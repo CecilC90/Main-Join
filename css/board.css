@@ -1,6 +1,8 @@
 /* Alle Abstände aktuell noch Platzhalter*/
 
-.board-container {
+
+/* Board Header */
+.board-header {
     padding-top: 100px;
     padding-right: 50px;
     padding-left: 50px;
@@ -15,4 +17,24 @@
 
 #add-task {
     margin-left: 30px;
+}
+
+/* Board-Section */
+
+.board-section {
+    padding-top: 50
+    px;
+    padding-right: 50px;
+    padding-left: 50px;
+    display: flex;
+}
+
+.board-element {
+    width: 300px;
+    padding: 16px;
+}
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
 }

@@ -12,7 +12,7 @@
     <script src="js/board.js"></script>
 </head>
 <body>
-    <section class="board-container">
+    <section class="board-header">
         <div>
             <h1>Board</h1>
         </div>
@@ -23,6 +23,33 @@
             <div>
                 <button id="add-task">Add Task "Plus"</button>
             </div>
+        </div>
+    </section>
+    <section class="board-section">
+        <div class="board-element" id="todo">
+            <div class="space-between">
+                <span>To do</span>
+                <a href="#">+</a>
+            </div>
+            <div id="content-todo"></div>
+        </div>
+        <div class="board-element" id="progress">
+            <div class="space-between">
+                <span>In progress</span>
+                <a href="#">+</a>
+            </div>
+            <div id="content-progress"></div>
+        </div>
+        <div class="board-element" id="feedback">
+            <div class="space-between">
+                <span>Await feedback</span>
+                <a href="#">+</a>
+            </div>
+            <div id="content-feedback"></div>
+        </div class="space-between">
+        <div class="board-element" id="done">
+            <span>Done</span>
+            <div id="content-done"></div>
         </div>
     </section>
 </body>
