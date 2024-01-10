@@ -1,0 +1,14 @@
+.content{
+    display: flex;
+}
+.addTaskContainer{
+    margin-left: 96px;
+    margin-top: 206px;
+}
+.addTasks{
+    display: flex;
+}
+
+.seperatorContainer{
+    width: 50px;
+}

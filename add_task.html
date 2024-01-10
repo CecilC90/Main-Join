@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join / Add Task</title>
+    <link rel="shortcut icon" href="./assets/img/join_logo.svg" type="image/x-icon" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./css/fonts.css" />
+    <link rel="stylesheet" href="./css/add_task.css" />
+    <script src="script.js"></script>
+    <script src="./js/add_task.js"></script>
+  </head>
+  <body onload="init()">
+    <div class="content">
+      <div w3-include-html="assets/templates/menu.html"></div>
+      <div class="addTaskContainer">
+        <h1>Add Task</h1>
+        <form class="addTasks" onsubmit="addTask(); return false">
+          <div class="leftContainer">
+            <div class="taskTitle">
+              <p>Title*</p>
+              <input type="text" placeholder="Enter a title" required />
+              <p>This fild is required</p>
+            </div>
+            <div class="taskDescription">
+              <p>Description</p>
+              <textarea name="description" id="" cols="30" rows="10"></textarea>
+            </div>
+            <div class="assignedTo">
+              <p>Assingned to</p>
+              <!-- hier muss die auswahl hin -->
+              <div>
+                <!-- hier müssen die ausgewählten contacte hin -->
+              </div>
+            </div>
+          </div>
+          <div class="seperatorContainer"></div>
+          <div class="rightContainer">
+            <div class="taskDueDate">
+              <p>Due date*</p>
+              <input type="datetime" />
+            </div>
+            <div class="taskPrio">
+              <p>Prio</p>
+              <div>
+                <div>Urgent</div>
+                <div>Medium</div>
+                <div>Low</div>
+              </div>
+            </div>
+            <div class="taskCategory">
+              <p>Category*</p>
+              <!-- hier muss die auswahl die Category hin -->
+            </div>
+            <div class="Subtasks">
+              <p>Subtasks</p>
+              <!-- hier muss die auswahl der subTasks hin -->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
