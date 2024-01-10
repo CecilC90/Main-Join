@@ -1,0 +1,18 @@
+/* Alle Abstände aktuell noch Platzhalter*/
+
+.board-container {
+    padding-top: 100px;
+    padding-right: 50px;
+    padding-left: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-and-add {
+    display: flex;
+    align-items: center;
+}
+
+#add-task {
+    margin-left: 30px;
+}
