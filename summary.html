@@ -8,14 +8,22 @@
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./css/fonts.css">
+    <link rel="stylesheet" href="./css/summary.css">
 
 </head>
 
 <body onload="includesHTML()">
-
-    <div w3-include-html="assets/templates/menu.html"></div>
     <div w3-include-html="assets/templates/header.html"></div>
-
+    <div class="flex-container">
+        <div w3-include-html="assets/templates/menu.html"></div>
+        <div class="summary-container">
+            <div class="headline">
+                <span class="fs-61 fw-700">Join 360</span>
+                <span class="seperator"></span>
+                <span class="fs-27 fw-400">Key Metrics at a Glance</span>
+            </div>
+        </div>
+    </div>
 
 
 </body>

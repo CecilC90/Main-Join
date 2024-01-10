@@ -1,0 +1,38 @@
+.flex-container {
+    display: flex;
+}
+
+.summary-container {
+    margin-top: 112px;
+    width: 100%;
+}
+
+.headline{ 
+    display: flex;
+    align-items: center;
+    padding-top: 110px;
+    padding-left: 96px;
+    gap: 30px;
+}
+
+.fs-61 {
+    font-size: 61px;
+}
+
+.fw-700 {
+    font-weight: 700;
+}
+
+.seperator {
+    width: 3px;
+    height: 59px;
+    background-color: #29ABE2;
+}
+
+.fs-27 {
+    font-size: 27px;
+}
+
+.fw-400 {
+    font-weight: 400;
+}
