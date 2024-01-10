@@ -1,4 +1,6 @@
-/* Alle Abstände aktuell noch Platzhalter*/
+/* Alle Abstände aktuell noch Platzhalter */
+/* Alle Farben aktuell noch Platzhalter 
+*/
 
 
 /* Board Header */
@@ -34,7 +36,33 @@
     padding: 16px;
 }
 
+.board-element:first-child {
+    padding-right: 0;
+}
+
+
 .space-between {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.board-content {
+    margin-top: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border: 1px solid grey;
+    background-color: rgb(221, 214, 214);
+    border-radius: 10px;
+    color: grey;
+    border-style: dotted;
+    text-align: center;
+}
+
+#todo-container {
+    padding: 8px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    cursor: pointer;
+    margin-bottom: 10px;
 }
