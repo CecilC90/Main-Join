@@ -13,7 +13,7 @@
 </head>
 <body onload="init()">
     <div w3-include-html="assets/templates/menu.html"></div>
-    
+
     <section class="board-header">
         <div>
             <h1>Board</h1>
@@ -33,25 +33,33 @@
                 <span>To do</span>
                 <a href="#">+</a>
             </div>
-            <div class="board-content" id="content-todo">No task To do</div>
+            <div class="board-content">No task To do</div>
+            <div id="content-todo"></div>
+            <div class="drag-container" ondrop="moveTo('open')" ondragover="allowDrop(event)"></div>
         </div>
         <div class="board-element" id="progress">
             <div class="space-between">
                 <span>In progress</span>
                 <a href="#">+</a>
             </div>
-            <div class="board-content" id="content-progress">No task in progress</div>
+            <div class="board-content">No task in progress</div>
+            <div id="content-progress"></div>
+            <div class="drag-container" ondrop="moveTo('progress')" ondragover="allowDrop(event)"></div>
         </div>
         <div class="board-element" id="feedback">
             <div class="space-between">
                 <span>Await feedback</span>
                 <a href="#">+</a>
             </div>
-            <div class="board-content" id="content-feedback">No task await for feedback</div>
+            <div class="board-content">No task await for feedback</div>
+            <div id="content-feedback"></div>
+            <div class="drag-container" ondrop="moveTo('feedback')" ondragover="allowDrop(event)"></div>
         </div class="space-between">
         <div class="board-element" id="done">
             <span>Done</span>
-            <div class="board-content" id="content-done">No task are done</div>
+            <div class="board-content">No task are done</div>
+            <div id="content-done"></div>
+            <div class="drag-container" ondrop="moveTo('done')" ondragover="allowDrop(event)"></div>
         </div>
     </section>
 </body>

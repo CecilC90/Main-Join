@@ -66,3 +66,16 @@
     cursor: pointer;
     margin-bottom: 10px;
 }
+
+.drag-container {
+    height: 200px;
+    margin-top: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border: 1px solid grey;
+    background-color: rgb(221, 214, 214);
+    border-radius: 10px;
+    color: grey;
+    border-style: dotted;
+    text-align: center;
+}
