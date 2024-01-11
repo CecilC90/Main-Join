@@ -28,29 +28,52 @@ function init() {
 function renderHTML() {
 
     let open = todos.filter(t => t['category'] == 'open');
-
-    let progressContent = document.getElementById('content-todo');
-    progressContent.innerHTML = '';
+    let boardContentTodo = document.getElementById('board-content-todo');
+    let openContent = document.getElementById('content-todo');
+    if(!open.length == 0) {
+        boardContentTodo.classList.remove('board-content');
+        boardContentTodo.innerHTML = '';
+    } else {
+        boardContentTodo.classList.add('board-content');
+        boardContentTodo.innerHTML = 'No tasks To Do';
+    }
+    openContent.innerHTML = '';
     for(let i = 0; i < open.length; i++) {
         const element = open[i];
-        progressContent.innerHTML += templateHTMLTodoContainer(element);
+        openContent.innerHTML += templateHTMLTodoContainer(element);
     }
 
 
 
     let progress = todos.filter(t => t['category'] == 'progress');
-
-    let todoContent = document.getElementById('content-progress');
-    todoContent.innerHTML = '';
-    todoContent.classList.remove('board-content');
+    let boardContentProgress = document.getElementById('board-content-progress');
+    let progressContent = document.getElementById('content-progress');
+    if(!progress.length == 0) {
+        boardContentProgress.classList.remove('board-content');
+        boardContentProgress.innerHTML = '';
+    } else {
+        boardContentProgress.classList.add('board-content');
+        boardContentProgress.innerHTML = 'No task in progress';
+    }
+    progressContent.innerHTML = '';
+    progressContent.classList.remove('board-content');
     for(let i = 0; i < progress.length; i++) {
         const element = progress[i];
-        todoContent.innerHTML += templateHTMLTodoContainer(element);
+        progressContent.innerHTML += templateHTMLTodoContainer(element);
     }
 
-    let feedback = todos.filter(t => t['category'] == 'feedback');
 
+
+    let feedback = todos.filter(t => t['category'] == 'feedback');
+    let boardContentFeedback = document.getElementById('board-content-feedback');
     let feedbackContent = document.getElementById('content-feedback');
+    if(!feedback.length == 0) {
+        boardContentFeedback.classList.remove('board-content');
+        boardContentFeedback.innerHTML = '';
+    } else {
+        boardContentFeedback.classList.add('board-content');
+        boardContentFeedback.innerHTML = 'No tasks await for feedback';
+    }
     feedbackContent.innerHTML = '';
     feedbackContent.classList.remove('board-content');
     for(let i = 0; i < feedback.length; i++) {
@@ -58,9 +81,18 @@ function renderHTML() {
         feedbackContent.innerHTML += templateHTMLTodoContainer(element);
     }
 
-    let done = todos.filter(t => t['category'] == 'done');
 
+
+    let done = todos.filter(t => t['category'] == 'done');
+    let boardContentDone = document.getElementById('board-content-done');
     let doneContent = document.getElementById('content-done');
+    if(!done.length == 0) {
+        boardContentDone.classList.remove('board-content');
+        boardContentDone.innerHTML = '';
+    } else {
+        boardContentDone.classList.add('board-content');
+        boardContentDone.innerHTML = 'No tasks are done';
+    }
     doneContent.innerHTML = '';
     doneContent.classList.remove('board-content');
     for(let i = 0; i < done.length; i++) {
