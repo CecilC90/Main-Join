@@ -140,3 +140,19 @@ p {
   fill: #fff;
 }
 /* #endregion */
+
+footer {
+  display: flex;
+  justify-content: space-between;
+}
+.createTaskButtonConatiner {
+  display: flex;
+  gap: 16px;
+}
+.createTaskButtonConatiner button {
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+}
