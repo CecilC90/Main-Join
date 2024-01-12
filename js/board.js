@@ -44,10 +44,10 @@ function renderHTML() {
     }
 
 
-
     let progress = todos.filter(t => t['category'] == 'progress');
     let boardContentProgress = document.getElementById('board-content-progress');
     let progressContent = document.getElementById('content-progress');
+    document.getElementById('drag-progress').style.display = "none";
     if(!progress.length == 0) {
         boardContentProgress.classList.remove('board-content');
         boardContentProgress.innerHTML = '';
@@ -56,7 +56,6 @@ function renderHTML() {
         boardContentProgress.innerHTML = 'No task in progress';
     }
     progressContent.innerHTML = '';
-    progressContent.classList.remove('board-content');
     for(let i = 0; i < progress.length; i++) {
         const element = progress[i];
         progressContent.innerHTML += templateHTMLTodoContainer(element);
@@ -67,6 +66,7 @@ function renderHTML() {
     let feedback = todos.filter(t => t['category'] == 'feedback');
     let boardContentFeedback = document.getElementById('board-content-feedback');
     let feedbackContent = document.getElementById('content-feedback');
+    document.getElementById('drag-feedback').style.display = "none";
     if(!feedback.length == 0) {
         boardContentFeedback.classList.remove('board-content');
         boardContentFeedback.innerHTML = '';
@@ -75,7 +75,6 @@ function renderHTML() {
         boardContentFeedback.innerHTML = 'No tasks await for feedback';
     }
     feedbackContent.innerHTML = '';
-    feedbackContent.classList.remove('board-content');
     for(let i = 0; i < feedback.length; i++) {
         const element = feedback[i];
         feedbackContent.innerHTML += templateHTMLTodoContainer(element);
@@ -86,6 +85,7 @@ function renderHTML() {
     let done = todos.filter(t => t['category'] == 'done');
     let boardContentDone = document.getElementById('board-content-done');
     let doneContent = document.getElementById('content-done');
+    document.getElementById('drag-done').style.display = "none";
     if(!done.length == 0) {
         boardContentDone.classList.remove('board-content');
         boardContentDone.innerHTML = '';
@@ -94,7 +94,6 @@ function renderHTML() {
         boardContentDone.innerHTML = 'No tasks are done';
     }
     doneContent.innerHTML = '';
-    doneContent.classList.remove('board-content');
     for(let i = 0; i < done.length; i++) {
         const element = done[i];
         doneContent.innerHTML += templateHTMLTodoContainer(element);
@@ -108,7 +107,7 @@ function moveTo(category) {
 
 function allowDrop(ev) {
     ev.preventDefault();
-  }
+}
 
 function startDragging(id) {
     startDragginId = id;

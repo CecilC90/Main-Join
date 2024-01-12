@@ -28,38 +28,38 @@
         </div>
     </section>
     <section class="board-section">
-        <div class="board-element" id="todo">
+        <div class="board-element" id="todo" ondrop="moveTo('open')" ondragover="allowDrop(event)">
             <div class="space-between">
                 <span>To do</span>
                 <a href="#">+</a>
             </div>
             <div id="board-content-todo" class="board-content">No tasks To do</div>
             <div id="content-todo"></div>
-            <div class="drag-container" ondrop="moveTo('open')" ondragover="allowDrop(event)"></div>
+            <div id="drag-todo" class="drag-container"></div>
         </div>
-        <div class="board-element" id="progress">
+        <div class="board-element" id="progress" ondrop="moveTo('progress')" ondragover="allowDrop(event)">
             <div class="space-between">
                 <span>In progress</span>
                 <a href="#">+</a>
             </div>
             <div id="board-content-progress" class="board-content">No task in progress</div>
             <div id="content-progress"></div>
-            <div class="drag-container" ondrop="moveTo('progress')" ondragover="allowDrop(event)"></div>
+            <div id="drag-progress" class="drag-container"></div>
         </div>
-        <div class="board-element" id="feedback">
+        <div class="board-element" id="feedback" ondrop="moveTo('feedback')" ondragover="allowDrop(event)">
             <div class="space-between">
                 <span>Await feedback</span>
                 <a href="#">+</a>
             </div>
             <div id="board-content-feedback" class="board-content">No tasks await for feedback</div>
             <div id="content-feedback"></div>
-            <div class="drag-container" ondrop="moveTo('feedback')" ondragover="allowDrop(event)"></div>
-        </div class="space-between">
-        <div class="board-element" id="done">
+            <div id="drag-feedback" class="drag-container"></div>
+        </div>
+        <div class="board-element" id="done" ondrop="moveTo('done')" ondragover="allowDrop(event)">
             <span>Done</span>
             <div id="board-content-done" class="board-content">No tasks are done</div>
             <div id="content-done"></div>
-            <div class="drag-container" ondrop="moveTo('done')" ondragover="allowDrop(event)"></div>
+            <div id="drag-done" class="drag-container"></div>
         </div>
     </section>
 </body>

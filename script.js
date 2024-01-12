@@ -16,4 +16,4 @@ async function includesHTML() {
       } else 
         element.innerHTML = `<b>"${file}"</b> not found!`; // wenn die datei nicht gefunden wurde wird das angezeigt
     }
-  }
+}
