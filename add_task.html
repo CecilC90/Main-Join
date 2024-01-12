@@ -14,51 +14,68 @@
   <body onload="init()">
     <div class="content">
       <div w3-include-html="assets/templates/menu.html"></div>
+      <div w3-include-html="assets/templates/header.html"></div>
       <div class="addTaskContainer">
         <h1>Add Task</h1>
-        <form class="addTasks" onsubmit="addTask(); return false">
+        <div class="addTasks">
           <div class="leftContainer">
             <div class="taskTitle">
-              <p>Title*</p>
-              <input type="text" placeholder="Enter a title" required />
-              <p>This fild is required</p>
+              <div class="inputContainer">
+                <p>Title*</p>
+                <input class="inputField" type="text" placeholder="Enter a title" required />
+              </div>
+              <p class="fildIisRequiredText">This fild is required</p>
             </div>
-            <div class="taskDescription">
+            <div class="inputContainer">
               <p>Description</p>
-              <textarea name="description" id="" cols="30" rows="10"></textarea>
+              <textarea class="descriptionTextArea" name="description" id="descriptionTextArea"></textarea>
             </div>
-            <div class="assignedTo">
+            <div class="inputContainer">
               <p>Assingned to</p>
-              <!-- hier muss die auswahl hin -->
+              <input class="inputField" type="text"><!-- hier muss die auswahl hin -->
               <div>
                 <!-- hier müssen die ausgewählten contacte hin -->
               </div>
             </div>
           </div>
-          <div class="seperatorContainer"></div>
+          <div class="seperatorContainer">
+            <img src="/assets/img/seperator_add_task.svg" alt="">
+          </div>
           <div class="rightContainer">
             <div class="taskDueDate">
-              <p>Due date*</p>
-              <input type="datetime" />
+              <div class="inputContainer">
+                <p>Due date*</p>
+                <input class="inputField" type="datetime" />
+              </div>
+              <p class="fildIisRequiredText">This fild is required</p>
             </div>
             <div class="taskPrio">
               <p>Prio</p>
-              <div>
-                <div>Urgent</div>
-                <div>Medium</div>
-                <div>Low</div>
+              <div class="prioButtonConatiner">
+                <div class="prioButton">
+                  <p>Urgent</p>
+                  <img src="/assets/img/prio_urgent.svg" alt="">
+                </div>
+                <div class="prioButtonMedium">
+                  <p>Medium</p>
+                  <img src="/assets/img/prio_medium.svg" alt="">
+                </div>
+                <div class="prioButton">
+                  <p>Low</p>
+                  <img src="/assets/img/prio_low.svg" alt="">
+                </div>
               </div>
             </div>
-            <div class="taskCategory">
+            <div class="inputContainer">
               <p>Category*</p>
-              <!-- hier muss die auswahl die Category hin -->
+              <input class="inputField" type="text"><!-- hier muss die auswahl die Category hin -->
             </div>
-            <div class="Subtasks">
+            <div class="inputContainer">
               <p>Subtasks</p>
-              <!-- hier muss die auswahl der subTasks hin -->
+              <input class="inputField" type="text"><!-- hier muss die auswahl der subTasks hin -->
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </body>
