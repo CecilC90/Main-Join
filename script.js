@@ -20,3 +20,7 @@ async function includesHTML() {
 function showSelectedButton(selected){
   document.getElementById(selected).classList.replace('menuButton', 'selectedMenuButton');
 }
+
+function openPage(page){
+  window.location.href = page + ".html";
+}
