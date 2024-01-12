@@ -2,6 +2,10 @@
 /* Alle Farben aktuell noch Platzhalter 
 */
 
+body {
+    max-width: 1440px;
+    background-color: #F6F7F8;
+}
 
 /* Board Header */
 .board-header {
@@ -24,8 +28,7 @@
 /* Board-Section */
 
 .board-section {
-    padding-top: 50
-    px;
+    padding-top: 50px;
     padding-right: 50px;
     padding-left: 50px;
     display: flex;
@@ -43,7 +46,6 @@
 .space-between {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
 }
 
 .board-content {
@@ -59,9 +61,32 @@
 }
 
 #todo-container {
-    padding: 8px;
+    margin-top: 20px;
+    padding: 16px;
     border-radius: 20px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     cursor: pointer;
     margin-bottom: 10px;
+}
+
+#todo-container h2 {
+    font-size: 20px;
+    margin-top: 8;
+    margin-bottom: 8px;
+}
+
+#todo-container p {
+    color: lightgray;
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+#todo-container span {
+    padding: 4px 8px;
+    background-color: blue;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 8px;
 }

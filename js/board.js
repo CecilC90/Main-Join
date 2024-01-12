@@ -2,18 +2,21 @@ let todos = [
     {
         id: 0,
         title: 'Todo1',
+        todoCategory: 'Test Category',
         description: 'Ths is the first Todo.',
         category: 'open'
     },
     {
         id: 1,
         title: 'Todo2',
+        todoCategory: 'Test Category',
         description: 'Ths is the second Todo.',
         category: 'open'
     },
     {
         id: 2,
         title: 'Todo3',
+        todoCategory: 'Test Category',
         description: 'Ths is the third Todo.',
         category: 'done'
     }
@@ -26,7 +29,13 @@ function init() {
 }
 
 function renderHTML() {
+    renderCategoryOpen();
+    renderCategoryProgress();
+    renderCategorFeedback();
+    renderCategoryDone();
+}
 
+function renderCategoryOpen() {
     let open = todos.filter(t => t['category'] == 'open');
     let boardContentTodo = document.getElementById('board-content-todo');
     let openContent = document.getElementById('content-todo');
@@ -42,8 +51,9 @@ function renderHTML() {
         const element = open[i];
         openContent.innerHTML += templateHTMLTodoContainer(element);
     }
+}
 
-
+function renderCategoryProgress() {
     let progress = todos.filter(t => t['category'] == 'progress');
     let boardContentProgress = document.getElementById('board-content-progress');
     let progressContent = document.getElementById('content-progress');
@@ -60,9 +70,9 @@ function renderHTML() {
         const element = progress[i];
         progressContent.innerHTML += templateHTMLTodoContainer(element);
     }
+}
 
-
-
+function renderCategorFeedback() {
     let feedback = todos.filter(t => t['category'] == 'feedback');
     let boardContentFeedback = document.getElementById('board-content-feedback');
     let feedbackContent = document.getElementById('content-feedback');
@@ -79,9 +89,9 @@ function renderHTML() {
         const element = feedback[i];
         feedbackContent.innerHTML += templateHTMLTodoContainer(element);
     }
+}
 
-
-
+function renderCategoryDone() {
     let done = todos.filter(t => t['category'] == 'done');
     let boardContentDone = document.getElementById('board-content-done');
     let doneContent = document.getElementById('content-done');
@@ -100,6 +110,10 @@ function renderHTML() {
     }
 }
 
+function showDetailView(ele) {
+    
+}
+
 function moveTo(category) {
     todos[startDragginId]['category'] = category;
     renderHTML();
@@ -115,9 +129,11 @@ function startDragging(id) {
 
 function templateHTMLTodoContainer(element) {
     return `
-    <div draggable="true" ondragstart="startDragging(${element.id})" id="todo-container">
+    <div onclick="showDetailView(${element})" draggable="true" ondragstart="startDragging(${element.id})" id="todo-container">
+        <span id="category-span">${element.todoCategory}</span>
         <h2>${element.title}</h2>
         <p>${element.description}</p>
     </div>
 `;
 }
+
