@@ -12,11 +12,24 @@
     align-items: center;
     padding-top: 110px;
     padding-left: 96px;
+    padding-bottom: 56px;
     gap: 30px;
+}
+
+.pl-96 {
+    padding-left: 96px;
+}
+
+.pb-13 {
+    padding-bottom: 13px;
 }
 
 .fs-61 {
     font-size: 61px;
+}
+
+.fs-64 {
+    font-size: 64px;
 }
 
 .fw-700 {
@@ -33,6 +46,142 @@
     font-size: 27px;
 }
 
+.fs-16 {
+    font-size: 16px;
+}
+
+.fs-21 {
+    font-size: 21px;
+} 
+
+.fs-47 {
+    font-size: 47px;
+}
+
 .fw-400 {
     font-weight: 400;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
+}
+
+
+.flex-column {
+    flex-direction: column;
+}
+
+.mt-minus-5 {
+    margin-top: -5px;
+}
+
+.gap-18 {
+    gap: 18px;
+}
+
+.gap-60 {
+    gap: 60px;
+}
+
+.padding-horizontal-57 {
+    padding: 33px 57px;
+}
+
+.padding-horizontal-63 {
+    padding: 33px 63.5px;
+}
+
+.check-rectangle {
+    display: flex;
+    padding-left: 96px;
+    padding-bottom: 28px;
+    gap:32px;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+}
+
+.elipse {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 69px;
+    width: 69px;
+    background-color: #2A3647;
+    border-radius: 50%;
+}
+
+.edit-icon {
+    height: 24px;
+    width: 24px;
+}
+
+.vector-icon {
+    height: 22px;
+    width: 30px;
+}
+
+.arrow-icon {
+    width: 34px;
+    height: 15px;
+}
+
+.urgency-summary {
+    padding-left: 96px;
+}
+
+.urgency-container {
+    display: flex;
+    align-items: center;
+    padding: 36px 65px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    width: fit-content;
+}
+
+.elipse-urgency {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 60px;
+    background-color: #FF3D00;
+    border-radius: 50%;
+}
+
+.line {
+    width: 2px;
+    height: 102px;
+    background-color: #D1D1D1;
+    margin: 0 61px;
+}
+
+.greet-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 80px;
+}
+
+.name-container {
+    font-size: 64px;
+    font-weight: 700;
+    color: #29ABE2;
 }
