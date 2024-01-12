@@ -24,7 +24,7 @@ function renderStartPageHTML() {
       </div>
       <div class="loginButtonContainer">
         <button class="buttonDarg" id="logInButton">Log in</button>
-        <button class="buttonLight">Guest Log in</button>
+        <button class="buttonLight" onclick="openPage('summary')">Guest Log in</button>
       </div>
     </form> 
   `;

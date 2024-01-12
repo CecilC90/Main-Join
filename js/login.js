@@ -42,6 +42,7 @@ async function login() {
     let userPassword = userInfos.password;
     if(password.value == userPassword){
       console.log('login erfolgreich');
+      openPage('summary');
     } else {
       console.log('passwort ist nicht korrekt');
       showLoginWorngPassword();
