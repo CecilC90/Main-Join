@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join</title>
     <script src="script.js"></script>
+    <script src="./js/summary.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./css/summary.css">
-
 </head>
 
-<body onload="includesHTML()">
+<body onload="includesHTML(), greeting()">
     <div w3-include-html="assets/templates/header.html"></div>
     <div class="flex-container">
         <div w3-include-html="assets/templates/menu.html"></div>
@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <div class="greet-container">
-                    <div class="fs-47 fw-500">Good morning,</div>
+                    <div class="fs-47 fw-500" id="greeting"></div>
                     <div class="name-container">Sofia Müller</div>
                 </div>
             </div>
