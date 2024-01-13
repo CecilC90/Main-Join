@@ -24,3 +24,8 @@ function showSelectedButton(selected){
 function openPage(page){
   window.location.href = page + ".html";
 }
+
+function userNavbar() {
+  let navbar = document.getElementById('popUpUser');
+        navbar.classList.toggle('d-none');
+}
