@@ -1,6 +1,6 @@
-function templateHTMLTodoContainer(element) {
+function templateHTMLTodoContainer(element, index) {
     return `
-    <div onclick="showDetailView()" draggable="true" ondragstart="startDragging(${element.id})" id="todo-container">
+    <div onclick="showDetailView(${index})" draggable="true" ondragstart="startDragging(${element.id})" id="todo-container">
         <span id="category-span">${element.todoCategory}</span>
         <h2>${element.title}</h2>
         <p>${element.description}</p>

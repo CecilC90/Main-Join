@@ -4,7 +4,8 @@ let todos = [
         title: 'Todo1',
         todoCategory: 'Test Category',
         description: 'Ths is the first Todo.',
-        category: 'open'
+        category: 'open',
+        
     },
     {
         id: 1,
@@ -51,8 +52,7 @@ function renderCategoryOpen() {
     }
     openContent.innerHTML = '';
     for(let i = 0; i < open.length; i++) {
-        const element = open[i];
-        openContent.innerHTML += templateHTMLTodoContainer(element);
+        openContent.innerHTML += templateHTMLTodoContainer(open[i], i);
     }
 }
 
@@ -70,8 +70,7 @@ function renderCategoryProgress() {
     }
     progressContent.innerHTML = '';
     for(let i = 0; i < progress.length; i++) {
-        const element = progress[i];
-        progressContent.innerHTML += templateHTMLTodoContainer(element);
+        progressContent.innerHTML += templateHTMLTodoContainer(progress[i], i);
     }
 }
 
@@ -89,8 +88,7 @@ function renderCategorFeedback() {
     }
     feedbackContent.innerHTML = '';
     for(let i = 0; i < feedback.length; i++) {
-        const element = feedback[i];
-        feedbackContent.innerHTML += templateHTMLTodoContainer(element);
+        feedbackContent.innerHTML += templateHTMLTodoContainer(feedback[i], i);
     }
 }
 
@@ -108,8 +106,7 @@ function renderCategoryDone() {
     }
     doneContent.innerHTML = '';
     for(let i = 0; i < done.length; i++) {
-        const element = done[i];
-        doneContent.innerHTML += templateHTMLTodoContainer(element);
+        doneContent.innerHTML += templateHTMLTodoContainer(done[i], i);
     }
 }
 
@@ -126,13 +123,62 @@ function startDragging(id) {
     startDragginId = id;
 }
 
+function showAddTask() {
+    let showAddTodoContainer = document.getElementById('show-add-todo');
+    showAddTodoContainer.style.display = "flex";
+    showAddTodoContainer.innerHTML = templateHTMLAddTask();
+}
+
 function closeAddTask() {
     let showAddTodoContainer = document.getElementById('show-add-todo');
     showAddTodoContainer.style.display = "none";
 }
 
-function showAddTask() {
-    let showAddTodoContainer = document.getElementById('show-add-todo');
-    showAddTodoContainer.style.display = "flex";
-    showAddTodoContainer.innerHTML = templateHTMLAddTask();
+function showDetailView(index) {
+    renderCategoryOpenDetailView(index);
+    renderCategoryProgressDetailView(index);
+    renderCategoryFeedbackDetailView(index);
+    renderCategoryDoneDetailView(index);
+}
+
+function renderCategoryOpenDetailView(index) {
+    let filteredTodos = todos.filter(t => t['category'] == 'open');
+    let element = filteredTodos[index];
+    let showDetailTodoContainer = document.getElementById('show-detail-todo');
+    showDetailTodoContainer.style.display = "flex";
+    showDetailTodoContainer.innerHTML = templateHTMLDetailView(element);
+}
+
+function renderCategoryProgressDetailView(index) {
+    let filteredTodos = todos.filter(t => t['category'] == 'feedback');
+    let element = filteredTodos[index];
+    let showDetailTodoContainer = document.getElementById('show-detail-todo');
+    showDetailTodoContainer.style.display = "flex";
+    showDetailTodoContainer.innerHTML = templateHTMLDetailView(element);
+}
+
+function renderCategoryFeedbackDetailView(index) {
+    let filteredTodos = todos.filter(t => t['category'] == 'feedback');
+    let element = filteredTodos[index];
+    let showDetailTodoContainer = document.getElementById('show-detail-todo');
+    showDetailTodoContainer.style.display = "flex";
+    showDetailTodoContainer.innerHTML = templateHTMLDetailView(element);
+}
+
+function renderCategoryDoneDetailView(index) {
+    let filteredTodos = todos.filter(t => t['category'] == 'done');
+    let element = filteredTodos[index];
+    let showDetailTodoContainer = document.getElementById('show-detail-todo');
+    showDetailTodoContainer.style.display = "flex";
+    showDetailTodoContainer.innerHTML = templateHTMLDetailView(element);
+}
+
+function templateHTMLDetailView(element, index) { 
+        return `
+            <div id="detail-todo-content">
+                <span id="category-span">${element.todoCategory}</span>
+                <h2>${element.title}</h2>
+                <p>${element.description}</p>
+            </div>
+        `;
 }
