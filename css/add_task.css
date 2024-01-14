@@ -39,8 +39,10 @@ p {
   display: flex;
 }
 .addTaskContainer {
+  display: flex;
+  flex-direction: column;
   margin-left: 96px;
-  margin-top: 206px;
+  margin-top: 160px; /* soll laut figma 206px */
 }
 .addTasks {
   display: flex;
@@ -144,6 +146,9 @@ p {
 footer {
   display: flex;
   justify-content: space-between;
+  align-items: end;
+  flex: 1;
+  margin-bottom: 79px;
 }
 .createTaskButtonConatiner {
   display: flex;
