@@ -64,6 +64,11 @@ p {
   max-width: 408px;
   height: 84px;
 }
+.dropDownIcon:hover{
+  border-radius: 50%;
+  background-color: #EEE;
+  cursor: pointer;
+}
 /* #endregion */
 
 .seperatorContainer {
@@ -160,4 +165,32 @@ footer {
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
+}
+.taskClearButton:hover svg path{
+  stroke: #29abe2;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100%; /* Änderung: Dropdown-Breite auf 100% setzen */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content label {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.dropdown-content input {
+  margin-right: 8px; /* Änderung: Abstand zwischen Checkbox und Text hinzufügen */
 }
