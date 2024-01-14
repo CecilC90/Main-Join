@@ -1,3 +1,5 @@
+let loggedInUser = [];
+
 document.addEventListener("DOMContentLoaded", function () {
   var slideImage = document.getElementById("slideImage");
   var content = document.getElementById("content");
@@ -42,6 +44,8 @@ async function login() {
     let userPassword = userInfos.password;
     if(password.value == userPassword){
       console.log('login erfolgreich');
+//funktion um den User nach erfolgreichen Login zu speichern
+      addLoggedInUser(userInfos);
       openPage('summary');
     } else {
       console.log('passwort ist nicht korrekt');
@@ -53,6 +57,12 @@ async function login() {
     console.log('Email noch nicht vorhanden')
   }
 
+}
+
+function addLoggedInUser(userInfos) {
+    let name = userInfos.name;
+    loggedInUser.push.name;
+    console.log(name);
 }
 
 async function addUser() {

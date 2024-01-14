@@ -3,7 +3,7 @@ function greeting() {
     let greeting;
 
     if (time >= 5 && time < 12) {
-        greeting = 'Good mroning';
+        greeting = 'Good morning';
     } else if (time >= 12 && time < 18) {
         greeting = 'Good afternoon';
     } else {
@@ -51,7 +51,6 @@ function finished() {
         numberOfDone.innerHTML = `${countofDone}`;
     }
 }
-
 
 function tasks() {
     boardTasks = document.getElementById('boardTasks');
