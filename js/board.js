@@ -5,7 +5,15 @@ let todos = [
         todoCategory: 'Test Category',
         description: 'Ths is the first Todo.',
         category: 'open',
-        
+        dueDate: '10/05/2023',
+        priority: 'low',
+        subtasks: {
+            firstTask: 'This is the first task',
+            secondTask: 'This is the secons task'
+        },
+        assignedTo: {
+            // Kontake reinpushen
+        },
     },
     {
         id: 1,
@@ -13,13 +21,6 @@ let todos = [
         todoCategory: 'Test Category',
         description: 'Ths is the second Todo.',
         category: 'open'
-    },
-    {
-        id: 2,
-        title: 'Todo3',
-        todoCategory: 'Test Category',
-        description: 'Ths is the third Todo.',
-        category: 'done'
     }
 ]
 
@@ -66,7 +67,7 @@ function renderCategoryProgress() {
         boardContentProgress.innerHTML = '';
     } else {
         boardContentProgress.classList.add('board-content');
-        boardContentProgress.innerHTML = 'No task in progress';
+        boardContentProgress.innerHTML = 'No tasks in progress';
     }
     progressContent.innerHTML = '';
     for(let i = 0; i < progress.length; i++) {
@@ -173,12 +174,31 @@ function renderCategoryDoneDetailView(index) {
     showDetailTodoContainer.innerHTML = templateHTMLDetailView(element);
 }
 
-function templateHTMLDetailView(element, index) { 
+function templateHTMLDetailView(element) { 
         return `
             <div id="detail-todo-content">
                 <span id="category-span">${element.todoCategory}</span>
                 <h2>${element.title}</h2>
                 <p>${element.description}</p>
+                Due Date: <p>${element.dueDate}</p>
+                Priority: <p>${element.priority}</p>
+                <h3>Assigned to:</h3> Currently empty
             </div>
         `;
 }
+
+function filterTodos() {
+    let search = document.getElementById('search').value;
+    search.toLowerCase();
+    for(let i = 0; i < todos.length; i++) {
+        const todo = todos[i];
+        let todoContent = document.getElementById(`todo-container${i}`);
+        let title = todo['title'];
+        if(title.toLowerCase().includes(search)) {
+            todoContent.style.display = 'block';
+        } else {
+            todoContent.style.display = 'none';
+        }
+    }
+}
+
