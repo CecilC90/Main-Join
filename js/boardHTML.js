@@ -1,9 +1,17 @@
 function templateHTMLTodoContainer(element, index) {
     return `
-    <div onclick="showDetailView(${index})" draggable="true" ondragstart="startDragging(${element.id})" id="todo-container">
+    <div class="todo-content" onclick="showDetailView(${index})" draggable="true" ondragstart="startDragging(${element.id})" id="todo-container${index}">
         <span id="category-span">${element.todoCategory}</span>
         <h2>${element.title}</h2>
         <p>${element.description}</p>
+        <div class="flex-container">
+          <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar w-50"></div>
+          </div>
+          <div id="subtask-content">
+            <span>X</span> / <span>X</span> Subtasks
+          </div>
+        </div>
     </div>
 `;
 }
