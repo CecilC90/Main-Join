@@ -111,13 +111,15 @@ a {
 }
 
 .main-task-container {
+    display: flex;
+    flex-direction: column;
     width: 560px;
     margin-left: 96px;
+    gap: 28px;
 }
 
 .check-rectangle {
     display: flex;
-    padding-bottom: 28px;
     gap:32px;
 }
 
@@ -227,7 +229,6 @@ a {
 
 .overview-container{
     display: flex;
-    padding-top: 29px;
     gap: 28px;
 }
 
@@ -256,6 +257,7 @@ a {
 
   @media(max-width: 970px) {
     .headline {
+        padding-top: 48px;
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
@@ -336,5 +338,16 @@ a {
         width: 116px;
         height: 116px;
         padding: 13px 31px;
+    }
+  }
+
+  @media(max-width: 750px) {
+    .headline {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    
+    .main-task-container {
+        margin-left: 16px;
     }
   }
