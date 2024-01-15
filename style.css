@@ -263,4 +263,15 @@ font-weight: 700; */
   background-color: #2A3D59;
 }
 
+.logo-mobile img{
+  width: 32px;
+  height: 39px;
+}
+
+@media(max-width: 945px) {
+  .greeting-container {
+    display: none;
+  }
+}
+
 /* #endregion */
