@@ -33,11 +33,20 @@
             <div class="inputContainer">
               <p>Assingned to</p>
 
-              <div class="inputField">
-                <input type="text" id="contactInput" />
-                <div class="dropdown" id="contactDropdown">
-                  <img class="dropDownIcon" src="/assets/img/arrow_drop_down.svg" alt="" />
-                  <div class="dropdown-content" id="dropdownContent"></div>
+              <div>
+                <div class="inputField dropdown">
+                  <input type="text" id="contactInput" />
+                  <img class="dropDownIcon" id="assignedToDropdown" src="/assets/img/arrow_drop_down.svg" alt="" />
+                </div>
+                <div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo">
+                  <div class="dropdownContacts">
+                    <p>julian, Weishaar</p>
+                    <input type="checkbox" />
+                  </div>
+                  <div class="dropdownContacts">
+                    <p>Laura, Musterfrau</p>
+                    <input type="checkbox" />
+                  </div>
                 </div>
               </div>
 
@@ -118,13 +127,25 @@
                 </div>
               </div>
             </div>
-            <div class="inputContainer">
-              <p>Category*</p>
-              <div class="inputField">
-                <input type="text" />
-                <img class="dropDownIcon" src="/assets/img/arrow_drop_down.svg" alt="drop down icon" />
+
+            <div>
+              <div class="inputContainer">
+                <p>Category*</p>
+                <div class="inputField dropdown">
+                  <input type="text" />
+                  <img class="dropDownIcon" id="categoryDropdown" src="/assets/img/arrow_drop_down.svg" alt="drop down icon" />
+                </div>
+                <div class="dropdownContenCategory" id="dropdownContenCategory">
+                  <div class="dropdownCategory">
+                    <p>julian, Weishaar</p>
+                  </div>
+                  <div class="dropdownCategory">
+                    <p>Laura, Musterfrau</p>
+                  </div>
+                </div>
               </div>
             </div>
+
             <div class="inputContainer">
               <p>Subtasks</p>
               <input class="inputField" type="text" /><!-- hier muss die auswahl der subTasks hin -->

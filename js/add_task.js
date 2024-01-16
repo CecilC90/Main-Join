@@ -1,5 +1,6 @@
 let selectedPrio = 'medium';
 let contacts = ['julian, weishaar', 'Max, Mustermann', 'Laura, Musterfrau'];
+let category = ['Arbeit', 'Privat', 'Anderes']
 
 
 async function init() {
@@ -23,39 +24,49 @@ function setPrioButton(prio){
 
 
 
+
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
   // Populate dropdown content
-  const dropdownContent = document.getElementById('dropdownContent');
-  contacts.forEach(contact => {
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.value = contact;
-    dropdownContent.appendChild(checkbox);
+  // const dropdownContent = document.getElementById('dropdownContent');
+  // contacts.forEach(contact => {
+  //   const checkbox = document.createElement('input');
+  //   checkbox.type = 'checkbox';
+  //   checkbox.value = contact;
+  //   dropdownContent.appendChild(checkbox);
     
-    const label = document.createElement('label');
-    label.textContent = contact;
-    dropdownContent.appendChild(label);
+  //   const label = document.createElement('label');
+  //   label.textContent = contact;
+  //   dropdownContent.appendChild(label);
 
-    // Add line break for better spacing
-    dropdownContent.appendChild(document.createElement('br'));
-  });
+  //   // Add line break for better spacing
+  //   dropdownContent.appendChild(document.createElement('br'));
+  // });
 
   // Toggle dropdown visibility
-  const contactDropdown = document.getElementById('contactDropdown');
+  const contactDropdown = document.getElementById('assignedToDropdown');
   contactDropdown.addEventListener('click', function () {
-    dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
+    dropdownContentAssignedTo.style.display = (dropdownContentAssignedTo.style.display === 'block') ? 'none' : 'block';
+  });
+
+  const categoryDropdown = document.getElementById('categoryDropdown');
+  categoryDropdown.addEventListener('click', function () {
+    dropdownContenCategory.style.display = (dropdownContenCategory.style.display === 'block') ? 'none' : 'block';
+    console.log('category wurde gedrückt')
   });
 
   // Handle checkbox selection
-  dropdownContent.addEventListener('change', function (event) {
-    const selectedContacts = Array.from(dropdownContent.querySelectorAll('input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
-    document.getElementById('contactInput').value = selectedContacts.join(', ');
-  });
+  // dropdownContent.addEventListener('change', function (event) {
+  //   const selectedContacts = Array.from(dropdownContent.querySelectorAll('input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
+  //   document.getElementById('contactInput').value = selectedContacts.join(', ');
+  // });
 
   // Close dropdown when clicking outside
-  window.addEventListener('click', function (event) {
-    if (!contactDropdown.contains(event.target)) {
-      dropdownContent.style.display = 'none';
-    }
-  });
+  // window.addEventListener('click', function (event) {
+  //   if (!contactDropdown.contains(event.target)) {
+  //     dropdownContent.style.display = 'none';
+  //   }
+  // });
 });
