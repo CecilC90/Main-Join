@@ -8,7 +8,6 @@ a {
 }
 
 .summary-container {
-    margin-top: 96px;
     width: 100%;
 }
 
@@ -19,6 +18,10 @@ a {
     padding-left: 96px;
     padding-bottom: 56px;
     gap: 30px;
+}
+
+.width-100 {
+    width: 100%;
 }
 
 .pl-96 {
@@ -256,6 +259,15 @@ a {
   }
 
   @media(max-width: 970px) {
+
+    .header-container {    
+        padding: 16px 20px;
+    }
+    
+    .help-container {
+        display: none;
+    }
+
     .headline {
         padding-top: 48px;
         flex-direction: column;
@@ -370,10 +382,6 @@ a {
         display: block;
     }
 
-    .header-container {    
-        padding: 16px 20px;
-    }
-
     .user-icon {
         height: 40px;
         width: 40px;
@@ -385,7 +393,4 @@ a {
         width: 40px;
     }
 
-    .help-container {
-        display: none;
-    }
   }

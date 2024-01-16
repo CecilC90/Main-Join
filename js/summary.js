@@ -60,3 +60,6 @@ function tasks() {
         boardTasks.innerHTML = `${todos.length}`;
     }
 }
+
+
+
