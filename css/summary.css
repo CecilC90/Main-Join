@@ -350,4 +350,42 @@ a {
     .main-task-container {
         margin-left: 16px;
     }
+
+    .menu {
+        display: none;
+    }
+
+    .header {
+        height: 80px;
+        left: 0;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .title {
+        display: none;
+    }
+
+    .logo-mobile {
+        display: block;
+    }
+
+    .header-container {    
+        padding: 16px 20px;
+    }
+
+    .user-icon {
+        height: 40px;
+        width: 40px;
+        font-size: 16px;
+    }
+
+    .user-icon span {
+        height: 40px;
+        width: 40px;
+    }
+
+    .help-container {
+        display: none;
+    }
   }

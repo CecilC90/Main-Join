@@ -268,10 +268,4 @@ font-weight: 700; */
   height: 39px;
 }
 
-@media(max-width: 945px) {
-  .greeting-container {
-    display: none;
-  }
-}
-
 /* #endregion */
