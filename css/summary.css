@@ -263,7 +263,7 @@ a {
     .header-container {    
         padding: 16px 20px;
     }
-    
+
     .help-container {
         display: none;
     }
@@ -354,13 +354,19 @@ a {
   }
 
   @media(max-width: 750px) {
+    .summary-container {
+        justify-content: center;
+        padding: 0px 8px;
+        box-sizing: border-box;
+    }
+
     .headline {
-        padding-left: 16px;
-        padding-right: 16px;
+        padding-left: 0px;
+        padding-right: 0px;
     }
     
     .main-task-container {
-        margin-left: 16px;
+        margin-left: 0;
     }
 
     .menu {
@@ -392,5 +398,4 @@ a {
         height: 40px;
         width: 40px;
     }
-
   }
