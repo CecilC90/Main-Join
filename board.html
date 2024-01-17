@@ -25,14 +25,14 @@
     
     <section class="board-header">
         <div>
-            <h1>Board</h1>
+            <h1 class="headline">Board</h1>
         </div>
         <div class="search-and-add">
             <div id="search-btn">
                 <input oninput="filterTodos()" type="text" id="search" placeholder="Find Task"><button><img src="assets/img/search.svg" alt=""></button>
             </div>
             <div class="add-task-button">
-                <button id="add-task">Add Task <img src="assets/img/add.svg" alt=""></button>
+                <button class="buttonDarg" id="add-task">Add Task <img src="assets/img/add.svg" alt=""></button>
             </div>
         </div>
     </section>
@@ -44,7 +44,6 @@
             </div>
             <div id="board-content-todo" class="board-content">No tasks To do</div>
             <div id="content-todo"></div>
-            <div id="drag-todo" class="drag-container"></div>
         </div>
         <div class="board-element" id="progress" ondrop="moveTo('progress')" ondragover="allowDrop(event)">
             <div class="space-between">
