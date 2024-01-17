@@ -42,38 +42,52 @@ function sortedContactList(sortedMembers) {
             return 1;
         }
         return 0;
-    }
-    )
-};
+    });
+}
 
 function renderContactList(sortedMembers) {
     let contactlist = document.getElementById('contactsList');
     contactlist.innerHTML = "";
+    let currentInitial = null;
+
     for (let i = 0; i < sortedMembers.length; i++) {
         let sortedMember = sortedMembers[i];
-        let initials = sortedMembers[i].name.split(' ')
-            .map(word => word.charAt(0))
-            .join('');
+        let firstLetter = getFirstLetter(sortedMembers, i);
+
+        if (firstLetter !== currentInitial) {
+            contactlist.innerHTML += renderFirstLetter(firstLetter);
+            currentInitial = firstLetter;
+        }
+
+        let initials = getMemberInitials(sortedMembers, i);
         contactlist.innerHTML += renderContactsHTML(sortedMembers, i, initials);
     }
 }
 
-function renderInitialsHTML(initials, i) {
-    letters = document.getElementById('initials');
-    letters.innerHTML += `
-    <div>
-    ${initials}
-    </div>
+function getFirstLetter(sortedMembers, i) {
+    return sortedMembers[i].name.charAt(0);
+}
+
+function getMemberInitials(sortedMembers, i) {
+    return sortedMembers[i].name.split(' ')
+        .map(word => word.charAt(0))
+        .join('');
+}
+
+function renderFirstLetter(firstLetter) {
+    return `
+    <div class="first-letter">${firstLetter}</div>
+    <div class="underline"></div>
     `;
 }
 
 function renderContactsHTML(sortedMembers, i, initials) {
     return `
-
-        <div class=contact-icon id="initials">${initials}</div>
+    <div class="user-card">
+        <div class="contact-icon" id="initials">${initials}</div>
         <div class=contact-container>
             <span>${sortedMembers[i].name}</span>
-            <span>${sortedMembers[i].email}</span>
+            <span class="email">${sortedMembers[i].email}</span>
         </div>
     <div>
     `;

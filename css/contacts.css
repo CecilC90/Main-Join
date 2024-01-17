@@ -49,10 +49,50 @@
 }
 
 .underline{
-    border: 1px solid #D1D1D1;    
+    border: 1px solid #D1D1D1;   
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 .contact-container{
     display: flex;
     flex-direction: column;
+}
+
+.contact-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    height: 42px;
+    font-size: 12px;
+    font-weight: 400;
+    border-radius: 50%;
+    background-color: #FF7A00;
+    border: 2px solid white;
+    margin-right: 35px;
+}
+
+.contact-container .email {
+    color: #007CEE;
+}
+
+.user-card:hover {
+    background-color:#F9F9F9;
+}
+
+.first-letter {
+    font-size: 20px;
+    font-weight: 400;
+    padding-left: 36px;
+    padding-top: 17px;
+    padding-bottom: 17px;
 }
