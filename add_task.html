@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="./css/fonts.css" />
     <link rel="stylesheet" href="./css/add_task.css" />
     <script src="script.js"></script>
+    <script src="./js/add_taskHTML.js"></script>
     <script src="./js/add_task.js"></script>
   </head>
   <body onload="init()">
     <div class="content">
       <div w3-include-html="assets/templates/menu.html"></div>
-      <div w3-include-html="assets/templates/header.html"></div>
+      <!-- <div w3-include-html="assets/templates/header.html"></div> -->
       <div class="addTaskContainer">
         <h1>Add Task</h1>
         <div class="addTasks">
@@ -22,7 +23,9 @@
             <div class="taskTitle">
               <div class="inputContainer">
                 <p>Title*</p>
-                <input class="inputField" type="text" placeholder="Enter a title" required />
+                <div class="inputField">
+                  <input type="text" placeholder="Enter a title" required />
+                </div>
               </div>
               <p class="fildIisRequiredText">This fild is required</p>
             </div>
@@ -30,26 +33,17 @@
               <p>Description</p>
               <textarea class="descriptionTextArea" name="description" id="descriptionTextArea"></textarea>
             </div>
-            <div class="inputContainer">
+            <div class="inputContainer assingnedToConatiner">
               <p>Assingned to</p>
-
               <div>
                 <div class="inputField dropdown">
                   <input type="text" id="contactInput" />
-                  <img class="dropDownIcon" id="assignedToDropdown" src="/assets/img/arrow_drop_down.svg" alt="" />
+                  <img class="dropDownIcon" id="assignedToDropdownIcon" src="/assets/img/arrow_drop_down.svg" alt="" />
                 </div>
                 <div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo">
-                  <div class="dropdownContacts">
-                    <p>julian, Weishaar</p>
-                    <input type="checkbox" />
-                  </div>
-                  <div class="dropdownContacts">
-                    <p>Laura, Musterfrau</p>
-                    <input type="checkbox" />
-                  </div>
+                  <!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->
                 </div>
               </div>
-
               <div>
                 <!-- hier müssen die ausgewählten contacte hin -->
               </div>
@@ -127,28 +121,21 @@
                 </div>
               </div>
             </div>
-
-            <div>
-              <div class="inputContainer">
-                <p>Category*</p>
+            <div class="inputContainer categoryContainer">
+              <p>Category*</p>
+              <div>
                 <div class="inputField dropdown">
                   <input type="text" />
-                  <img class="dropDownIcon" id="categoryDropdown" src="/assets/img/arrow_drop_down.svg" alt="drop down icon" />
+                  <img class="dropDownIcon" id="categoryDropdownIcon" src="/assets/img/arrow_drop_down.svg" alt="drop down icon" />
                 </div>
                 <div class="dropdownContenCategory" id="dropdownContenCategory">
-                  <div class="dropdownCategory">
-                    <p>julian, Weishaar</p>
-                  </div>
-                  <div class="dropdownCategory">
-                    <p>Laura, Musterfrau</p>
-                  </div>
+                  <!-- hier wird über die function renderCategoryDropdownList() eingefügt-->
                 </div>
               </div>
             </div>
-
             <div class="inputContainer">
               <p>Subtasks</p>
-              <input class="inputField" type="text" /><!-- hier muss die auswahl der subTasks hin -->
+              <div class="inputField"><input type="text" /><!-- hier muss die auswahl der subTasks hin --></div>
             </div>
           </div>
         </div>

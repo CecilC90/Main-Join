@@ -1,12 +1,14 @@
 let selectedPrio = 'medium';
-let contacts = ['julian, weishaar', 'Max, Mustermann', 'Laura, Musterfrau'];
+let contacts = ['julian, weishaar', 'Max, Mustermann', 'Laura, Musterfrau', 'Hans, Wurst'];
 let category = ['Arbeit', 'Privat', 'Anderes']
 
 
 async function init() {
   await includesHTML();
   showSelectedButton('addTaskButton');
-  setPrioButton('medium')
+  setPrioButton('medium');
+  renderAssingnedToDropdownList();
+  renderCategoryDropdownList();
 }
 
 function addTask(){
@@ -19,54 +21,64 @@ function setPrioButton(prio){
   document.getElementById(selectedOldPrioID).classList.replace(selectedOldPrioID, 'prioButton');
   document.getElementById(selectedPrioID).classList.replace('prioButton', selectedPrioID);
   selectedPrio = prio;
-  console.log(selectedPrio);
+}
+
+function renderAssingnedToDropdownList(){
+  let content = document.getElementById('dropdownContentAssignedTo');
+  content.innerHTML = '';
+  for (let i = 0; i < contacts.length; i++) {
+    content.innerHTML += renderAssingnedToDropdownListHTML(i); 
+  }
+}
+
+function renderCategoryDropdownList(){
+  let content = document.getElementById('dropdownContenCategory');
+  content.innerHTML = '';
+  for (let i = 0; i < category.length; i++) {
+    content.innerHTML += renderCategoryDropdownListHTML(i); 
+  }
+}
+
+function toggleDropdownIcon(id, dispayStatus){
+  if(dispayStatus == 'block'){
+    document.getElementById(id).src = "/assets/img/arrow_drop_down_up.svg";
+  } else {
+    document.getElementById(id).src = "/assets/img/arrow_drop_down.svg";
+  }
 }
 
 
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', function () {
-  // Populate dropdown content
-  // const dropdownContent = document.getElementById('dropdownContent');
-  // contacts.forEach(contact => {
-  //   const checkbox = document.createElement('input');
-  //   checkbox.type = 'checkbox';
-  //   checkbox.value = contact;
-  //   dropdownContent.appendChild(checkbox);
-    
-  //   const label = document.createElement('label');
-  //   label.textContent = contact;
-  //   dropdownContent.appendChild(label);
-
-  //   // Add line break for better spacing
-  //   dropdownContent.appendChild(document.createElement('br'));
-  // });
-
   // Toggle dropdown visibility
-  const contactDropdown = document.getElementById('assignedToDropdown');
+  let contactDropdown = document.getElementById('assignedToDropdownIcon');
   contactDropdown.addEventListener('click', function () {
     dropdownContentAssignedTo.style.display = (dropdownContentAssignedTo.style.display === 'block') ? 'none' : 'block';
+    let dispayStatus = dropdownContentAssignedTo.style.display;
+    toggleDropdownIcon('assignedToDropdownIcon', dispayStatus);
   });
 
-  const categoryDropdown = document.getElementById('categoryDropdown');
+  let categoryDropdown = document.getElementById('categoryDropdownIcon');
   categoryDropdown.addEventListener('click', function () {
     dropdownContenCategory.style.display = (dropdownContenCategory.style.display === 'block') ? 'none' : 'block';
-    console.log('category wurde gedrückt')
+    let dispayStatus = dropdownContenCategory.style.display
+    toggleDropdownIcon('categoryDropdownIcon', dispayStatus);
   });
 
-  // Handle checkbox selection
-  // dropdownContent.addEventListener('change', function (event) {
-  //   const selectedContacts = Array.from(dropdownContent.querySelectorAll('input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
-  //   document.getElementById('contactInput').value = selectedContacts.join(', ');
-  // });
-
   // Close dropdown when clicking outside
-  // window.addEventListener('click', function (event) {
-  //   if (!contactDropdown.contains(event.target)) {
-  //     dropdownContent.style.display = 'none';
-  //   }
-  // });
+  window.addEventListener('click', function (event) {
+    let assignedToConatiner = this.document.getElementById('dropdownContentAssignedTo');
+    if (!contactDropdown.contains(event.target) && !assignedToConatiner.contains(event.target)) {
+      dropdownContentAssignedTo.style.display = 'none';
+      toggleDropdownIcon('assignedToDropdownIcon', 'none');
+    }
+  });
+
+  window.addEventListener('click', function (event) {
+    let categoryConatiner = this.document.getElementById('dropdownContenCategory');
+    if (!categoryDropdown.contains(event.target) && !categoryConatiner.contains(event.target)) {
+      dropdownContenCategory.style.display = 'none';
+      toggleDropdownIcon('categoryDropdownIcon', 'none');
+    }
+  });
+  
 });
