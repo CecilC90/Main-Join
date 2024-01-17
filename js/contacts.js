@@ -83,7 +83,7 @@ function renderFirstLetter(firstLetter) {
 
 function renderContactsHTML(sortedMembers, i, initials) {
     return `
-    <div class="user-card">
+    <div class="user-card" onclick="openUserInformation(${i}, sortedMembers)">
         <div class="contact-icon" id="initials">${initials}</div>
         <div class=contact-container>
             <span>${sortedMembers[i].name}</span>
@@ -91,4 +91,11 @@ function renderContactsHTML(sortedMembers, i, initials) {
         </div>
     <div>
     `;
+}
+
+function openUserInformation(i, sortedMembers) {
+    mainCard = document.getElementById('userOverview');
+    mainCard.innerHTML = `
+    <div>${sortedMembers[i].name}</div>
+    `
 }
