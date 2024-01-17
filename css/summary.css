@@ -10,13 +10,13 @@ a {
 
 .summary-container {
     margin-top: 96px;
+    margin-left: 96px;
 }
 
 .headline{ 
     display: flex;
     align-items: center;
-    padding-top: 72px;
-    padding-left: 96px;
+    padding-top: 110px;
     padding-bottom: 56px;
     gap: 30px;
 }
@@ -25,9 +25,6 @@ a {
     width: 100%;
 }
 
-.pl-96 {
-    padding-left: 96px;
-}
 
 .pb-13 {
     padding-bottom: 13px;
@@ -118,7 +115,6 @@ a {
     display: flex;
     flex-direction: column;
     width: 560px;
-    margin-left: 96px;
     gap: 28px;
 }
 

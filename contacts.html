@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>contacts</title>
+    <script src="script.js"></script>
+    <script src="./js/contacts.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/summary.css">
+    <link rel="stylesheet" href="./css/contacts.css">
+    <link rel="stylesheet" href="./css/fonts.css">
+</head>
+
+<body onload="includesHTML(), renderContacts()">
+    <div w3-include-html="assets/templates/header.html"></div>
+    <div class="flex-container">
+        <div w3-include-html="assets/templates/menu.html"></div>
+        <div class="main-container">
+            <div class="contacts-container">
+                <div class="contacts-header">
+                    <div class="contact-button">
+                        <span>Add new contact</span>
+                        <img src="./assets/img/person_add.svg" alt="">
+                    </div>
+                </div>
+                <div class="contacts-list" id="contactsList"></div>
+            </div>
+            <div>
+                <div class="headline">
+                    <span class="fs-61 fw-700">Contacts</span>
+                    <span class="seperator"></span>
+                    <span class="fs-27 fw-400">Better with a team</span>
+                    <span class="seperator-mobile"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
