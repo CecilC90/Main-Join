@@ -51,6 +51,8 @@ function showDetailView(index) {
 function closeDetailView() {
     let detailViewContainer = document.getElementById('show-detail-todo');
     detailViewContainer.style.display = 'none';
+
+    renderTodos();
 }
 
 function templateHTMLDetailView(index) { 
@@ -60,10 +62,10 @@ function templateHTMLDetailView(index) {
                 <span id="category-span">${todos[index].todoCategory}</span>
                 <span onclick="closeDetailView()">X</span>
             </div>
-            <h2 id="new-title">${todos[index].title}</h2>
-            <p id="new-description">${todos[index].description}</p>
-            <p id="new-date">Due Date: ${todos[index].dueDate}</p>
-            <p id="new-priority">Priority: ${todos[index].priority}</p>
+            <h2>${todos[index].title}</h2>
+            <p>${todos[index].description}</p>
+            <p>Due Date: ${todos[index].dueDate}</p>
+            <p>Priority: ${todos[index].priority}</p>
             <a onclick="editTask(${index})" href="#">Edit</a>
         </div>
     `;
@@ -81,13 +83,14 @@ function changeTask(index) {
     let newPriority = document.getElementById('new-priority');
 
     todos[index] = {
+        ...todos[index],
         title: newTitle.value,
         description: newDescription.value,
         dueDate: newDate.value,
         priority: newPriority.value
     }
 
-    detailViewContainer.innerHTML = templateHTMLDetailView(index);
+    showDetailView(index);
 }
 
 function templateHTMLEditTask(index) {
@@ -97,13 +100,13 @@ function templateHTMLEditTask(index) {
             <span onclick="closeDetailView()">X</span>
         </div>
         <p>Title:</p>
-        <input type="text" value="${todos[index].title}">
+        <input id="new-title" type="text" value="${todos[index].title}">
         <p>Description:</p>
-        <input type="text" value="${todos[index].description}">
+        <input id="new-description" type="text" value="${todos[index].description}">
         <p>Due Date:</p>
-        <input type="text" value="${todos[index].dueDate}">
+        <input id="new-date" type="text" value="${todos[index].dueDate}">
         <p>Priority:</p>
-        <input type="text" value="${todos[index].priority}">
+        <input id="new-priority" type="text" value="${todos[index].priority}">
         <a onclick="changeTask(${index})" href="#">OK</a>
     </div>
     `;
