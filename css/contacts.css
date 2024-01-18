@@ -9,11 +9,12 @@
     display: flex;
     flex-direction: column;
     width: 33%;
-    height: 100%;
+    height: calc(100vh - 96px);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.08);
     background-color: white;
-    padding: 0px 28px;
+    padding: 22px 28px;
     box-sizing: border-box;
+    overflow: auto;
 }
 
 .contacts-headline {
@@ -24,14 +25,12 @@
 
 .contacts-header {
     height: 56px;
-    display: flex;
     position: sticky;
-    margin: 22.5px 24px;
 }
 
 .contact-button {
-    display: flex;
-    width: 100%;
+    text-align: center;
+    padding: 16px;
     font-size: 21px;
     justify-content: center;
     align-items: center;
@@ -94,6 +93,7 @@
     background-color: #FF7A00;
     border: 2px solid white;
     color: white;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);;
 }
 
 .contact-container .email {
@@ -175,4 +175,73 @@
 
 .detail-email {
     color: #29abe2;
+}
+
+.popup-container {
+    display: none;
+    position: fixed;
+    top: 0%;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.contact-popup{
+    display: flex;
+    height: 592px;
+    width: 1212px;
+    background-color: white;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.let-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px 48px;
+    height: 100%;
+    background-color: #2a3647;
+    color: white;
+}
+
+.let-container img {
+    width: 55px;
+    height: 66px;
+    z-index: 5;
+    padding-bottom: 12px;
+}
+
+.seperator-popUp {
+    width: 90px;
+    height: 3px;
+    background-color: #29ABE2;
+    border-radius: 5px;
+    margin-top: 16px;
+}
+
+.right-container {
+    width: auto;
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.close-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    width: 24px;
+    margin-top: 52px;
+    margin-right: 52px;
+    cursor: pointer;
+}
+
+.close-icon:hover{
+    background-color:#D9D9D9;
+    border-radius: 20px;
 }

@@ -23,7 +23,13 @@ let members = [
         name: 'Eva Fischer',
         email: 'eva@gmail.com',
     },
+    {
+        name: 'Tatjana Wolf',
+        email: 'wolf@gmail.com',
+    },
 ]
+
+//Eventuelle probleme beim Sortieren der User???
 
 function renderContacts() {
     sortedMembers = members;
@@ -33,16 +39,34 @@ function renderContacts() {
 
 function sortedContactList(sortedMembers) {
     sortedMembers.sort((a, b) => {
-        let nameA = a.name.toUpperCase();
-        let nameB = b.name.toUpperCase();
-        if (nameA < nameB) {
+        let nameA = a.name.split(' ');
+        let nameB = b.name.split(' ');
+        let firstLetterA = nameA[0].charAt(0).toUpperCase();
+        let firstLetterB = nameB[0].charAt(0).toUpperCase();
+
+        if (firstLetterA < firstLetterB) {
             return -1;
         }
-        if (nameA > nameB) {
+        if (firstLetterA > firstLetterB) {
             return 1;
         }
-        return 0;
+
+        return sortSecondName(nameA, nameB);
     });
+}
+
+function sortSecondName(nameA, nameB) {
+    let secondLetterA = nameA.length > 1 ? nameA[1].charAt(0).toUpperCase() : '';
+    let secondLetterB = nameB.length > 1 ? nameB[1].charAt(0).toUpperCase() : '';
+
+    if (secondLetterA < secondLetterB) {
+        return -1;
+    }
+    if (secondLetterA > secondLetterB) {
+        return 1;
+    }
+
+    return 0;
 }
 
 function renderContactList(sortedMembers) {
@@ -113,13 +137,17 @@ function closeUserInformation(i) {
     mainCard.innerHTML = '';
 }
 
-
 function openUserInformation(i, sortedMembers, initials) {
     mainCard = document.getElementById('userOverview');
     mainCard.innerHTML = '';
     mainCard.innerHTML = userInformationHTML(i, sortedMembers, initials);
 }
 
+function deleteUser(i, sortedMembers) {
+    sortedMembers.splice(i, 1);
+    renderContactList(sortedMembers);
+    closeUserInformation();
+}
 
 function userInformationHTML(i, sortedMembers, initials) {
     return `
@@ -134,7 +162,7 @@ function userInformationHTML(i, sortedMembers, initials) {
                     <img src="./assets/img/contacts-edit.svg" alt="Edit icon">
                     <span>Edit</span>
                 </div>
-                <div class="edit-delete-container">
+                <div class="edit-delete-container" onclick="deleteUser(${i}, sortedMembers)">
                     <img src="./assets/img/delete.svg" alt="Delete icon">
                     <span>Delete</span>
                 </div>
@@ -153,4 +181,14 @@ function userInformationHTML(i, sortedMembers, initials) {
         </div>
     </div>
     `;
+}
+
+function openAddContactPopUp() {
+    popUp = document.getElementById('popupContainer');
+    popUp.style.display ="flex";
+}
+
+function closeAddContactPopUp() {
+    popUp = document.getElementById('popupContainer');
+    popUp.style.display ="none";
 }
