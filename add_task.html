@@ -15,7 +15,7 @@
   <body onload="init()">
     <div class="content">
       <div w3-include-html="assets/templates/menu.html"></div>
-      <!-- <div w3-include-html="assets/templates/header.html"></div> -->
+      <div w3-include-html="assets/templates/header.html"></div>
       <div class="addTaskContainer">
         <h1>Add Task</h1>
         <div class="addTasks">
@@ -44,8 +44,8 @@
                   <!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->
                 </div>
               </div>
-              <div>
-                <!-- hier müssen die ausgewählten contacte hin -->
+              <div class="contactesIconsContainer" id="showSelectedDropdownContact">
+                <!-- hier wird über die function renderSelectedContactsIcons() eingefügt-->
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@
               <p>Category*</p>
               <div>
                 <div class="inputField dropdown">
-                  <input type="text" />
+                  <input type="text" id="inputFiedCategory" placeholder="Select task category"/>
                   <img class="dropDownIcon" id="categoryDropdownIcon" src="/assets/img/arrow_drop_down.svg" alt="drop down icon" />
                 </div>
                 <div class="dropdownContenCategory" id="dropdownContenCategory">
@@ -143,7 +143,7 @@
           <p>*This field is required</p>
           <div class="createTaskButtonConatiner">
             <div>
-              <button class="buttonLight taskClearButton">
+              <button class="buttonLight taskClearButton" onclick="clearTask()">
                 Clear<svg width="25" height="24" viewBox="0 0 25 24" fill="none">
                   <path
                     d="M12.2496 11.9998L17.4926 17.2428M7.00659 17.2428L12.2496 11.9998L7.00659 17.2428ZM17.4926 6.75684L12.2486 11.9998L17.4926 6.75684ZM12.2486 11.9998L7.00659 6.75684L12.2486 11.9998Z"
@@ -156,7 +156,7 @@
               </button>
             </div>
             <div>
-              <button class="buttonDarg">Create Task<img src="/assets/img/check_icon.svg" alt="" /></button>
+              <button class="buttonDarg" onclick="addTask()">Create Task<img src="/assets/img/check_icon.svg" alt="" /></button>
             </div>
           </div>
         </footer>
