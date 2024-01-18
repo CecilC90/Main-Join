@@ -83,7 +83,7 @@ function renderFirstLetter(firstLetter) {
 
 function renderContactsHTML(sortedMembers, i, initials) {
     return `
-    <div class="user-card" onclick="openUserInformation(${i}, sortedMembers)">
+    <div id="userCard${i}" class="user-card" onclick="toggleUserInformation(${i}, sortedMembers, '${initials}')">
         <div class="contact-icon" id="initials">${initials}</div>
         <div class=contact-container>
             <span>${sortedMembers[i].name}</span>
@@ -93,9 +93,64 @@ function renderContactsHTML(sortedMembers, i, initials) {
     `;
 }
 
-function openUserInformation(i, sortedMembers) {
+function toggleUserInformation(i, sortedMembers, initials) {
+    let mainCard = document.getElementById('userOverview');
+    let userCard = document.getElementById(`userCard${i}`);
+
+    if (mainCard.innerHTML === "") {
+        openUserInformation(i, sortedMembers, initials);
+        userCard.style.backgroundColor = '#2A3647';
+        userCard.style.color = 'white';
+    } else {
+        closeUserInformation();
+        userCard.style.backgroundColor = '';
+        userCard.style.color = '';
+    }
+}
+
+function closeUserInformation(i) {
+    let mainCard = document.getElementById('userOverview');
+    mainCard.innerHTML = '';
+}
+
+
+function openUserInformation(i, sortedMembers, initials) {
     mainCard = document.getElementById('userOverview');
-    mainCard.innerHTML = `
-    <div>${sortedMembers[i].name}</div>
-    `
+    mainCard.innerHTML = '';
+    mainCard.innerHTML = userInformationHTML(i, sortedMembers, initials);
+}
+
+
+function userInformationHTML(i, sortedMembers, initials) {
+    return `
+    <div class="main-head-container">
+        <div>
+            <div class="main-contact-icon">${initials}</div>
+        </div>
+        <div>
+            <div class="name-container">${sortedMembers[i].name}</div>
+            <div class="action-icons-container">
+                <div class="edit-delete-container">
+                    <img src="./assets/img/contacts-edit.svg" alt="Edit icon">
+                    <span>Edit</span>
+                </div>
+                <div class="edit-delete-container">
+                    <img src="./assets/img/delete.svg" alt="Delete icon">
+                    <span>Delete</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contact-info-container">
+        <div class="information-headline">Contact Information</div>
+        <div class="contact-detail">
+            <div class="detail-title">Email</div>
+            <div class="detail-email">${sortedMembers[i].email}</div>
+        </div>
+        <div>
+            <div class="detail-title">Phone</div>
+            <div class="detail-info">number</div>
+        </div>
+    </div>
+    `;
 }

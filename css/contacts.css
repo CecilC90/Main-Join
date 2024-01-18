@@ -50,6 +50,7 @@
 
 .underline{
     border: 1px solid #D1D1D1;   
+    margin: 8px 0px;
 }
 
 .user-card {
@@ -81,6 +82,20 @@
     margin-right: 35px;
 }
 
+.main-contact-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    font-size: 47px;
+    font-weight: 500;
+    border-radius: 50%;
+    background-color: #FF7A00;
+    border: 2px solid white;
+    color: white;
+}
+
 .contact-container .email {
     color: #007CEE;
 }
@@ -95,4 +110,69 @@
     padding-left: 36px;
     padding-top: 17px;
     padding-bottom: 17px;
+}
+
+.main-head-container {
+    display: flex;
+    gap: 54px;
+    margin-bottom: 21px;
+}
+
+.name-container {
+    color: black;
+    font-size: 47px;
+    font-weight: 500;
+    padding-bottom: 8px;
+}
+
+.action-icons-container {
+    color: #2a3647;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 400;
+    gap: 16px;
+}
+
+.action-icons-container img {
+    height: 18px;
+    width: 18px;
+   
+}
+
+.edit-delete-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.edit-delete-container:hover {
+    font-weight: 700;
+    filter: invert(60%) sepia(79%) saturate(1567%) hue-rotate(165deg) brightness(92%) contrast(93%);
+}
+
+.contact-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+}
+
+.detail-title {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.information-headline {
+    display: flex;
+    align-items: center;
+    height: 74px;
+    font-size: 20px;
+    font-weight: 400;
+    
+}
+
+.detail-email {
+    color: #29abe2;
 }
