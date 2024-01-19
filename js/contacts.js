@@ -118,18 +118,24 @@ function renderContactsHTML(sortedMembers, i, initials) {
 }
 
 function toggleUserInformation(i, sortedMembers, initials) {
+    resetUserCardStyles()
+    highlightUsercard(i);
+    openUserInformation(i, sortedMembers, initials);
+}
+
+function highlightUsercard(i) {
     let mainCard = document.getElementById('userOverview');
     let userCard = document.getElementById(`userCard${i}`);
+    userCard.style.backgroundColor = '#2A3647';
+    userCard.style.color = 'white';
+}
 
-    if (mainCard.innerHTML === "") {
-        openUserInformation(i, sortedMembers, initials);
-        userCard.style.backgroundColor = '#2A3647';
-        userCard.style.color = 'white';
-    } else {
-        closeUserInformation();
+function resetUserCardStyles() {
+    let allUserCards = document.querySelectorAll('.user-card');
+    allUserCards.forEach(userCard => {
         userCard.style.backgroundColor = '';
         userCard.style.color = '';
-    }
+    });
 }
 
 function closeUserInformation(i) {
@@ -185,14 +191,14 @@ function userInformationHTML(i, sortedMembers, initials) {
 
 function openAddContactPopUp() {
     popUp = document.getElementById('popupContainer');
-    popUp.style.display ="flex";
+    popUp.style.display = "flex";
     popUp.innerHTML = addContactPopUpHTML();
     resetAddInput();
 }
 
 function closeAddContactPopUp() {
     popUp = document.getElementById('popupContainer');
-    popUp.style.display ="none";
+    popUp.style.display = "none";
 }
 
 function resetAddInput() {
@@ -202,6 +208,27 @@ function resetAddInput() {
     name.innerHTML = "";
     email.innerHTML = "";
     phone.innerHTML = "";
+}
+
+
+function checkinputfield() {
+    if (validateForm()) {
+        addContact();
+    }
+}
+function addContact() {
+    let name = document.getElementById('addName');
+    let email = document.getElementById('addEmail');
+    let phone = document.getElementById('addPhone');
+    let newContact = {
+        name: name.value,
+        email: email.value,
+        phone: phone.value,
+    };
+
+    members.push(newContact);
+    renderContacts()
+    closeAddContactPopUp();
 }
 
 function addContactPopUpHTML() {
@@ -220,7 +247,7 @@ function addContactPopUpHTML() {
                 <div class="person-icon">
                     <img src="./assets/img/person.svg" alt="">
                 </div>
-                <div class="form-container">
+                <form class="form-container">
                     <div class="input-container">
                         <div class="inputFieldsRegistration">
                             <div class="inputField">
@@ -239,9 +266,9 @@ function addContactPopUpHTML() {
                     </div>
                     <div class="addContactContainer">
                         <button class="buttonLight" onclick="closeAddContactPopUp()">Cancel</button>
-                        <button class="buttonDarg">Create contact</button>
+                        <button class="buttonDarg" onclick=" checkinputfield()">Create contact</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     `
