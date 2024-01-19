@@ -175,6 +175,52 @@ p {
 .categoryContainer {
   height: 83px;
 }
+.subtasksInputMenu{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.subtasksInputMenuimg:hover{
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #eee;
+}
+.subtasksList{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.subtask{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 24px;
+  padding: 4px 16px;
+  border-radius: 10px;
+}
+.subtask:hover{
+  background-color: #EEE;
+  cursor: pointer;
+}
+.subtask p{
+  font-size: 16px;
+}
+.subtaskText{
+  display: flex;
+  gap: 10px;
+}
+.subtaskText p{
+  font-size: 16px;
+}
+.subtaskMenu{
+  display: none;
+  align-items: center;
+  gap: 4px;
+}
+.subtask:hover .subtaskMenu{
+  display: flex;
+}
+
 /* #endregion */
 
 footer {

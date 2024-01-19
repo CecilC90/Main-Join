@@ -125,7 +125,7 @@
               <p>Category*</p>
               <div>
                 <div class="inputField dropdown">
-                  <input type="text" id="inputFiedCategory" placeholder="Select task category"/>
+                  <input type="text" id="inputFiedCategory" placeholder="Select task category" />
                   <img class="dropDownIcon" id="categoryDropdownIcon" src="/assets/img/arrow_drop_down.svg" alt="drop down icon" />
                 </div>
                 <div class="dropdownContenCategory" id="dropdownContenCategory">
@@ -135,7 +135,16 @@
             </div>
             <div class="inputContainer">
               <p>Subtasks</p>
-              <div class="inputField"><input type="text" /><!-- hier muss die auswahl der subTasks hin --></div>
+              <div class="inputField">
+                <input type="text" id="subtasksInput" onkeyup="showSubtasksDoneAndCancel()" placeholder="Add new subtask" />
+                <div class="subtasksInputMenu" id="subtasksInputMenu">
+                  <img class="subtasksInputMenuimg" src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
+                </div>
+              </div>
+              <div>
+                <div class="subtasksList" id="subtasksList">
+                </div>
+              </div>
             </div>
           </div>
         </div>

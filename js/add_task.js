@@ -18,6 +18,7 @@ let contacts = [
   },
 ];
 let category = ["Arbeit", "Privat", "Anderes"];
+let subtasks = [];
 
 async function init() {
   await includesHTML();
@@ -26,6 +27,7 @@ async function init() {
   renderAssingnedToDropdownList();
   renderCategoryDropdownList();
   renderSelectedContactsIcons();
+  renderSubtasks();
 }
 
 function setPrioButton(prio) {
@@ -98,8 +100,8 @@ function renderCategoryDropdownList() {
   }
 }
 
-function setSelectedCategory(i){
-  let content = document.getElementById('inputFiedCategory');
+function setSelectedCategory(i) {
+  let content = document.getElementById("inputFiedCategory");
   content.value = category[i];
   dropdownContenCategory.style.display = "none";
   toggleDropdownIcon("categoryDropdownIcon", "none");
@@ -111,6 +113,62 @@ function toggleDropdownIcon(id, dispayStatus) {
   } else {
     document.getElementById(id).src = "/assets/img/arrow_drop_down.svg";
   }
+}
+
+function showSubtasksDoneAndCancel() {
+  let subtasksInput = document.getElementById("subtasksInput");
+  let content = document.getElementById("subtasksInputMenu");
+  if (subtasksInput.value.length != 0) {
+    content.innerHTML = /* html */ `
+      <img class="subtasksInputMenuimg" onclick="clearSubtaskInputField()" src="/assets/img/subtasks_cancel_icon.svg" alt="cancel_icon">
+      <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+      <img class="subtasksInputMenuimg" onclick="addSubtask()" src="/assets/img/subtasks_done_icon.svg" alt="done_icon">
+   `;
+  } else {
+    content.innerHTML = '<img class="subtasksInputMenuimg" src="/assets/img/subtasks_add_icon.svg" alt="add_icon">';
+  }
+}
+
+function clearSubtaskInputField(){
+  let content = document.getElementById('subtasksInput');
+  content.value = '';
+  showSubtasksDoneAndCancel();
+}
+
+function addSubtask(){
+  let subtasksInput = document.getElementById("subtasksInput");
+  subtasks.push(subtasksInput.value);
+  clearSubtaskInputField();
+  renderSubtasks();
+}
+
+function renderSubtasks(){
+  let subtasksList = document.getElementById('subtasksList');
+  subtasksList.innerHTML = '';
+  for (let i = 0; i < subtasks.length; i++) {
+    subtasksList.innerHTML += renderSubtasksHTML(i);
+  }
+}
+
+function renderSubtasksHTML(i){
+  return /* html */`
+  <div class="subtask">
+    <div class="subtaskText">
+      <p>&bull;</p>
+      <P>${subtasks[i]}</P>
+    </div>
+    <div class="subtaskMenu">
+      <img src="/assets/img/subtasks_edit_icon.svg" alt="edit_icon">
+      <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+      <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i})" alt="delete_icon">
+    </div>
+  </div>
+  `;
+}
+
+function deleteSubtask(i){
+  subtasks.splice(i, 1);
+  renderSubtasks();
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -153,9 +211,11 @@ function addTask() {
 
 function clearTask() {
   for (let i = 0; i < contacts.length; i++) {
-    contacts[i]['selected'] = false;
+    contacts[i]["selected"] = false;
   }
   renderAssingnedToDropdownList();
   renderSelectedContactsIcons();
-  document.getElementById('inputFiedCategory').value = "";
+  document.getElementById("inputFiedCategory").value = "";
+  subtasks = [];
+  renderSubtasks();
 }
