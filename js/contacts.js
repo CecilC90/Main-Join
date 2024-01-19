@@ -186,9 +186,63 @@ function userInformationHTML(i, sortedMembers, initials) {
 function openAddContactPopUp() {
     popUp = document.getElementById('popupContainer');
     popUp.style.display ="flex";
+    popUp.innerHTML = addContactPopUpHTML();
+    resetAddInput();
 }
 
 function closeAddContactPopUp() {
     popUp = document.getElementById('popupContainer');
     popUp.style.display ="none";
+}
+
+function resetAddInput() {
+    let name = document.getElementById('addName');
+    let email = document.getElementById('addEmail');
+    let phone = document.getElementById('addPhone');
+    name.innerHTML = "";
+    email.innerHTML = "";
+    phone.innerHTML = "";
+}
+
+function addContactPopUpHTML() {
+    return `
+    <div class="contact-popup">
+            <div class="let-container">
+                <img src="./assets/img/join_logo_white.svg" alt="">
+                <div class="fs-61 fw-700">Add contact</div>
+                <div class="fs-27 fw-400">Tasks are better with a Team!</div>
+                <div class="seperator-popUp"></div>
+            </div>
+            <div class="right-container">
+                <div class="close-icon" onclick="closeAddContactPopUp()">
+                    <img src="./assets/img/close.svg" alt="">
+                </div>
+                <div class="person-icon">
+                    <img src="./assets/img/person.svg" alt="">
+                </div>
+                <div class="form-container">
+                    <div class="input-container">
+                        <div class="inputFieldsRegistration">
+                            <div class="inputField">
+                                <input type="text" placeholder="Name" id="addName" required />
+                                <img src="./assets/img/person.svg" alt="" />
+                            </div>
+                            <div class="inputField" id="inputEmailField">
+                                <input type="email" placeholder="Email" id="addEmail" required />
+                                <img src="./assets/img/mail.svg" alt="" />
+                            </div>
+                            <div class="inputField">
+                                <input type="tel" placeholder="Phone" id="addPhone" required />
+                                <img src="./assets/img/call.svg" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="addContactContainer">
+                        <button class="buttonLight" onclick="closeAddContactPopUp()">Cancel</button>
+                        <button class="buttonDarg">Create contact</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `
 }
