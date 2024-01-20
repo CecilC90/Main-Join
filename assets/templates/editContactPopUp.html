@@ -15,22 +15,22 @@
             <div class="input-container">
                 <div class="inputFieldsRegistration">
                     <div class="inputField">
-                        <input type="text" placeholder="Name" id="addName" required />
+                        <input type="text" placeholder="Name" id="editName" required />
                         <img src="./assets/img/person.svg" alt="" />
                     </div>
                     <div class="inputField" id="inputEmailField">
-                        <input type="email" placeholder="Email" id="addEmail" required />
+                        <input type="email" placeholder="Email" id="editEmail" required />
                         <img src="./assets/img/mail.svg" alt="" />
                     </div>
                     <div class="inputField">
-                        <input type="tel" placeholder="Phone" id="addPhone" required />
+                        <input type="tel" placeholder="Phone" id="editPhone" required />
                         <img src="./assets/img/call.svg" alt="" />
                     </div>
                 </div>
             </div>
             <div class="addContactContainer">
                 <button class="buttonLight" >Delete</button>
-                <button class="buttonDarg" >Save</button>
+                <button class="buttonDarg" onclick="updateMemberInfo(i)">Save</button>
             </div>
         </form>
     </div>

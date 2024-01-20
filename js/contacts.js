@@ -204,11 +204,12 @@ function closeAddContactPopUp() {
     editPopUp.classList.remove('d-none');
 }
 
-function openEditContactPopUp() {
+function openEditContactPopUp(i) {
     popUp = document.getElementById('popupContainer');
     popUp.style.display = "flex";
     addPopUp = document.getElementById('addContactPopUp');
     addPopUp.classList.add('d-none');
+    loadMemberInfo(i);
 }
 
 function closeEditContactPopUp() {
@@ -225,6 +226,34 @@ function resetAddInput() {
     name.value = "";
     email.value = "";
     phone.value = "";
+}
+
+function loadMemberInfo(i) {
+    let name = document.getElementById('editName');
+    let email = document.getElementById('editEmail');
+    let phone = document.getElementById('editPhone');
+    name.value = members[i].name;
+    email.value = members[i].email;
+    phone.value = members[i].phone;
+}
+
+function updateMemberInfo() {
+    
+
+    let nameInput = document.getElementById('editName');
+    let emailInput = document.getElementById('editEmail');
+    let phoneInput = document.getElementById('editPhone');
+
+    // Aktualisiere die Werte im Array für das Mitglied mit dem Index i
+    members[i].name = nameInput.value;
+    members[i].email = emailInput.value;
+    members[i].phone = phoneInput.value;
+
+    // Führe die Aktualisierung in der Benutzeroberfläche durch (wenn benötigt)
+    renderContacts(); // Annahme: Du hast eine Funktion, um die Kontaktliste neu zu rendern.
+    
+    // Schließe das Edit-Popup oder mache weitere Aktionen
+    closeEditContactPopUp();
 }
 
 function addContact() {
