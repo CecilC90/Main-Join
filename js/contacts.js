@@ -192,7 +192,6 @@ function userInformationHTML(i, sortedMembers, initials) {
 function openAddContactPopUp() {
     popUp = document.getElementById('popupContainer');
     popUp.style.display = "flex";
-    popUp.innerHTML = addContactPopUpHTML();
     resetAddInput();
 }
 
@@ -205,17 +204,11 @@ function resetAddInput() {
     let name = document.getElementById('addName');
     let email = document.getElementById('addEmail');
     let phone = document.getElementById('addPhone');
-    name.innerHTML = "";
-    email.innerHTML = "";
-    phone.innerHTML = "";
+    name.value = "";
+    email.value = "";
+    phone.value = "";
 }
 
-
-function checkinputfield() {
-    if (validateForm()) {
-        addContact();
-    }
-}
 function addContact() {
     let name = document.getElementById('addName');
     let email = document.getElementById('addEmail');
@@ -231,7 +224,7 @@ function addContact() {
     closeAddContactPopUp();
 }
 
-function addContactPopUpHTML() {
+/*function addContactPopUpHTML() {
     return `
     <div class="contact-popup">
             <div class="let-container">
@@ -266,10 +259,10 @@ function addContactPopUpHTML() {
                     </div>
                     <div class="addContactContainer">
                         <button class="buttonLight" onclick="closeAddContactPopUp()">Cancel</button>
-                        <button class="buttonDarg" onclick=" checkinputfield()">Create contact</button>
+                        <button class="buttonDarg" onclick="">Create contact</button>
                     </div>
                 </form>
             </div>
         </div>
     `
-}
+}*/

@@ -15,7 +15,9 @@
 </head>
 
 <body onload="includesHTML(), renderContacts()">
-    <div class="popup-container d-none" id="popupContainer"></div>
+    <div class="popup-container d-none" id="popupContainer">
+        <div w3-include-html="assets/templates/addContactPopUp.html"></div>
+    </div>
     <div w3-include-html="assets/templates/header.html"></div>
     <div class="flex-container">
         <div w3-include-html="assets/templates/menu.html"></div>
