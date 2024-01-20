@@ -129,44 +129,66 @@ function showSubtasksDoneAndCancel() {
   }
 }
 
-function clearSubtaskInputField(){
-  let content = document.getElementById('subtasksInput');
-  content.value = '';
+function clearSubtaskInputField() {
+  let content = document.getElementById("subtasksInput");
+  content.value = "";
   showSubtasksDoneAndCancel();
 }
 
-function addSubtask(){
+function addSubtask() {
   let subtasksInput = document.getElementById("subtasksInput");
   subtasks.push(subtasksInput.value);
   clearSubtaskInputField();
   renderSubtasks();
 }
 
-function renderSubtasks(){
-  let subtasksList = document.getElementById('subtasksList');
-  subtasksList.innerHTML = '';
+function renderSubtasks() {
+  let subtasksList = document.getElementById("subtasksList");
+  subtasksList.innerHTML = "";
   for (let i = 0; i < subtasks.length; i++) {
     subtasksList.innerHTML += renderSubtasksHTML(i);
   }
 }
 
-function renderSubtasksHTML(i){
-  return /* html */`
-  <div class="subtask">
-    <div class="subtaskText">
-      <p>&bull;</p>
-      <P>${subtasks[i]}</P>
-    </div>
-    <div class="subtaskMenu">
-      <img src="/assets/img/subtasks_edit_icon.svg" alt="edit_icon">
-      <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
-      <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i})" alt="delete_icon">
+function renderSubtasksHTML(i) {
+  return /* html */ `
+  <div id="subtask${i}">
+    <div class="subtask">
+      <div class="subtaskText">
+        <p>&bull;</p>
+        <P>${subtasks[i]}</P>
+      </div>
+      <div class="subtaskMenu">
+        <img src="/assets/img/subtasks_edit_icon.svg" onclick="editSubtask(${i})" alt="edit_icon">
+        <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+        <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i})" alt="delete_icon">
+      </div>
     </div>
   </div>
   `;
 }
 
-function deleteSubtask(i){
+function editSubtask(i) {
+  let content = document.getElementById("subtask" + i);
+  content.innerHTML = /* html */ `
+    <div class="subtaskEdit" id="subtaskEdit">
+      <input type="text" id="editSubtask${i}" value="${subtasks[i]}">
+      <div >
+        <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i})" alt="delete_icon">
+        <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+        <img src="/assets/img/subtasks_done_icon.svg" onclick="editSubtaskDone(${i})" alt="done_icon">
+      </div>
+    </div>
+  `;
+}
+
+function editSubtaskDone(i) {
+  let content = document.getElementById("editSubtask" + i);
+  subtasks[i] = content.value;
+  renderSubtasks();
+}
+
+function deleteSubtask(i) {
   subtasks.splice(i, 1);
   renderSubtasks();
 }
@@ -203,6 +225,15 @@ document.addEventListener("DOMContentLoaded", function () {
       toggleDropdownIcon("categoryDropdownIcon", "none");
     }
   });
+
+  // window.addEventListener("click", function (event) {
+  //   let subtaskEdit = this.document.getElementById("subtaskEdit");
+  //   if(subtaskEdit){
+  //     if (!subtaskEdit.contains(event.target)) {
+  //       renderSubtasks();
+  //     }
+  //   }
+  // });
 });
 
 function addTask() {

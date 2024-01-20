@@ -220,7 +220,22 @@ p {
 .subtask:hover .subtaskMenu{
   display: flex;
 }
-
+.subtaskEdit{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 16px;
+  border-bottom: 1px solid #29ABE2;
+  background-color: #FFF;
+}
+.subtaskEdit input{
+  font-size: 16px;
+  border: 0;
+  flex: 1;
+}
+.subtaskEdit input:focus{
+  outline: none;
+}
 /* #endregion */
 
 footer {
