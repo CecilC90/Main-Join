@@ -37,7 +37,7 @@
               <p>Assingned to</p>
               <div>
                 <div class="inputField dropdown">
-                  <input type="text" id="contactInput" />
+                  <input type="text" id="contactInput" onkeydown="filterAssingnedToDropdownList()" />
                   <img class="dropDownIcon" id="assignedToDropdownIcon" src="/assets/img/arrow_drop_down.svg" alt="" />
                 </div>
                 <div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo">
@@ -138,7 +138,7 @@
               <div class="inputField">
                 <input type="text" id="subtasksInput" onkeyup="showSubtasksDoneAndCancel()" placeholder="Add new subtask" />
                 <div class="subtasksInputMenu" id="subtasksInputMenu">
-                  <img class="subtasksInputMenuimg" src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
+                  <img src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
                 </div>
               </div>
               <div>

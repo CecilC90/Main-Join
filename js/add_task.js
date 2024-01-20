@@ -48,6 +48,12 @@ function renderAssingnedToDropdownList() {
   }
 }
 
+function filterAssingnedToDropdownList(){
+  let contactInput = document.getElementById('contactInput');
+  let content = document.getElementById("dropdownContentAssignedTo");
+  
+}
+
 function getFirstAndSecondLetter(i) {
   let name = contacts[i]["name"];
   let splitName = name.split(",");
@@ -125,7 +131,7 @@ function showSubtasksDoneAndCancel() {
       <img class="subtasksInputMenuimg" onclick="addSubtask()" src="/assets/img/subtasks_done_icon.svg" alt="done_icon">
    `;
   } else {
-    content.innerHTML = '<img class="subtasksInputMenuimg" src="/assets/img/subtasks_add_icon.svg" alt="add_icon">';
+    content.innerHTML = '<img src="/assets/img/subtasks_add_icon.svg" alt="add_icon">';
   }
 }
 
@@ -152,7 +158,7 @@ function renderSubtasks() {
 
 function renderSubtasksHTML(i) {
   return /* html */ `
-  <div id="subtask${i}">
+  <div id="subtask${i}" ondblclick="editSubtask(${i})">
     <div class="subtask">
       <div class="subtaskText">
         <p>&bull;</p>
@@ -173,7 +179,7 @@ function editSubtask(i) {
   content.innerHTML = /* html */ `
     <div class="subtaskEdit" id="subtaskEdit">
       <input type="text" id="editSubtask${i}" value="${subtasks[i]}">
-      <div >
+      <div>
         <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i})" alt="delete_icon">
         <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
         <img src="/assets/img/subtasks_done_icon.svg" onclick="editSubtaskDone(${i})" alt="done_icon">
@@ -227,10 +233,13 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // window.addEventListener("click", function (event) {
-  //   let subtaskEdit = this.document.getElementById("subtaskEdit");
+  //   let subtaskEdit = this.document.getElementById("subtask");
   //   if(subtaskEdit){
-  //     if (!subtaskEdit.contains(event.target)) {
-  //       renderSubtasks();
+  //     if (subtaskEdit.contains(event.target)) {
+  //       // renderSubtasks();
+  //       console.log("ich wurde gedrückt")
+  //     } else {
+  //       console.log('ich wurde nicht gedrückt');
   //     }
   //   }
   // });
