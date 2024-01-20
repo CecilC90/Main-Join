@@ -209,6 +209,7 @@ function openEditContactPopUp(i) {
     popUp.style.display = "flex";
     addPopUp = document.getElementById('addContactPopUp');
     addPopUp.classList.add('d-none');
+    document.getElementById('editButton').onclick = function() { updateMemberInfo(i); };
     loadMemberInfo(i);
 }
 
@@ -237,25 +238,24 @@ function loadMemberInfo(i) {
     phone.value = members[i].phone;
 }
 
-function updateMemberInfo() {
+function updateMemberInfo(i) {
     
 
     let nameInput = document.getElementById('editName');
     let emailInput = document.getElementById('editEmail');
     let phoneInput = document.getElementById('editPhone');
 
-    // Aktualisiere die Werte im Array für das Mitglied mit dem Index i
+    
     members[i].name = nameInput.value;
     members[i].email = emailInput.value;
     members[i].phone = phoneInput.value;
 
-    // Führe die Aktualisierung in der Benutzeroberfläche durch (wenn benötigt)
-    renderContacts(); // Annahme: Du hast eine Funktion, um die Kontaktliste neu zu rendern.
     
-    // Schließe das Edit-Popup oder mache weitere Aktionen
+    renderContacts(); 
+    
+    
     closeEditContactPopUp();
 }
-
 function addContact() {
     let name = document.getElementById('addName');
     let email = document.getElementById('addEmail');
@@ -271,45 +271,3 @@ function addContact() {
     closeAddContactPopUp();
 }
 
-/*function addContactPopUpHTML() {
-    return `
-    <div class="contact-popup">
-            <div class="let-container">
-                <img src="./assets/img/join_logo_white.svg" alt="">
-                <div class="fs-61 fw-700">Add contact</div>
-                <div class="fs-27 fw-400">Tasks are better with a Team!</div>
-                <div class="seperator-popUp"></div>
-            </div>
-            <div class="right-container">
-                <div class="close-icon" onclick="closeAddContactPopUp()">
-                    <img src="./assets/img/close.svg" alt="">
-                </div>
-                <div class="person-icon">
-                    <img src="./assets/img/person.svg" alt="">
-                </div>
-                <form class="form-container">
-                    <div class="input-container">
-                        <div class="inputFieldsRegistration">
-                            <div class="inputField">
-                                <input type="text" placeholder="Name" id="addName" required />
-                                <img src="./assets/img/person.svg" alt="" />
-                            </div>
-                            <div class="inputField" id="inputEmailField">
-                                <input type="email" placeholder="Email" id="addEmail" required />
-                                <img src="./assets/img/mail.svg" alt="" />
-                            </div>
-                            <div class="inputField">
-                                <input type="tel" placeholder="Phone" id="addPhone" required />
-                                <img src="./assets/img/call.svg" alt="" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="addContactContainer">
-                        <button class="buttonLight" onclick="closeAddContactPopUp()">Cancel</button>
-                        <button class="buttonDarg" onclick="">Create contact</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    `
-}*/
