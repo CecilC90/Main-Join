@@ -164,7 +164,7 @@ function userInformationHTML(i, sortedMembers, initials) {
         <div>
             <div class="name-container">${sortedMembers[i].name}</div>
             <div class="action-icons-container">
-                <div class="edit-delete-container">
+                <div class="edit-delete-container" onclick ="openEditContactPopUp(${i})">
                     <img src="./assets/img/contacts-edit.svg" alt="Edit icon">
                     <span>Edit</span>
                 </div>
@@ -192,12 +192,30 @@ function userInformationHTML(i, sortedMembers, initials) {
 function openAddContactPopUp() {
     popUp = document.getElementById('popupContainer');
     popUp.style.display = "flex";
+    editPopUp = document.getElementById('editContactPopUp');
+    editPopUp.classList.add('d-none');
     resetAddInput();
 }
 
 function closeAddContactPopUp() {
     popUp = document.getElementById('popupContainer');
     popUp.style.display = "none";
+    editPopUp = document.getElementById('editContactPopUp');
+    editPopUp.classList.remove('d-none');
+}
+
+function openEditContactPopUp() {
+    popUp = document.getElementById('popupContainer');
+    popUp.style.display = "flex";
+    addPopUp = document.getElementById('addContactPopUp');
+    addPopUp.classList.add('d-none');
+}
+
+function closeEditContactPopUp() {
+    popUp = document.getElementById('popupContainer');
+    popUp.style.display = "none";
+    addPopUp = document.getElementById('addContactPopUp');
+    addPopUp.classList.remove('d-none');
 }
 
 function resetAddInput() {

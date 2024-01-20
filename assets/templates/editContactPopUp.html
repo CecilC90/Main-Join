@@ -1,0 +1,37 @@
+<div class="contact-popup">
+    <div class="let-container">
+        <img src="./assets/img/join_logo_white.svg" alt="">
+        <div class="fs-61 fw-700">Edit contact</div>
+        <div class="seperator-popUp"></div>
+    </div>
+    <div class="right-container">
+        <div class="close-icon" onclick="closeEditContactPopUp()">
+            <img src="./assets/img/close.svg" alt="">
+        </div>
+        <div class="person-icon">
+            <img src="./assets/img/person.svg" alt="">
+        </div>
+        <form class="form-container" onsubmit="addContact(); return false">
+            <div class="input-container">
+                <div class="inputFieldsRegistration">
+                    <div class="inputField">
+                        <input type="text" placeholder="Name" id="addName" required />
+                        <img src="./assets/img/person.svg" alt="" />
+                    </div>
+                    <div class="inputField" id="inputEmailField">
+                        <input type="email" placeholder="Email" id="addEmail" required />
+                        <img src="./assets/img/mail.svg" alt="" />
+                    </div>
+                    <div class="inputField">
+                        <input type="tel" placeholder="Phone" id="addPhone" required />
+                        <img src="./assets/img/call.svg" alt="" />
+                    </div>
+                </div>
+            </div>
+            <div class="addContactContainer">
+                <button class="buttonLight" >Delete</button>
+                <button class="buttonDarg" >Save</button>
+            </div>
+        </form>
+    </div>
+</div>
