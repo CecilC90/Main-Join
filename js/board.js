@@ -183,8 +183,12 @@ function renderContacts(index) {
     if(todos[index].assignedContacts.length > 0) {
         for(let i = 0; i < todos[index].assignedContacts.length; i++) {
             const assignedContact = todos[index].assignedContacts[i];
+            let splitName = assignedContact.split(" ");
+            let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
+            let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
+            let resultInitials = firstLetter + secondLetter;
             assignedContactsContainer.innerHTML += `
-                <div>${assignedContact}</div>
+                <div class="contactsIcon">${resultInitials}</div>
             `;
         }
     }

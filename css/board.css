@@ -182,6 +182,10 @@
     width: 50%;
 }
 
+.style-contacticon {
+    display: flex;
+}
+
 #detail-content {
     background-color: #fff;
 }

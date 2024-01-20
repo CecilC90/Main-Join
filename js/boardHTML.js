@@ -6,7 +6,7 @@ function templateHTMLTodoContainer(element, index) {
         <p>${element.description}</p>
         <div id="progress-content${index}"></div>
         <div class="space-between">
-          <div id="assigned-contacts${index}"></div>
+          <div class="style-contacticon" id="assigned-contacts${index}"></div>
           <img id="prio-img${index}" src="">
         </div>
     </div>
