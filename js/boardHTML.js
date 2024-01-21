@@ -191,6 +191,8 @@ function templateHTMLEditTask(index) {
       <input id="new-date" type="text" value="${todos[index].dueDate}">
       <p>Priority:</p>
       <div class="prioButtonConatainer priobutton-editview" id="priobutton-container${index}"></div>
+      <p>Assigned To:</p>
+      <div id="assignedcontacts-container${index}"></div>
       <a onclick="changeTask(${index})" href="#">OK</a>
   </div>
   `;

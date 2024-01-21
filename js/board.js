@@ -62,9 +62,27 @@ let todos = [
     }
 ]
 
+async function setItem(key, value) { // In dieser Funktion werden die Daten gespeichert und als Parameter wird der Key und der Wert.
+    const payload = {key, value, token: STORAGE_TOKEN}; // Erstellt ein JSON für die Daten die gespeichert werden sollen.
+    return fetch(STORAGE_URL, {method: 'POST', body: JSON.stringify(payload)}) // Die Daten werden abgerufen mit der Methode "POST" und das die Daten werden als JSON wiedergegeben.
+        .then(res => res.json()); // Diese Methode konvertiert die Antwort in ein JSON-Objekt, was für die weitere Verarbeitung nützlich sein kann.
+}   
+
+async function getItem(key) { // In dieser Funktion werden die Daten wieder ausgegeben und als Parameter wird nur der Key wiedergegeben.
+    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`; // Die URL wird passend abgeändert.
+    return fetch(url).then(res => res.json()).then(res => { // Hier wird die URL abgerufen und die Antwort wird wieder als JSON ausgegeben.
+        if(res.data) {
+            return res.data.value;
+        } else {
+            return res;
+        }
+    });
+}
+
 let startDragginId;
 
 function init() {
+
     includesHTML();
     renderHTML();
 }
@@ -199,17 +217,12 @@ function changeTask(index) {
     showDetailView(index);
 }
 
-function renderTodos() {
+async function renderTodos() {
 
     let contentTodo = document.getElementById('board-content-todo');
     let contentProgress = document.getElementById('board-content-progress');
     let contentFeedback = document.getElementById('board-content-feedback');
     let contentDone = document.getElementById('board-content-done');
-
-    contentTodo.innerHTML = '';
-    contentProgress.innerHTML = '';
-    contentFeedback.innerHTML = '';
-    contentDone.innerHTML = '';
 
     checkOpenTodo();
     checkProgressTodo();
@@ -256,7 +269,7 @@ function changeProgressbar(index) {
   
   }
   
-  function subtaskCounter(index, i) {
+function subtaskCounter(index, i) {
     let showCounter = document.getElementById(`subtask-counter${index}`);
     let checkboxSubtask = document.getElementById(`subtask${index}-${i}`);
   
@@ -406,4 +419,3 @@ function emptyInput() {
     renderTodos();
     document.getElementById('change-img').src = 'assets/img/search.svg';
 }
-
