@@ -49,9 +49,24 @@ function renderAssingnedToDropdownList() {
 }
 
 function filterAssingnedToDropdownList(){
-  let contactInput = document.getElementById('contactInput');
+  let contactInput = document.getElementById('contactInput').value;
+  contactInput = contactInput.toLowerCase();
   let content = document.getElementById("dropdownContentAssignedTo");
-  
+  content.innerHTML = '';
+  for (let i = 0; i < contacts.length; i++) {
+    if(contacts[i]['name'].toLowerCase().includes(contactInput)){
+      let firstAndSecondLetter = getFirstAndSecondLetter(i);
+      content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter);
+      showSelectedDropdownContact(i);
+      dropdownContentAssignedTo.style.display = "flex";
+      toggleDropdownIcon("assignedToDropdownIcon", "flex");
+    }
+  }
+  if(contactInput.length == 0){
+    renderAssingnedToDropdownList();
+    dropdownContentAssignedTo.style.display = "none";
+    toggleDropdownIcon("assignedToDropdownIcon", "none");
+  }
 }
 
 function getFirstAndSecondLetter(i) {
@@ -244,6 +259,11 @@ document.addEventListener("DOMContentLoaded", function () {
   //   }
   // });
 });
+
+// function setDisplayStyleDropDown(id, dispayStatus){
+//   dropdownContentAssignedTo.style.display = dispayStatus;
+//   toggleDropdownIcon(id, dispayStatus);
+// }
 
 function addTask() {
   console.log("add Task");
