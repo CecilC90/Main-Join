@@ -13,6 +13,24 @@ function templateHTMLTodoContainer(element, index) {
 `;
 }
 
+function renderSubtaskProgressbar(index) {
+  let progressbarContent = document.getElementById(`progress-content${index}`);
+  if(todos[index].subtask.length > 0) {
+    progressbarContent.innerHTML = `
+    <div class="space-between align-items">
+      <div id="progress${index}" class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div id="progress-bar${index}" class="progress-bar"></div>
+      </div>
+      <div id="subtask-content">
+        <span id="subtask-counter${index}">X</span> / <span id="subtask-maxlength${index}">X</span> Subtasks
+      </div>
+    </div>
+  `; 
+  }
+
+  subtaskMaxLength(index);
+}
+
 function templateHTMLAddTask() {
     return `
     <div id="add-todo-content">
@@ -152,7 +170,8 @@ function templateHTMLDetailView(index) {
           <p>${todos[index].description}</p>
           <p>Due Date: ${todos[index].dueDate}</p>
           <p>Priority: ${todos[index].priority}</p>
-          <div id="checkbox-subtask"></div>
+          <div id="assigned-contacts-detailview${index}"></div>
+          <div id="checkbox-subtask${index}"></div> 
           <a onclick="editTask(${index})" href="#">Edit</a>
       </div>
   `;
@@ -171,8 +190,26 @@ function templateHTMLEditTask(index) {
       <p>Due Date:</p>
       <input id="new-date" type="text" value="${todos[index].dueDate}">
       <p>Priority:</p>
-      <input id="new-priority" type="text" value="${todos[index].priority}">
+      <div class="prioButtonConatainer priobutton-editview" id="priobutton-container${index}"></div>
       <a onclick="changeTask(${index})" href="#">OK</a>
   </div>
   `;
+}
+
+function renderPrioButton(index) {
+    let prioButtonConatainer = document.getElementById(`priobutton-container${index}`);
+    prioButtonConatainer.innerHTML = `
+      <div class="prioButton" id="prioButtonHigh" onclick="setPrioButton('high', ${index})">
+          <p>Urgent</p>
+          <img id="change-img-high" src="assets/img/prio-urgent.svg">
+      </div>
+      <div class="prioButton" id="prioButtonMedium" onclick="setPrioButton('medium', ${index})">
+          <p>Medium</p>
+          <img id="change-img-medium" src="assets/img/prio-medium.svg">
+      </div>
+      <div class="prioButton" id="prioButtonLow" onclick="setPrioButton('low', ${index})">
+          <p>Low</p>
+          <img id="change-img-low" src="assets/img/prio-low.svg">
+      </div>
+    `;
 }

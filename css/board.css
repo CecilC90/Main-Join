@@ -26,8 +26,8 @@
 /* Board Header */
 .board-header {
     padding-top: 100px;
-    padding-right: 50px;
-    padding-left: 50px;
+    padding-right: 96px;
+    padding-left: 96px;
     display: flex;
     justify-content: space-between;
 }
@@ -82,9 +82,9 @@
 /* Board-Section */
 
 .board-section {
-    padding-top: 50px;
-    padding-right: 50px;
-    padding-left: 50px;
+    padding-top: 96px;
+    padding-right: 96px;
+    padding-left: 96px;
     display: flex;
 }
 
@@ -121,6 +121,12 @@
     color: #41526E;
     font-weight: 700;
     font-size: 18px;
+}
+
+.align-items {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
 }
 
 .board-content {
@@ -186,6 +192,14 @@
     display: flex;
 }
 
+.margin-left {
+    margin-left: -10px;
+}
+
+.margin-left:first-child {
+    margin-left: 0;
+}
+
 #detail-content {
     background-color: #fff;
 }
@@ -225,8 +239,36 @@
 
 #detail-todo-content {
     width: 500px;
-    height: 50vh;
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
+}
+
+.contact-detailview {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.contact-detailview span {
+    padding-left: 8px;
+}
+
+.priobutton-editview {
+    display: flex;
+}
+
+.priobutton-editview div {
+    margin-right: 8px;
+    padding: 0 !important;
+    height: 41px;
+}
+
+.priobutton-editview div:last-child {
+    margin-right: 0;
+}
+
+.prioButton p {
+    margin: 0;
 }

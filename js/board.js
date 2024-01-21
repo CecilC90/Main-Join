@@ -11,8 +11,12 @@ let todos = [
             'Max Mustermann', 'Laura Musterfrau', 'Hans Wurst'
         ],
         subtask: [
-            'Test', 'Test1'
+            {
+                title: 'title1',
+                subtaskDone: false,
+            }
         ],
+        counter: 0
     },
     {
         id: 1,
@@ -23,9 +27,11 @@ let todos = [
         dueDate: '10/05/2023',
         priority: 'medium',
         assignedContacts: [],
-        subtask: [
-            'Here is a Subtask'
+        assignedContacts: [
+            'Benedikt Ziegler', 'Laura Musterfrau', 'Hans Wurst'
         ],
+        subtask: [],
+        counter: 0
     },
     {
         id: 2,
@@ -34,9 +40,25 @@ let todos = [
         description: 'Ths is the third Todo.',
         category: 'progress',
         dueDate: '10/05/2023',
-        priority: 'urgent',
-        assignedContacts: [],
-        subtask: [],
+        priority: 'high',
+        assignedContacts: [
+            'Max Mustermann', 'Laura Musterfrau', 'Hans Wurst'
+        ],
+        subtask: [
+            {
+                title: 'title3',
+                subtaskDone: false,
+            },
+            {
+                title: 'title4',
+                subtaskDone: false,
+            },
+            {
+                title: 'title5',
+                subtaskDone: false,
+            }
+        ],
+        counter: 0
     }
 ]
 
@@ -46,8 +68,6 @@ function init() {
     includesHTML();
     renderHTML();
 }
-
-// Styles width JavaScript
 
 function renderHTML() {
     renderTodos();
@@ -60,69 +80,120 @@ function showDetailView(index) {
    detailViewContainer.innerHTML = templateHTMLDetailView(index);
 
    renderSubtasks(index);
-}   
+   renderContactsDetailView(index);
+}
 
 function closeDetailView() {
     let detailViewContainer = document.getElementById('show-detail-todo');
     detailViewContainer.style.display = 'none';
 
-    renderTodos();
+    renderHTML();
 }
 
-function renderSubtasks(index) {
-    let subtasks = document.getElementById('checkbox-subtask');
-    if(todos[index].subtask.length > 0) {
-        subtasks.innerHTML = 'Subtasks';
-        for(let i = 0; i < todos[index].subtask.length; i++) {
-            let currentIndexSubtask = todos[index].subtask[i];
-            subtasks.innerHTML += `
-                <input onclick="counterSubtask(${index})" id="subtask${index}" type="checkbox">
-                <label for="subtask${index}">${currentIndexSubtask}</label>
+function renderContactsDetailView(index) {
+    let assignedContactsContainer = document.getElementById(`assigned-contacts-detailview${index}`);
+    if(todos[index].assignedContacts.length > 0) {
+        assignedContactsContainer.innerHTML = `
+            <p>Assigned To:</p>
+        `;
+        for(let i = 0; i < todos[index].assignedContacts.length; i++) {
+            const assignedContact = todos[index].assignedContacts[i];
+            let splitName = assignedContact.split(" ");
+            let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
+            let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
+            let resultInitials = firstLetter + secondLetter;
+            assignedContactsContainer.innerHTML += `
+                <div class="contact-detailview">
+                    <div class="contactsIcon">${resultInitials}</div>
+                    <span>${assignedContact}</span>    
+                </div>
             `;
         }
     }
 }
 
-function counterSubtask(index) {
-    let checkboxSubtask = document.getElementById(`subtask${index}`);
-    let counterSubtask = document.getElementById(`subtask-counter${index}`)
-    let counter = 0;
-    
-    if(checkboxSubtask.checked) {
-        counter++;
-    } else {
-        counter--;
-    }
-
-    counterSubtask.innerHTML = counter;
-    todos[index].subtaskCounter = counter;
-}
-
-function maxLengthSubtask(index) {
-    let maxLengthTask = document.getElementById(`subtask-maxlength${index}`);
-    let taskLength = todos[index].subtask.length;
-    if(taskLength > 0) {
-        maxLengthTask.innerHTML = taskLength;
+function renderSubtasks(index) {
+    let subtasks = document.getElementById(`checkbox-subtask${index}`);
+    if(todos[index].subtask.length > 0) {
+        subtasks.innerHTML = `
+            <p>Subtasks</p>
+        `;
+        for(let i = 0; i < todos[index].subtask.length; i++) {
+            let currentIndexSubtask = todos[index].subtask[i].title;
+            subtasks.innerHTML += `
+                <div class="subtask-detailview">
+                    <input onclick="subtaskCounter(${index}, ${i})" id="subtask${index}-${i}" type="checkbox">
+                    <label for="subtask${index}-${i}">${currentIndexSubtask}</label>
+                </div>
+            `;
+        }
     }
 }
 
 function editTask(index) {
     let detailViewContainer = document.getElementById('show-detail-todo');
     detailViewContainer.innerHTML = templateHTMLEditTask(index);
+    renderPrioButton(index);
+
+    renderHTML();
 }
+
+function setPrioButton(prioValue, index) {
+    todos[index] = {
+      ...todos[index],
+      priority: prioValue
+    }
+  
+    let low = document.getElementById('prioButtonLow');
+    let medium = document.getElementById('prioButtonMedium');
+    let high = document.getElementById('prioButtonHigh');
+    let changeImgLow = document.getElementById('change-img-low');
+    let changeImgMedium = document.getElementById('change-img-medium');
+    let changeImgHigh = document.getElementById('change-img-high');
+  
+    if(prioValue == 'low') {
+      low.style.background = '#7ae229';
+      low.style.color = '#fff';
+      changeImgLow.src = 'assets/img/prio-low-white.png';
+    } else {
+      low.style.background = '#fff';
+      low.style.color = 'black';
+      changeImgLow.src = 'assets/img/prio-low.svg';
+    }
+  
+    if(prioValue == 'medium') {
+      medium.style.background = '#ffa800';
+      medium.style.color = '#fff';
+      changeImgMedium.src = 'assets/img/prio-medium-white.png';
+    } else {
+      medium.style.background = '#fff';
+      medium.style.color = 'black';
+      changeImgMedium.src = 'assets/img/prio-medium.svg';
+    }
+  
+    if(prioValue == 'high') {
+      high.style.background = '#ff3d00';
+      high.style.color = '#fff';
+      changeImgHigh.src = 'assets/img/prio-urgent-white.png';
+    } else {
+      high.style.background = '#fff';
+      high.style.color = 'black';
+      changeImgHigh.src = 'assets/img/prio-urgent.svg';
+    }
+  
+  }
+  
 
 function changeTask(index) {
     let newTitle = document.getElementById('new-title');
     let newDescription = document.getElementById('new-description');
     let newDate = document.getElementById('new-date');
-    let newPriority = document.getElementById('new-priority');
 
     todos[index] = {
         ...todos[index],
         title: newTitle.value,
         description: newDescription.value,
         dueDate: newDate.value,
-        priority: newPriority.value
     }
 
     showDetailView(index);
@@ -149,34 +220,64 @@ function renderTodos() {
         const todo = todos[i];
         if(todo.category == 'open') {
             contentTodo.innerHTML += templateHTMLTodoContainer(todo, i);
-            renderProgressbar(i);
-            maxLengthSubtask(i);
+            renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContacts(i);
         }
         if(todo['category'] == 'progress') {
             contentProgress.innerHTML += templateHTMLTodoContainer(todo, i);
-            renderProgressbar(i);
-            maxLengthSubtask(i);
+            renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContacts(i);
         }
         if(todo['category'] == 'feedback') {
             contentFeedback.innerHTML += templateHTMLTodoContainer(todo, i);
-            renderProgressbar(i);
-            maxLengthSubtask(i);
+            renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContacts(i);
         }
         if(todo['category'] == 'done') {
             contentDone.innerHTML += templateHTMLTodoContainer(todo, i);
-            renderProgressbar(i);
-            maxLengthSubtask(i);
+            renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContacts(i);
         }
     }
 }
+
+function changeProgressbar(index) {
+    let progressBar = document.getElementById(`progress-bar${index}`);
+    let maxLength = todos[index].subtask.length; 
+    let counter = todos[index].counter;
+  
+    let result = (counter / maxLength) * 100;
+  
+    progressBar.style.width = result + '%';
+  
+  }
+  
+  function subtaskCounter(index, i) {
+    let showCounter = document.getElementById(`subtask-counter${index}`);
+    let checkboxSubtask = document.getElementById(`subtask${index}-${i}`);
+  
+        if(checkboxSubtask.checked) {
+          todos[index].counter++;
+        } else {
+          todos[index].counter--;
+        }
+  
+        showCounter.innerHTML = todos[index].counter;
+        changeProgressbar(index);
+  }
+  
+  function subtaskMaxLength(index) {
+      let showMaxLength = document.getElementById(`subtask-maxlength${index}`);
+      let maxLength = todos[index].subtask.length;
+  
+      if(todos[index].subtask.length > 0) {
+        showMaxLength.innerHTML = maxLength;
+      }
+  }
 
 function renderContacts(index) {
     let assignedContactsContainer = document.getElementById(`assigned-contacts${index}`);
@@ -188,7 +289,7 @@ function renderContacts(index) {
             let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
             let resultInitials = firstLetter + secondLetter;
             assignedContactsContainer.innerHTML += `
-                <div class="contactsIcon">${resultInitials}</div>
+                <div class="contactsIcon margin-left">${resultInitials}</div>
             `;
         }
     }
@@ -202,27 +303,9 @@ function renderPrioImg(index) {
     if(todos[index].priority == 'medium') {
         prioImg.src = 'assets/img/prio-medium.svg';
     }
-    if(todos[index].priority == 'urgent') {
+    if(todos[index].priority == 'high') {
         prioImg.src = 'assets/img/prio-urgent.svg';
     }
-}
-
-function renderProgressbar(index) {
-    let progressbar = document.getElementById(`progress-content${index}`);
-        for(let i = 0; i < todos.length; i++) {
-            const todo = todos[i];
-            if(todos[index].subtask.length > 0) {
-                progressbar.innerHTML = `
-                    <div class="space-between">
-                        <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar w-50"></div>
-                    </div>
-                    <div id="subtask-content">
-                        <span id="subtask-counter${index}">X</span> / <span id="subtask-maxlength${index}">X</span> Subtasks
-                    </div>
-            `;   
-        }
-    } 
 }
 
 function checkOpenTodo() {
@@ -323,3 +406,4 @@ function emptyInput() {
     renderTodos();
     document.getElementById('change-img').src = 'assets/img/search.svg';
 }
+
