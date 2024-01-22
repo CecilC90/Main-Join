@@ -62,27 +62,9 @@ let todos = [
     }
 ]
 
-async function setItem(key, value) { // In dieser Funktion werden die Daten gespeichert und als Parameter wird der Key und der Wert.
-    const payload = {key, value, token: STORAGE_TOKEN}; // Erstellt ein JSON für die Daten die gespeichert werden sollen.
-    return fetch(STORAGE_URL, {method: 'POST', body: JSON.stringify(payload)}) // Die Daten werden abgerufen mit der Methode "POST" und das die Daten werden als JSON wiedergegeben.
-        .then(res => res.json()); // Diese Methode konvertiert die Antwort in ein JSON-Objekt, was für die weitere Verarbeitung nützlich sein kann.
-}   
-
-async function getItem(key) { // In dieser Funktion werden die Daten wieder ausgegeben und als Parameter wird nur der Key wiedergegeben.
-    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`; // Die URL wird passend abgeändert.
-    return fetch(url).then(res => res.json()).then(res => { // Hier wird die URL abgerufen und die Antwort wird wieder als JSON ausgegeben.
-        if(res.data) {
-            return res.data.value;
-        } else {
-            return res;
-        }
-    });
-}
-
 let startDragginId;
 
 function init() {
-
     includesHTML();
     renderHTML();
 }
@@ -99,13 +81,14 @@ function showDetailView(index) {
 
    renderSubtasks(index);
    renderContactsDetailView(index);
+   renderCheckboxAfterClose(index);
 }
 
 function closeDetailView() {
     let detailViewContainer = document.getElementById('show-detail-todo');
     detailViewContainer.style.display = 'none';
 
-    renderHTML();
+    renderTodos();
 }
 
 function renderContactsDetailView(index) {
@@ -152,8 +135,6 @@ function editTask(index) {
     let detailViewContainer = document.getElementById('show-detail-todo');
     detailViewContainer.innerHTML = templateHTMLEditTask(index);
     renderPrioButton(index);
-
-    renderHTML();
 }
 
 function setPrioButton(prioValue, index) {
@@ -217,7 +198,7 @@ function changeTask(index) {
     showDetailView(index);
 }
 
-async function renderTodos() {
+function renderTodos() {
 
     let contentTodo = document.getElementById('board-content-todo');
     let contentProgress = document.getElementById('board-content-progress');
@@ -236,24 +217,32 @@ async function renderTodos() {
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContacts(i);
+            renderCounterAfterClose(i);
+            changeProgressbar(i);
         }
         if(todo['category'] == 'progress') {
             contentProgress.innerHTML += templateHTMLTodoContainer(todo, i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContacts(i);
+            renderCounterAfterClose(i);
+            changeProgressbar(i);
         }
         if(todo['category'] == 'feedback') {
             contentFeedback.innerHTML += templateHTMLTodoContainer(todo, i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContacts(i);
+            renderCounterAfterClose(i);
+            changeProgressbar(i);
         }
         if(todo['category'] == 'done') {
             contentDone.innerHTML += templateHTMLTodoContainer(todo, i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContacts(i);
+            renderCounterAfterClose(i);
+            changeProgressbar(i);
         }
     }
 }
@@ -262,18 +251,21 @@ function changeProgressbar(index) {
     let progressBar = document.getElementById(`progress-bar${index}`);
     let maxLength = todos[index].subtask.length; 
     let counter = todos[index].counter;
-  
-    let result = (counter / maxLength) * 100;
-  
-    progressBar.style.width = result + '%';
-  
+    
+    if(progressBar) {
+        let result = (counter / maxLength) * 100;
+        progressBar.style.width = result + '%';
+    }
+
   }
   
 function subtaskCounter(index, i) {
     let showCounter = document.getElementById(`subtask-counter${index}`);
     let checkboxSubtask = document.getElementById(`subtask${index}-${i}`);
+
+        todos[index].subtask[i].subtaskDone = checkboxSubtask.checked;
   
-        if(checkboxSubtask.checked) {
+        if(todos[index].subtask[i].subtaskDone) {
           todos[index].counter++;
         } else {
           todos[index].counter--;
@@ -282,15 +274,35 @@ function subtaskCounter(index, i) {
         showCounter.innerHTML = todos[index].counter;
         changeProgressbar(index);
   }
+
+function renderCheckboxAfterClose(index) {
+
+    for(let i = 0; i < todos[index].subtask.length; i++) {
+        let checkboxSubtask = document.getElementById(`subtask${index}-${i}`);
+
+        const isChecked = todos[index].subtask[i].subtaskDone;
+        checkboxSubtask.checked = isChecked;
+    }
+}
+
+function renderCounterAfterClose(index) {
+    let showCounter = document.getElementById(`subtask-counter${index}`);
+
+    if(showCounter) {
+        const counter = todos[index].counter;
+        showCounter.innerHTML = counter;
+    }
+}
+
   
-  function subtaskMaxLength(index) {
+function subtaskMaxLength(index) {
       let showMaxLength = document.getElementById(`subtask-maxlength${index}`);
       let maxLength = todos[index].subtask.length;
   
       if(todos[index].subtask.length > 0) {
         showMaxLength.innerHTML = maxLength;
       }
-  }
+}
 
 function renderContacts(index) {
     let assignedContactsContainer = document.getElementById(`assigned-contacts${index}`);
@@ -418,4 +430,18 @@ function emptyInput() {
     document.getElementById('search').value = '';
     renderTodos();
     document.getElementById('change-img').src = 'assets/img/search.svg';
+}
+
+
+function load() {
+    let taskAsText = JSON.stringify(todos);
+    localStorage.setItem('task', taskAsText);
+}
+
+function save() {
+    let taskAsText = localStorage.getItem('task');
+
+    if (taskAsText) {
+        todos = JSON.parse(taskAsText);
+    }
 }
