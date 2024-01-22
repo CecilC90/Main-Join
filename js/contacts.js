@@ -197,7 +197,11 @@ function openAddContactPopUp() {
     resetAddInput();
 }
 
-function closeAddContactPopUp() {
+function closeAddContactPopUp(event) {
+    if (event) {
+        event.preventDefault();
+    }
+
     popUp = document.getElementById('popupContainer');
     popUp.style.display = "none";
     editPopUp = document.getElementById('editContactPopUp');
@@ -209,7 +213,7 @@ function openEditContactPopUp(i) {
     popUp.style.display = "flex";
     addPopUp = document.getElementById('addContactPopUp');
     addPopUp.classList.add('d-none');
-    document.getElementById('editButton').onclick = function() { updateMemberInfo(i); };
+    document.getElementById('editButton').onclick = function () { updateMemberInfo(i, event); };
     loadMemberInfo(i);
 }
 
@@ -238,24 +242,34 @@ function loadMemberInfo(i) {
     phone.value = members[i].phone;
 }
 
-function updateMemberInfo(i) {
-    
-
-    let nameInput = document.getElementById('editName');
-    let emailInput = document.getElementById('editEmail');
-    let phoneInput = document.getElementById('editPhone');
-
-    
-    members[i].name = nameInput.value;
-    members[i].email = emailInput.value;
-    members[i].phone = phoneInput.value;
-
-    
+/*function updateMemberInfo(i) {
+    let nameInput = document.getElementById('editName').value;
+    console.log(nameInput);
+    let emailInput = document.getElementById('editEmail').value;
+    let phoneInput = document.getElementById('editPhone').value;
+    members[i].name = nameInput;
+    members[i].email = emailInput;
+    members[i].phone = phoneInput;
     renderContacts(); 
-    
-    
     closeEditContactPopUp();
+}*/
+
+function updateMemberInfo(i, event) {
+    event.preventDefault();
+
+    members[i] = {
+        name: document.getElementById('editName').value,
+        email: document.getElementById('editPhone').value,
+        phone: document.getElementById('editPhone').value,
+    };
+
+    renderContacts();
+    closeEditContactPopUp();
+    mainCard = document.getElementById('userOverview');
+    mainCard.innerHTML = '';
 }
+
+
 function addContact() {
     let name = document.getElementById('addName');
     let email = document.getElementById('addEmail');
@@ -266,7 +280,7 @@ function addContact() {
         phone: phone.value,
     };
 
-    members.push(newContact);
+    sortedMembers.push(newContact);
     renderContacts()
     closeAddContactPopUp();
 }
