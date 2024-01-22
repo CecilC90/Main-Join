@@ -79,7 +79,7 @@ function renderContactList(sortedMembers) {
         let firstLetter = getFirstLetter(sortedMembers, i);
 
         if (firstLetter !== currentInitial) {
-            contactlist.innerHTML += renderFirstLetter(firstLetter);
+            contactlist.innerHTML += renderFirstLetterHTML(firstLetter);
             currentInitial = firstLetter;
         }
 
@@ -98,7 +98,7 @@ function getMemberInitials(sortedMembers, i) {
         .join('');
 }
 
-function renderFirstLetter(firstLetter) {
+function renderFirstLetterHTML(firstLetter) {
     return `
     <div class="first-letter">${firstLetter}</div>
     <div class="underline"></div>
@@ -242,24 +242,12 @@ function loadMemberInfo(i) {
     phone.value = members[i].phone;
 }
 
-/*function updateMemberInfo(i) {
-    let nameInput = document.getElementById('editName').value;
-    console.log(nameInput);
-    let emailInput = document.getElementById('editEmail').value;
-    let phoneInput = document.getElementById('editPhone').value;
-    members[i].name = nameInput;
-    members[i].email = emailInput;
-    members[i].phone = phoneInput;
-    renderContacts(); 
-    closeEditContactPopUp();
-}*/
-
 function updateMemberInfo(i, event) {
     event.preventDefault();
 
     members[i] = {
         name: document.getElementById('editName').value,
-        email: document.getElementById('editPhone').value,
+        email: document.getElementById('editEmail').value,
         phone: document.getElementById('editPhone').value,
     };
 
@@ -269,15 +257,11 @@ function updateMemberInfo(i, event) {
     mainCard.innerHTML = '';
 }
 
-
 function addContact() {
-    let name = document.getElementById('addName');
-    let email = document.getElementById('addEmail');
-    let phone = document.getElementById('addPhone');
     let newContact = {
-        name: name.value,
-        email: email.value,
-        phone: phone.value,
+        name: document.getElementById('addName').value,
+        email: document.getElementById('addEmail').value,
+        phone: document.getElementById('addPhone').value,
     };
 
     sortedMembers.push(newContact);
