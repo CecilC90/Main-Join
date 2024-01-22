@@ -36,11 +36,18 @@ p {
   font-style: normal;
   font-weight: 400;
   margin-top: 4px;
+  height: 15px;
 }
 .dropDownIcon:hover {
   border-radius: 50%;
   background-color: #eee;
   cursor: pointer;
+}
+.wrongInput{
+  border: 1px solid #FF001F !important;
+}
+.correctInput{
+  border: 1px solid #29ABE2 !important;
 }
 /* #endregion */
 

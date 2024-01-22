@@ -154,12 +154,14 @@ function clearSubtaskInputField() {
   let content = document.getElementById("subtasksInput");
   content.value = "";
   showSubtasksDoneAndCancel();
+  setBlueBorder('subtasksInput', 'subtaskField');
 }
 
 function addSubtask() {
   let subtasksInput = document.getElementById("subtasksInput");
   subtasks.push(subtasksInput.value);
   clearSubtaskInputField();
+  setBlueBorder('subtasksInput', 'subtaskField');
   renderSubtasks();
 }
 
@@ -265,17 +267,63 @@ document.addEventListener("DOMContentLoaded", function () {
 //   toggleDropdownIcon(id, dispayStatus);
 // }
 
+function checkIsFieldFilled(id){
+  let content = document.getElementById(id);
+  if(content.value.length > 0){
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function setBlueBorder(id, conatiner){
+  if(checkIsFieldFilled(id)){
+    document.getElementById(conatiner).classList.add('correctInput');
+  } else {
+    document.getElementById(conatiner).classList.remove('correctInput');
+  }
+}
+
+function setBorderRed(id, requiredConatiner){
+  document.getElementById(id).classList.add('wrongInput');
+  document.getElementById(requiredConatiner).innerHTML = 'This fild is required'
+}
+
+function removeBorader(id){
+  document.getElementById(id).classList.remove('wrongInput');
+  document.getElementById(id).classList.remove('correctInput');
+}
+
 function addTask() {
-  console.log("add Task");
+  let allInputsFilled = true;
+
+  if(checkIsFieldFilled('titleInputField')){
+    console.log('ich bin ausgefüllt');
+  } else {
+    setBorderRed('titleField', 'requiredTextTitle');
+    allInputsFilled = false;
+  }
+  if(checkIsFieldFilled('duedateInputField')){
+    console.log('ich bin ausgefüllt');
+  } else {
+    setBorderRed('duedateField', 'requiredTextDuedate');
+    allInputsFilled = false;
+  }
 }
 
 function clearTask() {
   for (let i = 0; i < contacts.length; i++) {
     contacts[i]["selected"] = false;
   }
+  subtasks = [];
+  renderSubtasks();
   renderAssingnedToDropdownList();
   renderSelectedContactsIcons();
   document.getElementById("inputFiedCategory").value = "";
-  subtasks = [];
-  renderSubtasks();
+  document.getElementById("titleInputField").value = "";
+  document.getElementById("duedateInputField").value = "";
+  document.getElementById("requiredTextTitle").innerHTML = "";
+  document.getElementById("requiredTextDuedate").innerHTML = "";
+  removeBorader('titleField');
+  removeBorader('duedateField');
 }

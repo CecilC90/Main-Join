@@ -23,11 +23,11 @@
             <div class="taskTitle">
               <div class="inputContainer">
                 <p>Title*</p>
-                <div class="inputField">
-                  <input type="text" placeholder="Enter a title" required />
+                <div class="inputField" id="titleField">
+                  <input type="text" id="titleInputField" onkeyup="setBlueBorder('titleInputField', 'titleField')" placeholder="Enter a title" required />
                 </div>
               </div>
-              <p class="fildIisRequiredText">This fild is required</p>
+              <p class="fildIisRequiredText" id="requiredTextTitle"></p>
             </div>
             <div class="inputContainer">
               <p>Description</p>
@@ -56,12 +56,12 @@
             <div class="taskDueDate">
               <div class="inputContainer">
                 <p>Due date*</p>
-                <div class="inputField">
-                  <input type="datetime" type="datetime-local" (dd-mm-yyyy) placeholder="dd/mm/yyy" />
+                <div class="inputField" id="duedateField">
+                  <input type="datetime" id="duedateInputField" type="datetime-local" onkeyup="setBlueBorder('duedateInputField', 'duedateField')" placeholder="dd/mm/yyy" />
                   <img src="/assets/img/calendar_icon.svg" alt="calender icon" />
                 </div>
               </div>
-              <p class="fildIisRequiredText">This fild is required</p>
+              <p class="fildIisRequiredText" id="requiredTextDuedate"></p>
             </div>
             <div class="taskPrio">
               <p>Prio</p>
@@ -135,15 +135,14 @@
             </div>
             <div class="inputContainer">
               <p>Subtasks</p>
-              <div class="inputField">
-                <input type="text" id="subtasksInput" onkeyup="showSubtasksDoneAndCancel()" placeholder="Add new subtask" />
+              <div class="inputField" id="subtaskField">
+                <input type="text" id="subtasksInput" onkeyup="showSubtasksDoneAndCancel(), setBlueBorder('subtasksInput', 'subtaskField')" placeholder="Add new subtask" />
                 <div class="subtasksInputMenu" id="subtasksInputMenu">
                   <img src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
                 </div>
               </div>
               <div>
-                <div class="subtasksList" id="subtasksList">
-                </div>
+                <div class="subtasksList" id="subtasksList"></div>
               </div>
             </div>
           </div>
