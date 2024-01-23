@@ -178,7 +178,7 @@ function templateHTMLDetailView(index) {
 }
 
 function templateHTMLEditTask(index) {
-  return `
+  return /* HTML */ `
   <div id="detail-todo-content">
       <div class="space-end">
           <span onclick="closeDetailView()">X</span>
@@ -191,8 +191,16 @@ function templateHTMLEditTask(index) {
       <input id="new-date" type="text" value="${todos[index].dueDate}">
       <p>Priority:</p>
       <div class="prioButtonConatainer priobutton-editview" id="priobutton-container${index}"></div>
-      <p>Assigned To:</p>
-      <div id="assignedcontacts-container${index}"></div>
+      <div class="inputContainer assingnedToConatiner">
+          <p>Assingned to</p>
+            <div>
+                <div class="inputField dropdown">
+                  <input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownList()" />
+                  <img onclick="contactDropdown()" class="dropDownIcon" id="assignedToDropdownIcon" src="/assets/img/arrow_drop_down.svg" alt="" />
+                </div>
+                <div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo"></div> <!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->
+              </div>
+         <div class="contactesIconsContainer" id="showSelectedDropdownContact"></div> <!-- hier wird über die function renderSelectedContactsIcons() eingefügt-->
       <a onclick="changeTask(${index})" href="#">OK</a>
   </div>
   `;

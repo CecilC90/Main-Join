@@ -239,6 +239,7 @@
 
 #detail-todo-content {
     width: 500px;
+    height: 80vh;
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;

@@ -8,7 +8,7 @@ let todos = [
         dueDate: '10/05/2023',
         priority: 'low',
         assignedContacts: [
-            'Max Mustermann', 'Laura Musterfrau', 'Hans Wurst'
+            'Anton Mayer', 'Emmanuel Mauer'
         ],
         subtask: [
             {
@@ -28,7 +28,7 @@ let todos = [
         priority: 'medium',
         assignedContacts: [],
         assignedContacts: [
-            'Benedikt Ziegler', 'Laura Musterfrau', 'Hans Wurst'
+            'Benedikt Ziegler', 'David Eisenberg'
         ],
         subtask: [],
         counter: 0
@@ -42,7 +42,7 @@ let todos = [
         dueDate: '10/05/2023',
         priority: 'high',
         assignedContacts: [
-            'Max Mustermann', 'Laura Musterfrau', 'Hans Wurst'
+            
         ],
         subtask: [
             {
@@ -79,7 +79,7 @@ function showDetailView(index) {
 
    detailViewContainer.innerHTML = templateHTMLDetailView(index);
 
-   renderSubtasks(index);
+   renderSubtask(index);
    renderContactsDetailView(index);
    renderCheckboxAfterClose(index);
 }
@@ -113,7 +113,7 @@ function renderContactsDetailView(index) {
     }
 }
 
-function renderSubtasks(index) {
+function renderSubtask(index) {
     let subtasks = document.getElementById(`checkbox-subtask${index}`);
     if(todos[index].subtask.length > 0) {
         subtasks.innerHTML = `
@@ -135,6 +135,9 @@ function editTask(index) {
     let detailViewContainer = document.getElementById('show-detail-todo');
     detailViewContainer.innerHTML = templateHTMLEditTask(index);
     renderPrioButton(index);
+    changeSelectedContacts(index);
+    renderAssingnedToDropdownList();
+    renderSelectedContactsIcons();
 }
 
 function setPrioButton(prioValue, index) {
@@ -182,6 +185,19 @@ function setPrioButton(prioValue, index) {
   
   }
   
+function changeSelectedContacts(index) {
+    for (let i = 0; i < todos[index].assignedContacts.length; i++) {
+        let todosContact = todos[index].assignedContacts[i];
+
+        for (let j = 0; j < contacts.length; j++) {
+            let contact = contacts[j];
+
+            if (todosContact === contact.name) {
+                contact.selected = true;
+            }
+        }
+    }
+}
 
 function changeTask(index) {
     let newTitle = document.getElementById('new-title');
