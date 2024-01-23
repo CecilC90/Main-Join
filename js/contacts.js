@@ -1,33 +1,64 @@
 let members = [
     {
+        backgroundColor: '#663300',
         name: 'Anton Mayer',
         email: 'antom@gmail.com',
     },
     {
+        backgroundColor: '#99cc00',
         name: 'Emmanuel Mauer',
         email: 'antom@gmail.com',
     },
     {
+        backgroundColor: '#9900ff',
         name: 'Benedikt Ziegler',
         email: 'benedikt@gmail.com',
     },
     {
+        backgroundColor: '#00ffff',
         name: 'Anja Schulz',
         email: 'schulz@hotmail.com',
     },
     {
+        backgroundColor: '#ffcc00',
         name: 'David Eisenberg',
         email: 'davidberg@gmail.com',
     },
     {
+        backgroundColor: '#ff9966',
         name: 'Eva Fischer',
         email: 'eva@gmail.com',
     },
     {
+        backgroundColor: '#cc0000',
         name: 'Tatjana Wolf',
         email: 'wolf@gmail.com',
     },
 ]
+
+let backgroundColors = [
+    '#ff0000', // Rot
+    '#00ff00', // Grün
+    '#0000ff', // Blau
+    '#ffff00', // Gelb
+    '#ff00ff', // Magenta
+    '#00ffff', // Cyan
+    '#ff9900', // Orange
+    '#9900ff', // Lila
+    '#009900', // Dunkelgrün
+    '#990000', // Dunkelrot
+    '#ffcc00', // Goldgelb
+    '#cc66ff', // Flieder
+    '#0099cc', // Türkis
+    '#ff6699', // Rosa
+    '#663300', // Braun
+    '#99cc00', // Olivgrün
+    '#6600cc', // Indigo
+    '#ff9966', // Pfirsich
+    '#336600', // Dunkelgrün
+    '#cc0000', // Dunkelrot
+];
+
 
 //Eventuelle probleme beim Sortieren der User???
 
@@ -108,7 +139,7 @@ function renderFirstLetterHTML(firstLetter) {
 function renderContactsHTML(sortedMembers, i, initials) {
     return `
     <div id="userCard${i}" class="user-card" onclick="toggleUserInformation(${i}, sortedMembers, '${initials}')">
-        <div class="contact-icon" id="initials">${initials}</div>
+        <div class="contact-icon" id="initials" style= background-color:${members[i]['backgroundColor']}>${initials}</div>
         <div class=contact-container>
             <span>${sortedMembers[i].name}</span>
             <span class="email">${sortedMembers[i].email}</span>
@@ -159,7 +190,7 @@ function userInformationHTML(i, sortedMembers, initials) {
     return `
     <div class="main-head-container">
         <div>
-            <div class="main-contact-icon">${initials}</div>
+            <div class="main-contact-icon" style= background-color:${members[i]['backgroundColor']}>${initials}</div>
         </div>
         <div>
             <div class="name-container">${sortedMembers[i].name}</div>
@@ -258,12 +289,15 @@ function updateMemberInfo(i, event) {
 }
 
 function addContact() {
+    const randomIndex = Math.floor(Math.random() * backgroundColors.length);
+
     let newContact = {
         name: document.getElementById('addName').value,
         email: document.getElementById('addEmail').value,
         phone: document.getElementById('addPhone').value,
+        backgroundColor: backgroundColors[randomIndex],
     };
-
+    console.log(newContact);
     sortedMembers.push(newContact);
     renderContacts()
     closeAddContactPopUp();
