@@ -138,6 +138,7 @@ function editTask(index) {
     changeSelectedContacts(index);
     renderAssingnedToDropdownList();
     renderSelectedContactsIcons();
+    renderSubtasks(index);
 }
 
 function setPrioButton(prioValue, index) {
@@ -207,6 +208,19 @@ function pushSelecetedContactsToTodos(index) {
             todos[index].assignedContacts.push(contact);
         }
     }
+}
+
+function addSubtask(index) {
+    let subtasksInput = document.getElementById("subtasksInput");
+    let addSubtask = todos[index].subtask;
+    addSubtask.push(
+        {
+            title: subtasksInput.value,
+            selected: false
+        }
+    )
+    
+    renderSubtasks(index);
 }
 
 function changeTask(index) {

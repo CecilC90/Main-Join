@@ -201,6 +201,18 @@ function templateHTMLEditTask(index) {
                 <div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo"></div> <!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->
               </div>
          <div class="contactesIconsContainer" id="showSelectedDropdownContact"></div> <!-- hier wird über die function renderSelectedContactsIcons() eingefügt-->
+         <div class="inputContainer">
+              <p>Subtasks</p>
+              <div class="inputField" id="subtaskField">
+                <input type="text" id="subtasksInput" onkeyup="showSubtasksDoneAndCancel(${index})" placeholder="Add new subtask" />
+                <div class="subtasksInputMenu" id="subtasksInputMenu">
+                  <img onclick="addSubtask(${index})" src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
+                </div>
+              </div>
+              <div>
+                <div class="subtasksList" id="subtasksList"></div>
+              </div>
+            </div>
       <button onclick="changeTask(${index})" href="#">OK</button>
   </div>
   `;

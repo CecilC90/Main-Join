@@ -136,14 +136,14 @@ function toggleDropdownIcon(id, dispayStatus) {
   }
 }
 
-function showSubtasksDoneAndCancel() {
+function showSubtasksDoneAndCancel(index) {
   let subtasksInput = document.getElementById("subtasksInput");
   let content = document.getElementById("subtasksInputMenu");
   if (subtasksInput.value.length != 0) {
     content.innerHTML = /* html */ `
       <img class="subtasksInputMenuimg" onclick="clearSubtaskInputField()" src="/assets/img/subtasks_cancel_icon.svg" alt="cancel_icon">
       <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
-      <img class="subtasksInputMenuimg" onclick="addSubtask()" src="/assets/img/subtasks_done_icon.svg" alt="done_icon">
+      <img class="subtasksInputMenuimg" onclick="addSubtask(${index})" src="/assets/img/subtasks_done_icon.svg" alt="done_icon">
    `;
   } else {
     content.innerHTML = '<img src="/assets/img/subtasks_add_icon.svg" alt="add_icon">';
