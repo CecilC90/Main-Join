@@ -42,7 +42,7 @@ let todos = [
         dueDate: '10/05/2023',
         priority: 'high',
         assignedContacts: [
-            
+            'Benedikt Ziegler', 'David Eisenberg'
         ],
         subtask: [
             {
@@ -186,6 +186,7 @@ function setPrioButton(prioValue, index) {
   }
   
 function changeSelectedContacts(index) {
+
     for (let i = 0; i < todos[index].assignedContacts.length; i++) {
         let todosContact = todos[index].assignedContacts[i];
 
@@ -199,10 +200,29 @@ function changeSelectedContacts(index) {
     }
 }
 
+function pushSelecetedContactsToTodos(index) {
+    for(let i = 0; i < contacts.length; i++) {
+        contact = contacts[i];
+        if(contact.selected == true){
+            todos[index].assignedContacts.push(contact);
+        }
+    }
+}
+
 function changeTask(index) {
     let newTitle = document.getElementById('new-title');
     let newDescription = document.getElementById('new-description');
     let newDate = document.getElementById('new-date');
+
+    todos[index].assignedContacts = [];
+
+    for(let j = 0; j < contacts.length; j++) {
+        let contact = contacts[j];
+
+        if(contact.selected) {
+            todos[index].assignedContacts.push(contact.name);
+        }
+    }
 
     todos[index] = {
         ...todos[index],
@@ -232,7 +252,7 @@ function renderTodos() {
             contentTodo.innerHTML += templateHTMLTodoContainer(todo, i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
-            renderContacts(i);
+            renderContact(i);
             renderCounterAfterClose(i);
             changeProgressbar(i);
         }
@@ -240,7 +260,7 @@ function renderTodos() {
             contentProgress.innerHTML += templateHTMLTodoContainer(todo, i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
-            renderContacts(i);
+            renderContact(i);
             renderCounterAfterClose(i);
             changeProgressbar(i);
         }
@@ -248,7 +268,7 @@ function renderTodos() {
             contentFeedback.innerHTML += templateHTMLTodoContainer(todo, i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
-            renderContacts(i);
+            renderContact(i);
             renderCounterAfterClose(i);
             changeProgressbar(i);
         }
@@ -256,7 +276,7 @@ function renderTodos() {
             contentDone.innerHTML += templateHTMLTodoContainer(todo, i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
-            renderContacts(i);
+            renderContact(i);
             renderCounterAfterClose(i);
             changeProgressbar(i);
         }
@@ -320,12 +340,12 @@ function subtaskMaxLength(index) {
       }
 }
 
-function renderContacts(index) {
+function renderContact(index) {
     let assignedContactsContainer = document.getElementById(`assigned-contacts${index}`);
     if(todos[index].assignedContacts.length > 0) {
         for(let i = 0; i < todos[index].assignedContacts.length; i++) {
-            const assignedContact = todos[index].assignedContacts[i];
-            let splitName = assignedContact.split(" ");
+            const contact = todos[index].assignedContacts[i];
+            let splitName = contact.split(" ");
             let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
             let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
             let resultInitials = firstLetter + secondLetter;

@@ -201,7 +201,7 @@ function templateHTMLEditTask(index) {
                 <div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo"></div> <!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->
               </div>
          <div class="contactesIconsContainer" id="showSelectedDropdownContact"></div> <!-- hier wird über die function renderSelectedContactsIcons() eingefügt-->
-      <a onclick="changeTask(${index})" href="#">OK</a>
+      <button onclick="changeTask(${index})" href="#">OK</button>
   </div>
   `;
 }

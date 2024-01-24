@@ -111,14 +111,22 @@ let contacts = [
     }
   }
 
-// Toggle dropdown visibility
-    function contactDropdown() {
-        dropdownContentAssignedTo.style.display = dropdownContentAssignedTo.style.display === "flex" ? "none" : "flex";
-        let dispayStatus = dropdownContentAssignedTo.style.display;
-    };
-    
-  
 
+function contactDropdown() {
+  // Toggle dropdown visibility
+    dropdownContentAssignedTo.style.display = dropdownContentAssignedTo.style.display === "flex" ? "none" : "flex";
+    let dispayStatus = dropdownContentAssignedTo.style.display;
+    toggleDropdownIcon("assignedToDropdownIcon", dispayStatus);
+};
+
+function toggleDropdownIcon(id, dispayStatus) {
+    if (dispayStatus == "flex") {
+        document.getElementById(id).src = "/assets/img/arrow_drop_down_up.svg";
+    } else {
+        document.getElementById(id).src = "/assets/img/arrow_drop_down.svg";
+    }
+}
+      
   function renderAssingnedToDropdownListHTML(i, firstAndSecondLetter) {
     return /*html */ `
       <div class="dropdownContacts" id="dropdownContact${i}" onclick="setContactSelected(${i})">
