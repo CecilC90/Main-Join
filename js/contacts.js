@@ -1,40 +1,4 @@
-let members = [
-    {
-        backgroundColor: '#663300',
-        name: 'Anton Mayer',
-        email: 'antom@gmail.com',
-    },
-    {
-        backgroundColor: '#99cc00',
-        name: 'Emmanuel Mauer',
-        email: 'antom@gmail.com',
-    },
-    {
-        backgroundColor: '#9900ff',
-        name: 'Benedikt Ziegler',
-        email: 'benedikt@gmail.com',
-    },
-    {
-        backgroundColor: '#00ffff',
-        name: 'Anja Schulz',
-        email: 'schulz@hotmail.com',
-    },
-    {
-        backgroundColor: '#ffcc00',
-        name: 'David Eisenberg',
-        email: 'davidberg@gmail.com',
-    },
-    {
-        backgroundColor: '#ff9966',
-        name: 'Eva Fischer',
-        email: 'eva@gmail.com',
-    },
-    {
-        backgroundColor: '#cc0000',
-        name: 'Tatjana Wolf',
-        email: 'wolf@gmail.com',
-    },
-]
+let contacts = [];
 
 let backgroundColors = [
     '#ff0000', // Rot
@@ -59,17 +23,40 @@ let backgroundColors = [
     '#cc0000', // Dunkelrot
 ];
 
+//--------------------------------------------
+async function setItem(key, value) {
+    const payload = { key, value, token: STORAGE_TOKEN }; //wenn key und key gleich sind kann man es aus weg lassen { key, value, token:STORAGE_TOKEN}
+    return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) });
+  }
+  
+  async function getItem(key) {
+    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
+    return fetch(url).then(res => res.json()).then(res => res.data.value).catch(function(err)
+    {
+       console.log('fetch konnte nicht aufgeührt werden');
+    });;
+  }
+//--------------------------------------
+
+async function initContacts() {
+    await loadContacts();
+    renderContacts();
+}
+
+async function loadContacts() {
+    contacts = JSON.parse(await getItem('contacts'));
+}
 
 //Eventuelle probleme beim Sortieren der User???
 
-function renderContacts() {
-    sortedMembers = members;
-    sortedContactList(sortedMembers);
-    renderContactList(sortedMembers);
+async function renderContacts() {
+    sortedContacts = contacts;
+    sortedContactList();
+    renderContactList(sortedContacts);
 }
 
-function sortedContactList(sortedMembers) {
-    sortedMembers.sort((a, b) => {
+function sortedContactList() {
+    contacts.sort((a, b) => {
         let nameA = a.name.split(' ');
         let nameB = b.name.split(' ');
         let firstLetterA = nameA[0].charAt(0).toUpperCase();
@@ -100,31 +87,31 @@ function sortSecondName(nameA, nameB) {
     return 0;
 }
 
-function renderContactList(sortedMembers) {
+function renderContactList(sortedContacts) {
     let contactlist = document.getElementById('contactsList');
     contactlist.innerHTML = "";
     let currentInitial = null;
 
-    for (let i = 0; i < sortedMembers.length; i++) {
-        let sortedMember = sortedMembers[i];
-        let firstLetter = getFirstLetter(sortedMembers, i);
+    for (let i = 0; i < sortedContacts.length; i++) {
+        let sortedContact = sortedContacts[i];
+        let firstLetter = getFirstLetter(sortedContacts, i);
 
         if (firstLetter !== currentInitial) {
             contactlist.innerHTML += renderFirstLetterHTML(firstLetter);
             currentInitial = firstLetter;
         }
 
-        let initials = getMemberInitials(sortedMembers, i);
-        contactlist.innerHTML += renderContactsHTML(sortedMembers, i, initials);
+        let initials = getMemberInitials(sortedContacts, i);
+        contactlist.innerHTML += renderContactsHTML(sortedContacts, i, initials);
     }
 }
 
-function getFirstLetter(sortedMembers, i) {
-    return sortedMembers[i].name.charAt(0);
+function getFirstLetter(sortedContacts, i) {
+    return sortedContacts[i].name.charAt(0);
 }
 
-function getMemberInitials(sortedMembers, i) {
-    return sortedMembers[i].name.split(' ')
+function getMemberInitials(sortedContacts, i) {
+    return sortedContacts[i].name.split(' ')
         .map(word => word.charAt(0))
         .join('');
 }
@@ -136,22 +123,22 @@ function renderFirstLetterHTML(firstLetter) {
     `;
 }
 
-function renderContactsHTML(sortedMembers, i, initials) {
+function renderContactsHTML(sortedContacts, i, initials) {
     return `
-    <div id="userCard${i}" class="user-card" onclick="toggleUserInformation(${i}, sortedMembers, '${initials}')">
-        <div class="contact-icon" id="initials" style= background-color:${members[i]['backgroundColor']}>${initials}</div>
+    <div id="userCard${i}" class="user-card" onclick="toggleUserInformation(${i}, sortedContacts, '${initials}')">
+        <div class="contact-icon" id="initials" style= background-color:${contacts[i]['color']}>${initials}</div>
         <div class=contact-container>
-            <span>${sortedMembers[i].name}</span>
-            <span class="email">${sortedMembers[i].email}</span>
+            <span>${sortedContacts[i].name}</span>
+            <span class="email">${sortedContacts[i].email}</span>
         </div>
     <div>
     `;
 }
 
-function toggleUserInformation(i, sortedMembers, initials) {
+function toggleUserInformation(i, sortedContacts, initials) {
     resetUserCardStyles()
     highlightUsercard(i);
-    openUserInformation(i, sortedMembers, initials);
+    openUserInformation(i, sortedContacts, initials);
 }
 
 function highlightUsercard(i) {
@@ -174,32 +161,33 @@ function closeUserInformation(i) {
     mainCard.innerHTML = '';
 }
 
-function openUserInformation(i, sortedMembers, initials) {
+function openUserInformation(i, sortedContacts, initials) {
     mainCard = document.getElementById('userOverview');
     mainCard.innerHTML = '';
-    mainCard.innerHTML = userInformationHTML(i, sortedMembers, initials);
+    mainCard.innerHTML = userInformationHTML(i, sortedContacts, initials);
 }
 
-function deleteUser(i, sortedMembers) {
-    sortedMembers.splice(i, 1);
-    renderContactList(sortedMembers);
+function deleteContact(i, sortedContacts) {
+    sortedContacts.splice(i, 1);
+    setItem('contacts', JSON.stringify(contacts));
+    renderContactList(sortedContacts);
     closeUserInformation();
 }
 
-function userInformationHTML(i, sortedMembers, initials) {
+function userInformationHTML(i, sortedContacts, initials) {
     return `
     <div class="main-head-container">
         <div>
-            <div class="main-contact-icon" style= background-color:${members[i]['backgroundColor']}>${initials}</div>
+            <div class="main-contact-icon" style= background-color:${contacts[i]['color']}>${initials}</div>
         </div>
         <div>
-            <div class="name-container">${sortedMembers[i].name}</div>
+            <div class="name-container">${sortedContacts[i].name}</div>
             <div class="action-icons-container">
                 <div class="edit-delete-container" onclick ="openEditContactPopUp(${i})">
                     <img src="./assets/img/contacts-edit.svg" alt="Edit icon">
                     <span>Edit</span>
                 </div>
-                <div class="edit-delete-container" onclick="deleteUser(${i}, sortedMembers)">
+                <div class="edit-delete-container" onclick="deleteContact(${i}, sortedContacts)">
                     <img src="./assets/img/delete.svg" alt="Delete icon">
                     <span>Delete</span>
                 </div>
@@ -210,7 +198,7 @@ function userInformationHTML(i, sortedMembers, initials) {
         <div class="information-headline">Contact Information</div>
         <div class="contact-detail">
             <div class="detail-title">Email</div>
-            <div class="detail-email">${sortedMembers[i].email}</div>
+            <div class="detail-email">${sortedContacts[i].email}</div>
         </div>
         <div>
             <div class="detail-title">Phone</div>
@@ -244,7 +232,8 @@ function openEditContactPopUp(i) {
     popUp.style.display = "flex";
     addPopUp = document.getElementById('addContactPopUp');
     addPopUp.classList.add('d-none');
-    document.getElementById('editButton').onclick = function () { updateMemberInfo(i, event); };
+    document.getElementById('editButton').onclick = function () { updateContactInfo(i, event); };
+    document.getElementById('deleteButton').onclick = function () { deleteContact(i, sortedContacts); };
     loadMemberInfo(i);
 }
 
@@ -268,37 +257,42 @@ function loadMemberInfo(i) {
     let name = document.getElementById('editName');
     let email = document.getElementById('editEmail');
     let phone = document.getElementById('editPhone');
-    name.value = members[i].name;
-    email.value = members[i].email;
-    phone.value = members[i].phone;
+    name.value = contacts[i].name;
+    email.value = contacts[i].email;
+    phone.value = contacts[i].phone;
 }
 
-function updateMemberInfo(i, event) {
+function updateContactsInfo(i, event) {
     event.preventDefault();
 
-    members[i] = {
+    contacts[i] = {
+        id:contacts[i]['id'],
         name: document.getElementById('editName').value,
         email: document.getElementById('editEmail').value,
         phone: document.getElementById('editPhone').value,
+        color: contacts[i]['color'],
     };
 
+    setItem('contacts', JSON.stringify(contacts));
+    loadContacts();
     renderContacts();
     closeEditContactPopUp();
     mainCard = document.getElementById('userOverview');
     mainCard.innerHTML = '';
 }
 
-function addContact() {
+async function addContact() {
     const randomIndex = Math.floor(Math.random() * backgroundColors.length);
 
-    let newContact = {
-        name: document.getElementById('addName').value,
-        email: document.getElementById('addEmail').value,
-        phone: document.getElementById('addPhone').value,
-        backgroundColor: backgroundColors[randomIndex],
-    };
-    console.log(newContact);
-    sortedMembers.push(newContact);
+    contacts.push({
+        id: Date.now(),
+        name: addName.value,
+        email: addEmail.value,
+        phone: addPhone.value,
+        color: backgroundColors[randomIndex],
+    });    
+
+    await setItem('contacts', JSON.stringify(contacts));
     renderContacts()
     closeAddContactPopUp();
 }

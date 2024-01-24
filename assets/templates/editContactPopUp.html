@@ -11,7 +11,7 @@
         <div class="person-icon">
             <img src="./assets/img/person.svg" alt="">
         </div>
-        <form class="form-container" onsubmit="updateMemberInfo(i); return false">
+        <form class="form-container" onsubmit="updateContactInfo(i); return false">
             <div class="input-container">
                 <div class="inputFieldsRegistration">
                     <div class="inputField">
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="addContactContainer">
-                <button class="buttonLight" onclick="deleteUser(i, sortedMembers)">Delete</button>
+                <button class="buttonLight" id="deleteButton" onclick="deleteContact(i, sortedContacts)">Delete</button>
                 <button class="buttonDarg" id="editButton" >Save</button>
             </div>
         </form>
