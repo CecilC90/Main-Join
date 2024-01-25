@@ -280,99 +280,11 @@ font-weight: 700; */
   }
 }
 
-@media(max-width: 970px) {
-
+@media(max-width: 900px) {
   .header-container {    
-      padding: 16px 20px;
-  }
-
-  .help-container {
-      display: none;
-  }
-
-  .headline {
-      padding-top: 48px;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-      padding-bottom: 40px;
-  }
-
-  .fs-61 {
-      font-size: 47px;
-  }
-
-  .fs-27 {
-      font-size: 20px;
-  }
-
-  .seperator {
-      display: none;
-  }
-
-  .seperator-mobile {
-      display: block;
-  }
-
-  .main-task-container {
-      width: 396px;
-  }
-
-  .button-container {
-      width: 186px;
-      height: 110px;
-  }
-
-  .elipse {
-      height: 40px;
-      width: 40px;
-  }
-
-  .fs-64 {
-      font-size: 47px;
-  }
-
-  .fs-20 {
-      font-size: 14px;
-  }
-
-  .urgency-container {
-      width: 396px;
-      height: 110px;
-  }
-
-  .elipse-urgency {
-      width: 40px;
-      height: 40px;
-  }
-
-  .arrow-icon {
-      width: 22.7px;
-      height: 10px;
-  }
-
-  .fs-16 {
-      font-size: 14px;
-  }
-
-  .line {
-      height: 68px;
-      margin: 0 20px;
-  }
-
-  .fs-21 {
-      font-size: 16px;
-  }
-
-.overview-container {
-   width: 396px;
+    padding-left: 50px;
+    padding-right: 25px;
 }
-
-  .task-container {
-      width: 116px;
-      height: 116px;
-      padding: 13px 31px;
-  }
 }
 
 @media(max-width: 750px) {
