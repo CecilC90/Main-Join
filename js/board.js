@@ -218,7 +218,7 @@ function addSubtask(index) {
             title: subtasksInput.value,
             selected: false
         }
-    )
+    );
     
     renderSubtasks(index);
 }
