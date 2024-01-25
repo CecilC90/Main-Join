@@ -1,0 +1,5 @@
+Abstand nach Links zum Menu ab 1350px nur noch 50px.
+
+Ab 750px links das Menu verschwinden lassen und dann das Menu im Footer anzeigen. (sollte Positon Fix sein)
+
+Header bei 900px ändern Padding links 50px rechts 25px und aber 750px auf Mobil Header wechseln.

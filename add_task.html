@@ -18,20 +18,20 @@
       <div w3-include-html="assets/templates/header.html"></div>
       <div class="addTaskContainer">
         <h1>Add Task</h1>
-        <div class="addTasks">
+        <div class="addTasks" id="addTask">
           <div class="leftContainer">
             <div class="taskTitle">
               <div class="inputContainer">
                 <p>Title*</p>
                 <div class="inputField" id="titleField">
-                  <input type="text" id="titleInputField" onkeyup="setBlueBorder('titleInputField', 'titleField')" placeholder="Enter a title" required />
+                  <input type="text" id="titleInputField" onkeyup="setBlueBorder('titleInputField', 'titleField'), clearRequiredText('requiredTextTitle')" placeholder="Enter a title" required />
                 </div>
               </div>
               <p class="fildIisRequiredText" id="requiredTextTitle"></p>
             </div>
             <div class="inputContainer">
               <p>Description</p>
-              <textarea class="descriptionTextArea" name="description" id="descriptionTextArea"></textarea>
+              <textarea class="descriptionTextArea" id="descriptionTextArea" onkeyup="setBlueBorder('descriptionTextArea', 'descriptionTextArea')"></textarea>
             </div>
             <div class="inputContainer assingnedToConatiner">
               <p>Assingned to</p>
@@ -57,7 +57,7 @@
               <div class="inputContainer">
                 <p>Due date*</p>
                 <div class="inputField" id="duedateField">
-                  <input type="datetime" id="duedateInputField" type="datetime-local" onkeyup="setBlueBorder('duedateInputField', 'duedateField')" placeholder="dd/mm/yyy" />
+                  <input type="datetime" id="duedateInputField" type="datetime-local" onkeyup="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate')" placeholder="dd/mm/yyy" />
                   <img src="/assets/img/calendar_icon.svg" alt="calender icon" />
                 </div>
               </div>
