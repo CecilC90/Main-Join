@@ -24,15 +24,17 @@
         <div w3-include-html="assets/templates/menu.html"></div>
         <div class="main-container">
             <div class="contacts-container">
+                <div class="add-button-mobile" onclick="openAddContactPopUp()"><img src="./assets/img/person_add.svg" alt=""></div>
                 <div class="contacts-header">
                     <div class="contact-button" onclick="openAddContactPopUp()">
                         <span>Add new contact</span>
                         <img src="./assets/img/person_add.svg" alt="">
                     </div>
                 </div>
+                
                 <div class="contacts-list" id="contactsList"></div>
             </div>
-            <div>
+            <div class="info-container">
                 <div class="headline">
                     <span class="fs-61 fw-700">Contacts</span>
                     <span class="seperator"></span>

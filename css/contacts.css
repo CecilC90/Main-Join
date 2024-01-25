@@ -8,6 +8,7 @@
 .contacts-container {
     display: flex;
     flex-direction: column;
+    position: relative;
     width: 33%;
     height: calc(100vh - 96px);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.08);
@@ -15,6 +16,11 @@
     padding: 22px 28px;
     box-sizing: border-box;
     overflow: auto;
+    font-size: 20px;
+}
+
+.contacts-container .email {
+    font-size: 16px     ;
 }
 
 .contacts-headline {
@@ -40,6 +46,25 @@
     cursor: pointer;
     border-radius: 10px;
     gap: 16px;
+}
+
+.add-button-mobile{
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    bottom: 112px;
+    right: 43px;
+    background-color: #2a3647;
+    width: 56px;
+    height: 56px;
+    border-radius: 46px;
+    cursor: pointer;
+}
+
+.add-button-mobile img {
+    width: 30px;
+    height: 21px;
 }
 
 .contact-button:hover {
@@ -270,6 +295,16 @@
     border:3px solid white;
 }
 
+.edit-person-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 70px;
+    border:3px solid white;
+}
+
 .person-icon img {
     width: 64px;
     height: 64px;
@@ -293,4 +328,24 @@
     font-size: 21px;
     font-style: normal;
     font-weight: 700;
+}
+
+
+@media(max-width: 1280px) {
+    .info-container {
+        display: none;
+    }
+
+    .contacts-container {
+        width: 100%;
+        font-size: 20px;
+    }
+
+    .contacts-container .email {
+        font-size: 16px;
+    }
+
+    .contact-button {
+        display: none;
+    }
 }
