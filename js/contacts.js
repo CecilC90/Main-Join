@@ -27,15 +27,14 @@ let backgroundColors = [
 async function setItem(key, value) {
     const payload = { key, value, token: STORAGE_TOKEN }; //wenn key und key gleich sind kann man es aus weg lassen { key, value, token:STORAGE_TOKEN}
     return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) });
-  }
-  
-  async function getItem(key) {
+}
+
+async function getItem(key) {
     const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-    return fetch(url).then(res => res.json()).then(res => res.data.value).catch(function(err)
-    {
-       console.log('fetch konnte nicht aufgeührt werden');
+    return fetch(url).then(res => res.json()).then(res => res.data.value).catch(function (err) {
+        console.log('fetch konnte nicht aufgeührt werden');
     });;
-  }
+}
 //--------------------------------------
 
 async function initContacts() {
@@ -136,9 +135,18 @@ function renderContactsHTML(sortedContacts, i, initials) {
 }
 
 function toggleUserInformation(i, sortedContacts, initials) {
-    resetUserCardStyles()
+    resetUserCardStyles();
     highlightUsercard(i);
     openUserInformation(i, sortedContacts, initials);
+    handleScreenWidth();
+}
+
+function handleScreenWidth() {
+    if (window.innerWidth < 1280) {
+        document.getElementById('contactsContainer').style.display = "none";
+        document.getElementById('infoContainer').style.display = "block";
+        document.getElementById('menuContactMobile').classList.remove('d-none');
+    }
 }
 
 function highlightUsercard(i) {
@@ -165,6 +173,8 @@ function openUserInformation(i, sortedContacts, initials) {
     mainCard = document.getElementById('userOverview');
     mainCard.innerHTML = '';
     mainCard.innerHTML = userInformationHTML(i, sortedContacts, initials);
+    document.getElementById('initialsPopUp').innerHTML = `${initials}`;
+    document.getElementById('initialsPopUp').style.backgroundColor = contacts[i]['color'];
 }
 
 function deleteContact(i, sortedContacts) {
@@ -172,6 +182,13 @@ function deleteContact(i, sortedContacts) {
     setItem('contacts', JSON.stringify(contacts));
     renderContactList(sortedContacts);
     closeUserInformation();
+}
+
+function closeMainContact() {
+    resetUserCardStyles();
+    document.getElementById('contactsContainer').style.display = "flex";
+    document.getElementById('infoContainer').style.display = "none";
+    document.getElementById('menuContactMobile').classList.add('d-none');
 }
 
 function userInformationHTML(i, sortedContacts, initials) {
@@ -266,7 +283,7 @@ function updateContactsInfo(i, event) {
     event.preventDefault();
 
     contacts[i] = {
-        id:contacts[i]['id'],
+        id: contacts[i]['id'],
         name: document.getElementById('editName').value,
         email: document.getElementById('editEmail').value,
         phone: document.getElementById('editPhone').value,
@@ -290,7 +307,7 @@ async function addContact() {
         email: addEmail.value,
         phone: addPhone.value,
         color: backgroundColors[randomIndex],
-    });    
+    });
 
     await setItem('contacts', JSON.stringify(contacts));
     renderContacts()

@@ -254,22 +254,22 @@ a {
         margin-left: 50px;
     }
 }
-/*
+
 @media(max-width: 1170px) {
     .greet-container {
       display: none;
     }
   }
 
-  @media(max-width: 970px) {
-
+  @media(max-width: 911px) {
+/*
     .header-container {    
         padding: 16px 20px;
     }
 
     .help-container {
         display: none;
-    }
+    }*/
 
     .headline {
         padding-top: 48px;
@@ -360,7 +360,7 @@ a {
     .summary-container {
         justify-content: center;
         padding: 0px 8px;
-        margin-left: ;
+        margin-left: 50px;
         box-sizing: border-box;
     }
 
@@ -402,4 +402,4 @@ a {
         height: 40px;
         width: 40px;
     }
-  }*/
+  }
