@@ -24,19 +24,21 @@
         <div w3-include-html="assets/templates/menu.html"></div>
         <div class="main-container">
             <div class="contacts-container" id="contactsContainer">
-                <div class="add-button-mobile" onclick="openAddContactPopUp()"><img src="./assets/img/person_add.svg" alt=""></div>
+                <div class="add-button-mobile" onclick="openAddContactPopUp()"><img src="./assets/img/person_add.svg"
+                        alt=""></div>
                 <div class="contacts-header">
                     <div class="contact-button" onclick="openAddContactPopUp()">
                         <span>Add new contact</span>
                         <img src="./assets/img/person_add.svg" alt="">
                     </div>
                 </div>
-                
+
                 <div class="contacts-list" id="contactsList"></div>
             </div>
             <div class="info-container" id="infoContainer">
-                <button class="contact-close" onclick="closeMainContact()"><img src="./assets/img/arrow-left-line.svg" alt=""></button>
-                
+                <button class="contact-close" onclick="closeMainContact()"><img src="./assets/img/arrow-left-line.svg"
+                        alt=""></button>
+
                 <div class="headline">
                     <span class="fs-61 fw-700">Contacts</span>
                     <span class="seperator"></span>
@@ -45,7 +47,12 @@
                 </div>
                 <div id="userOverview"></div>
             </div>
-            <button class="menu-contact-mobile d-none" id="menuContactMobile" onclick="closeMainContact()"><img src="./assets/img/more_vert.svg" alt=""></button>
+            <button class="menu-contact-mobile d-none" id="menuContactMobile" onclick="openContatOptions()"><img
+                    src="./assets/img/more_vert.svg" alt=""></button>
+            <div class="contact-options-mobile d-none" id="contactOptionsMobile">
+                <div><img src="./assets/img/contacts-edit.svg" alt="">Edit</div>
+                <div><img src="./assets/img/delete.svg" alt="">Delete</div>
+            </div>
         </div>
     </div>
 

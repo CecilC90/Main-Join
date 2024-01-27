@@ -139,6 +139,7 @@ function toggleUserInformation(i, sortedContacts, initials) {
     highlightUsercard(i);
     openUserInformation(i, sortedContacts, initials);
     handleScreenWidth();
+    //document.getElementById('menuContactMobile').onclick = function () { openContatOptions(i); };
 }
 
 function handleScreenWidth() {
@@ -314,3 +315,26 @@ async function addContact() {
     closeAddContactPopUp();
 }
 
+function openContatOptions() {
+    document.getElementById('contactOptionsMobile').style.display= 'flex';
+    
+}
+document.addEventListener('DOMContentLoaded', function () {
+    const contactOptionsMobile = document.getElementById('contactOptionsMobile');
+
+    function openContactOptions() {
+        contactOptionsMobile.style.display = 'flex';
+    }
+
+    window.onclick = (event) => {
+        // Überprüfe, ob das geklickte Element nicht das contactOptionsMobile-Element oder ein Kind davon ist
+        if (!event.target.matches('#contactOptionsMobile') && !contactOptionsMobile.contains(event.target)) {
+            contactOptionsMobile.style.display = 'none';
+        }
+    };
+
+    document.getElementById('contactOptionsMobile').addEventListener('click', event => {
+        // Verhindere, dass das Klick-Event auf die untergeordneten Elemente propagiert wird
+        event.stopPropagation();
+    });
+});
