@@ -79,6 +79,7 @@ function showDetailView(index) {
 
    detailViewContainer.innerHTML = templateHTMLDetailView(index);
 
+   renderPrioImg(index);
    renderSubtask(index);
    renderContactsDetailView(index);
    renderCheckboxAfterClose(index);
@@ -95,7 +96,7 @@ function renderContactsDetailView(index) {
     let assignedContactsContainer = document.getElementById(`assigned-contacts-detailview${index}`);
     if(todos[index].assignedContacts.length > 0) {
         assignedContactsContainer.innerHTML = `
-            <p>Assigned To:</p>
+            <span class="label">Assigned To:</span>
         `;
         for(let i = 0; i < todos[index].assignedContacts.length; i++) {
             const assignedContact = todos[index].assignedContacts[i];
@@ -117,7 +118,7 @@ function renderSubtask(index) {
     let subtasks = document.getElementById(`checkbox-subtask${index}`);
     if(todos[index].subtask.length > 0) {
         subtasks.innerHTML = `
-            <p>Subtasks</p>
+            <span class="label">Subtasks</span>
         `;
         for(let i = 0; i < todos[index].subtask.length; i++) {
             let currentIndexSubtask = todos[index].subtask[i].title;
@@ -134,11 +135,19 @@ function renderSubtask(index) {
 function editTask(index) {
     let detailViewContainer = document.getElementById('show-detail-todo');
     detailViewContainer.innerHTML = templateHTMLEditTask(index);
+
     renderPrioButton(index);
     changeSelectedContacts(index);
     renderAssingnedToDropdownList();
     renderSelectedContactsIcons();
     renderSubtasks(index);
+    loadPrioButton(index);
+}
+
+function loadPrioButton(index) {
+    let prioValue = todos[index].priority;
+
+    setPrioButton(prioValue, index);
 }
 
 function setPrioButton(prioValue, index) {
@@ -247,6 +256,7 @@ function changeTask(index) {
 
     showDetailView(index);
 }
+
 
 function renderTodos() {
 
@@ -372,14 +382,31 @@ function renderContact(index) {
 
 function renderPrioImg(index) {
     let prioImg = document.getElementById(`prio-img${index}`);
+    let prioImgDetail = document.getElementById(`prio-img-detail${index}`);
+
     if(todos[index].priority == 'low') {
-        prioImg.src = 'assets/img/prio-low.svg';
+        if(prioImg) {
+            prioImg.src = 'assets/img/prio-low.svg';
+        }
+        if(prioImgDetail) {
+            prioImgDetail.src = 'assets/img/prio-low.svg';
+        }
     }
     if(todos[index].priority == 'medium') {
-        prioImg.src = 'assets/img/prio-medium.svg';
+        if(prioImg) {
+            prioImg.src = 'assets/img/prio-medium.svg';
+        }
+        if(prioImgDetail) {
+            prioImgDetail.src = 'assets/img/prio-medium.svg';
+        }
     }
     if(todos[index].priority == 'high') {
-        prioImg.src = 'assets/img/prio-urgent.svg';
+        if(prioImg) {
+            prioImg.src = 'assets/img/prio-urgent.svg';
+        }
+        if(prioImgDetail) {
+            prioImgDetail.src = 'assets/img/prio-urgent.svg';
+        }
     }
 }
 

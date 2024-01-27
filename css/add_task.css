@@ -200,7 +200,6 @@ p {
 .subtask{
   display: flex;
   justify-content: space-between;
-  align-items: center;
   height: 24px;
   padding: 4px 16px;
   border-radius: 10px;

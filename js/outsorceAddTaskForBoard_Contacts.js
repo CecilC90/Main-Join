@@ -69,7 +69,7 @@ let contacts = [
   
   function getFirstAndSecondLetter(i) {
     let name = contacts[i]["name"];
-    let splitName = name.split(",");
+    let splitName = name.split(" ");
     let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
     let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
     let result = firstLetter + secondLetter;

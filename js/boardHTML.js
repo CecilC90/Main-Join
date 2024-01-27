@@ -1,5 +1,5 @@
 function templateHTMLTodoContainer(element, index) {
-    return `
+    return /*HTML*/ `
     <div class="todo-content" onclick="showDetailView(${index})" draggable="true" ondragstart="startDragging(${element.id})" id="todo-container${index}">
         <span id="category-span">${element.todoCategory}</span>
         <h2>${element.title}</h2>
@@ -160,19 +160,32 @@ function templateHTMLAddTask() {
 }
 
 function templateHTMLDetailView(index) { 
-  return `
+  return /* HTML */ `
       <div id="detail-todo-content">
           <div class="space-between">
               <span id="category-span">${todos[index].todoCategory}</span>
-              <span onclick="closeDetailView()">X</span>
+              <img class="close-img" onclick="closeDetailView()" src="/assets/img/close.svg" alt="">
           </div>
-          <h2>${todos[index].title}</h2>
+          <h1 class="headline">${todos[index].title}</h1>
           <p>${todos[index].description}</p>
-          <p>Due Date: ${todos[index].dueDate}</p>
-          <p>Priority: ${todos[index].priority}</p>
-          <div id="assigned-contacts-detailview${index}"></div>
-          <div id="checkbox-subtask${index}"></div> 
-          <a onclick="editTask(${index})" href="#">Edit</a>
+          <div class="task-info">
+            <div>
+              <span class="label">Due Date:</span>
+              <span class="value">${todos[index].dueDate}</span>
+            </div>
+            <div>
+              <span class="label">Priority:</span>
+              <span class="value">${todos[index].priority}</span>
+              <img id="prio-img-detail${index}" src="">
+            </div>
+          </div>
+          <div class="assigned-contacts-container" id="assigned-contacts-detailview${index}"></div>
+          <div class="checkbox-subtask-container" id="checkbox-subtask${index}"></div> 
+          <div class="btn-container">
+            <div class="delete-btn"></div>
+            <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+            <div class="edit-btn" onclick="editTask(${index})"></div>
+          </div>
       </div>
   `;
 }
@@ -181,18 +194,18 @@ function templateHTMLEditTask(index) {
   return /* HTML */ `
   <div id="detail-todo-content">
       <div class="space-end">
-          <span onclick="closeDetailView()">X</span>
+        <img class="close-img" onclick="closeDetailView()" src="/assets/img/close.svg" alt="">
       </div>
-      <p>Title:</p>
-      <input id="new-title" type="text" value="${todos[index].title}">
-      <p>Description:</p>
-      <input id="new-description" type="text" value="${todos[index].description}">
-      <p>Due Date:</p>
-      <input id="new-date" type="text" value="${todos[index].dueDate}">
-      <p>Priority:</p>
+      <p class="edit-p">Title:</p>
+      <input class="inputField editViewInput" id="new-title" type="text" value="${todos[index].title}">
+      <p class="edit-p">Description:</p>
+      <textarea class="descriptionTextArea editViewTextarea" id="new-description" type="text" value="">${todos[index].description}</textarea>
+      <p class="edit-p">Due Date:</p>
+      <input class="inputField editViewInput" id="new-date" type="date" value="${todos[index].dueDate}">
+      <p class="edit-p">Priority:</p>
       <div class="prioButtonConatainer priobutton-editview" id="priobutton-container${index}"></div>
       <div class="inputContainer assingnedToConatiner">
-          <p>Assingned to</p>
+          <p class="edit-p">Assingned to</p>
             <div>
                 <div class="inputField dropdown">
                   <input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownList()" />
@@ -202,7 +215,7 @@ function templateHTMLEditTask(index) {
               </div>
          <div class="contactesIconsContainer" id="showSelectedDropdownContact"></div> <!-- hier wird über die function renderSelectedContactsIcons() eingefügt-->
          <div class="inputContainer">
-              <p>Subtasks</p>
+              <p class="edit-p">Subtasks</p>
               <div class="inputField" id="subtaskField">
                 <input type="text" id="subtasksInput" onkeyup="showSubtasksDoneAndCancel(${index})" placeholder="Add new subtask" />
                 <div class="subtasksInputMenu" id="subtasksInputMenu">

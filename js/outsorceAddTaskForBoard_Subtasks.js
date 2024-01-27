@@ -41,8 +41,10 @@
   
   function editSubtaskDone(i, index) {
     let content = document.getElementById("editSubtask" + i);
-    todos[index].subtask[i].title = content.value;
-    renderSubtasks(index);
+    if(content.value !== '') {
+        todos[index].subtask[i].title = content.value;
+        renderSubtasks(index);
+    }
   }
   
   function deleteSubtask(i, index) {
