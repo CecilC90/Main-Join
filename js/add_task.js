@@ -28,26 +28,29 @@ async function init() {
   checkScreenWidth();
 }
 
-function loadContent(){
+function loadContent() {
   setPrioButton("medium");
   renderAssingnedToDropdownList();
   renderCategoryDropdownList();
   renderSelectedContactsIcons();
   renderSubtasks();
-  loadEventListener();
+  loadEventListner();
+  // window.addEventListener("click", handleWindowClick);
 }
 
 window.addEventListener("resize", checkScreenWidth);
 
 function checkScreenWidth() {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-  let content = document.getElementById('addTask');
+  let content = document.getElementById("addTask");
   if (screenWidth <= 1220 && mobileVersionIsOn == false) {
+    window.removeEventListener("click", handleWindowClick);
     mobileVersionIsOn = true;
     content.innerHTML = renderAddTaskMobileHTML();
     loadContent();
-  } 
+  }
   if (screenWidth > 1220 && mobileVersionIsOn == true) {
+    window.removeEventListener("click", handleWindowClick);
     mobileVersionIsOn = false;
     content.innerHTML = renderAddTaskHTML();
     loadContent();
@@ -274,56 +277,54 @@ function clearTask() {
   removeBorader("duedateField");
 }
 
-// document.addEventListener("DOMContentLoaded", function () {
-  function loadEventListener(){
-    // Toggle dropdown visibility
-    let contactDropdown = document.getElementById("assignedToDropdownIcon");
-    contactDropdown.addEventListener("click", function () {
-      dropdownContentAssignedTo.style.display = dropdownContentAssignedTo.style.display === "flex" ? "none" : "flex";
-      let dispayStatus = dropdownContentAssignedTo.style.display;
-      toggleDropdownIcon("assignedToDropdownIcon", dispayStatus);
-      console.log('ich wurde gedrückt');
-    });
-  
-    let categoryDropdown = document.getElementById("categoryDropdownIcon");
-    categoryDropdown.addEventListener("click", function () {
-      dropdownContenCategory.style.display = dropdownContenCategory.style.display === "flex" ? "none" : "flex";
-      let dispayStatus = dropdownContenCategory.style.display;
-      toggleDropdownIcon("categoryDropdownIcon", dispayStatus);
-    });
-  
-    // Close dropdown when clicking outside
-    window.addEventListener("click", function (event) {
-      let assignedToConatiner = this.document.getElementById("dropdownContentAssignedTo");
-      if (!contactDropdown.contains(event.target) && !assignedToConatiner.contains(event.target)) {
-        dropdownContentAssignedTo.style.display = "none";
-        toggleDropdownIcon("assignedToDropdownIcon", "none");
-      }
-    });
-  
-    window.addEventListener("click", function (event) {
-      let categoryConatiner = this.document.getElementById("dropdownContenCategory");
-      if (!categoryDropdown.contains(event.target) && !categoryConatiner.contains(event.target)) {
-        dropdownContenCategory.style.display = "none";
-        toggleDropdownIcon("categoryDropdownIcon", "none");
-      }
-    });
-  };
-  //});
+function loadEventListner(){
+  let contactDropdown = document.getElementById("assignedToDropdownIcon");
+  contactDropdown.addEventListener("click", function () {
+    dropdownContentAssignedTo.style.display = dropdownContentAssignedTo.style.display === "flex" ? "none" : "flex";
+    let dispayStatus = dropdownContentAssignedTo.style.display;
+    toggleDropdownIcon("assignedToDropdownIcon", dispayStatus);
+  });
+
+  let categoryDropdown = document.getElementById("categoryDropdownIcon");
+  categoryDropdown.addEventListener("click", function () {
+    dropdownContenCategory.style.display = dropdownContenCategory.style.display === "flex" ? "none" : "flex";
+    let dispayStatus = dropdownContenCategory.style.display;
+    toggleDropdownIcon("categoryDropdownIcon", dispayStatus);
+  });
+
+  window.addEventListener("click", handleWindowClick);
+}
 
 
-  // window.addEventListener("click", function (event) {
-  //   let subtaskEdit = this.document.getElementById("subtask");
-  //   if(subtaskEdit){
-  //     if (subtaskEdit.contains(event.target)) {
-  //       // renderSubtasks();
-  //       console.log("ich wurde gedrückt")
-  //     } else {
-  //       console.log('ich wurde nicht gedrückt');
-  //     }
-  //   }
-  // });
-  
+
+
+function handleWindowClick(event) {
+  let contactDropdown = document.getElementById("assignedToDropdownIcon");
+  let categoryDropdown = document.getElementById("categoryDropdownIcon");
+  let assignedToConatiner = document.getElementById("dropdownContentAssignedTo");
+  if (!contactDropdown.contains(event.target) && !assignedToConatiner.contains(event.target)) {
+    dropdownContentAssignedTo.style.display = "none";
+    toggleDropdownIcon("assignedToDropdownIcon", "none");
+  }
+  let categoryConatiner = document.getElementById("dropdownContenCategory");
+  if (!categoryDropdown.contains(event.target) && !categoryConatiner.contains(event.target)) {
+    dropdownContenCategory.style.display = "none";
+    toggleDropdownIcon("categoryDropdownIcon", "none");
+  }
+}
+
+// window.addEventListener("click", function (event) {
+//   let subtaskEdit = this.document.getElementById("subtask");
+//   if(subtaskEdit){
+//     if (subtaskEdit.contains(event.target)) {
+//       // renderSubtasks();
+//       console.log("ich wurde gedrückt")
+//     } else {
+//       console.log('ich wurde nicht gedrückt');
+//     }
+//   }
+// });
+
 // function setDisplayStyleDropDown(id, dispayStatus){
 //   dropdownContentAssignedTo.style.display = dispayStatus;
 //   toggleDropdownIcon(id, dispayStatus);
