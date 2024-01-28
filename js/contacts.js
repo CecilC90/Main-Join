@@ -139,7 +139,7 @@ function toggleUserInformation(i, sortedContacts, initials) {
     highlightUsercard(i);
     openUserInformation(i, sortedContacts, initials);
     handleScreenWidth();
-    //document.getElementById('menuContactMobile').onclick = function () { openContatOptions(i); };
+    document.getElementById('menuContactMobile').onclick = function () { openContatOptions(i); };
 }
 
 function handleScreenWidth() {
@@ -176,6 +176,8 @@ function openUserInformation(i, sortedContacts, initials) {
     mainCard.innerHTML = userInformationHTML(i, sortedContacts, initials);
     document.getElementById('initialsPopUp').innerHTML = `${initials}`;
     document.getElementById('initialsPopUp').style.backgroundColor = contacts[i]['color'];
+    
+    
 }
 
 function deleteContact(i, sortedContacts) {
@@ -183,6 +185,9 @@ function deleteContact(i, sortedContacts) {
     setItem('contacts', JSON.stringify(contacts));
     renderContactList(sortedContacts);
     closeUserInformation();
+    document.getElementById('contactOptionsMobile').style.display = "none";
+    document.getElementById('contactsContainer').style.display = "flex";
+    document.getElementById('infoContainer').style.display = "none";
 }
 
 function closeMainContact() {
@@ -253,6 +258,7 @@ function openEditContactPopUp(i) {
     document.getElementById('editButton').onclick = function () { updateContactInfo(i, event); };
     document.getElementById('deleteButton').onclick = function () { deleteContact(i, sortedContacts); };
     loadMemberInfo(i);
+    document.getElementById('contactOptionsMobile').style.display = "none";
 }
 
 function closeEditContactPopUp() {
@@ -315,26 +321,9 @@ async function addContact() {
     closeAddContactPopUp();
 }
 
-function openContatOptions() {
+function openContatOptions(i) {
     document.getElementById('contactOptionsMobile').style.display= 'flex';
-    
+    document.getElementById('openEditMobile').onclick = function () { openEditContactPopUp(`${i}`); };
+    document.getElementById('deleteMobile').onclick = function () { deleteContact(i, sortedContacts); };
 }
-document.addEventListener('DOMContentLoaded', function () {
-    const contactOptionsMobile = document.getElementById('contactOptionsMobile');
 
-    function openContactOptions() {
-        contactOptionsMobile.style.display = 'flex';
-    }
-
-    window.onclick = (event) => {
-        // Überprüfe, ob das geklickte Element nicht das contactOptionsMobile-Element oder ein Kind davon ist
-        if (!event.target.matches('#contactOptionsMobile') && !contactOptionsMobile.contains(event.target)) {
-            contactOptionsMobile.style.display = 'none';
-        }
-    };
-
-    document.getElementById('contactOptionsMobile').addEventListener('click', event => {
-        // Verhindere, dass das Klick-Event auf die untergeordneten Elemente propagiert wird
-        event.stopPropagation();
-    });
-});

@@ -19,7 +19,6 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    width: 456px;
     height: calc(100vh - 96px);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.08);
     background-color: white;
@@ -102,7 +101,6 @@
 }
 
 .contact-options-mobile div:active {
-
     font-weight: 700;
     filter: invert(76%) sepia(37%) saturate(6674%) hue-rotate(165deg) brightness(94%) contrast(87%);
 }
@@ -209,7 +207,6 @@
 .action-icons-container img {
     height: 18px;
     width: 18px;
-
 }
 
 .edit-delete-container {
@@ -227,8 +224,8 @@
 .contact-close {
     display: none;
     position: absolute;
-    top: 51px;
-    right: 20px;
+    top: 150px;
+    right: 16px;
     border: none;
     background-color: transparent;
     cursor: pointer;
@@ -249,8 +246,6 @@
 
 .info-container {
     margin-left: 50px;
-    position: relative;
-    width: 100%;
 }
 
 .contact-info-container {
@@ -290,17 +285,26 @@
     z-index: 5;
 }
 
+.headline-popUp{
+    font-size: 61px;
+    font-weight: 700;
+}
+
+.subheadline-popUp {
+    font-size: 27px;
+    font-weight: 400;
+}
+
 .contact-popup {
     display: flex;
     position: relative;
     height: 592px;
-    width: 1212px;
     background-color: white;
     border-radius: 30px;
-    overflow: hidden;
+    gap: 83px;
 }
 
-.let-container {
+.left-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -309,9 +313,10 @@
     width: 40%;
     background-color: #2a3647;
     color: white;
+    
 }
 
-.let-container img {
+.left-container img {
     width: 55px;
     height: 66px;
     z-index: 5;
@@ -327,11 +332,11 @@
 }
 
 .right-container {
-    width: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 135px 0;
+    padding-right: 48px;
 }
 
 .close-icon {
@@ -434,6 +439,76 @@
 
     .contact-close {
         display: flex;
+    }
+
+    .contact-popup {
+        box-sizing: border-box;
+        flex-direction: column;
+        height: auto;
+        gap: 0;
+    }
+
+    .left-container {
+        box-sizing: border-box;
+        border-radius: 30px 30px 0px 0px;
+        width: 100%;
+        padding: 124px 24px;
+    }
+
+    .left-container img {
+        display: none;
+    }
+
+    .headline-popUp {
+        font-size: 47px;
+    }
+
+    .subheadline-popUp {
+        font-size: 20px;
+    }
+
+    .close-icon img{
+        z-index: 999;
+        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(108deg) brightness(104%) contrast(150%);
+    }
+
+    .close-icon:hover {
+        background-color: none;
+        border-radius: none;
+    }
+
+    .person-icon {
+        position: absolute;
+        transform: translate(0%, -213%);
+        
+    }
+
+    .right-container {
+        padding: 0px 16px;
+        padding-top: 92px;
+    }
+
+    .form-container {
+        box-sizing: border-box;
+        margin-left: 0;
+        align-items: center;
+    }
+
+    .input-container {
+        width: auto;
+    }
+
+    .addContactContainer {
+        margin-top: 32px;
+        margin-bottom: 80px;
+    }
+
+    .addContactContainer .cancel {
+        display: none;
+    }
+
+    .inputFieldsRegistration {
+        gap: 15px;
     }
 }
 
