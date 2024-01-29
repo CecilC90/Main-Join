@@ -17,7 +17,7 @@
     <script src="js/outsorceAddTaskForBoard_Subtasks.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
-<body onload="init()">
+<body onload="initBoard ()">
 <div class="content">
     <div w3-include-html="assets/templates/menu.html"></div>
     <div w3-include-html="assets/templates/header.html"></div>
@@ -35,6 +35,10 @@
             </div>
             <div class="add-task-button">
                 <button class="buttonDarg" id="add-task">Add Task <img src="assets/img/add.svg" alt=""></button>
+            </div>
+            <!-- Mobile Task-Button -->
+            <div class="add-task-button-mobile">
+                <button class="buttonDarg" id="add-task-mobile"><img src="assets/img/add.svg" alt=""></button>
             </div>
         </div>
     </section>

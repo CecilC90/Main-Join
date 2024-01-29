@@ -5,7 +5,7 @@ let todos = [
         todoCategory: 'Test Category',
         description: 'Ths is the first Todo.',
         category: 'open',
-        dueDate: '10/05/2023',
+        dueDate: '2024-01-27',
         priority: 'low',
         assignedContacts: [
             'Anton Mayer', 'Emmanuel Mauer'
@@ -24,7 +24,7 @@ let todos = [
         todoCategory: 'Test Category',
         description: 'Ths is the second Todo.',
         category: 'done',
-        dueDate: '10/05/2023',
+        dueDate: '2024-01-27',
         priority: 'medium',
         assignedContacts: [],
         assignedContacts: [
@@ -39,7 +39,7 @@ let todos = [
         todoCategory: 'Test Category',
         description: 'Ths is the third Todo.',
         category: 'progress',
-        dueDate: '10/05/2023',
+        dueDate: '2024-01-27',
         priority: 'high',
         assignedContacts: [
             'Benedikt Ziegler', 'David Eisenberg'
@@ -64,7 +64,7 @@ let todos = [
 
 let startDragginId;
 
-function init() {
+function initBoard() {
     includesHTML();
     renderHTML();
 }
@@ -255,6 +255,7 @@ function changeTask(index) {
     }
 
     showDetailView(index);
+    renderTodos();
 }
 
 
@@ -442,7 +443,7 @@ function checkFeedbackTodo() {
 
     if(filteredOpenCategory.length === 0) {
         contentFeedback.classList.add('board-content');
-        contentFeedback.innerHTML = 'No tasks in progress';
+        contentFeedback.innerHTML = 'No tasks await for feedback';
     } else {
         contentFeedback.classList.remove('board-content');
         contentFeedback.innerHTML = '';
@@ -455,7 +456,7 @@ function checkDoneTodo() {
 
     if(filteredOpenCategory.length === 0) {
         contentDone.classList.add('board-content');
-        contentDone.innerHTML = 'No tasks in progress';
+        contentDone.innerHTML = 'No tasks are done';
     } else {
         contentDone.classList.remove('board-content');
         contentDone.innerHTML = '';
@@ -479,6 +480,8 @@ function showAddTask() {
     let showAddTodoContainer = document.getElementById('show-add-todo');
     showAddTodoContainer.style.display = "flex";
     showAddTodoContainer.innerHTML = templateHTMLAddTask();
+
+    init();
 }
 
 function closeAddTask() {
