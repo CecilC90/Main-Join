@@ -1,5 +1,7 @@
 let contacts = [];
 
+let openContactOptionsMobile = false;
+
 let backgroundColors = [
     '#ff0000', // Rot
     '#00ff00', // Grün
@@ -176,8 +178,6 @@ function openUserInformation(i, sortedContacts, initials) {
     mainCard.innerHTML = userInformationHTML(i, sortedContacts, initials);
     document.getElementById('initialsPopUp').innerHTML = `${initials}`;
     document.getElementById('initialsPopUp').style.backgroundColor = contacts[i]['color'];
-    
-    
 }
 
 function deleteContact(i, sortedContacts) {
@@ -322,8 +322,30 @@ async function addContact() {
 }
 
 function openContatOptions(i) {
-    document.getElementById('contactOptionsMobile').style.display= 'flex';
+    document.getElementById('contactOptionsMobile').style.display = 'flex';
     document.getElementById('openEditMobile').onclick = function () { openEditContactPopUp(`${i}`); };
     document.getElementById('deleteMobile').onclick = function () { deleteContact(i, sortedContacts); };
+    openContactOptionsMobile = true;
+    event.stopPropagation();
+    //window.addEventListener("click", windowClick);
 }
+
+document.addEventListener('click', function (event) {
+    if (openContactOptionsMobile) {
+        let contactOptionsMobile = document.getElementById('contactOptionsMobile');
+        if (!contactOptionsMobile.contains(event.target)) {
+            contactOptionsMobile.style.display = 'none';
+        }
+        openContactOptionsMobile = false;
+    }
+});
+
+/*function windowClick(event) {
+
+    if (!contactOptionsMobile.contains(event.target)) {
+        contactOptionsMobile.style.display = 'none';
+        window.removeEventListener("click", windowClick);
+    }
+}*/
+
 
