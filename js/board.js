@@ -490,8 +490,11 @@ function closeAddTask() {
 }
 
 function filterTodos() {
-    let search = document.getElementById('search').value;
-    search.toLowerCase();
+    let searchDestop = document.getElementById('search').value.toLowerCase();
+    let searachMobile = document.getElementById('search-mobile').value.toLowerCase();
+
+    let search = searchDestop || searachMobile;
+
     for(let i = 0; i < todos.length; i++) {
         const todo = todos[i];
         let todoContent = document.getElementById(`todo-container${i}`);
@@ -504,24 +507,13 @@ function filterTodos() {
     }
 
     document.getElementById('change-img').src = './assets/img/close.svg';
+    document.getElementById('change-img-mobile').src = './assets/img/close.svg';
 }
 
 function emptyInput() {
+    document.getElementById('search-mobile').value = '';
     document.getElementById('search').value = '';
     renderTodos();
     document.getElementById('change-img').src = 'assets/img/search.svg';
-}
-
-
-function load() {
-    let taskAsText = JSON.stringify(todos);
-    localStorage.setItem('task', taskAsText);
-}
-
-function save() {
-    let taskAsText = localStorage.getItem('task');
-
-    if (taskAsText) {
-        todos = JSON.parse(taskAsText);
-    }
+    document.getElementById('change-img-mobile').src = './assets/img/search.svg';
 }
