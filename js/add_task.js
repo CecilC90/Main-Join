@@ -22,10 +22,16 @@ let subtasks = [];
 let mobileVersionIsOn = false;
 
 async function init() {
+  loadAddTask();
   await includesHTML();
   showSelectedButton("addTaskButton");
   loadContent();
   checkScreenWidth();
+}
+
+function loadAddTask(){
+  let content = document.getElementById("addTask");
+  content.innerHTML = renderAddTaskHTML();
 }
 
 function loadContent() {
@@ -35,7 +41,7 @@ function loadContent() {
   renderSelectedContactsIcons();
   renderSubtasks();
   loadEventListner();
-  // window.addEventListener("click", handleWindowClick);
+  window.addEventListener("click", handleWindowClick);
 }
 
 window.addEventListener("resize", checkScreenWidth);
@@ -147,7 +153,7 @@ function renderCategoryDropdownList() {
 }
 
 function setSelectedCategory(i) {
-  let content = document.getElementById("inputFiedCategory");
+  let content = document.getElementById("inputFieldCategory");
   content.value = category[i];
   dropdownContenCategory.style.display = "none";
   toggleDropdownIcon("categoryDropdownIcon", "none");
@@ -230,7 +236,9 @@ function setBlueBorder(id, conatiner) {
 
 function setRedBorder(id, requiredConatiner) {
   document.getElementById(id).classList.add("wrongInput");
-  document.getElementById(requiredConatiner).innerHTML = "This fild is required";
+  if(requiredConatiner){
+    document.getElementById(requiredConatiner).innerHTML = "This fild is required";
+  }
 }
 
 function clearRequiredText(requiredConatiner) {
@@ -258,6 +266,17 @@ function addTask() {
     setRedBorder("duedateField", "requiredTextDuedate");
     allInputsFilled = false;
   }
+
+  if (checkIsFieldFilled("inputFieldCategory")) {
+    console.log("ich bin ausgefüllt");
+  } else {
+    setRedBorder("categoryField");
+    allInputsFilled = false;
+  }
+}
+
+function test1234(){
+  console.log('ja ich wurde ausgeführt');
 }
 
 function clearTask() {
@@ -268,13 +287,14 @@ function clearTask() {
   renderSubtasks();
   renderAssingnedToDropdownList();
   renderSelectedContactsIcons();
-  document.getElementById("inputFiedCategory").value = "";
+  document.getElementById("inputFieldCategory").value = "";
   document.getElementById("titleInputField").value = "";
   document.getElementById("duedateInputField").value = "";
   document.getElementById("requiredTextTitle").innerHTML = "";
   document.getElementById("requiredTextDuedate").innerHTML = "";
   removeBorader("titleField");
   removeBorader("duedateField");
+  removeBorader("categoryField");
 }
 
 function loadEventListner(){
@@ -294,9 +314,6 @@ function loadEventListner(){
 
   window.addEventListener("click", handleWindowClick);
 }
-
-
-
 
 function handleWindowClick(event) {
   let contactDropdown = document.getElementById("assignedToDropdownIcon");

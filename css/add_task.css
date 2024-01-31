@@ -280,6 +280,7 @@ footer {
 }
 .dropdownContentAssignedTo {
   display: none;
+  z-index: 2;
   gap: 2px;
   flex-direction: column;
   position: absolute;
@@ -374,8 +375,8 @@ footer {
   .addTasks {
     display: flex;
     flex-direction: column;
-    padding-top: 40px;
     gap: 8px;
+    padding-top: 40px;
     padding-bottom: 88px;
   }
   .leftContainer {
