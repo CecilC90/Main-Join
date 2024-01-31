@@ -232,6 +232,7 @@
 }
 
 .menu-contact-mobile {
+    display: none;
     position: absolute;
     bottom: 112px;
     right: 16px;
@@ -415,6 +416,17 @@
     font-weight: 700;
 }
 
+@media(min-width: 1281px) {
+    .info-container {
+        display: block!important;
+    }
+
+    .contacts-container {
+        display: flex!important;
+    }
+
+
+}
 
 @media(max-width: 1280px) {
     .info-container {
@@ -516,7 +528,6 @@
 @media(max-width: 911px) {
     .name-container {
         font-size: 36px;
-
     }
 
     .info-container {
@@ -536,6 +547,14 @@
         height: 80px;
         font-size: 27px;
     }
+
+    .menu-contact-mobile {
+        display: block;
+    }
+
+    .menu-contact-mobile {
+        display: block;
+    }
 }
 
 @media(max-width: 750px) {
@@ -551,11 +570,5 @@
 
     #editContactPopUp {
         width: 100%;
-    }
-}
-
-@media(min-width: 1280px) {
-    .contacts-container {
-        display: flex;
     }
 }

@@ -1,6 +1,7 @@
 let contacts = [];
 
 let openContactOptionsMobile = false;
+let openUserOverview = false;
 
 let backgroundColors = [
     '#ff0000', // Rot
@@ -142,6 +143,7 @@ function toggleUserInformation(i, sortedContacts, initials) {
     openUserInformation(i, sortedContacts, initials);
     handleScreenWidth();
     document.getElementById('menuContactMobile').onclick = function () { openContatOptions(i); };
+    openUserOverview = true;
 }
 
 function handleScreenWidth() {
@@ -170,6 +172,7 @@ function resetUserCardStyles() {
 function closeUserInformation(i) {
     let mainCard = document.getElementById('userOverview');
     mainCard.innerHTML = '';
+    openUserOverview = false;
 }
 
 function openUserInformation(i, sortedContacts, initials) {
@@ -194,7 +197,7 @@ function closeMainContact() {
     resetUserCardStyles();
     document.getElementById('contactsContainer').style.display = "flex";
     document.getElementById('infoContainer').style.display = "none";
-    document.getElementById('menuContactMobile').classList.add('d-none');
+    document.getElementById('menuContactMobile').style.display ="none";
 }
 
 function userInformationHTML(i, sortedContacts, initials) {
@@ -340,12 +343,5 @@ document.addEventListener('click', function (event) {
     }
 });
 
-/*function windowClick(event) {
-
-    if (!contactOptionsMobile.contains(event.target)) {
-        contactOptionsMobile.style.display = 'none';
-        window.removeEventListener("click", windowClick);
-    }
-}*/
 
 
