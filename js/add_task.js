@@ -44,7 +44,7 @@ function loadContent() {
   window.addEventListener("click", handleWindowClick);
 }
 
-window.addEventListener("resize", checkScreenWidth);
+ window.addEventListener("resize", checkScreenWidth);
 
 function checkScreenWidth() {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;

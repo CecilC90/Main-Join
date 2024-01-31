@@ -291,6 +291,15 @@ footer {
   max-height: 170px;
   overflow: auto;
 }
+.dropdownContentAssignedTo::-webkit-scrollbar{
+  width: 24px;
+}
+.dropdownContentAssignedTo::-webkit-scrollbar-thumb{
+  width: 4px;
+  background-color: #A8A8A8;
+  border: 9px solid white;
+  border-radius: 20px;
+}
 .dropdownContacts {
   display: flex;
   justify-content: space-between;
