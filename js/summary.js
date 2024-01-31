@@ -1,9 +1,9 @@
 async function render() {
-    await loadLoggedInUser();
     await includesHTML();
     greeting();
     loadTasks();
-    showUserInitials()
+    loadLoggedInUser();
+    // showUserInitials()
 }
 
 function greeting() {

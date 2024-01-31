@@ -37,6 +37,7 @@ function loadLoggedInUser() {
   if (loggedInUserAsText) {
     loggedInUser = JSON.parse(loggedInUserAsText);
   }
+  showUserInitials();
 }
 
 function showUserInitials() {

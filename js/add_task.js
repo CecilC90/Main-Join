@@ -27,6 +27,8 @@ async function init() {
   showSelectedButton("addTaskButton");
   loadContent();
   checkScreenWidth();
+  loadLoggedInUser();
+  // showUserInitials();
 }
 
 function loadAddTask(){
