@@ -3,7 +3,6 @@ async function render() {
     greeting();
     loadTasks();
     loadLoggedInUser();
-    // showUserInitials()
 }
 
 function greeting() {
