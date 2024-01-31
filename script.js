@@ -1,6 +1,9 @@
 const STORAGE_TOKEN = "4EFBXYBGE7QJD8SZ3C5H1CD589HBSZGJ38CGAPOM";
 const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 
+let loggedInUser = [];
+
+
 function init() {
   renderStartPage();
 }
@@ -15,6 +18,40 @@ async function includesHTML() {
       element.innerHTML = await resp.text();
     } else element.innerHTML = `<b>"${file}"</b> not found!`;
   }
+}
+
+function addLoggedInUser(userInfos) {
+  let name = userInfos.name;
+  loggedInUser.push(name);
+  console.log(name);
+  saveLoggedInUser();
+}
+
+function saveLoggedInUser() {
+  let loggedInUserAsText = JSON.stringify(loggedInUser);
+  localStorage.setItem('loggedInUser', loggedInUserAsText);
+}
+
+function loadLoggedInUser() {
+  let loggedInUserAsText = localStorage.getItem('loggedInUser');
+  if (loggedInUserAsText) {
+    loggedInUser = JSON.parse(loggedInUserAsText);
+  }
+}
+
+function showUserInitials() {
+  let userIcon = document.getElementById('Initial');
+  if (loggedInUser) {
+    let splitName = loggedInUser[0].split(" ");
+    let initials = splitName[0].charAt(0)+splitName[1].charAt(0);
+    userIcon.innerHTML = `${initials}`;
+  }
+}
+
+function logoutUser() {
+  let logoutUser = loggedInUser.splice(0, 1); 
+  saveLoggedInUser();
+  openPage('index');
 }
 
 function showSelectedButton(selected){

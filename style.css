@@ -208,6 +208,8 @@ font-weight: 700; */
   border: 3px solid #2a3647;
   border-radius: 50%;
   cursor: pointer;
+  animation-duration: 0.3s;
+  animation-name: fadein;
 }
 
 .user-icon:hover {
@@ -263,14 +265,14 @@ font-weight: 700; */
   background-color: #2A3D59;
 }
 
-.logo-mobile img{
+.logo-mobile img {
   width: 32px;
   height: 39px;
 }
 
 @media(max-width: 1350px) {
   .summary-container {
-      margin-left: 50px;
+    margin-left: 50px;
   }
 }
 
@@ -281,51 +283,51 @@ font-weight: 700; */
 }
 
 @media(max-width: 900px) {
-  .header-container {    
+  .header-container {
     padding-left: 50px;
     padding-right: 25px;
-}
+  }
 }
 
 @media(max-width: 750px) {
 
   .headline {
-      padding-left: 16px;
-      padding-right: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
-  
+
   .main-task-container {
-      margin-left: 0;
+    margin-left: 0;
   }
 
   .menu {
-      display: none;
+    display: none;
   }
 
   .header {
-      height: 80px;
-      left: 0;
-      width: 100%;
-      font-size: 16px;
+    height: 80px;
+    left: 0;
+    width: 100%;
+    font-size: 16px;
   }
 
   .title {
-      display: none;
+    display: none;
   }
 
   .logo-mobile {
-      display: block;
+    display: block;
   }
 
   .user-icon {
-      height: 40px;
-      width: 40px;
-      font-size: 16px;
+    height: 40px;
+    width: 40px;
+    font-size: 16px;
   }
 
   .user-icon span {
-      height: 40px;
-      width: 40px;
+    height: 40px;
+    width: 40px;
   }
 }
 

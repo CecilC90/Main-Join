@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./css/summary.css">
 </head>
 
-<body onload="includesHTML(), greeting(), loadTasks()">
+<body onload="render()">
     <div w3-include-html="assets/templates/header.html"></div>
     <div class="flex-container">
         <div w3-include-html="assets/templates/menu.html"></div>
@@ -102,14 +102,13 @@
                 </div>
                 <div class="greet-container">
                     <div class="fs-47 fw-500" id="greeting"></div>
-                    <div class="name-container">Sofia Müller</div>
+                    <div class="name-container" id="name" ></div>
                 </div>
             </div>
 
         </div>
     </div>
     </div>
-
 
 </body>
 

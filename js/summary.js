@@ -1,3 +1,11 @@
+async function render() {
+    await loadLoggedInUser();
+    await includesHTML();
+    greeting();
+    loadTasks();
+    showUserInitials()
+}
+
 function greeting() {
     let time = new Date().getHours();
     let greeting;
@@ -11,6 +19,16 @@ function greeting() {
     }
 
     document.getElementById('greeting').innerHTML = greeting;
+
+    showName();
+}
+
+function showName() {
+    if (loggedInUser === 'Guest') {
+        document.getElementById('name').innerHTML = '';
+    } else {
+        document.getElementById('name').innerHTML = `${loggedInUser}`;
+    }
 }
 
 function loadTasks() {

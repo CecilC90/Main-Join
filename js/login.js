@@ -1,4 +1,4 @@
-let loggedInUser = [];
+
 
 document.addEventListener("DOMContentLoaded", function () {
   var slideImage = document.getElementById("slideImage");
@@ -39,12 +39,12 @@ async function login() {
   let password = document.getElementById("password");
   let respons = await getItem(email.value);
   let userInfos
-  if(respons != undefined){
+  if (respons != undefined) {
     userInfos = JSON.parse(respons);
     let userPassword = userInfos.password;
-    if(password.value == userPassword){
+    if (password.value == userPassword) {
       console.log('login erfolgreich');
-//funktion um den User nach erfolgreichen Login zu speichern
+      //funktion um den User nach erfolgreichen Login zu speichern
       addLoggedInUser(userInfos);
       openPage('summary');
     } else {
@@ -59,11 +59,7 @@ async function login() {
 
 }
 
-function addLoggedInUser(userInfos) {
-    let name = userInfos.name;
-    loggedInUser.push.name;
-    console.log(name);
-}
+
 
 async function addUser() {
   showEmailAlreadyUsed(false);
@@ -71,14 +67,14 @@ async function addUser() {
   let name = document.getElementById("name");
   let password = document.getElementById("password");
   let checkPasswort = document.getElementById("confirmPasswort");
-  let userInfos = {'name': name.value, 'password': password.value, 'email': email.value, 'id': new Date().getTime()}
+  let userInfos = { 'name': name.value, 'password': password.value, 'email': email.value, 'id': new Date().getTime() }
   let respons = await getItem(email.value);
   let loadUserEmail;
-  if(respons != undefined){
+  if (respons != undefined) {
     loadUserEmail = JSON.parse(respons);
   }
-  if(!loadUserEmail){
-    if(password.value == checkPasswort.value){
+  if (!loadUserEmail) {
+    if (password.value == checkPasswort.value) {
       document.getElementById('registrationButton').disable = true;
       await setItem(email.value, userInfos);
       console.log('User wurde angelegt und der Fehler kommt weil die Email noch nicht in der Datenbank war!')
@@ -93,29 +89,29 @@ async function addUser() {
   }
 }
 
-function showLoginWorngPassword(){
+function showLoginWorngPassword() {
   let textField = document.getElementById('wrongPasswordText');
   textField.innerHTML = 'Wrong password Ups! Try again.'
   document.getElementById('inputPasswordField').classList.add('wrongInput');
 }
 
-function showPasswordNotConfirm(){
+function showPasswordNotConfirm() {
   let textField = document.getElementById('passwordNotConfirmText');
   textField.innerHTML = 'Ups! your password don’t match'
   document.getElementById('inputPasswordField').classList.add('wrongInput');
 }
 
-function showEmailAlreadyUsed(email){
-  if(email == true){
+function showEmailAlreadyUsed(email) {
+  if (email == true) {
     document.getElementById('inputEmailField').classList.add('wrongInput');
   } else {
     document.getElementById('inputEmailField').classList.remove('wrongInput');
   }
-  
+
 }
 
-function showEmailNotExisting(email){
-  if(email == true){
+function showEmailNotExisting(email) {
+  if (email == true) {
     document.getElementById('inputEmailField').classList.add('wrongInput');
   } else {
     document.getElementById('inputEmailField').classList.remove('wrongInput');
@@ -129,9 +125,8 @@ async function setItem(key, value) {
 
 async function getItem(key) {
   const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-  return fetch(url).then(res => res.json()).then(res => res.data.value).catch(function(err)
-  {
-     console.log('fetch konnte nicht aufgeührt werden');
+  return fetch(url).then(res => res.json()).then(res => res.data.value).catch(function (err) {
+    console.log('fetch konnte nicht aufgeührt werden');
   });;
 }
 
