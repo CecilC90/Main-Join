@@ -79,6 +79,8 @@ function showDetailView(index) {
 
    detailViewContainer.innerHTML = templateHTMLDetailView(index);
 
+   document.getElementById('detail-todo-content').style.animationPlayState = 'running';
+
    renderPrioImg(index);
    renderSubtask(index);
    renderContactsDetailView(index);
