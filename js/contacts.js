@@ -198,6 +198,7 @@ function closeMainContact() {
     document.getElementById('contactsContainer').style.display = "flex";
     document.getElementById('infoContainer').style.display = "none";
     document.getElementById('menuContactMobile').style.display ="none";
+    document.getElementById('userOverview').innerHTML = "";
 }
 
 function userInformationHTML(i, sortedContacts, initials) {

@@ -70,6 +70,37 @@
     border-radius: 46px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     cursor: pointer;
+    z-index: 999;
+}
+
+@keyframes fadein {
+    from {
+        right: -100px;
+    }
+
+    to {
+        right: 16px;
+    }
+}
+
+@keyframes fadeinPopup {
+    from {
+        right: -1000px;
+    }
+
+    to {
+        right: 0;
+    }
+}
+
+@keyframes fadeinPopupMobile {
+    from {
+        top: 1000px;
+    }
+
+    to {
+        top: 0;
+    }
 }
 
 .contact-options-mobile {
@@ -82,7 +113,7 @@
     width: 116px;
     height: 100px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    z-index: 999;
+    z-index: 10;
     background-color: white;
     justify-content: center;
     align-items: flex-start;
@@ -90,6 +121,8 @@
     font-size: 16px;
     font-weight: 400;
     border-radius: 20px 20px 0px 20px;
+    animation-duration: 0.3s;
+    animation-name: fadein;
 }
 
 .contact-options-mobile div {
@@ -286,7 +319,7 @@
     z-index: 5;
 }
 
-.headline-popUp{
+.headline-popUp {
     font-size: 61px;
     font-weight: 700;
 }
@@ -303,6 +336,8 @@
     background-color: white;
     border-radius: 30px;
     gap: 83px;
+    animation-duration: 0.3s;
+    animation-name: fadeinPopup;
 }
 
 .left-container {
@@ -315,7 +350,7 @@
     background-color: #2a3647;
     color: white;
     border-radius: 30px 0px 0px 30px;
-    
+
 }
 
 .left-container img {
@@ -418,11 +453,11 @@
 
 @media(min-width: 1281px) {
     .info-container {
-        display: block!important;
+        display: block !important;
     }
 
     .contacts-container {
-        display: flex!important;
+        display: flex !important;
     }
 
 
@@ -459,6 +494,8 @@
         flex-direction: column;
         height: auto;
         gap: 0;
+        animation-duration: 0.3s;
+        animation-name: fadeinPopupMobile;
     }
 
     .left-container {
@@ -480,7 +517,7 @@
         font-size: 20px;
     }
 
-    .close-icon img{
+    .close-icon img {
         z-index: 999;
         filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(108deg) brightness(104%) contrast(150%);
     }
@@ -493,7 +530,7 @@
     .person-icon {
         position: absolute;
         transform: translate(0%, -213%);
-        
+
     }
 
     .right-container {
@@ -549,11 +586,7 @@
     }
 
     .menu-contact-mobile {
-        display: block;
-    }
-
-    .menu-contact-mobile {
-        display: block;
+        display: block !important;
     }
 }
 
