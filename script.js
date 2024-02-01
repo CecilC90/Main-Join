@@ -65,5 +65,13 @@ function openPage(page){
 
 function userNavbar() {
   let navbar = document.getElementById('popUpUser');
-        navbar.classList.toggle('d-none');
+  
+  // Überprüfe, ob das Element aktuell sichtbar ist
+  if (navbar.style.display === 'flex') {
+      // Wenn sichtbar, setze den Stil auf 'none' (versteckt)
+      navbar.style.display = 'none';
+  } else {
+      // Wenn nicht sichtbar, setze den Stil auf 'flex' (sichtbar)
+      navbar.style.display = 'flex';
+  }
 }
