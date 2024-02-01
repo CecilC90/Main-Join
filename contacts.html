@@ -47,17 +47,18 @@
                     <span class="seperator-mobile"></span>
                 </div>
                 <div id="userOverview"></div>
+                <div class="contact-options-mobile" id="contactOptionsMobile">
+                    <div id="openEditMobile" onclick="openEditContactPopUp(`${i}`)">
+                        <img src="./assets/img/contacts-edit.svg" alt="" id="openEditMobile">Edit
+                    </div>
+                    <div id="deleteMobile" onclick="deleteContact(`${i}`, sortedContacts)">
+                        <img src="./assets/img/delete.svg" alt="">Delete
+                    </div>
+                </div>
             </div>
             <button class="menu-contact-mobile" id="menuContactMobile" onclick="openContatOptions(i)"><img
                     src="./assets/img/more_vert.svg" alt=""></button>
-            <div class="contact-options-mobile" id="contactOptionsMobile">
-                <div id="openEditMobile" onclick="openEditContactPopUp(`${i}`)">
-                    <img src="./assets/img/contacts-edit.svg" alt="" id="openEditMobile">Edit
-                </div>
-                <div id="deleteMobile" onclick="deleteContact(`${i}`, sortedContacts)">
-                    <img src="./assets/img/delete.svg" alt="">Delete
-                </div>
-            </div>
+            
         </div>
     </div>
 

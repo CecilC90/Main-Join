@@ -1,7 +1,13 @@
+body {
+    position: relative;
+    overflow-y: hidden;
+}
 .main-container {
     display: flex;
     width: 100%;
     margin-top: 96px;
+    position: relative;
+    overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -125,7 +131,7 @@
     font-size: 16px;
     font-weight: 400;
     border-radius: 20px 20px 0px 20px;
-    animation-duration: 0.3s;
+    animation-duration: 1.3s;
     animation-name: fadein;
 }
 
@@ -261,7 +267,7 @@
 .contact-close {
     display: none;
     position: absolute;
-    top: 150px;
+    top: 50px;
     right: 16px;
     border: none;
     background-color: transparent;
@@ -601,6 +607,7 @@
 @media(max-width: 750px) {
     .main-container {
         margin-top: 80px;
+        height: calc(100vh - 80px);
     }
 }
 
