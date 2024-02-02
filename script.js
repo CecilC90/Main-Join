@@ -20,6 +20,18 @@ async function includesHTML() {
   }
 }
 
+async function setItem(key, value) {
+  const payload = { key, value, token: STORAGE_TOKEN }; //wenn key und key gleich sind kann man es aus weg lassen { key, value, token:STORAGE_TOKEN}
+  return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) });
+}
+
+async function getItem(key) {
+  const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
+  return fetch(url).then(res => res.json()).then(res => res.data.value).catch(function (err) {
+    console.log('fetch konnte nicht aufgeührt werden');
+  });;
+}
+
 function addLoggedInUser(userInfos) {
   let name = userInfos.name;
   loggedInUser.push(name);

@@ -45,7 +45,7 @@ function loadContent() {
   window.addEventListener("click", handleWindowClick);
 }
 
- window.addEventListener("resize", checkScreenWidth);
+window.addEventListener("resize", checkScreenWidth);
 
 function checkScreenWidth() {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -62,6 +62,10 @@ function checkScreenWidth() {
     content.innerHTML = renderAddTaskHTML();
     loadContent();
   }
+}
+
+async function loadContacts(){
+  
 }
 
 function setPrioButton(prio) {
@@ -273,6 +277,37 @@ function addTask() {
   } else {
     setRedBorder("categoryField");
     allInputsFilled = false;
+  }
+  if(allInputsFilled){
+    let title = document.getElementById('titleInputField').value;
+    let description = document.getElementById('descriptionTextArea').value;
+    let category = document.getElementById('inputFieldCategory').value;
+    let dueDate = document.getElementById('duedateInputField').value;
+    let selectedContacts = [];
+    for (let i = 0; i < contacts.length; i++) {
+      if(contacts[i]['selected']){
+        selectedContacts.push(contacts[i]['name']);
+      }
+    }
+    let currentTask = {
+      id: 0,
+        title: title,
+        description: description,
+        todoCategory: category,
+        category: 'open',
+        dueDate: dueDate,
+        priority: selectedPrio,
+        assignedContacts: [
+            'Anton Mayer', 'Emmanuel Mauer'
+        ],
+        subtask: [
+            {
+                title: 'title1',
+                subtaskDone: false,
+            }
+        ],
+        counter: 0
+    }
   }
 }
 
