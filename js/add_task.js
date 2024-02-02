@@ -264,11 +264,11 @@ function addTask() {
     allInputsFilled = false;
   }
   if (allInputsFilled) {
-    addNewTask();
+    addToTaskBackend();
   }
 }
 
-async function addNewTask() {
+async function addToTaskBackend() {
   let title = document.getElementById("titleInputField").value;
   let description = document.getElementById("descriptionTextArea").value;
   let category = document.getElementById("inputFieldCategory").value;
