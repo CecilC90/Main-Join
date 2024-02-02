@@ -1,36 +1,20 @@
 let selectedPrio = "medium";
-let contacts = [
-  {
-    name: "julian, weishaar",
-    selected: true,
-  },
-  {
-    name: "Laura, Musterfrau",
-    selected: true,
-  },
-  {
-    name: "Max, Mustermann",
-    selected: false,
-  },
-  {
-    name: "Hans, Wurst",
-    selected: false,
-  },
-];
+let contacts = [];
 let category = ["Arbeit", "Privat", "Anderes"];
 let subtasks = [];
-let mobileVersionIsOn = false;
+let mobileVersionIsOn;
 
 async function init() {
   loadAddTaskContent();
   await includesHTML();
   showSelectedButton("addTaskButton");
-  loadContent();
+  await loadContacts();
+  setMobileVersionIsOn();
   checkScreenWidth();
   loadLoggedInUser();
 }
 
-function loadAddTaskContent(){
+function loadAddTaskContent() {
   let content = document.getElementById("addTask");
   content.innerHTML = renderAddTaskHTML();
 }
@@ -46,6 +30,15 @@ function loadContent() {
 }
 
 window.addEventListener("resize", checkScreenWidth);
+
+function setMobileVersionIsOn() {
+  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  if (screenWidth <= 1220) {
+    mobileVersionIsOn = false;
+  } else {
+    mobileVersionIsOn = true;
+  }
+}
 
 function checkScreenWidth() {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -64,8 +57,9 @@ function checkScreenWidth() {
   }
 }
 
-async function loadContacts(){
-  
+async function loadContacts() {
+  let respons = await getItem("contacts");
+  contacts = JSON.parse(respons);
 }
 
 function setPrioButton(prio) {
@@ -109,7 +103,7 @@ function filterAssingnedToDropdownList() {
 
 function getFirstAndSecondLetter(i) {
   let name = contacts[i]["name"];
-  let splitName = name.split(",");
+  let splitName = name.split(" ");
   let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
   let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
   let result = firstLetter + secondLetter;
@@ -241,7 +235,7 @@ function setBlueBorder(id, conatiner) {
 
 function setRedBorder(id, requiredConatiner) {
   document.getElementById(id).classList.add("wrongInput");
-  if(requiredConatiner){
+  if (requiredConatiner) {
     document.getElementById(requiredConatiner).innerHTML = "This fild is required";
   }
 }
@@ -257,58 +251,64 @@ function removeBorader(id) {
 
 function addTask() {
   let allInputsFilled = true;
-
-  if (checkIsFieldFilled("titleInputField")) {
-    console.log("ich bin ausgefüllt");
-  } else {
+  if (checkIsFieldFilled("titleInputField") == false) {
     setRedBorder("titleField", "requiredTextTitle");
     allInputsFilled = false;
   }
-
-  if (checkIsFieldFilled("duedateInputField")) {
-    console.log("ich bin ausgefüllt");
-  } else {
+  if (checkIsFieldFilled("duedateInputField") == false) {
     setRedBorder("duedateField", "requiredTextDuedate");
     allInputsFilled = false;
   }
-
-  if (checkIsFieldFilled("inputFieldCategory")) {
-    console.log("ich bin ausgefüllt");
-  } else {
+  if (checkIsFieldFilled("inputFieldCategory") == false) {
     setRedBorder("categoryField");
     allInputsFilled = false;
   }
-  if(allInputsFilled){
-    let title = document.getElementById('titleInputField').value;
-    let description = document.getElementById('descriptionTextArea').value;
-    let category = document.getElementById('inputFieldCategory').value;
-    let dueDate = document.getElementById('duedateInputField').value;
-    let selectedContacts = [];
-    for (let i = 0; i < contacts.length; i++) {
-      if(contacts[i]['selected']){
-        selectedContacts.push(contacts[i]['name']);
-      }
-    }
-    let currentTask = {
-      id: 0,
-        title: title,
-        description: description,
-        todoCategory: category,
-        category: 'open',
-        dueDate: dueDate,
-        priority: selectedPrio,
-        assignedContacts: [
-            'Anton Mayer', 'Emmanuel Mauer'
-        ],
-        subtask: [
-            {
-                title: 'title1',
-                subtaskDone: false,
-            }
-        ],
-        counter: 0
+  if (allInputsFilled) {
+    addNewTask();
+  }
+}
+
+async function addNewTask() {
+  let title = document.getElementById("titleInputField").value;
+  let description = document.getElementById("descriptionTextArea").value;
+  let category = document.getElementById("inputFieldCategory").value;
+  let dueDate = document.getElementById("duedateInputField").value;
+  let selectedContacts = loadSelectedContacts();
+  let allTasks = await loadAllTasks();
+  let currentTask = {
+    id: 0,
+    title: title,
+    description: description,
+    todoCategory: category,
+    category: "open",
+    dueDate: dueDate,
+    priority: selectedPrio,
+    assignedContacts: selectedContacts,
+    subtask: subtasks,
+    counter: 0,
+  };
+  allTasks.push(currentTask);
+  await saveAllTasks(allTasks);
+  console.log(allTasks);
+}
+
+function loadSelectedContacts(){
+  let selectedContacts = [];
+  for (let i = 0; i < contacts.length; i++) {
+    if (contacts[i]["selected"]) {
+      selectedContacts.push(contacts[i]["id"]);
     }
   }
+  return selectedContacts;
+}
+
+async function loadAllTasks(){
+  let respons = await getItem("allTasks");
+  return JSON.parse(respons);
+}
+
+async function saveAllTasks(allTasks){
+  await setItem('allTasks', allTasks);
 }
 
 function clearTask() {
@@ -329,7 +329,7 @@ function clearTask() {
   removeBorader("categoryField");
 }
 
-function loadEventListner(){
+function loadEventListner() {
   let contactDropdown = document.getElementById("assignedToDropdownIcon");
   contactDropdown.addEventListener("click", function () {
     dropdownContentAssignedTo.style.display = dropdownContentAssignedTo.style.display === "flex" ? "none" : "flex";
