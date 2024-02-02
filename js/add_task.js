@@ -22,16 +22,15 @@ let subtasks = [];
 let mobileVersionIsOn = false;
 
 async function init() {
-  loadAddTask();
+  loadAddTaskContent();
   await includesHTML();
   showSelectedButton("addTaskButton");
   loadContent();
   checkScreenWidth();
   loadLoggedInUser();
-  // showUserInitials();
 }
 
-function loadAddTask(){
+function loadAddTaskContent(){
   let content = document.getElementById("addTask");
   content.innerHTML = renderAddTaskHTML();
 }
@@ -275,10 +274,6 @@ function addTask() {
     setRedBorder("categoryField");
     allInputsFilled = false;
   }
-}
-
-function test1234(){
-  console.log('ja ich wurde ausgeführt');
 }
 
 function clearTask() {

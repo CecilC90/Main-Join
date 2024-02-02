@@ -108,8 +108,7 @@ function renderAddTaskHTML(){
         <div class="inputContainer">
           <p>Due date<span style="color: #FF8190;">*</span></p>
           <div class="inputField" id="duedateField">
-            <input type="text" id="duedateInputField" placeholder="dd/mm/yyyy" onkeyup="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate')"/>
-            <img src="/assets/img/calendar_icon.svg" alt="calender icon" />
+            <input class="duedateInputField" id="duedateInputField" type="date" onchange="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate')"/>
           </div>
         </div>
         <p class="fildIisRequiredText" id="requiredTextDuedate"></p>
@@ -197,7 +196,7 @@ function renderAddTaskHTML(){
         </div>
       </div>
     </div>
-    <Button>test</Button>
+    <button style="display: none"></button>
   </form>
   `
 }
@@ -283,8 +282,7 @@ function renderAddTaskMobileHTML() {
       <div class="inputContainer">
         <p>Due date<span style="color: #FF8190;">*</span></p>
         <div class="inputField" id="duedateField">
-          <input type="datetime" id="duedateInputField" type="datetime-local" onkeyup="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate')" placeholder="dd/mm/yyy" />
-          <img src="/assets/img/calendar_icon.svg" alt="calender icon" />
+          <input class="duedateInputField" type="date" id="duedateInputField" onchange="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate')"/>
         </div>
       </div>
       <p class="fildIisRequiredText" id="requiredTextDuedate"></p>

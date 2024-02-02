@@ -124,6 +124,20 @@ p {
   width: 440px;
   gap: 24px;
 }
+
+.duedateInputField{
+  font-family: "Inter", sans-serif;
+  color: #757575 !important;
+}
+.duedateInputField:invalid {
+  color: #757575 !important;
+}
+.duedateInputField:valid {
+  color: #000 !important;
+}
+.duedateInputField[type="date"]::-webkit-calendar-picker-indicator {
+  background: url(/assets/img/calendar_icon.svg) no-repeat;
+}
 .prioButtonConatiner {
   display: flex;
   justify-content: space-between;
