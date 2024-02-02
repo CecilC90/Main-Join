@@ -114,13 +114,14 @@ a {
 .main-task-container {
     display: flex;
     flex-direction: column;
-    width: 560px;
     gap: 28px;
+    max-width: 560px;
 }
 
 .check-rectangle {
     display: flex;
-    gap:32px;
+    justify-content: space-between;
+    gap: 32px;
 }
 
 .button-container {
@@ -130,8 +131,7 @@ a {
     box-sizing: border-box;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
     border-radius: 30px;
-    width: 264px;
-    height: 168px;
+    padding: 38px 50px 38px 58px;
     overflow: hidden;
     cursor: pointer;
 }
@@ -183,7 +183,6 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 560px;
     height: 168px;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
     border-radius: 30px;
@@ -229,12 +228,12 @@ a {
 
 .overview-container{
     display: flex;
+    justify-content: space-between;
     gap: 28px;
 }
 
 .task-container {
-    box-sizing: border-box;
-    width: 168px;
+    box-sizing: border-box;   
     height: 168px;
     padding: 21.5px 42.5px;
     text-align: center;
@@ -262,15 +261,6 @@ a {
   }
 
   @media(max-width: 911px) {
-/*
-    .header-container {    
-        padding: 16px 20px;
-    }
-
-    .help-container {
-        display: none;
-    }*/
-
     .headline {
         padding-top: 48px;
         flex-direction: column;
@@ -295,15 +285,6 @@ a {
         display: block;
     }
   
-    .main-task-container {
-        width: 396px;
-    }
-
-    .button-container {
-        width: 186px;
-        height: 110px;
-    }
-
     .elipse {
         height: 40px;
         width: 40px;
@@ -318,7 +299,6 @@ a {
     }
 
     .urgency-container {
-        width: 396px;
         height: 110px;
     }
 
@@ -345,10 +325,6 @@ a {
         font-size: 16px;
     }
 
-.overview-container {
-     width: 396px;
-}
-
     .task-container {
         width: 116px;
         height: 116px;
@@ -362,6 +338,7 @@ a {
         padding: 0px 8px;
         margin-left: 50px;
         box-sizing: border-box;
+        margin-top: 80px;
     }
 
     .headline {
@@ -401,5 +378,22 @@ a {
     .user-icon span {
         height: 40px;
         width: 40px;
+    }
+  }
+
+  @media(max-width: 470px) {
+    .summary-container {
+        margin-left: 0;
+    }
+  }
+
+  @media(max-width: 420px) {
+    .check-rectangle {
+        gap: 20px;
+    }
+
+    .overview-container {
+        gap: 20px;
+        justify-content: center;
     }
   }

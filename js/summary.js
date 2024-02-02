@@ -1,5 +1,6 @@
 async function render() {
     await includesHTML();
+    loadLoggedInUser();
     greeting();
     loadTasks();
     loadLoggedInUser();
@@ -18,7 +19,6 @@ function greeting() {
     }
 
     document.getElementById('greeting').innerHTML = greeting;
-
     showName();
 }
 
