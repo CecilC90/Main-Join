@@ -3,7 +3,6 @@ async function render() {
     loadLoggedInUser();
     greeting();
     loadTasks();
-    loadLoggedInUser();
 }
 
 function greeting() {
