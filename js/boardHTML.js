@@ -54,7 +54,7 @@ function templateHTMLDetailView(index) {
           <div class="assigned-contacts-container" id="assigned-contacts-detailview${index}"></div>
           <div class="checkbox-subtask-container" id="checkbox-subtask${index}"></div> 
           <div class="btn-container">
-            <div class="delete-btn"></div>
+            <div class="delete-btn" onclick="deleteTask(${index})"></div>
             <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
             <div class="edit-btn" onclick="editTask(${index})"></div>
           </div>

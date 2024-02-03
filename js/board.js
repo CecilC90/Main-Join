@@ -100,6 +100,14 @@ function renderSubtask(index) {
     }
 }
 
+async function deleteTask(index) {
+    todos.splice(index);
+
+    await setItem('allTasks', JSON.stringify(todos));
+    closeDetailView();
+    renderTodos;
+}
+
 function editTask(index) {
     let detailViewContainer = document.getElementById('show-detail-todo');
     detailViewContainer.innerHTML = templateHTMLEditTask(index);
