@@ -1,76 +1,40 @@
-let todos = [
-    {
-        id: 0,
-        title: 'Todo1',
-        todoCategory: 'Test Category',
-        description: 'Ths is the first Todo.',
-        category: 'open',
-        dueDate: '2024-01-27',
-        priority: 'low',
-        assignedContacts: [
-            'Anton Mayer', 'Emmanuel Mauer'
-        ],
-        subtask: [
-            {
-                title: 'title1',
-                subtaskDone: false,
-            }
-        ],
-        counter: 0
-    },
-    {
-        id: 1,
-        title: 'Todo2',
-        todoCategory: 'Test Category',
-        description: 'Ths is the second Todo.',
-        category: 'done',
-        dueDate: '2024-01-27',
-        priority: 'medium',
-        assignedContacts: [],
-        assignedContacts: [
-            'Benedikt Ziegler', 'David Eisenberg'
-        ],
-        subtask: [],
-        counter: 0
-    },
-    {
-        id: 2,
-        title: 'Todo3',
-        todoCategory: 'Test Category',
-        description: 'Ths is the third Todo.',
-        category: 'progress',
-        dueDate: '2024-01-27',
-        priority: 'high',
-        assignedContacts: [
-            'Benedikt Ziegler', 'David Eisenberg'
-        ],
-        subtask: [
-            {
-                title: 'title3',
-                subtaskDone: false,
-            },
-            {
-                title: 'title4',
-                subtaskDone: false,
-            },
-            {
-                title: 'title5',
-                subtaskDone: false,
-            }
-        ],
-        counter: 0
-    }
-]
+let todos = [];
+
+let contacts = [];
 
 let startDragginId;
+
+//--------------------------------------------
+async function setItem(key, value) {
+    const payload = { key, value, token: STORAGE_TOKEN }; //wenn key und key gleich sind kann man es aus weg lassen { key, value, token:STORAGE_TOKEN}
+    return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) });
+}
+
+async function getItem(key) {
+    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
+    return fetch(url).then(res => res.json()).then(res => res.data.value).catch(function (err) {
+        console.log('fetch konnte nicht aufgeührt werden');
+    });;
+}
+//--------------------------------------
 
 function initBoard() {
     includesHTML();
     renderHTML();
 }
 
-function renderHTML() {
-    renderTodos();
+async function renderHTML() {
+    await loadTasks();
+    await loadContacts();
+    await renderTodos();
+}
+
+async function loadTasks() {
+    todos = JSON.parse(await getItem('allTasks'));
+}
+
+async function loadContacts() {
+    contacts = JSON.parse(await getItem('contacts'));
 }
 
 function showDetailView(index) {
@@ -101,15 +65,17 @@ function renderContactsDetailView(index) {
             <span class="label">Assigned To:</span>
         `;
         for(let i = 0; i < todos[index].assignedContacts.length; i++) {
-            const assignedContact = todos[index].assignedContacts[i];
-            let splitName = assignedContact.split(" ");
+            const contactId = todos[index].assignedContacts[i];
+            const contact = findContactById(contactId);
+            let splitName = contact.name.split(" ");
             let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
             let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
             let resultInitials = firstLetter + secondLetter;
+            
             assignedContactsContainer.innerHTML += `
                 <div class="contact-detailview">
                     <div class="contactsIcon">${resultInitials}</div>
-                    <span>${assignedContact}</span>    
+                    <span>${contact.name}</span>    
                 </div>
             `;
         }
@@ -205,7 +171,7 @@ function changeSelectedContacts(index) {
         for (let j = 0; j < contacts.length; j++) {
             let contact = contacts[j];
 
-            if (todosContact === contact.name) {
+            if (todosContact === contact.id) {
                 contact.selected = true;
             }
         }
@@ -214,14 +180,14 @@ function changeSelectedContacts(index) {
 
 function pushSelecetedContactsToTodos(index) {
     for(let i = 0; i < contacts.length; i++) {
-        contact = contacts[i];
+        const contact = contacts[i].id;
         if(contact.selected == true){
             todos[index].assignedContacts.push(contact);
         }
     }
 }
 
-function addSubtask(index) {
+async function addSubtask(index) {
     let subtasksInput = document.getElementById("subtasksInput");
     let addSubtask = todos[index].subtask;
     addSubtask.push(
@@ -231,10 +197,11 @@ function addSubtask(index) {
         }
     );
     
+    await setItem('allTasks', JSON.stringify(todos));
     renderSubtasks(index);
 }
 
-function changeTask(index) {
+async function changeTask(index) {
     let newTitle = document.getElementById('new-title');
     let newDescription = document.getElementById('new-description');
     let newDate = document.getElementById('new-date');
@@ -245,7 +212,7 @@ function changeTask(index) {
         let contact = contacts[j];
 
         if(contact.selected) {
-            todos[index].assignedContacts.push(contact.name);
+            todos[index].assignedContacts.push(contact.id);
         }
     }
 
@@ -256,12 +223,14 @@ function changeTask(index) {
         dueDate: newDate.value,
     }
 
+    await setItem('allTasks', JSON.stringify(todos));
+
     showDetailView(index);
     renderTodos();
 }
 
 
-function renderTodos() {
+async function renderTodos() {
 
     let contentTodo = document.getElementById('board-content-todo');
     let contentProgress = document.getElementById('board-content-progress');
@@ -272,6 +241,9 @@ function renderTodos() {
     checkProgressTodo();
     checkFeedbackTodo();
     checkDoneTodo();
+
+    await loadTasks();
+    await loadContacts();
 
     for(let i = 0; i < todos.length; i++) {
         const todo = todos[i];
@@ -367,12 +339,17 @@ function subtaskMaxLength(index) {
       }
 }
 
+function findContactById(contactId) {
+    return contacts.find(contact => contact.id === contactId);
+}
+
 function renderContact(index) {
     let assignedContactsContainer = document.getElementById(`assigned-contacts${index}`);
     if(todos[index].assignedContacts.length > 0) {
         for(let i = 0; i < todos[index].assignedContacts.length; i++) {
-            const contact = todos[index].assignedContacts[i];
-            let splitName = contact.split(" ");
+            const contactId = todos[index].assignedContacts[i];
+            const contact = findContactById(contactId);
+            let splitName = contact.name.split(" ");
             let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
             let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
             let resultInitials = firstLetter + secondLetter;
@@ -481,7 +458,7 @@ function startDragging(id) {
 function showAddTask() {
     let showAddTodoContainer = document.getElementById('show-add-todo');
     showAddTodoContainer.style.display = "flex";
-    showAddTodoContainer.innerHTML = templateHTMLAddTask();
+    showAddTodoContainer.innerHTML = renderAddTaskHTML();
 
     init();
 }

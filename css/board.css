@@ -129,6 +129,10 @@ body {
     font-weight: 400;
 }
 
+a {
+    text-decoration: none !important;
+}
+
 .add-task-btn:hover {
     opacity: 0.7;
 }
