@@ -249,9 +249,15 @@ a {
 }
 
 #add-todo-content {
+    max-height: 90vh;
     background-color: #fff;
-    border-radius: 10px;
-    margin: 0 !important;
+    border-radius: 24px;
+    padding: 40px;
+    overflow: scroll;
+    transform: translateX(100vw);
+    animation-name: SlideFromRight;
+    animation-duration: 225ms;
+    animation-fill-mode: forwards;
 }
 
 .boardAddToDo {
@@ -571,6 +577,19 @@ footer {
         margin-left: 0;
         margin-bottom: 0;
     }
+
+    .addTasks {
+        padding-bottom: 0 !important;
+    }
+
+    .descriptionTextArea {
+        max-width: 100% !important;
+    }
+
+    footer {
+        background-color: #fff !important;
+        position: static !important;
+    }
 }
 
 @media(max-width: 1100px) {
@@ -666,6 +685,10 @@ footer {
 
     .headline {
         padding-left: 0;
+    }
+
+    #show-add-todo {
+        display: none;
     }
 }
 

@@ -522,9 +522,19 @@ function showAddTask() {
     renderSelectedContactsIcons();
     renderSubtasks();
     loadEventListner();
+    mobileAddTask();
 }
 
 function closeAddTask() {
     let showAddTodoContainer = document.getElementById('show-add-todo');
     showAddTodoContainer.style.display = "none";
 }
+
+function mobileAddTask() {
+    let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    if (screenWidth < 750) {
+        document.getElementById('todo-link').href = 'add_task.html';
+        document.getElementById('progress-link').href = 'add_task.html';
+        document.getElementById('feedback-link').href = 'add_task.html';
+    } 
+  }

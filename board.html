@@ -53,7 +53,7 @@
         <div class="board-element" id="todo" ondrop="moveTo('open')" ondragover="allowDrop(event)">
             <div class="space-between margin-right">
                 <span>To do</span>
-                <img class="add-task-btn" onclick="showAddTask()" src="assets/img/plus-button.svg" alt="">
+                <a id="todo-link"><img class="add-task-btn" onclick="showAddTask()" src="assets/img/plus-button.svg" alt=""></a>
             </div>
             <div id="board-content-todo" class="board-content">No tasks To do</div>
             <div id="content-todo"></div>
@@ -61,7 +61,7 @@
         <div class="board-element" id="progress" ondrop="moveTo('progress')" ondragover="allowDrop(event)">
             <div class="space-between margin-right">
                 <span>In progress</span>
-                <img class="add-task-btn" onclick="showAddTask()" src="assets/img/plus-button.svg" alt="">
+                <a id="progress-link"><img class="add-task-btn" onclick="showAddTask()" src="assets/img/plus-button.svg" alt=""></a>
             </div>
             <div id="board-content-progress" class="board-content">No task in progress</div>
             <div id="content-progress"></div>
@@ -70,7 +70,7 @@
         <div class="board-element" id="feedback" ondrop="moveTo('feedback')" ondragover="allowDrop(event)">
             <div class="space-between margin-right">
                 <span>Await feedback</span>
-                <img class="add-task-btn" onclick="showAddTask()" src="assets/img/plus-button.svg" alt="">
+                <a id="feedback-link"><img class="add-task-btn" onclick="showAddTask()" src="assets/img/plus-button.svg" alt=""></a>
             </div>
             <div id="board-content-feedback" class="board-content">No tasks await for feedback</div>
             <div id="content-feedback"></div>
