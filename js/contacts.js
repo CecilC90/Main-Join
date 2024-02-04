@@ -42,6 +42,7 @@ async function getItem(key) {
 
 async function initContacts() {
     await includesHTML();
+    showSelectedButton("contactButton");
     await loadContacts();
     renderContacts();
     loadLoggedInUser();

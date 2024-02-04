@@ -1,5 +1,6 @@
 async function render() {
     await includesHTML();
+    showSelectedButton("summaryButton");
     loadLoggedInUser();
 }
 
