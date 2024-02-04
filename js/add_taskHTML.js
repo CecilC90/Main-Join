@@ -108,7 +108,7 @@ function renderAddTaskHTML(){
         <div class="inputContainer">
           <p>Due date<span style="color: #FF8190;">*</span></p>
           <div class="inputField" id="duedateField">
-            <input class="duedateInputField" id="duedateInputField" type="date" onchange="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate')"/>
+            <input class="duedateInputField" id="duedateInputField" type="date" onkeyup="changeColorDuedate()" onchange="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate'), changeColorDuedate()"/>
           </div>
         </div>
         <p class="fildIisRequiredText" id="requiredTextDuedate"></p>
@@ -282,7 +282,7 @@ function renderAddTaskMobileHTML() {
       <div class="inputContainer">
         <p>Due date<span style="color: #FF8190;">*</span></p>
         <div class="inputField" id="duedateField">
-          <input class="duedateInputField" type="date" id="duedateInputField" onchange="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate')"/>
+        <input class="duedateInputField" id="duedateInputField" type="date" onkeyup="changeColorDuedate()" onchange="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate'), changeColorDuedate()"/>
         </div>
       </div>
       <p class="fildIisRequiredText" id="requiredTextDuedate"></p>

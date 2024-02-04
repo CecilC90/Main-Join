@@ -249,7 +249,18 @@ function removeBorader(id) {
   document.getElementById(id).classList.remove("correctInput");
 }
 
+function changeColorDuedate() {
+  let content = document.getElementById("duedateInputField");
+  if (content.value) {
+    content.classList.add("duedateColorBlack");
+  } else {
+    content.classList.remove("duedateColorBlack");
+  }
+}
+
 async function addTask() {
+  showAddTaskToBoard();
+  document.getElementById("createTaskButton").disabled = true;
   let allInputsFilled = true;
   if (checkIsFieldFilled("titleInputField") == false) {
     setRedBorder("titleField", "requiredTextTitle");
@@ -266,6 +277,7 @@ async function addTask() {
   if (allInputsFilled) {
     await addToTaskBackend();
   }
+  document.getElementById("createTaskButton").disabled = false;
 }
 
 async function addToTaskBackend() {
@@ -277,7 +289,7 @@ async function addToTaskBackend() {
   let allSubtasks = loadAllSubtasks();
   let allTasks = await loadAllTasks();
   let currentTask = {
-    id: 0,
+    id: new Date().getTime(),
     title: title,
     description: description,
     todoCategory: category,
@@ -290,9 +302,10 @@ async function addToTaskBackend() {
   };
   allTasks.push(currentTask);
   await saveAllTasks(allTasks);
+  console.log(allTasks);
 }
 
-function loadSelectedContacts(){
+function loadSelectedContacts() {
   let selectedContacts = [];
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i]["selected"]) {
@@ -302,25 +315,31 @@ function loadSelectedContacts(){
   return selectedContacts;
 }
 
-function loadAllSubtasks(){
+function loadAllSubtasks() {
   let allSubtasks = [];
   for (let i = 0; i < subtasks.length; i++) {
     let subtask = {
       title: subtasks[i],
-      subtaskDone: false
-    }
+      subtaskDone: false,
+    };
     allSubtasks.push(subtask);
   }
   return allSubtasks;
 }
 
-async function loadAllTasks(){
+async function loadAllTasks() {
   let respons = await getItem("allTasks");
   return JSON.parse(respons);
 }
 
-async function saveAllTasks(allTasks){
-  await setItem('allTasks', allTasks);
+async function saveAllTasks(allTasks) {
+  await setItem("allTasks", allTasks);
+}
+
+function showAddTaskToBoard() {
+  var conatiner = document.getElementById("finishedMessageContainer");
+  conatiner.style.display = "flex";
+  conatiner.style.bottom = "calc(50% - " + conatiner.clientHeight / 2 + "px)";
 }
 
 function clearTask() {
