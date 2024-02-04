@@ -69,6 +69,7 @@ function logoutUser() {
 
 function showSelectedButton(selected){
   document.getElementById(selected).classList.replace('menuButton', 'selectedMenuButton');
+  document.getElementById(selected + 'Mobile').classList.add('selectedMobileMenuButton');
 }
 
 function openPage(page){
