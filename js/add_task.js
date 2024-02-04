@@ -259,7 +259,6 @@ function changeColorDuedate() {
 }
 
 async function addTask() {
-  showAddTaskToBoard();
   document.getElementById("createTaskButton").disabled = true;
   let allInputsFilled = true;
   if (checkIsFieldFilled("titleInputField") == false) {
@@ -275,10 +274,11 @@ async function addTask() {
     allInputsFilled = false;
   }
   if (allInputsFilled) {
+    showAddTaskToBoard();
     await addToTaskBackend();
+    openPage('board');
   }
   document.getElementById("createTaskButton").disabled = false;
-  openPage('board');
 }
 
 async function addToTaskBackend() {
