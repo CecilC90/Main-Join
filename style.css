@@ -371,3 +371,28 @@ font-weight: 700; */
 
 
 /* #endregion */
+
+
+.legality-container {
+  margin-top: 96px;
+  margin-left: 96px;
+  padding-top: 110px;
+  overflow: scroll;
+  height: calc(100vh - 206px);
+  width: 100%;
+}
+
+.legality-container span {
+  color: #29abe2;
+  font-weight: 700;
+}
+
+.legality-container a {
+  text-decoration: underline;
+  color: #0000EE;
+}
+
+.legality-content {
+  max-width: 1014px;
+}
+
