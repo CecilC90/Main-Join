@@ -459,3 +459,45 @@ footer {
     bottom: 80px;
   }
 }
+@media (max-width: 460px){
+  .dropdownContentAssignedTo{
+    width: 100%;
+  }
+  .dropdownContenCategory{
+    width: 100%;
+  }
+}
+@media (max-width: 450px){
+  .addTaskContainer{
+    width: 100%;
+  }
+  footer{
+    padding: 5px;
+    width: calc(100% - 10px);
+  }
+  footer p{
+    font-size: 15px
+  }
+  .createTaskButtonConatiner{
+    gap: 0;
+  }
+  .createTaskButtonConatiner button{
+    font-size: 15px;
+  }
+}
+@media (max-width: 400px){
+  .prioButtonConatiner{
+    gap: 5px;
+  }
+}
+@media (max-width: 360px){
+  body p{
+    font-size: 15px;
+  }
+  .titleInputField{
+    font-size: 15px !important;
+  }
+  .descriptionTextArea{
+    font-size: 15px;
+  }
+}
