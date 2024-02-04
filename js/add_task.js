@@ -278,6 +278,7 @@ async function addTask() {
     await addToTaskBackend();
   }
   document.getElementById("createTaskButton").disabled = false;
+  openPage('board');
 }
 
 async function addToTaskBackend() {
