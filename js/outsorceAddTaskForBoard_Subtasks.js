@@ -48,6 +48,9 @@
   }
   
   async function deleteSubtaskEditview(i, index) {
+    if(todos[index].subtask[i].subtaskDone == true) {
+      todos[index].counter--;
+    }
     todos[index].subtask.splice(i, 1);
     await setItem('allTasks', JSON.stringify(todos));
     renderSubtasksEditview(index);
