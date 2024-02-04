@@ -6,16 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legality</title>
     <script src="script.js"></script>
+    <script src="./js/summary.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./css/summary.css">
     <link rel="stylesheet" href="./css/contacts.css">
 </head>
 
-<body onload="includesHTML()">
+<body onload="includesHTML(), render()">
     <div w3-include-html="assets/templates/header.html"></div>
     <div class="flex-container">
         <div w3-include-html="assets/templates/menu.html"></div>
+        <div w3-include-html="assets/templates/mobileMenu.html"></div>
         <div class="legality-container">
             <h1>Legal Notice</h1>
             <button class="contact-close" onclick="closeMainContact()"><img src="./assets/img/arrow-left-line.svg"
