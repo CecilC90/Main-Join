@@ -4,6 +4,12 @@ async function render() {
     loadLoggedInUser();
 }
 
+async function renderSummary() {
+    await render();
+    greeting();
+    loadTasks();
+}
+
 function greeting() {
     let time = new Date().getHours();
     let greeting;
