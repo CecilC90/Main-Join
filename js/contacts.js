@@ -119,7 +119,8 @@ function getFirstLetter(sortedContacts, i) {
 function getMemberInitials(sortedContacts, i) {
     return sortedContacts[i].name.split(' ')
         .map(word => word.charAt(0))
-        .join('');
+        .join('')
+        .toUpperCase();
 }
 
 function renderFirstLetterHTML(firstLetter) {
