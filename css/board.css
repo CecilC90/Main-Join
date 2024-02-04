@@ -474,6 +474,22 @@ a {
     margin: 0;
 }
 
+.header{
+    z-index: 0 !important;
+}
+
+footer {
+    margin-bottom: 0 !important;
+}
+
+#add-todo-content {
+    padding: 30px;
+}
+
+#add-todo-content p {
+    margin-bottom: 0 !important;
+}
+
 #ok-button {
     padding: 16px;
     border-radius: 10px;
@@ -555,10 +571,6 @@ a {
         margin-left: 0;
         margin-bottom: 0;
     }
-
-    .header{
-        z-index: 0 !important;
-      }
 }
 
 @media(max-width: 1100px) {

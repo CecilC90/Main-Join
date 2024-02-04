@@ -1,74 +1,89 @@
- function renderSubtasks(index) {
-    let subtasksList = document.getElementById("subtasksList");
+ function renderSubtasksEditview(index) {
+    let subtasksList = document.getElementById("subtasksListEditview");
     subtasksList.innerHTML = "";
     for (let i = 0; i < todos[index].subtask.length; i++) {
       let subtasks = todos[index].subtask[i].title;  
-      subtasksList.innerHTML += renderSubtasksHTML(i, subtasks, index);
+      subtasksList.innerHTML += renderSubtasksHTMLEditview(i, subtasks, index);
     }
   }
   
-  function renderSubtasksHTML(i, subtasks, index) {
+  function renderSubtasksHTMLEditview(i, subtasks, index) {
     return /* html */ `
-    <div id="subtask${i}" ondblclick="editSubtask(${i})">
+    <div id="subtaskEditview${i}" ondblclick="editSubtaskEditview(${i})">
       <div class="subtask">
         <div class="subtaskText">
           <p>&bull;</p>
           <P>${subtasks}</P>
         </div>
         <div class="subtaskMenu">
-          <img src="/assets/img/subtasks_edit_icon.svg" onclick="editSubtask(${i}, '${subtasks}', ${index})" alt="edit_icon">
+          <img src="/assets/img/subtasks_edit_icon.svg" onclick="editSubtaskEditview(${i}, '${subtasks}', ${index})" alt="edit_icon">
           <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
-          <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i}, ${index})" alt="delete_icon">
+          <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtaskEditview(${i}, ${index})" alt="delete_icon">
         </div>
       </div>
     </div>
     `;
   }
   
-  function editSubtask(i, editSubtask, index) {
-    let content = document.getElementById("subtask" + i);
+  function editSubtaskEditview(i, editSubtask, index) {
+    let content = document.getElementById("subtaskEditview" + i);
     content.innerHTML = /* html */ `
       <div class="subtaskEdit" id="subtaskEdit">
         <input type="text" id="editSubtask${i}" value="${editSubtask}">
         <div>
-          <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i}, ${index})" alt="delete_icon">
+          <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtaskEditview(${i}, ${index})" alt="delete_icon">
           <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
-          <img src="/assets/img/subtasks_done_icon.svg" onclick="editSubtaskDone(${i}, ${index})" alt="done_icon">
+          <img src="/assets/img/subtasks_done_icon.svg" onclick="editSubtaskDoneEditview(${i}, ${index})" alt="done_icon">
         </div>
       </div>
     `;
   }
   
-  function editSubtaskDone(i, index) {
+  function editSubtaskDoneEditview(i, index) {
     let content = document.getElementById("editSubtask" + i);
     if(content.value !== '') {
         todos[index].subtask[i].title = content.value;
-        renderSubtasks(index);
+        renderSubtasksEditview(index);
     }
   }
   
-  function deleteSubtask(i, index) {
+  async function deleteSubtaskEditview(i, index) {
     todos[index].subtask.splice(i, 1);
-    renderSubtasks(index);
+    await setItem('allTasks', JSON.stringify(todos));
+    renderSubtasksEditview(index);
   }
 
-  function showSubtasksDoneAndCancel(index) {
-    let subtasksInput = document.getElementById("subtasksInput");
-    let content = document.getElementById("subtasksInputMenu");
+  function showSubtasksDoneAndCancelEditview(index) {
+    let subtasksInput = document.getElementById("subtasksInputEditview");
+    let content = document.getElementById("subtasksInputMenuEditview");
     if (subtasksInput.value.length != 0) {
       content.innerHTML = /* html */ `
-        <img class="subtasksInputMenuimg" onclick="clearSubtaskInputField()" src="/assets/img/subtasks_cancel_icon.svg" alt="cancel_icon">
+        <img class="subtasksInputMenuimg" onclick="clearSubtaskInputFieldEditview()" src="/assets/img/subtasks_cancel_icon.svg" alt="cancel_icon">
         <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
-        <img class="subtasksInputMenuimg" onclick="addSubtask(${index})" src="/assets/img/subtasks_done_icon.svg" alt="done_icon">
+        <img class="subtasksInputMenuimg" onclick="addSubtaskEditview(${index})" src="/assets/img/subtasks_done_icon.svg" alt="done_icon">
      `;
     } else {
       content.innerHTML = '<img src="/assets/img/subtasks_add_icon.svg" alt="add_icon">';
     }
   }
   
-  function clearSubtaskInputField() {
-    let content = document.getElementById("subtasksInput");
+  function clearSubtaskInputFieldEditview() {
+    let content = document.getElementById("subtasksInputEditview");
     content.value = "";
-    showSubtasksDoneAndCancel();
+    showSubtasksDoneAndCancelEditview();
     setBlueBorder('subtasksInput', 'subtaskField');
   }
+
+  async function addSubtaskEditview(index) {
+    let subtasksInput = document.getElementById("subtasksInputEditview");
+    let addSubtask = todos[index].subtask;
+    addSubtask.push(
+        {
+            title: subtasksInput.value,
+            selected: false
+        }
+    );
+    
+    await setItem('allTasks', JSON.stringify(todos));
+    renderSubtasksEditview(index);
+}

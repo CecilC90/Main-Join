@@ -62,7 +62,7 @@ function templateHTMLDetailView(index) {
   `;
 }
 
-function templateHTMLEditTask(index) {
+async function templateHTMLEditTask(index) {
   return /* HTML */ `
   <div id="detail-todo-content">
       <div class="space-end">
@@ -80,22 +80,22 @@ function templateHTMLEditTask(index) {
           <p class="edit-p-m0">Assingned to</p>
             <div>
                 <div class="inputField dropdown">
-                  <input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownList()" />
-                  <img onclick="contactDropdown()" class="dropDownIcon" id="assignedToDropdownIcon" src="/assets/img/arrow_drop_down.svg" alt="" />
+                  <input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownListEditview()" />
+                  <img onclick="contactDropdown()" class="dropDownIcon" id="assignedToDropdownIconEditview" src="/assets/img/arrow_drop_down.svg" alt="" />
                 </div>
-                <div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo"></div> <!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->
+                <div class="dropdownContentAssignedTo" id="dropdownContentAssignedToEditview"></div> <!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->
               </div>
-         <div class="contactesIconsContainer mb-16" id="showSelectedDropdownContact"></div> <!-- hier wird über die function renderSelectedContactsIcons() eingefügt-->
+         <div class="contactesIconsContainer mb-16" id="showSelectedDropdownContactEditview"></div> <!-- hier wird über die function renderSelectedContactsIcons() eingefügt-->
          <div class="inputContainer">
               <p class="edit-p-m0">Subtasks</p>
               <div class="inputField" id="subtaskField">
-                <input type="text" id="subtasksInput" onkeyup="showSubtasksDoneAndCancel(${index})" placeholder="Add new subtask" />
-                <div class="subtasksInputMenu" id="subtasksInputMenu">
-                  <img onclick="addSubtask(${index})" src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
+                <input type="text" id="subtasksInputEditview" onkeyup="showSubtasksDoneAndCancelEditview(${index})" placeholder="Add new subtask" />
+                <div class="subtasksInputMenu" id="subtasksInputMenuEditview">
+                  <img onclick="addSubtaskEditview(${index})" src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
                 </div>
               </div>
               <div>
-                <div class="subtasksList" id="subtasksList"></div>
+                <div class="subtasksList" id="subtasksListEditview"></div>
               </div>
             </div>
       <div class="btn-container">
@@ -108,15 +108,15 @@ function templateHTMLEditTask(index) {
 function renderPrioButton(index) {
     let prioButtonConatainer = document.getElementById(`priobutton-container${index}`);
     prioButtonConatainer.innerHTML = `
-      <div class="prioButton" id="prioButtonHigh" onclick="setPrioButton('high', ${index})">
+      <div class="prioButton" id="prioButtonHighEditview" onclick="setPrioBtn('high', ${index})">
           <p>Urgent</p>
           <img id="change-img-high" src="assets/img/prio-urgent.svg">
       </div>
-      <div class="prioButton" id="prioButtonMedium" onclick="setPrioButton('medium', ${index})">
+      <div class="prioButton" id="prioButtonMediumEditview" onclick="setPrioBtn('medium', ${index})">
           <p>Medium</p>
           <img id="change-img-medium" src="assets/img/prio-medium.svg">
       </div>
-      <div class="prioButton" id="prioButtonLow" onclick="setPrioButton('low', ${index})">
+      <div class="prioButton" id="prioButtonLowEditview" onclick="setPrioBtn('low', ${index})">
           <p>Low</p>
           <img id="change-img-low" src="assets/img/prio-low.svg">
       </div>

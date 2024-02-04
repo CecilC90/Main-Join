@@ -1,7 +1,5 @@
 let todos = [];
 
-let contacts = [];
-
 let startDragginId;
 
 //--------------------------------------------
@@ -108,33 +106,33 @@ async function deleteTask(index) {
     renderTodos;
 }
 
-function editTask(index) {
+async function editTask(index) {
     let detailViewContainer = document.getElementById('show-detail-todo');
-    detailViewContainer.innerHTML = templateHTMLEditTask(index);
+    detailViewContainer.innerHTML = await templateHTMLEditTask(index);
 
     renderPrioButton(index);
     changeSelectedContacts(index);
-    renderAssingnedToDropdownList();
-    renderSelectedContactsIcons();
-    renderSubtasks(index);
+    renderAssingnedToDropdownListEditview();
+    renderSelectedContactsIconsEditview();
+    renderSubtasksEditview(index);
     loadPrioButton(index);
 }
 
 function loadPrioButton(index) {
     let prioValue = todos[index].priority;
 
-    setPrioButton(prioValue, index);
+    setPrioBtn(prioValue, index);
 }
 
-function setPrioButton(prioValue, index) {
+function setPrioBtn(prioValue, index) {
     todos[index] = {
       ...todos[index],
       priority: prioValue
     }
   
-    let low = document.getElementById('prioButtonLow');
-    let medium = document.getElementById('prioButtonMedium');
-    let high = document.getElementById('prioButtonHigh');
+    let low = document.getElementById('prioButtonLowEditview');
+    let medium = document.getElementById('prioButtonMediumEditview');
+    let high = document.getElementById('prioButtonHighEditview');
     let changeImgLow = document.getElementById('change-img-low');
     let changeImgMedium = document.getElementById('change-img-medium');
     let changeImgHigh = document.getElementById('change-img-high');
@@ -193,20 +191,6 @@ function pushSelecetedContactsToTodos(index) {
             todos[index].assignedContacts.push(contact);
         }
     }
-}
-
-async function addSubtask(index) {
-    let subtasksInput = document.getElementById("subtasksInput");
-    let addSubtask = todos[index].subtask;
-    addSubtask.push(
-        {
-            title: subtasksInput.value,
-            selected: false
-        }
-    );
-    
-    await setItem('allTasks', JSON.stringify(todos));
-    renderSubtasks(index);
 }
 
 async function changeTask(index) {
@@ -302,7 +286,7 @@ function changeProgressbar(index) {
 
   }
   
-function subtaskCounter(index, i) {
+async function subtaskCounter(index, i) {
     let showCounter = document.getElementById(`subtask-counter${index}`);
     let checkboxSubtask = document.getElementById(`subtask${index}-${i}`);
 
@@ -313,13 +297,13 @@ function subtaskCounter(index, i) {
         } else {
           todos[index].counter--;
         }
-  
+        
+        await setItem('allTasks', JSON.stringify(todos));
         showCounter.innerHTML = todos[index].counter;
         changeProgressbar(index);
   }
 
 function renderCheckboxAfterClose(index) {
-
     for(let i = 0; i < todos[index].subtask.length; i++) {
         let checkboxSubtask = document.getElementById(`subtask${index}-${i}`);
 
@@ -463,14 +447,6 @@ function startDragging(id) {
     startDragginId = id;
 }
 
-function showAddTask() {
-    let showAddTodoContainer = document.getElementById('show-add-todo');
-    showAddTodoContainer.style.display = "flex";
-    showAddTodoContainer.innerHTML = renderAddTaskHTML();
-
-    init();
-}
-
 function closeAddTask() {
     let showAddTodoContainer = document.getElementById('show-add-todo');
     showAddTodoContainer.style.display = "none";
@@ -503,4 +479,52 @@ function emptyInput() {
     renderTodos();
     document.getElementById('change-img').src = 'assets/img/search.svg';
     document.getElementById('change-img-mobile').src = './assets/img/search.svg';
+}
+
+function showAddTask() {
+    let showAddTodoContainer = document.getElementById('show-add-todo');
+    showAddTodoContainer.style.display = "flex";
+    showAddTodoContainer.innerHTML = `<div id="add-todo-content"></div>`;
+    document.getElementById('add-todo-content').innerHTML = `
+        <div class="space-between">
+            <h1 class="headline">Add Task</h1>
+            <img class="close-img" onclick="closeAddTask()" src="/assets/img/close.svg" alt="">
+        </div>
+    `;
+    document.getElementById('add-todo-content').innerHTML += renderAddTaskHTML();
+    document.getElementById('add-todo-content').innerHTML += `
+    <footer>
+    <p><span style="color: #ff8190">*</span>This field is required</p>
+    <div class="createTaskButtonConatiner">
+      <div>
+        <button class="buttonLight taskClearButton" onclick="clearTask()">
+          Clear<svg width="25" height="24" viewBox="0 0 25 24" fill="none">
+            <path
+              d="M12.2496 11.9998L17.4926 17.2428M7.00659 17.2428L12.2496 11.9998L7.00659 17.2428ZM17.4926 6.75684L12.2486 11.9998L17.4926 6.75684ZM12.2486 11.9998L7.00659 6.75684L12.2486 11.9998Z"
+              stroke="#2A3647"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+      <div>
+        <button class="buttonDarg" onclick="addTask()">Create Task<img src="/assets/img/check_icon.svg" alt="" /></button>
+      </div>
+    </div>
+    </footer>
+    `;
+
+    setPrioButton("medium");
+    renderAssingnedToDropdownList();
+    renderCategoryDropdownList();
+    renderSelectedContactsIcons();
+    renderSubtasks();
+    loadEventListner();
+}
+
+function closeAddTask() {
+    let showAddTodoContainer = document.getElementById('show-add-todo');
+    showAddTodoContainer.style.display = "none";
 }
