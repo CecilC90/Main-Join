@@ -91,7 +91,7 @@ async function templateHTMLEditTask(index) {
               <div class="inputField" id="subtaskField">
                 <input type="text" id="subtasksInputEditview" onkeyup="showSubtasksDoneAndCancelEditview(${index})" placeholder="Add new subtask" />
                 <div class="subtasksInputMenu" id="subtasksInputMenuEditview">
-                  <img onclick="addSubtaskEditview(${index})" src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
+                  <img src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
                 </div>
               </div>
               <div>
