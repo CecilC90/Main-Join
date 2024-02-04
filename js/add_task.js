@@ -249,7 +249,7 @@ function removeBorader(id) {
   document.getElementById(id).classList.remove("correctInput");
 }
 
-function addTask() {
+async function addTask() {
   let allInputsFilled = true;
   if (checkIsFieldFilled("titleInputField") == false) {
     setRedBorder("titleField", "requiredTextTitle");
@@ -264,7 +264,7 @@ function addTask() {
     allInputsFilled = false;
   }
   if (allInputsFilled) {
-    addToTaskBackend();
+    await addToTaskBackend();
   }
 }
 
@@ -274,6 +274,7 @@ async function addToTaskBackend() {
   let category = document.getElementById("inputFieldCategory").value;
   let dueDate = document.getElementById("duedateInputField").value;
   let selectedContacts = loadSelectedContacts();
+  let allSubtasks = loadAllSubtasks();
   let allTasks = await loadAllTasks();
   let currentTask = {
     id: 0,
@@ -284,12 +285,11 @@ async function addToTaskBackend() {
     dueDate: dueDate,
     priority: selectedPrio,
     assignedContacts: selectedContacts,
-    subtask: subtasks,
+    subtask: allSubtasks,
     counter: 0,
   };
   allTasks.push(currentTask);
   await saveAllTasks(allTasks);
-  console.log(allTasks);
 }
 
 function loadSelectedContacts(){
@@ -300,6 +300,18 @@ function loadSelectedContacts(){
     }
   }
   return selectedContacts;
+}
+
+function loadAllSubtasks(){
+  let allSubtasks = [];
+  for (let i = 0; i < subtasks.length; i++) {
+    let subtask = {
+      title: subtasks[i],
+      subtaskDone: false
+    }
+    allSubtasks.push(subtask);
+  }
+  return allSubtasks;
 }
 
 async function loadAllTasks(){
