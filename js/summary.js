@@ -1,13 +1,23 @@
+let todos= [];
+
+
 async function render() {
     await includesHTML();
     showSelectedButton("summaryButton");
     loadLoggedInUser();
 }
 
+async function loadAllTasks() {
+    let respons = await getItem("allTasks");
+    todos =JSON.parse(respons);
+  }
+
 async function renderSummary() {
+    await loadAllTasks();
     await render();
     greeting();
-    loadTasks();
+    
+    renderTasks();
 }
 
 function greeting() {
@@ -34,7 +44,7 @@ function showName() {
     }
 }
 
-function loadTasks() {
+function renderTasks() {
     todoCount();
     finished();
     urgent();
