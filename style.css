@@ -289,15 +289,23 @@ font-weight: 700; */
 
 .mobile-navbar {
   display: none;
-  justify-content: space-evenly;
+  /* justify-content: space-between; */
   align-items: center;
   position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
   height: 80px;
+  z-index: 1;
   background-color: #293647;
 }
+
+.selectedMobileMenuButton{
+  background-color: #091931;
+  height: 76px;
+  width: 80px;
+}
+
 
 @media(max-width: 1350px) {
   .summary-container {

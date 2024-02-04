@@ -436,7 +436,7 @@ footer {
   }
   footer {
     position: fixed;
-    bottom: 80px;
+    bottom: 0px;
     width: calc(440px - 16px - 16px);
     padding: 16px;
     background-color: #f6f7f8;
@@ -454,5 +454,8 @@ footer {
 @media (max-width: 750px) {
   .addTaskContainer {
     padding-left: 0;
+  }
+  footer{
+    bottom: 80px;
   }
 }
