@@ -9,6 +9,7 @@
   height: 335px;
   transform: scale(1);
   transition: top 0.5s, left 0.5s, transform 0.5s, width 0.5s, height 0.5s;
+  z-index: 1;
 }
 .content {
   display: flex;

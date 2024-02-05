@@ -285,30 +285,7 @@ font-weight: 700; */
   }
 }
 
-/* Mobile Navbar */
 
-.mobile-navbar {
-  display: none;
-  justify-content: space-evenly;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  height: 80px;
-  z-index: 1;
-  background-color: #293647;
-}
-
-.selectedMobileMenuButton{
-  background-color: #091931;
-  height: 76px;
-  width: 80px;
-  border-radius: 8px;
-}
-.selectedMobileMenuButton img {
-  filter: brightness(500%);
-}
 
 @media(max-width: 1350px) {
   .summary-container {
@@ -389,6 +366,31 @@ font-weight: 700; */
 
 /* #endregion */
 
+/* #region Mobile Navbar */
+
+.mobile-navbar {
+  display: none;
+  justify-content: space-evenly;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 80px;
+  z-index: 1;
+  background-color: #293647;
+}
+
+.selectedMobileMenuButton{
+  background-color: #091931;
+  height: 76px;
+  width: 80px;
+  border-radius: 8px;
+}
+.selectedMobileMenuButton img {
+  filter: brightness(500%);
+}
+/* #endregion */
 
 .legality-container {
   margin-top: 96px;
