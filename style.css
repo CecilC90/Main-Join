@@ -380,6 +380,12 @@ font-weight: 700; */
   }
 }
 
+@media(max-width: 911px) {
+  h1 {
+    font-size: 47px;
+  }
+}
+
 
 /* #endregion */
 

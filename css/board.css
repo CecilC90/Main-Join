@@ -603,6 +603,12 @@ footer {
     }
 }
 
+@media(max-width: 911px) {
+    .headline {
+        font-size: 47px;
+    }
+}
+
 @media(max-width: 750px) {
 
     * {
@@ -739,5 +745,15 @@ footer {
         margin-left: 8px;
         margin-right: 8px;
         padding: 4px;
+    }
+}
+
+@media(max-width: 360px) {
+    #ok-button {
+        font-size: 15px;
+    }
+
+    .inputField input {
+        font-size: 15px !important;
     }
 }
