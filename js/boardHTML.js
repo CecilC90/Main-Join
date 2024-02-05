@@ -33,7 +33,7 @@ function renderSubtaskProgressbar(index) {
 
 function templateHTMLDetailView(index) { 
   return /* HTML */ `
-      <div id="detail-todo-content">
+      <div onclick="doNotClose(event)" id="detail-todo-content">
           <div class="space-between">
               <span id="category-span">${todos[index].todoCategory}</span>
               <img class="close-img" onclick="closeDetailView()" src="/assets/img/close.svg" alt="">
@@ -64,7 +64,7 @@ function templateHTMLDetailView(index) {
 
 async function templateHTMLEditTask(index) {
   return /* HTML */ `
-  <div id="detail-todo-content">
+  <div onclick="doNotClose(event)" id="detail-todo-content">
       <div class="space-end">
         <img class="close-img" onclick="closeDetailView()" src="/assets/img/close.svg" alt="">
       </div>

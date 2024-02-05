@@ -123,7 +123,6 @@ body {
 }
 
 .add-task-btn {
-    border-radius: 10px;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -468,7 +467,7 @@ a {
 
 .priobutton-editview div {
     margin-right: 8px;
-    padding: 0 !important;
+    padding: 4px !important;
     height: 41px;
 }
 
@@ -690,6 +689,10 @@ footer {
     #show-add-todo {
         display: none;
     }
+
+    .mobile-navbar {
+        z-index: 0;
+      }
 }
 
 @media(max-width: 450px) {
@@ -724,12 +727,11 @@ footer {
     }
 
     #detail-todo-content {
-        width: 90vw;
+        width: 99vw;
         padding: 20px;
     }
 
     .priobutton-editview {
-        flex-direction: column;
         gap: 10px;
     }
 

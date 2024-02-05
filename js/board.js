@@ -35,6 +35,13 @@ async function loadContacts() {
     contacts = JSON.parse(await getItem('contacts'));
 }
 
+function addIdToTasks() {
+    for(let i = 0; i < todos.length; i++) {
+        const todo = todos[i];
+        todo.id = i;
+    }
+}
+
 function showDetailView(index) {
    let detailViewContainer = document.getElementById('show-detail-todo');
    detailViewContainer.style.display = 'flex';
@@ -54,6 +61,10 @@ function closeDetailView() {
     detailViewContainer.style.display = 'none';
 
     renderTodos();
+}
+
+function doNotClose(event) {
+    event.stopPropagation();
 }
 
 function renderContactsDetailView(index) {
