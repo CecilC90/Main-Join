@@ -35,7 +35,7 @@ function templateHTMLDetailView(index) {
   return /* HTML */ `
       <div onclick="doNotClose(event)" id="detail-todo-content">
           <div class="space-between">
-              <span id="category-span">${todos[index].todoCategory}</span>
+              <span class="category-span" id="category-span-detail${index}">${todos[index].todoCategory}</span>
               <img class="close-img" onclick="closeDetailView()" src="/assets/img/close.svg" alt="">
           </div>
           <h1 class="headline">${todos[index].title}</h1>

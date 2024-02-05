@@ -52,6 +52,7 @@ function showDetailView(index) {
 
    document.getElementById('detail-todo-content').style.animationPlayState = 'running';
 
+   changeColorForCategory(index);
    renderPrioImg(index);
    renderSubtask(index);
    renderContactsDetailView(index);
@@ -347,17 +348,24 @@ function subtaskMaxLength(index) {
 
 function changeColorForCategory(index) {
     let categoryContainer = document.getElementById(`category-span${index}`);
-      todoCategory = todos[index].todoCategory;
+    let categoryContainerDetailView = document.getElementById(`category-span-detail${index}`);
+    let todoCategory = todos[index].todoCategory; 
 
-      if(todoCategory == 'Arbeit') {
-         categoryContainer.style.backgroundColor = '#0038FF';
-      }
-      if(todoCategory == 'Privat') {
-         categoryContainer.style.backgroundColor = '#1FD7C1';
-      }
-      if(todoCategory == 'Anderes') {
-        categoryContainer.style.backgroundColor = '#E63946';
-     }
+    let backgroundColor = '';
+    if (todoCategory == 'Arbeit') {
+        backgroundColor = '#0038FF';
+    } else if (todoCategory == 'Privat') {
+        backgroundColor = '#1FD7C1';
+    } else if (todoCategory == 'Anderes') {
+        backgroundColor = '#E63946';
+    }
+
+    if (categoryContainer) {
+        categoryContainer.style.backgroundColor = backgroundColor;
+    }
+    if (categoryContainerDetailView) {
+        categoryContainerDetailView.style.backgroundColor = backgroundColor; 
+    }
 }
 
 function findContactById(contactId) {
