@@ -328,6 +328,10 @@ a {
     .task-container {
         padding: 13px 31px;
     }
+
+    .summary-container {
+        padding-right: 16px;
+    }
   }
 
   @media(max-width: 750px) {

@@ -79,6 +79,10 @@ function logoutUser() {
   openPage('index');
 }
 
+function goBack() {
+  window.history.back();
+}
+
 function showSelectedButton(selected) {
   document.getElementById(selected).classList.replace('menuButton', 'selectedMenuButton');
   document.getElementById(selected + 'Mobile').classList.add('selectedMobileMenuButton');
