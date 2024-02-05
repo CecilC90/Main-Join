@@ -452,8 +452,21 @@ footer {
   }
 }
 @media (max-width: 750px) {
+  body p{
+    font-size: 16px;
+  }
+  .inputField input{
+    font-size: 16px;
+  }
+  .descriptionTextArea{
+    font-size: 16px;
+  }
+  .duedateInputField[type="date"]::-webkit-calendar-picker-indicator {
+    background: url(/assets/img/calendar_icon_mobile.svg) no-repeat;
+  }
   .addTaskContainer {
-    padding-left: 0;
+    padding-left: 16px;
+    padding-right: 16px;
   }
   footer{
     bottom: 80px;
@@ -489,15 +502,8 @@ footer {
   .prioButtonConatiner{
     gap: 5px;
   }
-}
-@media (max-width: 360px){
-  body p{
-    font-size: 15px;
-  }
-  .titleInputField{
-    font-size: 15px !important;
-  }
-  .descriptionTextArea{
-    font-size: 15px;
+  .addTaskContainer {
+    padding-left: 0px;
+    padding-right: 0px;
   }
 }
