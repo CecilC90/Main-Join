@@ -88,8 +88,13 @@
 
     </div>
 
-    <div onclick="closeAddTask()" id="show-add-todo"></div>
     <div onclick="closeDetailView()" id="show-detail-todo"></div>
+
+    <div onclick="closeAddTask()" id="show-add-todo"></div>
+    <div class="finishedMessage" id="finishedMessageContainer" style="bottom: -100px; display: none;">
+        <p>Task added to board</p>
+        <img src="/assets/img/BoardIconAddTaskFinished.svg" alt="BoardIcon">
+      </div>
 
 </div>
 

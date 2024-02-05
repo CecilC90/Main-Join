@@ -253,6 +253,7 @@ async function renderTodos() {
         const todo = todos[i];
         if(todo.category == 'open') {
             contentTodo.innerHTML += templateHTMLTodoContainer(todo, i);
+            changeColorForCategory(i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContact(i);
@@ -261,6 +262,7 @@ async function renderTodos() {
         }
         if(todo['category'] == 'progress') {
             contentProgress.innerHTML += templateHTMLTodoContainer(todo, i);
+            changeColorForCategory(i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContact(i);
@@ -269,6 +271,7 @@ async function renderTodos() {
         }
         if(todo['category'] == 'feedback') {
             contentFeedback.innerHTML += templateHTMLTodoContainer(todo, i);
+            changeColorForCategory(i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContact(i);
@@ -277,6 +280,7 @@ async function renderTodos() {
         }
         if(todo['category'] == 'done') {
             contentDone.innerHTML += templateHTMLTodoContainer(todo, i);
+            changeColorForCategory(i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContact(i);
@@ -343,6 +347,21 @@ function subtaskMaxLength(index) {
       }
 }
 
+function changeColorForCategory(index) {
+    let categoryContainer = document.getElementById(`category-span${index}`);
+      todoCategory = todos[index].todoCategory;
+
+      if(todoCategory == 'Arbeit') {
+         categoryContainer.style.backgroundColor = '#0038FF';
+      }
+      if(todoCategory == 'Privat') {
+         categoryContainer.style.backgroundColor = '#1FD7C1';
+      }
+      if(todoCategory == 'Anderes') {
+        categoryContainer.style.backgroundColor = '#E63946';
+     }
+}
+
 function findContactById(contactId) {
     return contacts.find(contact => contact.id === contactId);
 }
@@ -350,7 +369,8 @@ function findContactById(contactId) {
 function renderContact(index) {
     let assignedContactsContainer = document.getElementById(`assigned-contacts${index}`);
     if(todos[index].assignedContacts.length > 0) {
-        for(let i = 0; i < todos[index].assignedContacts.length; i++) {
+        let limit = Math.min(4, todos[index].assignedContacts.length);
+        for(let i = 0; i < limit; i++) {
             const contactId = todos[index].assignedContacts[i];
             const contact = findContactById(contactId);
             let splitName = contact.name.split(" ");
@@ -361,6 +381,18 @@ function renderContact(index) {
                 <div class="contactsIcon margin-left">${resultInitials}</div>
             `;
         }
+    }
+
+    renderMoreContactsIcon(index);
+}
+
+function renderMoreContactsIcon(index) {
+    let assignedContactsContainer = document.getElementById(`assigned-contacts${index}`);
+    if(todos[index].assignedContacts.length > 4) {
+        let differenceLength = todos[index].assignedContacts.length - 4;
+        assignedContactsContainer.innerHTML += `
+            <div class="moreContactsIcon margin-left">+${differenceLength}</div>
+        `;
     }
 }
 
@@ -498,14 +530,14 @@ function showAddTask() {
     showAddTodoContainer.style.display = "flex";
     showAddTodoContainer.innerHTML = `<div id="add-todo-content"></div>`;
     document.getElementById('add-todo-content').innerHTML = `
-        <div class="space-between">
+        <div onclick="doNotClose(event)" class="space-between">
             <h1 class="headline">Add Task</h1>
             <img class="close-img" onclick="closeAddTask()" src="/assets/img/close.svg" alt="">
         </div>
     `;
     document.getElementById('add-todo-content').innerHTML += renderAddTaskHTML();
     document.getElementById('add-todo-content').innerHTML += `
-    <footer>
+    <footer onclick="doNotClose(event)">
     <p><span style="color: #ff8190">*</span>This field is required</p>
     <div class="createTaskButtonConatiner">
       <div>
@@ -522,7 +554,7 @@ function showAddTask() {
         </button>
       </div>
       <div>
-        <button class="buttonDarg" onclick="addTask()">Create Task<img src="/assets/img/check_icon.svg" alt="" /></button>
+        <button id="createTaskButton" class="buttonDarg" onclick="addTask()">Create Task<img src="/assets/img/check_icon.svg" alt="" /></button>
       </div>
     </div>
     </footer>
@@ -540,6 +572,8 @@ function showAddTask() {
 function closeAddTask() {
     let showAddTodoContainer = document.getElementById('show-add-todo');
     showAddTodoContainer.style.display = "none";
+
+    renderTodos();
 }
 
 function mobileAddTask() {
