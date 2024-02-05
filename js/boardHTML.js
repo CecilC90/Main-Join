@@ -18,7 +18,7 @@ function renderSubtaskProgressbar(index) {
   if(todos[index].subtask.length > 0) {
     progressbarContent.innerHTML = `
     <div class="space-between align-items">
-      <div id="progress${index}" class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+      <div id="progress${index}" id="progress-container" class="progress-container">
         <div id="progress-bar${index}" class="progress-bar"></div>
       </div>
       <div id="subtask-content">
@@ -38,7 +38,7 @@ function templateHTMLDetailView(index) {
               <span class="category-span" id="category-span-detail${index}">${todos[index].todoCategory}</span>
               <img class="close-img" onclick="closeDetailView()" src="/assets/img/close.svg" alt="">
           </div>
-          <h1 class="headline">${todos[index].title}</h1>
+          <h1 class="headline-detailview">${todos[index].title}</h1>
           <p>${todos[index].description}</p>
           <div class="task-info">
             <div>

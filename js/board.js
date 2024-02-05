@@ -353,7 +353,7 @@ function changeColorForCategory(index) {
 
     let backgroundColor = '';
     if (todoCategory == 'Arbeit') {
-        backgroundColor = '#0038FF';
+        backgroundColor = '#0038FF'
     } else if (todoCategory == 'Privat') {
         backgroundColor = '#1FD7C1';
     } else if (todoCategory == 'Anderes') {
