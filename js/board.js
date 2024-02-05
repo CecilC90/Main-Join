@@ -25,6 +25,7 @@ async function renderHTML() {
     await loadTasks();
     await loadContacts();
     await renderTodos();
+    showSelectedButton("boardButton");
 }
 
 async function loadTasks() {
