@@ -27,7 +27,7 @@
     }
 
     .add-button-mobile {
-        display: flex;
+        display: flex!important;
     }
 
     .contact-close {
@@ -136,6 +136,9 @@
 }
 
 @media(max-width: 750px) {
+    .contacts-container {
+        height: calc(100vh - 160px);
+    }
     .main-container {
         margin-top: 80px;
         height: calc(100vh - 80px);

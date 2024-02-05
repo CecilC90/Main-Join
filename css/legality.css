@@ -1,4 +1,4 @@
-.legality-container {
+.legality-container {   
     margin-top: 96px;
     margin-left: 96px;
     padding-top: 110px;
@@ -17,6 +17,38 @@
     color: #0000EE;
   }
   
+.legality-headline {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1014px;
+}
+
   .legality-content {
     max-width: 1014px;
+  }
+
+  .goBack-container {
+    border: none;
+    background-color:#f6f7f8;
+    cursor: pointer;
+  }
+
+  @media(max-width: 800px) {
+    .legality-container {
+        margin-left: 16px;
+        margin-top: 80px;
+        padding-top: 48px;
+    }
+
+    h1 {
+        font-size: 47px;
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+
+    p {
+        font-size: 16px;
+    }
   }
