@@ -45,7 +45,10 @@ function showName() {
     if (loggedInUser === 'Guest') {
         document.getElementById('name').innerHTML = '';
     } else {
-        document.getElementById('name').innerHTML = `${loggedInUser}`;
+        let names = loggedInUser[0].split(' ');
+        let firstName = names[0].charAt(0).toUpperCase() + names[0].slice(1).toLowerCase();
+        let lastName = names[1].charAt(0).toUpperCase() + names[1].slice(1).toLowerCase();
+        document.getElementById('name').innerHTML = `${firstName} ${lastName}`;
     }
 }
 

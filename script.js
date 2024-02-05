@@ -64,11 +64,11 @@ function showUserInitials() {
   if (loggedInUser) {
     if (loggedInUser.includes("Guest")) {
       let initials = "Guest";
-      userIcon.innerHTML = `${initials.charAt(0)}`;
+      userIcon.innerHTML = `${initials.charAt(0).toUpperCase()}`;
     } else {
       let splitName = loggedInUser[0].split(" ");
       let initials = splitName[0].charAt(0) + splitName[1].charAt(0);
-      userIcon.innerHTML = `${initials}`;
+      userIcon.innerHTML = `${initials.toUpperCase()}`;
     }
   }
 }
