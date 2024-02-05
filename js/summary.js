@@ -1,4 +1,4 @@
-let todos= [];
+let todos = [];
 
 
 async function render() {
@@ -9,32 +9,37 @@ async function render() {
 
 async function loadAllTasks() {
     let respons = await getItem("allTasks");
-    todos =JSON.parse(respons);
-  }
+    todos = JSON.parse(respons);
+}
 
 async function renderSummary() {
     await loadAllTasks();
     await render();
     greeting();
-    
+
     renderTasks();
 }
 
 function greeting() {
-    let time = new Date().getHours();
-    let greeting;
+        let time = new Date().getHours();
+        let greeting;
 
-    if (time >= 5 && time < 12) {
-        greeting = 'Good morning';
-    } else if (time >= 12 && time < 18) {
-        greeting = 'Good afternoon';
-    } else {
-        greeting = 'Good evening';
+        if (time >= 5 && time < 12) {
+            greeting = 'Good morning';
+        } else if (time >= 12 && time < 18) {
+            greeting = 'Good afternoon';
+        } else {
+            greeting = 'Good evening';
+        }
+
+        document.getElementById('greeting').innerHTML = greeting;
+        if (loggedInUser.includes("Guest")) {
+            document.getElementById('name').innerHTML = "";
+        } else {
+            showName();
+        }
     }
 
-    document.getElementById('greeting').innerHTML = greeting;
-    showName();
-}
 
 function showName() {
     if (loggedInUser === 'Guest') {

@@ -39,6 +39,13 @@ function addLoggedInUser(userInfos) {
   saveLoggedInUser();
 }
 
+function addLoggedInGuest() {
+  let guest = "Guest";
+  loggedInUser.push(guest);
+  saveLoggedInUser();
+}
+
+
 function saveLoggedInUser() {
   let loggedInUserAsText = JSON.stringify(loggedInUser);
   localStorage.setItem('loggedInUser', loggedInUserAsText);
@@ -55,36 +62,41 @@ function loadLoggedInUser() {
 function showUserInitials() {
   let userIcon = document.getElementById('Initial');
   if (loggedInUser) {
-    let splitName = loggedInUser[0].split(" ");
-    let initials = splitName[0].charAt(0)+splitName[1].charAt(0);
-    userIcon.innerHTML = `${initials}`;
+    if (loggedInUser.includes("Guest")) {
+      let initials = "Guest";
+      userIcon.innerHTML = `${initials.charAt(0)}`;
+    } else {
+      let splitName = loggedInUser[0].split(" ");
+      let initials = splitName[0].charAt(0) + splitName[1].charAt(0);
+      userIcon.innerHTML = `${initials}`;
+    }
   }
 }
 
 function logoutUser() {
-  let logoutUser = loggedInUser.splice(0, 1); 
+  let logoutUser = loggedInUser.splice(0, 1);
   saveLoggedInUser();
   openPage('index');
 }
 
-function showSelectedButton(selected){
+function showSelectedButton(selected) {
   document.getElementById(selected).classList.replace('menuButton', 'selectedMenuButton');
   document.getElementById(selected + 'Mobile').classList.add('selectedMobileMenuButton');
 }
 
-function openPage(page){
+function openPage(page) {
   window.location.href = page + ".html";
 }
 
 function userNavbar() {
   let navbar = document.getElementById('popUpUser');
-  
+
   // Überprüfe, ob das Element aktuell sichtbar ist
   if (navbar.style.display === 'flex') {
-      // Wenn sichtbar, setze den Stil auf 'none' (versteckt)
-      navbar.style.display = 'none';
+    // Wenn sichtbar, setze den Stil auf 'none' (versteckt)
+    navbar.style.display = 'none';
   } else {
-      // Wenn nicht sichtbar, setze den Stil auf 'flex' (sichtbar)
-      navbar.style.display = 'flex';
+    // Wenn nicht sichtbar, setze den Stil auf 'flex' (sichtbar)
+    navbar.style.display = 'flex';
   }
 }
