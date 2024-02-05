@@ -625,6 +625,9 @@ footer {
     .headline {
         font-size: 47px;
     }
+    h1 {
+        font-size: 47px;
+      }
 }
 
 @media(max-width: 750px) {
