@@ -141,7 +141,16 @@
 /* #endregion */
 
 /* #region Registration */
-
+.registrationMask {
+  display: flex;
+  gap: 32px;
+  padding: 48px 115px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 30px;
+  background: #fff;
+  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+}
 .registrationHeadlineContainer {
   display: flex;
   width: 437px;
@@ -196,3 +205,52 @@
 }
 
 /* #endregion */
+
+@media(max-width: 1050px){
+  .loginMask {
+    margin-top: 100px;
+  }
+  .registrationMask {
+    padding: 20px 60px;
+    margin-top: 150px;
+  }
+}
+@media(max-width: 750px){
+  h1{
+    font-size: 47px;
+  }
+  .content{
+    justify-content: flex-end;
+  }
+  .signUpButtonContainer{
+    align-self: center;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 42px;
+  }
+  .inputFieldsContainer{
+    width: 364px;
+  }
+  .loginMask {
+    padding: 32px 16px;
+    margin-top: 0px;
+  }
+  .loginButtonContainer{
+    flex-direction: column;
+    gap: 21px;
+  }
+  .footnotes{
+    margin-bottom: 22px;
+  }
+
+  .registrationMask {
+    padding: 32px 16px;
+    margin-top: 0px;
+  }
+  .registrationHeadlineContainer{
+    width: 364px;
+  }
+  .registrationBackIcon{
+    right: -24px;
+  }
+}

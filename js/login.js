@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function renderStartPage() {
-  let content = document.getElementById("loginMask");
+  let content = document.getElementById("loginMaskContainer");
   content.innerHTML = renderStartPageHTML();
   let singUpButton = document.getElementById("signUpButtonContainer");
   singUpButton.innerHTML = renderSingUpButtonHTML();
@@ -28,7 +28,7 @@ function renderStartPage() {
 
 function renderRegistrationPage() {
   document.getElementById("signUpButtonContainer").innerHTML = "";
-  let content = document.getElementById("loginMask");
+  let content = document.getElementById("loginMaskContainer");
   content.innerHTML = renderRegistrationPageHTML();
 }
 

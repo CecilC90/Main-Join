@@ -39,7 +39,7 @@ function renderSingUpButtonHTML() {
 
 function renderRegistrationPageHTML() {
   return `
-   <form class="loginMask" onsubmit="addUser(); return false;">
+   <form class="registrationMask" onsubmit="addUser(); return false;">
      <div class="registrationHeadlineContainer">
        <img class="registrationBackIcon" src="./assets/img/arrow-left-line.svg" alt="" onclick="renderStartPage()">
        <div class="registrationHeadline">
