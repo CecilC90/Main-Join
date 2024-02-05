@@ -1,0 +1,169 @@
+@media(max-width: 1350px) {
+    .summary-container {
+        margin-left: 50px;
+    }
+}
+
+@media(max-width: 1170px) {
+    .greet-container {
+      display: none;
+    }
+  }
+
+  @media(max-width: 911px) {
+    .headline {
+        padding-top: 48px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding-bottom: 40px;
+    }
+
+    .fs-61 {
+        font-size: 47px;
+    }
+
+    .fs-27 {
+        font-size: 20px;
+    }
+
+    .seperator {
+        display: none;
+    }
+
+    .seperator-mobile {
+        display: block;
+    }
+  
+    .elipse {
+        height: 40px;
+        width: 40px;
+    }
+
+    .fs-64 {
+        font-size: 47px;
+    }
+
+    .fs-20 {
+        font-size: 14px;
+    }
+
+    .urgency-container {
+        height: 110px;
+    }
+
+    .elipse-urgency {
+        width: 40px;
+        height: 40px;
+    }
+
+    .arrow-icon {
+        width: 22.7px;
+        height: 10px;
+    }
+
+    .fs-16 {
+        font-size: 14px;
+    }
+
+    .line {
+        height: 68px;
+        margin: 0 20px;
+    }
+
+    .fs-21 {
+        font-size: 16px;
+    }
+
+    .task-container {
+        padding: 13px 31px;
+    }
+
+    .summary-container {
+        padding-right: 16px;
+    }
+  }
+
+  @media(max-width: 750px) {
+    .summary-container {
+        justify-content: center;
+        padding: 0px 8px;
+        margin-left: 16px;
+        box-sizing: border-box;
+        margin-top: 80px;
+    }
+
+    .headline {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+
+    .menu {
+        display: none;
+    }
+
+    .header {
+        height: 80px;
+        left: 0;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .title {
+        display: none;
+    }
+
+    .logo-mobile {
+        display: block;
+    }
+
+    .user-icon {
+        height: 40px;
+        width: 40px;
+        font-size: 16px;
+    }
+
+    .user-icon span {
+        height: 40px;
+        width: 40px;
+    }
+  }
+
+  
+
+  @media(max-width: 470px) {
+    .summary-container {
+        margin-left: 0;
+    }
+  }
+
+  @media(max-width: 460px) {
+    .button-container {
+        padding: 18px 43px;
+    }
+  }
+
+  @media(max-width: 420px) {
+    .check-rectangle {
+        gap: 20px;
+    }
+
+    .overview-container {
+        gap: 20px;
+        justify-content: center;
+    }
+  }
+
+  @media(max-width: 400px) {
+
+
+    .button-container {
+        padding: 16px;
+    }
+
+    .task-container {
+        height: 136px;
+        padding: 12px;
+    }
+  }
