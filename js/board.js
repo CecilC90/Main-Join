@@ -25,6 +25,7 @@ async function renderHTML() {
     await loadTasks();
     await loadContacts();
     await renderTodos();
+    addIdToTasks();
     showSelectedButton("boardButton");
 }
 
@@ -245,9 +246,6 @@ async function renderTodos() {
     checkProgressTodo();
     checkFeedbackTodo();
     checkDoneTodo();
-
-    await loadTasks();
-    await loadContacts();
 
     for(let i = 0; i < todos.length; i++) {
         const todo = todos[i];
@@ -478,9 +476,11 @@ function checkDoneTodo() {
     }
 }
 
-function moveTo(category) {
+async function moveTo(category) {
     todos[startDragginId]['category'] = category;
-    renderHTML();
+    renderTodos();
+
+    await setItem('allTasks', JSON.stringify(todos));
 }
 
 function allowDrop(ev) {
