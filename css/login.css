@@ -1,5 +1,5 @@
-.wrongInput{
-  border: 1px solid #FF001F !important;
+.wrongInput {
+  border: 1px solid #ff001f !important;
 }
 
 /* #region login */
@@ -206,7 +206,7 @@
 
 /* #endregion */
 
-@media(max-width: 1050px){
+@media (max-width: 1050px) {
   .loginMask {
     margin-top: 100px;
   }
@@ -215,31 +215,42 @@
     margin-top: 150px;
   }
 }
-@media(max-width: 750px){
-  h1{
+@media (max-width: 750px) {
+  body{
+    background-color: #2A3647;
+    transition: background-color 0.5s;
+  }
+  .slideImageColor{
+    transition: fill 0.5s ease;
+  }
+  #slideImage {
+    width: 100.03px;
+    height: 121.97px;
+  }
+  h1 {
     font-size: 47px;
   }
-  .content{
+  .content {
     justify-content: flex-end;
   }
-  .signUpButtonContainer{
+  .signUpButtonContainer {
     align-self: center;
     margin-top: 0;
     margin-right: 0;
     margin-bottom: 42px;
   }
-  .inputFieldsContainer{
+  .inputFieldsContainer {
     width: 364px;
   }
   .loginMask {
     padding: 32px 16px;
     margin-top: 0px;
   }
-  .loginButtonContainer{
+  .loginButtonContainer {
     flex-direction: column;
     gap: 21px;
   }
-  .footnotes{
+  .footnotes {
     margin-bottom: 22px;
   }
 
@@ -247,10 +258,10 @@
     padding: 32px 16px;
     margin-top: 0px;
   }
-  .registrationHeadlineContainer{
+  .registrationHeadlineContainer {
     width: 364px;
   }
-  .registrationBackIcon{
+  .registrationBackIcon {
     right: -24px;
   }
 }
