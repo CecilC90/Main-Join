@@ -51,6 +51,11 @@ function saveLoggedInUser() {
   localStorage.setItem('loggedInUser', loggedInUserAsText);
 }
 
+function saveIsLoggedIn() {
+  let isLoggedInAsText = JSON.stringify(isLoggedIn);
+  localStorage.setItem('isLoggedIn',isLoggedInAsText);
+}
+
 function loadLoggedInUser() {
   let loggedInUserAsText = localStorage.getItem('loggedInUser');
   if (loggedInUserAsText) {
@@ -58,6 +63,14 @@ function loadLoggedInUser() {
   }
   showUserInitials();
 }
+
+async function loadIsLoggedIn() {
+  let isLoggedInAsText = localStorage.getItem('isLoggedIn');
+  if(isLoggedInAsText) {
+    isLoggedIn = JSON.parse(isLoggedInAsText);
+  }
+}
+
 
 function showUserInitials() {
   let userIcon = document.getElementById('Initial');

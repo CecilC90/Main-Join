@@ -1,10 +1,24 @@
 let todos = [];
 
+let isLoggedIn = false;
 
 async function render() {
     await includesHTML();
+    await loadIsLoggedIn();
     showSelectedButton("summaryButton");
     loadLoggedInUser();
+    showGreetingMobile();
+}
+
+function showGreetingMobile() {
+    if (!isLoggedIn && window.innerWidth < 608) {
+        document.getElementById('greetingMobile').classList.add('d-flex');
+        document.getElementById('greetingMobile').classList.add('hidden');
+        document.getElementById('greetingMobile').classList.add('hidden-overlay');
+        document.getElementById('greetingMobile').classList.remove('d-none');
+        isLoggedIn = true; // Aktualisieren Sie den Zustand des Logins
+    }
+    saveIsLoggedIn();
 }
 
 async function loadAllTasks() {

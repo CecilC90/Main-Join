@@ -323,6 +323,7 @@ async function addContact() {
         email: addEmail.value,
         phone: addPhone.value,
         color: backgroundColors[randomIndex],
+        active: true,
     });
 
     await setItem('contacts', JSON.stringify(contacts));

@@ -88,6 +88,7 @@ async function login() {
       //funktion um den User nach erfolgreichen Login zu speichern
       addLoggedInUser(userInfos);
       openPage("summary");
+      //greetingMobile();
     } else {
       console.log("passwort ist nicht korrekt");
       showLoginWorngPassword();
@@ -98,6 +99,13 @@ async function login() {
     console.log("Email noch nicht vorhanden");
   }
 }
+
+/*function greetingMobile() {
+  if (window.innerWidth < 608) {
+    document.getElementById('greetingContainer').classList.remove('d-none');
+  }
+}*/
+
 
 async function addUser() {
   showEmailAlreadyUsed(false);
