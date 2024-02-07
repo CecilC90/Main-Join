@@ -1,11 +1,20 @@
 let todos = [];
 
+async function renderSummary() {
+    await includesHTML();
+    showSelectedButton("summaryButton");
+    await loadLoggedInUser();
+    await greeting();
+    checkIsMsgAvailable();
+    await loadAllTasks();
+    //await render();
+    renderTasks();
+}
 
 async function render() {
     await includesHTML();
     showSelectedButton("summaryButton");
     await loadLoggedInUser();
-    checkIsMsgAvailable();
 }
 
 function checkIsMsgAvailable() {
@@ -32,45 +41,45 @@ async function loadAllTasks() {
     todos = JSON.parse(respons);
 }
 
-async function renderSummary() {
-    await loadAllTasks();
-    await render();
-    greeting();
 
-    renderTasks();
-}
 
-function greeting() {
+async function greeting() {
     let time = new Date().getHours();
-    let greeting;
+    let greetingContent;
 
     if (time >= 5 && time < 12) {
-        greeting = 'Good morning';
+        greetingContent = 'Good morning';
     } else if (time >= 12 && time < 18) {
-        greeting = 'Good afternoon';
+        greetingContent = 'Good afternoon';
     } else {
-        greeting = 'Good evening';
+        greetingContent = 'Good evening';
     }
 
-    document.getElementById('greeting').innerHTML = greeting;
-    if (loggedInUser.includes("Guest")) {
-        document.getElementById('name').innerHTML = "";
-    } else {
+    document.querySelectorAll('.greeting-content').forEach(element => {
+        element.innerHTML = greetingContent;
+    });
+
+    if (!loggedInUser.includes("Guest")) {
         showName();
     }
 }
 
-
 function showName() {
+    let nameContainers = document.querySelectorAll('.name');
     if (loggedInUser === 'Guest') {
-        document.getElementById('name').innerHTML = '';
+        nameContainers.forEach(container => {
+            container.innerHTML = '';
+        });
     } else {
         let names = loggedInUser[0].split(' ');
         let firstName = names[0].charAt(0).toUpperCase() + names[0].slice(1).toLowerCase();
         let lastName = names[1].charAt(0).toUpperCase() + names[1].slice(1).toLowerCase();
-        document.getElementById('name').innerHTML = `${firstName} ${lastName}`;
+        nameContainers.forEach(container => {
+            container.innerHTML = `${firstName} ${lastName}`;
+        });
     }
 }
+
 
 function renderTasks() {
     todoCount();

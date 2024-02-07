@@ -155,11 +155,22 @@
     }
   }
 
+  @media(max-width: 410px) {
+    .button-container {
+        box-sizing: border-box;
+        padding: 18px 48px;
+    }
+  }
+
   @media(max-width: 400px) {
 
 
     .button-container {
         padding: 16px;
+    }
+
+    .gap-18 {
+        gap: 10px;
     }
 
     .task-container {
