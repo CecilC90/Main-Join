@@ -100,17 +100,22 @@ function renderContactList(sortedContacts) {
 
     for (let i = 0; i < sortedContacts.length; i++) {
         let sortedContact = sortedContacts[i];
-        let firstLetter = getFirstLetter(sortedContacts, i);
+        
+        // Überprüfen, ob der Kontakt aktiv ist
+        if (sortedContact.active) {
+            let firstLetter = getFirstLetter(sortedContacts, i);
 
-        if (firstLetter !== currentInitial) {
-            contactlist.innerHTML += renderFirstLetterHTML(firstLetter);
-            currentInitial = firstLetter;
+            if (firstLetter !== currentInitial) {
+                contactlist.innerHTML += renderFirstLetterHTML(firstLetter);
+                currentInitial = firstLetter;
+            }
+
+            let initials = getMemberInitials(sortedContacts, i);
+            contactlist.innerHTML += renderContactsHTML(sortedContacts, i, initials);
         }
-
-        let initials = getMemberInitials(sortedContacts, i);
-        contactlist.innerHTML += renderContactsHTML(sortedContacts, i, initials);
     }
 }
+
 
 function getFirstLetter(sortedContacts, i) {
     return sortedContacts[i].name.charAt(0);
@@ -189,8 +194,9 @@ function openUserInformation(i, sortedContacts, initials) {
 }
 
 function deleteContact(i, sortedContacts) {
-    sortedContacts.splice(i, 1);
-    setItem('contacts', JSON.stringify(contacts));
+    contacts[i].active = false;
+    //sortedContacts.splice(i, 1);
+    //setItem('contacts', JSON.stringify(contacts));
     renderContactList(sortedContacts);
     closeUserInformation();
     document.getElementById('contactOptionsMobile').style.display = "none";
@@ -304,6 +310,7 @@ function updateContactsInfo(i, event) {
         email: document.getElementById('editEmail').value,
         phone: document.getElementById('editPhone').value,
         color: contacts[i]['color'],
+        active: true,
     };
 
     setItem('contacts', JSON.stringify(contacts));
