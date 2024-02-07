@@ -43,17 +43,13 @@ function addLoggedInGuest() {
   let guest = "Guest";
   loggedInUser.push(guest);
   saveLoggedInUser();
+  window.location.href = "summary.html?msg=Login erfolgreich";
 }
 
 
 function saveLoggedInUser() {
   let loggedInUserAsText = JSON.stringify(loggedInUser);
   localStorage.setItem('loggedInUser', loggedInUserAsText);
-}
-
-function saveIsLoggedIn() {
-  let isLoggedInAsText = JSON.stringify(isLoggedIn);
-  localStorage.setItem('isLoggedIn',isLoggedInAsText);
 }
 
 function loadLoggedInUser() {
@@ -63,14 +59,6 @@ function loadLoggedInUser() {
   }
   showUserInitials();
 }
-
-async function loadIsLoggedIn() {
-  let isLoggedInAsText = localStorage.getItem('isLoggedIn');
-  if(isLoggedInAsText) {
-    isLoggedIn = JSON.parse(isLoggedInAsText);
-  }
-}
-
 
 function showUserInitials() {
   let userIcon = document.getElementById('Initial');

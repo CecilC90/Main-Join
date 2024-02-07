@@ -85,10 +85,10 @@ async function login() {
     let userPassword = userInfos.password;
     if (password.value == userPassword) {
       console.log("login erfolgreich");
+      window.location.href = "summary.html?msg=Login erfolgreich";      //Weiterleitung zur summary mit msg
       //funktion um den User nach erfolgreichen Login zu speichern
       addLoggedInUser(userInfos);
-      openPage("summary");
-      //greetingMobile();
+      //openPage("summary");                                            // Wird nicht benötigt aufgrund von Zeile 88
     } else {
       console.log("passwort ist nicht korrekt");
       showLoginWorngPassword();

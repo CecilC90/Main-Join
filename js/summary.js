@@ -1,24 +1,30 @@
 let todos = [];
 
-let isLoggedIn = false;
 
 async function render() {
     await includesHTML();
-    await loadIsLoggedIn();
     showSelectedButton("summaryButton");
-    loadLoggedInUser();
-    showGreetingMobile();
+    await loadLoggedInUser();
+    checkIsMsgAvailable();
 }
 
+function checkIsMsgAvailable() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const msg = urlParams.get("msg");
+
+    if (msg) {
+        showGreetingMobile();
+    }
+}
+
+
 function showGreetingMobile() {
-    if (!isLoggedIn && window.innerWidth < 608) {
+    if (window.innerWidth < 608) {
         document.getElementById('greetingMobile').classList.add('d-flex');
         document.getElementById('greetingMobile').classList.add('hidden');
         document.getElementById('greetingMobile').classList.add('hidden-overlay');
         document.getElementById('greetingMobile').classList.remove('d-none');
-        isLoggedIn = true; // Aktualisieren Sie den Zustand des Logins
     }
-    saveIsLoggedIn();
 }
 
 async function loadAllTasks() {
@@ -35,24 +41,24 @@ async function renderSummary() {
 }
 
 function greeting() {
-        let time = new Date().getHours();
-        let greeting;
+    let time = new Date().getHours();
+    let greeting;
 
-        if (time >= 5 && time < 12) {
-            greeting = 'Good morning';
-        } else if (time >= 12 && time < 18) {
-            greeting = 'Good afternoon';
-        } else {
-            greeting = 'Good evening';
-        }
-
-        document.getElementById('greeting').innerHTML = greeting;
-        if (loggedInUser.includes("Guest")) {
-            document.getElementById('name').innerHTML = "";
-        } else {
-            showName();
-        }
+    if (time >= 5 && time < 12) {
+        greeting = 'Good morning';
+    } else if (time >= 12 && time < 18) {
+        greeting = 'Good afternoon';
+    } else {
+        greeting = 'Good evening';
     }
+
+    document.getElementById('greeting').innerHTML = greeting;
+    if (loggedInUser.includes("Guest")) {
+        document.getElementById('name').innerHTML = "";
+    } else {
+        showName();
+    }
+}
 
 
 function showName() {
