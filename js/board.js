@@ -1,4 +1,5 @@
 let todos = [];
+let randomColorsForCategory = ['#003366', '#004D40', '#1B5E20', '#B71C1C', '#4A148C'];
 
 let startDragginId;
 
@@ -24,13 +25,15 @@ function initBoard() {
 async function renderHTML() {
     await loadTasks();
     await loadContacts();
-    await renderTodos();
+    pushColorForCategory();
+    renderTodos();
     addIdToTasks();
     showSelectedButton("boardButton");
 }
 
 async function loadTasks() {
     todos = JSON.parse(await getItem('allTasks'));
+    console.log(todos);
 }
 
 async function loadContacts() {
@@ -52,7 +55,7 @@ function showDetailView(index) {
 
    document.getElementById('detail-todo-content').style.animationPlayState = 'running';
 
-   changeColorForCategory(index);
+   renderColorForCategory(index);
    renderPrioImg(index);
    renderSubtask(index);
    renderContactsDetailView(index);
@@ -236,7 +239,7 @@ async function changeTask(index) {
 }
 
 
-async function renderTodos() {
+function renderTodos() {
 
     let contentTodo = document.getElementById('board-content-todo');
     let contentProgress = document.getElementById('board-content-progress');
@@ -252,7 +255,7 @@ async function renderTodos() {
         const todo = todos[i];
         if(todo.category == 'open') {
             contentTodo.innerHTML += templateHTMLTodoContainer(todo, i);
-            changeColorForCategory(i);
+            renderColorForCategory(i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContact(i);
@@ -261,7 +264,7 @@ async function renderTodos() {
         }
         if(todo['category'] == 'progress') {
             contentProgress.innerHTML += templateHTMLTodoContainer(todo, i);
-            changeColorForCategory(i);
+            renderColorForCategory(i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContact(i);
@@ -270,7 +273,7 @@ async function renderTodos() {
         }
         if(todo['category'] == 'feedback') {
             contentFeedback.innerHTML += templateHTMLTodoContainer(todo, i);
-            changeColorForCategory(i);
+            renderColorForCategory(i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContact(i);
@@ -279,7 +282,7 @@ async function renderTodos() {
         }
         if(todo['category'] == 'done') {
             contentDone.innerHTML += templateHTMLTodoContainer(todo, i);
-            changeColorForCategory(i);
+            renderColorForCategory(i);
             renderSubtaskProgressbar(i);
             renderPrioImg(i);
             renderContact(i);
@@ -346,25 +349,33 @@ function subtaskMaxLength(index) {
       }
 }
 
-function changeColorForCategory(index) {
+function pushColorForCategory() {
+    let randomColorIndex = Math.floor(Math.random() * randomColorsForCategory.length);
+
+    for(let i = 0; i < todos.length; i++) {
+        const todo = todos[i];
+        const todoCategory = todo.todoCategory; 
+        if (todoCategory == 'Arbeit') {
+            todo.categoryColor = '#0038FF';
+        } else if (todoCategory == 'Privat') {
+            todo.categoryColor = '#1FD7C1';
+        } else if (todoCategory == 'Anderes') {
+            todo.categoryColor = '#E63946';
+        } else {
+            todo.categoryColor = randomColorsForCategory[randomColorIndex];
+        }
+    }
+}
+
+function renderColorForCategory(index) {
     let categoryContainer = document.getElementById(`category-span${index}`);
     let categoryContainerDetailView = document.getElementById(`category-span-detail${index}`);
-    let todoCategory = todos[index].todoCategory; 
-
-    let backgroundColor = '';
-    if (todoCategory == 'Arbeit') {
-        backgroundColor = '#0038FF'
-    } else if (todoCategory == 'Privat') {
-        backgroundColor = '#1FD7C1';
-    } else if (todoCategory == 'Anderes') {
-        backgroundColor = '#E63946';
-    }
 
     if (categoryContainer) {
-        categoryContainer.style.backgroundColor = backgroundColor;
+        categoryContainer.style.backgroundColor = todos[index].categoryColor;
     }
     if (categoryContainerDetailView) {
-        categoryContainerDetailView.style.backgroundColor = backgroundColor; 
+        categoryContainerDetailView.style.backgroundColor = todos[index].categoryColor; 
     }
 }
 

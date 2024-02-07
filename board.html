@@ -35,7 +35,7 @@
                 <input oninput="filterTodos()" type="text" id="search" placeholder="Find Task"><button><img id="change-img" onclick="emptyInput()" src="assets/img/search.svg" alt=""></button>
             </div>
             <div class="add-task-button">
-                <a href="add_task.html"><button class="buttonDarg" id="add-task">Add Task <img src="assets/img/add.svg" alt=""></button></a>
+                <a href="#"><button onclick="showAddTask()" class="buttonDarg" id="add-task">Add Task <img src="assets/img/add.svg" alt=""></button></a>
             </div>
             <!-- Mobile Task-Button -->
             <div class="add-task-button-mobile">
@@ -51,7 +51,7 @@
         <div class="board-element" id="todo" ondrop="moveTo('open')" ondragover="allowDrop(event)">
             <div class="space-between margin-right">
                 <span>To do</span>
-                <a id="todo-link"><img class="add-task-btn" onclick="showAddTask()" src="assets/img/plus-button.svg" alt=""></a>
+                <a class="catgeory-link" id="todo-link"><img class="add-task-btn" onclick="showAddTask()" src="assets/img/plus-button.svg" alt=""></a>
             </div>
             <div id="board-content-todo" class="board-content">No tasks To do</div>
             <div id="content-todo"></div>
@@ -59,7 +59,7 @@
         <div class="board-element" id="progress" ondrop="moveTo('progress')" ondragover="allowDrop(event)">
             <div class="space-between margin-right">
                 <span>In progress</span>
-                <a id="progress-link"><img class="add-task-btn" onclick="showAddTask()" src="assets/img/plus-button.svg" alt=""></a>
+                <a class="catgeory-link" id="progress-link"><img class="add-task-btn" onclick="showAddTask()" src="assets/img/plus-button.svg" alt=""></a>
             </div>
             <div id="board-content-progress" class="board-content">No task in progress</div>
             <div id="content-progress"></div>
@@ -68,14 +68,14 @@
         <div class="board-element" id="feedback" ondrop="moveTo('feedback')" ondragover="allowDrop(event)">
             <div class="space-between margin-right">
                 <span>Await feedback</span>
-                <a id="feedback-link"><img class="add-task-btn" onclick="showAddTask()" src="assets/img/plus-button.svg" alt=""></a>
+                <a class="catgeory-link" id="feedback-link"><img class="add-task-btn" onclick="showAddTask()" src="assets/img/plus-button.svg" alt=""></a>
             </div>
             <div id="board-content-feedback" class="board-content">No tasks await for feedback</div>
             <div id="content-feedback"></div>
             <div id="drag-feedback" class="drag-container"></div>
         </div>
         <div class="board-element" id="done" ondrop="moveTo('done')" ondragover="allowDrop(event)">
-            <div class="space-between margin-right">
+            <div class="space-between margin-right catgeory-link">
                 <span>Done</span>
             </div>
             <div id="board-content-done" class="board-content">No tasks are done</div>

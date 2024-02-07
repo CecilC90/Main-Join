@@ -101,6 +101,7 @@ body {
 
 #mobile-searchbar {
     display: none;
+    padding: 7px 21px;
 }
 
 .board-header .inputField {
@@ -138,6 +139,10 @@ body {
 
 a {
     text-decoration: none !important;
+}
+
+.catgeory-link {
+    height: 24px;
 }
 
 .add-task-btn:hover {
@@ -330,7 +335,7 @@ a {
 }
 
 #detail-todo-content {
-    max-height: 90vh;
+    max-height: 80vh;
     width: 400px;
     background-color: #fff;
     border-radius: 24px;
@@ -488,11 +493,17 @@ a {
 .editViewInput {
     width: calc(100% - 44px);
     margin-bottom: 16px;
+    font-size: 18px;
+    font-family: "Inter", sans-serif;
+    font-weight: normal;
 }
 
 .editViewTextarea {
     width: calc(100% - 34px);
     margin-bottom: 16px;
+    font-size: 18px;
+    font-family: "Inter", sans-serif;
+    font-weight: normal;
 }
 
 .edit-p {
@@ -635,6 +646,7 @@ footer {
 
     .margin-right {
         margin-right: 30px;
+        height: 24px;
     }
 }
 
@@ -703,6 +715,10 @@ footer {
     .board-element {
         width: 100%;
         padding-right: 30px;
+    }
+
+    #detail-todo-content {
+        width: 55vh;
     }
 
     .add-task-button {
