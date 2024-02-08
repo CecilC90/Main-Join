@@ -46,13 +46,40 @@ body {
 
     h1 {
         font-size: 47px;
+        padding-bottom: 32px;
     }
 
     h2 {
-        font-size: 32px;
+        font-size: 27px;
+        margin: 0;
+        margin-top: 24px;
     }
 
     p {
         font-size: 16px;
+        margin: 0;
+    }
+
+    ul {
+      margin: 0;
     }
   }
+
+  @media(max-width: 800px) {
+    h1 {
+      font-size: 32px;
+    }
+
+    h2 {
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    li {
+      font-size: 14px;
+    }
+  }
+
