@@ -100,8 +100,6 @@ function renderContactList(sortedContacts) {
 
     for (let i = 0; i < sortedContacts.length; i++) {
         let sortedContact = sortedContacts[i];
-        
-        // Überprüfen, ob der Kontakt aktiv ist
         if (sortedContact.active) {
             let firstLetter = getFirstLetter(sortedContacts, i);
 
@@ -118,7 +116,7 @@ function renderContactList(sortedContacts) {
 
 
 function getFirstLetter(sortedContacts, i) {
-    return sortedContacts[i].name.charAt(0);
+    return sortedContacts[i].name.charAt(0).toUpperCase(0);
 }
 
 function getMemberInitials(sortedContacts, i) {

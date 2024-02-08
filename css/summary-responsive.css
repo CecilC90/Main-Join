@@ -150,7 +150,7 @@
     }
 
     .overview-container {
-        gap: 20px;
+        gap: 16px;
         justify-content: center;
     }
   }
@@ -158,15 +158,13 @@
   @media(max-width: 410px) {
     .button-container {
         box-sizing: border-box;
-        padding: 18px 48px;
+        padding: 18px 43px;
     }
   }
 
   @media(max-width: 400px) {
-
-
     .button-container {
-        padding: 16px;
+        padding: 18px 32px;
     }
 
     .gap-18 {
@@ -176,5 +174,11 @@
     .task-container {
         height: 136px;
         padding: 12px;
+    }
+  }
+
+  @media(max-width: 350px) {
+    .button-container {
+        padding: 18px 24px
     }
   }

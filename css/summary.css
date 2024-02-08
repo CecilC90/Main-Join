@@ -193,7 +193,7 @@ a {
 .urgency-container:hover {
     background-color: #2A3647;
     color: white;
-    transform: scale(1.05);
+    transform: scale(1.01);
 }
 
 .elipse-urgency {
@@ -244,7 +244,7 @@ a {
 .task-container:hover {
     background-color: #2A3647;
     color: white;
-    transform: scale(1.1);
+    transform: scale(1.01);
 }
 
 #greetingMobile {

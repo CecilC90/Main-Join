@@ -10,14 +10,13 @@ body {
     position: relative;
 }
 
-::-webkit-scrollbar {
-    width: 27px;
+.contacts-container::-webkit-scrollbar {
+    width: 24px;
 }
 
-::-webkit-scrollbar-thumb {
-    width: 4px;
+.contacts-container::-webkit-scrollbar-thumb {
     background-color: #A8A8A8;
-    border: 9px solid white;
+    border: 8px solid white;
     border-radius: 20px;
 }
 
@@ -165,10 +164,8 @@ body {
 
 .user-card {
     display: flex;
-    align-items: center;
-    padding-left: 24px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    align-items: center; 
+    padding: 15px 24px;
     border-radius: 10px;
     cursor: pointer;
 }
