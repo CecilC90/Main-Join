@@ -75,7 +75,7 @@ function showUserInitials() {
 }
 
 function logoutUser() {
-  let logoutUser = loggedInUser.splice(0, 1);
+  logoutUser = loggedInUser.splice(0, 1);
   saveLoggedInUser();
   openPage('index');
 }

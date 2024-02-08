@@ -5,9 +5,9 @@ async function renderSummary() {
     showSelectedButton("summaryButton");
     await loadLoggedInUser();
     await loadAllTasks();
-    await greeting();
     await checkIsMsgAvailable();
     renderSummaryHTML();   
+    greeting();
     renderTasks();  
 }
 
