@@ -4,11 +4,11 @@ async function renderSummary() {
     await includesHTML();
     showSelectedButton("summaryButton");
     await loadLoggedInUser();
-    await greeting();
-    checkIsMsgAvailable();
     await loadAllTasks();
-    //await render();
-    renderTasks();
+    await greeting();
+    await checkIsMsgAvailable();
+    renderSummaryHTML();   
+    renderTasks();  
 }
 
 async function render() {
@@ -26,7 +26,6 @@ function checkIsMsgAvailable() {
     }
 }
 
-
 function showGreetingMobile() {
     if (window.innerWidth < 608) {
         document.getElementById('greetingMobile').classList.add('d-flex');
@@ -40,8 +39,6 @@ async function loadAllTasks() {
     let respons = await getItem("allTasks");
     todos = JSON.parse(respons);
 }
-
-
 
 async function greeting() {
     let time = new Date().getHours();
@@ -80,7 +77,6 @@ function showName() {
     }
 }
 
-
 function renderTasks() {
     todoCount();
     finished();
@@ -88,6 +84,7 @@ function renderTasks() {
     tasks();
     progressCount();
     awaitCount();
+    feedback();
 }
 
 function todoCount() {
@@ -142,6 +139,22 @@ function finished() {
         numberOfDone.innerHTML = `0`;
     } else {
         numberOfDone.innerHTML = `${countofDone}`;
+    }
+}
+
+function feedback() {
+    numberOfFeedback = document.getElementById('await');
+    let countofFeedback = 0
+    for (let i = 0; i < todos.length; i++) {
+        const todo = todos[i];
+        if (todo.category === "feedback") {
+            countofFeedback++;
+        }
+    }
+    if (countofFeedback < 1) {
+        numberOfFeedback.innerHTML = `0`;
+    } else {
+        numberOfFeedback.innerHTML = `${countofFeedback}`;
     }
 }
 
