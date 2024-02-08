@@ -6,7 +6,7 @@
         <span class="title">Kanban Project Management Tool</span>
         <div class="icon-container">
             <div class="help-container">
-                <img src="./assets/img/help.svg" alt="help" class="help-icon">
+                <img src="./assets/img/help.svg" alt="help" class="help-icon" onclick="openPage('help')">
             </div>
             <div class="user-icon" onclick="userNavbar()">
                 <span class="Icon-elipse" id="Initial"></span>
@@ -16,7 +16,7 @@
     <div class="popUp-container" id="popUpUser">
         <div id="popUpUser">
             <div class="popUp-button" onclick="openPage('legality')">Legal Notice</div>
-            <div class="popUp-button">Privacy Policy</div>
+            <div class="popUp-button" onclick="openPage('policy')">Privacy Policy</div>
             <div class="popUp-button" onclick="logoutUser()">Log out</div>
         </div>
     </div>

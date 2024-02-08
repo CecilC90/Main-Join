@@ -76,9 +76,7 @@ function doNotClose(event) {
 function renderContactsDetailView(index) {
     let assignedContactsContainer = document.getElementById(`assigned-contacts-detailview${index}`);
     if(todos[index].assignedContacts.length > 0) {
-        assignedContactsContainer.innerHTML = `
-            <span class="label">Assigned To:</span>
-        `;
+        assignedContactsContainer.innerHTML = addHeadlineAssignedToContacts();
         for(let i = 0; i < todos[index].assignedContacts.length; i++) {
             const contactId = todos[index].assignedContacts[i];
             const contact = findContactById(contactId);
@@ -87,12 +85,7 @@ function renderContactsDetailView(index) {
             let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
             let resultInitials = firstLetter + secondLetter;
             
-            assignedContactsContainer.innerHTML += `
-                <div class="contact-detailview">
-                    <div class="contactsIcon">${resultInitials}</div>
-                    <span>${contact.name}</span>    
-                </div>
-            `;
+            assignedContactsContainer.innerHTML += assignedContactsContainerHTML(contact, resultInitials);
         }
     }
 }
@@ -100,17 +93,10 @@ function renderContactsDetailView(index) {
 function renderSubtask(index) {
     let subtasks = document.getElementById(`checkbox-subtask${index}`);
     if(todos[index].subtask.length > 0) {
-        subtasks.innerHTML = `
-            <span class="label">Subtasks</span>
-        `;
+        subtasks.innerHTML = addHeadlineSubtasks();
         for(let i = 0; i < todos[index].subtask.length; i++) {
             let currentIndexSubtask = todos[index].subtask[i].title;
-            subtasks.innerHTML += `
-                <div class="subtask-detailview">
-                    <input onclick="subtaskCounter(${index}, ${i})" id="subtask${index}-${i}" type="checkbox">
-                    <label for="subtask${index}-${i}">${currentIndexSubtask}</label>
-                </div>
-            `;
+            subtasks.innerHTML += subtasksContainerHTML(index, i, currentIndexSubtask);
         }
     }
 }
@@ -379,6 +365,15 @@ function renderColorForCategory(index) {
     }
 }
 
+function renderSubtaskProgressbar(index) {
+    let progressbarContent = document.getElementById(`progress-content${index}`);
+    if(todos[index].subtask.length > 0) {
+      progressbarContent.innerHTML = templateProgressbar(index); 
+    }
+  
+    subtaskMaxLength(index);
+  }
+
 function findContactById(contactId) {
     return contacts.find(contact => contact.id === contactId);
 }
@@ -394,9 +389,7 @@ function renderContact(index) {
             let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
             let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
             let resultInitials = firstLetter + secondLetter;
-            assignedContactsContainer.innerHTML += `
-                <div class="contactsIcon margin-left">${resultInitials}</div>
-            `;
+            assignedContactsContainer.innerHTML += templateContactIcons(resultInitials);
         }
     }
 
@@ -407,9 +400,7 @@ function renderMoreContactsIcon(index) {
     let assignedContactsContainer = document.getElementById(`assigned-contacts${index}`);
     if(todos[index].assignedContacts.length > 4) {
         let differenceLength = todos[index].assignedContacts.length - 4;
-        assignedContactsContainer.innerHTML += `
-            <div class="moreContactsIcon margin-left">+${differenceLength}</div>
-        `;
+        assignedContactsContainer.innerHTML += templateMoreContactIcon(differenceLength);
     }
 }
 
@@ -548,36 +539,9 @@ function showAddTask() {
     let showAddTodoContainer = document.getElementById('show-add-todo');
     showAddTodoContainer.style.display = "flex";
     showAddTodoContainer.innerHTML = `<div id="add-todo-content"></div>`;
-    document.getElementById('add-todo-content').innerHTML = `
-        <div onclick="doNotClose(event)" class="space-between">
-            <h1 class="headline">Add Task</h1>
-            <img class="close-img" onclick="closeAddTask()" src="/assets/img/close.svg" alt="">
-        </div>
-    `;
+    document.getElementById('add-todo-content').innerHTML = templateAddTaskHeadline();
     document.getElementById('add-todo-content').innerHTML += renderAddTaskHTML();
-    document.getElementById('add-todo-content').innerHTML += `
-    <footer onclick="doNotClose(event)">
-    <p><span style="color: #ff8190">*</span>This field is required</p>
-    <div class="createTaskButtonConatiner">
-      <div>
-        <button class="buttonLight taskClearButton" onclick="clearTask()">
-          Clear<svg width="25" height="24" viewBox="0 0 25 24" fill="none">
-            <path
-              d="M12.2496 11.9998L17.4926 17.2428M7.00659 17.2428L12.2496 11.9998L7.00659 17.2428ZM17.4926 6.75684L12.2486 11.9998L17.4926 6.75684ZM12.2486 11.9998L7.00659 6.75684L12.2486 11.9998Z"
-              stroke="#2A3647"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
-      </div>
-      <div>
-        <button id="createTaskButton" class="buttonDarg" onclick="addTask()">Create Task<img src="/assets/img/check_icon.svg" alt="" /></button>
-      </div>
-    </div>
-    </footer>
-    `;
+    document.getElementById('add-todo-content').innerHTML += templateAddTaskFooter();
 
     setPrioButton("medium");
     renderAssingnedToDropdownList();

@@ -13,23 +13,29 @@ function templateHTMLTodoContainer(element, index) {
 `;
 }
 
-function renderSubtaskProgressbar(index) {
-  let progressbarContent = document.getElementById(`progress-content${index}`);
-  if(todos[index].subtask.length > 0) {
-    progressbarContent.innerHTML = `
-    <div class="space-between align-items">
-      <div id="progress${index}" id="progress-container" class="progress-container">
-        <div id="progress-bar${index}" class="progress-bar"></div>
+function templateProgressbar(index) {
+   return `
+      <div class="space-between align-items">
+        <div id="progress${index}" id="progress-container" class="progress-container">
+          <div id="progress-bar${index}" class="progress-bar"></div>
+        </div>
+        <div id="subtask-content">
+          <span id="subtask-counter${index}">X</span> / <span id="subtask-maxlength${index}">X</span> Subtasks
+        </div>
       </div>
-      <div id="subtask-content">
-        <span id="subtask-counter${index}">X</span> / <span id="subtask-maxlength${index}">X</span> Subtasks
-      </div>
-    </div>
-  `; 
-  }
-
-  subtaskMaxLength(index);
+    `;
 }
+
+function templateContactIcons(resultInitials) {
+  return `<div class="contactsIcon margin-left">${resultInitials}</div>`
+}
+
+function templateMoreContactIcon(differenceLength) {
+  return `<div class="moreContactsIcon margin-left">+${differenceLength}</div>`
+}
+
+
+// HTML Code for Pop-Up Windows
 
 function templateHTMLDetailView(index) { 
   return /* HTML */ `
@@ -121,4 +127,65 @@ function renderPrioButton(index) {
           <img id="change-img-low" src="assets/img/prio-low.svg">
       </div>
     `;
+}
+
+function addHeadlineAssignedToContacts() {
+  return `<span class="label">Assigned To:</span>`;
+}
+
+function assignedContactsContainerHTML(contact, resultInitials) {
+  return `
+    <div class="contact-detailview">
+      <div class="contactsIcon">${resultInitials}</div>
+      <span>${contact.name}</span>    
+    </div>
+  `;
+}
+
+function addHeadlineSubtasks() {
+  return `<span class="label">Subtasks</span>`;
+}
+
+function subtasksContainerHTML(index, i, currentIndexSubtask) {
+  return `
+    <div class="subtask-detailview">
+       <input onclick="subtaskCounter(${index}, ${i})" id="subtask${index}-${i}" type="checkbox">
+       <label for="subtask${index}-${i}">${currentIndexSubtask}</label>
+    </div>
+  `
+}
+
+function templateAddTaskHeadline() {
+  return `
+    <div onclick="doNotClose(event)" class="space-between">
+      <h1 class="headline">Add Task</h1>
+      <img class="close-img" onclick="closeAddTask()" src="/assets/img/close.svg" alt="">
+    </div>
+  `
+}
+
+function templateAddTaskFooter() {
+  return `
+    <footer onclick="doNotClose(event)">
+    <p><span style="color: #ff8190">*</span>This field is required</p>
+    <div class="createTaskButtonConatiner">
+      <div>
+        <button class="buttonLight taskClearButton" onclick="clearTask()">
+        Clear<svg width="25" height="24" viewBox="0 0 25 24" fill="none">
+            <path
+              d="M12.2496 11.9998L17.4926 17.2428M7.00659 17.2428L12.2496 11.9998L7.00659 17.2428ZM17.4926 6.75684L12.2486 11.9998L17.4926 6.75684ZM12.2486 11.9998L7.00659 6.75684L12.2486 11.9998Z"
+              stroke="#2A3647"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          </button>
+          </div>
+        <div>
+        <button id="createTaskButton" class="buttonDarg" onclick="addTask()">Create Task<img src="/assets/img/check_icon.svg" alt="" /></button>
+        </div>
+      </div>
+    </footer>
+  `
 }
