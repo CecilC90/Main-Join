@@ -41,8 +41,8 @@ function renderContactsDetailView(index) {
             let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
             let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
             let resultInitials = firstLetter + secondLetter;
-            
-            assignedContactsContainer.innerHTML += assignedContactsContainerHTML(contact, resultInitials);
+            assignedContactsContainer.innerHTML += assignedContactsContainerHTML(contact, resultInitials, i);
+            renderContactColor(contact, i);
         }
     }
 }
@@ -195,10 +195,6 @@ async function changeTask(index) {
 
     showDetailView(index);
     renderTodos();
-}
-
-function findContactById(contactId) {
-    return contacts.find(contact => contact.id === contactId);
 }
 
 function closeAddTask() {

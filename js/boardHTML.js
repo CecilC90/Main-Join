@@ -26,8 +26,8 @@ function templateProgressbar(index) {
     `;
 }
 
-function templateContactIcons(resultInitials) {
-  return `<div class="contactsIcon margin-left">${resultInitials}</div>`
+function templateContactIcons(resultInitials ,indexIcons) {
+  return `<div id="contactsIcon${indexIcons}" class="contactsIcon margin-left">${resultInitials}</div>`
 }
 
 function templateMoreContactIcon(differenceLength) {
@@ -133,10 +133,10 @@ function addHeadlineAssignedToContacts() {
   return `<span class="label">Assigned To:</span>`;
 }
 
-function assignedContactsContainerHTML(contact, resultInitials) {
+function assignedContactsContainerHTML(contact, resultInitials, i) {
   return `
     <div class="contact-detailview">
-      <div class="contactsIcon">${resultInitials}</div>
+      <div id="contactIconDetailview${i}" class="contactsIcon">${resultInitials}</div>
       <span>${contact.name}</span>    
     </div>
   `;

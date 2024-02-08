@@ -263,12 +263,30 @@ function renderContact(index) {
             let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
             let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
             let resultInitials = firstLetter + secondLetter;
-            assignedContactsContainer.innerHTML += templateContactIcons(resultInitials);
+            assignedContactsContainer.innerHTML += templateContactIcons(resultInitials, i);
+            renderContactColor(contact, i);
         }
     }
 
     renderMoreContactsIcon(index);
 }
+
+function renderContactColor(contact, i) {
+    let contactIcon = document.getElementById(`contactsIcon${i}`);
+    let contactIconDetailview = document.getElementById(`contactIconDetailview${i}`);
+
+    if(contactIcon) {
+        contactIcon.style.backgroundColor += contact.color;
+    }
+    if(contactIconDetailview) {
+        contactIconDetailview.style.backgroundColor += contact.color;
+    }
+}
+
+function findContactById(contactId) {
+    return contacts.find(contact => contact.id === contactId);
+}
+
 
 function renderMoreContactsIcon(index) {
     let assignedContactsContainer = document.getElementById(`assigned-contacts${index}`);
