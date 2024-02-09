@@ -154,7 +154,6 @@ async function addUser() {
 
 async function addContact() {
   const randomIndex = Math.floor(Math.random() * backgroundColors.length);
-
   await loadContacts();
   contacts.push({
       id: Date.now(),
