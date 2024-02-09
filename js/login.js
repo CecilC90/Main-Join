@@ -126,13 +126,6 @@ async function login() {
   }
 }
 
-/*function greetingMobile() {
-  if (window.innerWidth < 608) {
-    document.getElementById('greetingContainer').classList.remove('d-none');
-  }
-}*/
-
-
 async function addUser() {
   showEmailAlreadyUsed(false);
   document.getElementById("registrationButton").disable = true;

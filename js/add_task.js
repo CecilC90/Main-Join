@@ -74,9 +74,11 @@ function renderAssingnedToDropdownList() {
   let content = document.getElementById("dropdownContentAssignedTo");
   content.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
-    let firstAndSecondLetter = getFirstAndSecondLetter(i);
-    content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter);
-    showSelectedDropdownContact(i);
+    if (contacts[i]["active"]) {
+      let firstAndSecondLetter = getFirstAndSecondLetter(i);
+      content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter);
+      showSelectedDropdownContact(i);
+    }
   }
 }
 
@@ -87,11 +89,13 @@ function filterAssingnedToDropdownList() {
   content.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i]["name"].toLowerCase().includes(contactInput)) {
-      let firstAndSecondLetter = getFirstAndSecondLetter(i);
-      content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter);
-      showSelectedDropdownContact(i);
-      dropdownContentAssignedTo.style.display = "flex";
-      toggleDropdownIcon("assignedToDropdownIcon", "flex");
+      if (contacts[i]["active"]) {
+        let firstAndSecondLetter = getFirstAndSecondLetter(i);
+        content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter);
+        showSelectedDropdownContact(i);
+        dropdownContentAssignedTo.style.display = "flex";
+        toggleDropdownIcon("assignedToDropdownIcon", "flex");
+      }
     }
   }
   if (contactInput.length == 0) {
@@ -276,7 +280,7 @@ async function addTask() {
   if (allInputsFilled) {
     showAddTaskToBoard();
     await addToTaskBackend();
-    openPage('board');
+    openPage("board");
   }
   document.getElementById("createTaskButton").disabled = false;
 }

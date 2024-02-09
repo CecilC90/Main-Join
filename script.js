@@ -89,6 +89,10 @@ function showSelectedButton(selected) {
   document.getElementById(selected + 'Mobile').classList.add('selectedMobileMenuButton');
 }
 
+function showFooterButton(selected){
+  document.getElementById(selected).classList.replace('menuFooterButton', 'selectedFooterButton');
+}
+
 function openPage(page) {
   window.location.href = page + ".html";
 }
