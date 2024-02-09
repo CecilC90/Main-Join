@@ -153,6 +153,10 @@
     #editContactPopUp {
         width: 100%;
     }
+
+    .user-card {
+        padding: 15px 8px;
+    }
 }
 
 @media(max-width: 360px) {

@@ -182,3 +182,30 @@
         padding: 18px 24px
     }
   }
+
+  @media(max-height: 780px) {
+    .fs-61 {
+        font-size: 40px;
+    }
+
+    .fs-64 {
+        font-size: 32px;
+    }
+
+    .task-container {
+        height: max-content;
+    }
+
+    .button-container {
+        padding: 16px 24px;
+    }
+
+    .headline {
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+
+    .main-task-container {
+        gap: 20px;
+    }
+  }
