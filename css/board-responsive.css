@@ -1,0 +1,278 @@
+@media(max-width: 1550px) {
+    .board-element {
+        padding: 5px;
+    }
+
+    .board-section {
+        padding-left: 260px;
+    }
+
+    .board-header {
+        padding-left: 260px;
+    }
+}
+
+@media(max-width: 1430px) {
+
+    .board-header {
+        width: calc(100vw - 330px);
+        padding-left: 280px;
+    }
+
+    .board-section {
+        flex-direction: column;
+        padding-left: 280px;
+    }
+
+    #board-content-todo {
+        display: flex;
+        margin-right: 30px;
+        margin-bottom: 30px;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        padding: 2px 10px;
+    }
+
+    #board-content-progress {
+        display: flex;
+        margin-right: 30px;
+        margin-bottom: 30px;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        padding: 2px 10px;
+    }
+
+    #board-content-feedback {
+        display: flex;
+        margin-right: 30px;
+        margin-bottom: 30px;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        padding: 2px 10px;
+    }
+
+    #board-content-done {
+        display: flex;
+        margin-right: 30px;
+        margin-bottom: 30px;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        padding: 2px 10px;
+    }
+
+    .todo-content {
+        margin-right: 20px;
+        flex: 0 0 300px;
+    }
+
+    .todo-content:last-child {
+        margin-right: 0;
+    }
+
+    .board-element {
+        width: calc(100vw - 300px);
+        padding: 0;
+    }
+
+    .margin-right {
+        margin-right: 30px;
+        height: 24px;
+    }
+}
+
+@media(max-width: 1220px) {
+    #ok-button {
+        margin-left: 0;
+        margin-bottom: 0;
+    }
+
+    .addTasks {
+        padding-bottom: 0 !important;
+    }
+
+    .descriptionTextArea {
+        max-width: 100% !important;
+    }
+
+    footer {
+        background-color: #fff !important;
+        position: static !important;
+    }
+}
+
+@media(max-width: 1100px) {
+    .board-header .inputField {
+        display: none;
+    }
+
+    #mobile-searchbar {
+        display: flex;
+        margin-left: 280px;
+        margin-top: 30px;
+    }
+}
+
+@media(max-width: 911px) {
+    .headline {
+        font-size: 47px;
+    }
+}
+
+@media(max-width: 750px) {
+
+    * {
+        box-sizing: border-box !important;
+    }
+
+    .board-header {
+        padding-top: 80px;
+        padding-left: 30px;
+        width: 100vw;
+    }
+
+    .search-and-add {
+        margin-right: 30px;
+    }
+
+    .board-section {
+        padding-top: 30px;
+        padding-left: 30px;
+        width: 100vw;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    .board-element {
+        width: 100%;
+        padding-right: 30px;
+    }
+
+    #detail-todo-content {
+        width: 55vh;
+    }
+
+    .add-task-button {
+        display: none;
+    }
+
+    .add-task-button-mobile {
+        display: block;
+    }
+
+    .space-between {
+        margin-right: 0;
+    }
+
+    #board-content-todo {
+        margin-right: 0;
+        margin-bottom: 16px;
+    }
+
+    #board-content-progress {
+        margin-right: 0;
+        margin-bottom: 16px;
+    }
+
+    #board-content-feedback {
+        margin-right: 0;
+        margin-bottom: 16px;
+    }
+
+    #board-content-done {
+        margin-right: 0;
+        margin-bottom: 110px;
+        margin-right: 30px;
+    }
+
+    .descriptionTextArea {
+        width: 100%;
+    }
+
+    #mobile-searchbar {
+        display: flex;
+        margin-left: 30px;
+        margin-right: 30px;
+        margin-top: 30px;
+    }
+
+    .inputField {
+        padding: 4px;
+    }
+
+    .editViewInput {
+        width: 100%;
+    }
+
+    .prioButton {
+        padding: 4px;
+    }
+
+    .headline {
+        padding-left: 0;
+    }
+
+    #show-add-todo {
+        display: none;
+    }
+
+    .mobile-navbar {
+        z-index: 0;
+    }
+}
+
+@media(max-width: 450px) {
+    .board-header {
+        padding-top: 70px;
+        padding-left: 16px;
+    }
+
+    .headline {
+        padding: 0;
+    }
+
+    .board-section {
+        padding-top: 30px;
+        padding-left: 16px;
+    }
+
+    .search-and-add {
+        margin-right: 16px;
+    }
+
+    .board-element {
+        padding-right: 16px;
+    }
+
+    .todo-content {
+        flex: 0 0 250px;
+    }
+
+    #board-content-done {
+        margin-right: 16px; 
+    }
+
+    #detail-todo-content {
+        width: 99vw;
+        padding: 20px;
+    }
+
+    .priobutton-editview {
+        gap: 10px;
+    }
+
+    #mobile-searchbar {
+        margin-left: 16px;
+        margin-right: 16px;
+        padding: 4px;
+    }
+}
+
+@media(max-width: 360px) {
+    #ok-button {
+        font-size: 15px;
+    }
+
+    .inputField input {
+        font-size: 15px !important;
+    }
+}
