@@ -69,11 +69,7 @@ function editSubtaskHTML(i) {
 
 function renderAddTaskHTML(){
   return /* html */ `
-<<<<<<< HEAD
   <form class="addTasks" onsubmit="addTask(); return false">
-=======
-  <form class="addTasks" onsubmit="addTask(); return false"> <!-- doNotClose()-Function for AddTask Detailview (Board-Site) -->
->>>>>>> f808c81cc3b52ca64694a48ce23492c817f85fbc
     <div class="leftContainer">
       <div class="taskTitle">
         <div class="inputContainer">
