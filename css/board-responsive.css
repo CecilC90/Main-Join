@@ -133,7 +133,7 @@
         padding-left: 30px;
         width: 100vw;
     }
-
+    
     .search-and-add {
         margin-right: 30px;
     }
@@ -220,7 +220,7 @@
     }
 
     .mobile-navbar {
-        z-index: 0;
+        z-index: 1000;
     }
 }
 
