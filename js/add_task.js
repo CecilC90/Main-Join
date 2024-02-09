@@ -307,7 +307,6 @@ async function addToTaskBackend() {
   };
   allTasks.push(currentTask);
   await saveAllTasks(allTasks);
-  console.log(allTasks);
 }
 
 function loadSelectedContacts() {
@@ -397,20 +396,3 @@ function handleWindowClick(event) {
     toggleDropdownIcon("categoryDropdownIcon", "none");
   }
 }
-
-// window.addEventListener("click", function (event) {
-//   let subtaskEdit = this.document.getElementById("subtask");
-//   if(subtaskEdit){
-//     if (subtaskEdit.contains(event.target)) {
-//       // renderSubtasks();
-//       console.log("ich wurde gedrückt")
-//     } else {
-//       console.log('ich wurde nicht gedrückt');
-//     }
-//   }
-// });
-
-// function setDisplayStyleDropDown(id, dispayStatus){
-//   dropdownContentAssignedTo.style.display = dispayStatus;
-//   toggleDropdownIcon(id, dispayStatus);
-// }

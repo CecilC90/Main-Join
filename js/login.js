@@ -110,19 +110,14 @@ async function login() {
     userInfos = JSON.parse(respons);
     let userPassword = userInfos.password;
     if (password.value == userPassword) {
-      console.log("login erfolgreich");
-      window.location.href = "summary.html?msg=Login erfolgreich";      //Weiterleitung zur summary mit msg
-      //funktion um den User nach erfolgreichen Login zu speichern
+      window.location.href = "summary.html?msg=Login erfolgreich";   
       addLoggedInUser(userInfos);
-      //openPage("summary");                                            // Wird nicht benötigt aufgrund von Zeile 88
     } else {
-      console.log("passwort ist nicht korrekt");
       showLoginWorngPassword();
     }
     document.getElementById("logInButton").disable = false;
   } else {
     showEmailNotExisting(true);
-    console.log("Email noch nicht vorhanden");
   }
 }
 
@@ -152,7 +147,6 @@ async function addUser() {
       document.getElementById("registrationButton").disable = false;
     }
   } else {
-    console.log("E-Mail wurde schon verwendet");
     showEmailAlreadyUsed(true);
     document.getElementById("registrationButton").disable = false;
   }
@@ -170,7 +164,6 @@ async function addContact() {
       color: backgroundColors[randomIndex],
       active: true,
   });
-  console.log(contacts);
   await setItem('contacts', JSON.stringify(contacts));
 }
 

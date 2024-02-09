@@ -3,7 +3,6 @@ const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 
 let loggedInUser = [];
 
-
 function init() {
   renderStartPage();
 }
@@ -35,7 +34,6 @@ async function getItem(key) {
 function addLoggedInUser(userInfos) {
   let name = userInfos.name;
   loggedInUser.push(name);
-  console.log(name);
   saveLoggedInUser();
 }
 
@@ -99,13 +97,9 @@ function openPage(page) {
 
 function userNavbar() {
   let navbar = document.getElementById('popUpUser');
-
-  // Überprüfe, ob das Element aktuell sichtbar ist
   if (navbar.style.display === 'flex') {
-    // Wenn sichtbar, setze den Stil auf 'none' (versteckt)
     navbar.style.display = 'none';
   } else {
-    // Wenn nicht sichtbar, setze den Stil auf 'flex' (sichtbar)
     navbar.style.display = 'flex';
   }
 }
