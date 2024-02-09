@@ -39,6 +39,7 @@ function templateMoreContactIcon(differenceLength) {
 
 function templateHTMLDetailView(index) { 
   return /* HTML */ `
+      <div class="detail-todo-container">
       <div onclick="doNotClose(event)" id="detail-todo-content">
           <div class="space-between">
               <span class="category-span" id="category-span-detail${index}">${todos[index].todoCategory}</span>
@@ -64,6 +65,7 @@ function templateHTMLDetailView(index) {
             <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
             <div class="edit-btn" onclick="editTask(${index})"></div>
           </div>
+        </div>
       </div>
   `;
 }

@@ -215,7 +215,7 @@ function emptyInput() {
 function showAddTask() {
     let showAddTodoContainer = document.getElementById('show-add-todo');
     showAddTodoContainer.style.display = "flex";
-    showAddTodoContainer.innerHTML = `<div id="add-todo-content"></div>`;
+    showAddTodoContainer.innerHTML = `<div onclick="doNotClose(event)" id="add-todo-content"></div>`;
     document.getElementById('add-todo-content').innerHTML = templateAddTaskHeadline();
     document.getElementById('add-todo-content').innerHTML += renderAddTaskHTML();
     document.getElementById('add-todo-content').innerHTML += templateAddTaskFooter();

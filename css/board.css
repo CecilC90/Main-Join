@@ -335,13 +335,12 @@ a {
 }
 
 #detail-todo-content {
-    max-height: 80vh;
+    overflow: scroll; 
+    padding: 20px; 
     width: 400px;
     background-color: #fff;
     border-radius: 24px;
-    padding: 40px;
-    overflow: scroll;
-    transform: translateX(100vw);
+    max-height: 80vh;
     animation-name: SlideFromRight;
     animation-duration: 225ms;
     animation-fill-mode: forwards;
