@@ -7,6 +7,12 @@ function init() {
   renderStartPage();
 }
 
+async function checkloggedInUser() {
+  if (loggedInUser.length === 0) {
+      window.location.href = "index.html";
+  }
+}
+
 async function includesHTML() {
   let includeElements = document.querySelectorAll("[w3-include-html]");
   for (let i = 0; i < includeElements.length; i++) {
@@ -55,6 +61,7 @@ function loadLoggedInUser() {
   if (loggedInUserAsText) {
     loggedInUser = JSON.parse(loggedInUserAsText);
   }
+  checkloggedInUser();
   showUserInitials();
 }
 

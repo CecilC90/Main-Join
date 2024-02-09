@@ -26,7 +26,7 @@ function renderSummaryHTML() {
                             </a>
                         </div>
                         <div>
-                            <a href="board.html">
+                            <a href="board.html#done">
                                 <div class="button-container gap-18">
                                     <div class="elipse">
                                         <div>
@@ -77,7 +77,7 @@ function renderSummaryHTML() {
                                 <div class="fs-20 fw-400">Tasks in Progress</div>
                             </div>
                         </a>
-                        <a href="board.html">
+                        <a href="board.html#feedback">
                             <div class="task-container">
                                 <div class="fs-64 fw-600" id="await"></div>
                                 <div class="fs-20 fw-400">Awaiting Feedback</div>
