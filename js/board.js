@@ -25,6 +25,7 @@ function initBoard() {
 async function renderHTML() {
     await loadTasks();
     await loadContacts();
+    await loadLoggedInUser();
     pushColorForCategory();
     renderTodos();
     addIdToTasks();
