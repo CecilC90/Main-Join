@@ -164,3 +164,13 @@
         padding: 22px 8px;
     }
 }
+
+@media(max-height: 700px) {
+    .left-container {
+        padding: 100px 24px;
+    }
+
+    .right-container {
+        padding-top: 88px;
+    }
+}
