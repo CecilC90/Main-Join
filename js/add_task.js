@@ -3,6 +3,7 @@ let contacts = [];
 let category = ["Arbeit", "Privat", "Anderes"];
 let subtasks = [];
 let mobileVersionIsOn;
+let selectedCategory = 'open';
 
 async function init() {
   loadAddTaskContent();
@@ -298,7 +299,7 @@ async function addToTaskBackend() {
     title: title,
     description: description,
     todoCategory: category,
-    category: "open",
+    category: selectedCategory,
     dueDate: dueDate,
     priority: selectedPrio,
     assignedContacts: selectedContacts,
