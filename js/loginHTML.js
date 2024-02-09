@@ -1,5 +1,5 @@
 function renderStartPageHTML() {
-  return `
+  return /* html */`
     <form class="loginMask" onsubmit="login(); return false;">
       <div class="loginHeadline">
         <h1>Log in</h1>
@@ -18,7 +18,7 @@ function renderStartPageHTML() {
         </div>
         <p class="wrongPasswordText" id="wrongPasswordText"></p>
         <div class="rememberMeContainer">
-          <input type="checkbox" />
+          <img onclick="setRememberMe()" class="checkbox" id="rememberMeCheckbox" src="/assets/img/checkbox_unchecked.svg" alt="checkbock">
           <p>Remember me</p>
         </div>
       </div>
@@ -38,7 +38,7 @@ function renderSingUpButtonHTML() {
 }
 
 function renderRegistrationPageHTML() {
-  return `
+  return /* html */ `
    <form class="registrationMask" onsubmit="addUser(); return false;">
      <div class="registrationHeadlineContainer">
        <img class="registrationBackIcon" src="./assets/img/arrow-left-line.svg" alt="" onclick="renderStartPage()">
@@ -54,7 +54,7 @@ function renderRegistrationPageHTML() {
            <img src="./assets/img/person.svg" alt="" />
          </div>
          <div class="inputField" id="inputEmailField">
-           <input type="email" placeholder="Email" id="email" required />
+           <input type="email" placeholder="Email" id="email" onkeyup="showEmailAlreadyUsed(false)" required />
            <img src="./assets/img/mail.svg" alt="" />
          </div>
          <div class="inputField">
@@ -68,7 +68,7 @@ function renderRegistrationPageHTML() {
        </div>
        <p class="passwordNotConfirmText" id="passwordNotConfirmText"></p>
        <div class="acceptPrivacyPolicContainer">
-         <input type="checkbox" />
+         <img onclick="setPrivacyPolic()" class="checkbox" id="privacyPolicCheckbox" src="/assets/img/checkbox_unchecked.svg" alt="checkbock">
          <p>I accept the <a href="">Privacy Polic</a></p>
        </div>
      </div>
