@@ -24,6 +24,10 @@ let contacts = [];
 let privacyPolic = false;
 let rememberMe = false;
 
+function init() {
+  renderStartPage();
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   var slideImage = document.getElementById("slideImage");
   var content = document.getElementById("content");

@@ -3,10 +3,6 @@ const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 
 let loggedInUser = [];
 
-function init() {
-  renderStartPage();
-}
-
 async function checkloggedInUser() {
   if (loggedInUser.length === 0) {
       window.location.href = "index.html";
