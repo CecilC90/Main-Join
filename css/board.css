@@ -189,6 +189,43 @@ a {
     transform: rotate(5deg);
 }
 
+.todo-content img {
+    width: 35px;
+    cursor: pointer;
+}
+
+.position-relative {
+    position: relative;
+}
+
+#dropdown-status {
+    display: none;
+}
+
+.dropdown-change-status {
+    display: flex;
+    position: absolute;
+    top: 100%; /* Setzt den Container direkt unter das Elternelement */
+    right: 0; /* Ausrichtung nach rechts */
+    flex-direction: column;
+    background-color: #2A3647;
+    color: #fff;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.dropdown-change-status span {
+    color: #fff;
+    font-weight: 300;
+    padding: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.dropdown-change-status span:hover {
+    background-color: #41526E;
+}
+
 .todo-content h2 {
     font-size: 20px;
     margin-top: 20px;

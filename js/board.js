@@ -194,6 +194,35 @@ function renderColorForCategory(index) {
     }
 }
 
+function openDropDownStatus(event, index) {
+    event.stopPropagation(); 
+    let parentDiv = event.target.closest('.position-relative');
+
+    let dropDown = parentDiv.querySelector('.dropdown-change-status');
+    if (!dropDown) {
+        dropDown = document.createElement('div');
+        dropDown.className = 'dropdown-change-status';
+        dropDown.innerHTML = `
+            <span onclick="changeTo('open', ${index}, event)">To Do</span>
+            <span onclick="changeTo('progress', ${index}, event)">In progress</span>
+            <span onclick="changeTo('feedback', ${index}, event)">Await feedback</span>
+            <span onclick="changeTo('done', ${index}, event)">Done</span>
+        `;
+        parentDiv.appendChild(dropDown);
+    } else {
+        parentDiv.removeChild(dropDown);
+    }
+}
+
+async function changeTo(newStatus, index, event) {
+    event.stopPropagation();
+    todos[index].category = newStatus;
+
+    await setItem('allTasks', JSON.stringify(todos));
+    renderTodos();
+}
+
+
 function renderSubtaskProgressbar(index) {
     let progressbarContent = document.getElementById(`progress-content${index}`);
     if(todos[index].subtask.length > 0) {

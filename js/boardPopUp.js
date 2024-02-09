@@ -169,65 +169,7 @@ function pushSelecetedContactsToTodos(index) {
     }
 }
 
-async function changeTask(index) {
-    let newTitle = document.getElementById('new-title');
-    let newDescription = document.getElementById('new-description');
-    let newDate = document.getElementById('new-date');
-
-    todos[index].assignedContacts = [];
-
-    for(let j = 0; j < contacts.length; j++) {
-        let contact = contacts[j];
-
-        if(contact.selected) {
-            todos[index].assignedContacts.push(contact.id);
-        }
-    }
-
-    todos[index] = {
-        ...todos[index],
-        title: newTitle.value,
-        description: newDescription.value,
-        dueDate: newDate.value,
-    }
-
-    await setItem('allTasks', JSON.stringify(todos));
-
-    showDetailView(index);
-    renderTodos();
-}
-
-function closeAddTask() {
-    let showAddTodoContainer = document.getElementById('show-add-todo');
-    showAddTodoContainer.style.display = "none";
-}
-
-function emptyInput() {
-    document.getElementById('search-mobile').value = '';
-    document.getElementById('search').value = '';
-    renderTodos();
-    document.getElementById('change-img').src = 'assets/img/search.svg';
-    document.getElementById('change-img-mobile').src = './assets/img/search.svg';
-}
-
-// Addtask function
-
-function showAddTask() {
-    let showAddTodoContainer = document.getElementById('show-add-todo');
-    showAddTodoContainer.style.display = "flex";
-    showAddTodoContainer.innerHTML = `<div onclick="doNotClose(event)" id="add-todo-content"></div>`;
-    document.getElementById('add-todo-content').innerHTML = templateAddTaskHeadline();
-    document.getElementById('add-todo-content').innerHTML += renderAddTaskHTML();
-    document.getElementById('add-todo-content').innerHTML += templateAddTaskFooter();
-
-    setPrioButton("medium");
-    renderAssingnedToDropdownList();
-    renderCategoryDropdownList();
-    renderSelectedContactsIcons();
-    renderSubtasks();
-    loadEventListner();
-    mobileAddTask();
-}
+// Assigned Contacts editview
 
 function renderAssingnedToDropdownListEditview() {
     let content = document.getElementById("dropdownContentAssignedToEditview");
@@ -331,6 +273,8 @@ function renderAssingnedToDropdownListEditview() {
     `;
   }
 
+  // Subtask Editview
+
   function renderSubtasksEditview(index) {
     let subtasksList = document.getElementById("subtasksListEditview");
     subtasksList.innerHTML = "";
@@ -422,6 +366,61 @@ function renderAssingnedToDropdownListEditview() {
     
     await setItem('allTasks', JSON.stringify(todos));
     renderSubtasksEditview(index);
+}
+
+async function changeTask(index) {
+    let newTitle = document.getElementById('new-title');
+    let newDescription = document.getElementById('new-description');
+    let newDate = document.getElementById('new-date');
+
+    todos[index].assignedContacts = [];
+
+    for(let j = 0; j < contacts.length; j++) {
+        let contact = contacts[j];
+
+        if(contact.selected) {
+            todos[index].assignedContacts.push(contact.id);
+        }
+    }
+
+    todos[index] = {
+        ...todos[index],
+        title: newTitle.value,
+        description: newDescription.value,
+        dueDate: newDate.value,
+    }
+
+    await setItem('allTasks', JSON.stringify(todos));
+
+    showDetailView(index);
+    renderTodos();
+}
+
+function emptyInput() {
+    document.getElementById('search-mobile').value = '';
+    document.getElementById('search').value = '';
+    renderTodos();
+    document.getElementById('change-img').src = 'assets/img/search.svg';
+    document.getElementById('change-img-mobile').src = './assets/img/search.svg';
+}
+
+// Addtask function
+
+function showAddTask() {
+    let showAddTodoContainer = document.getElementById('show-add-todo');
+    showAddTodoContainer.style.display = "flex";
+    showAddTodoContainer.innerHTML = `<div onclick="doNotClose(event)" id="add-todo-content"></div>`;
+    document.getElementById('add-todo-content').innerHTML = templateAddTaskHeadline();
+    document.getElementById('add-todo-content').innerHTML += renderAddTaskHTML();
+    document.getElementById('add-todo-content').innerHTML += templateAddTaskFooter();
+
+    setPrioButton("medium");
+    renderAssingnedToDropdownList();
+    renderCategoryDropdownList();
+    renderSelectedContactsIcons();
+    renderSubtasks();
+    loadEventListner();
+    mobileAddTask();
 }
 
 function closeAddTask() {
