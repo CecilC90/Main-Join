@@ -175,6 +175,7 @@ async function addContact() {
       email: document.getElementById("email").value,
       phone: '',
       color: backgroundColors[randomIndex],
+      active: true,
   });
   console.log(contacts);
   await setItem('contacts', JSON.stringify(contacts));
