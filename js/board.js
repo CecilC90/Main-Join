@@ -15,6 +15,7 @@ async function getItem(key) {
         console.log('fetch konnte nicht aufgeührt werden');
     });;
 }
+
 //--------------------------------------
 
 function initBoard() {
@@ -25,7 +26,7 @@ function initBoard() {
 async function renderHTML() {
     await loadTasks();
     await loadContacts();
-    await loadLoggedInUser();
+    loadLoggedInUser();
     pushColorForCategory();
     renderTodos();
     addIdToTasks();
