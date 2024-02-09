@@ -177,6 +177,21 @@ function checkDoneTodo() {
     }
 }
 
+// Dragging Function
+async function moveTo(category) {
+    todos[startDragginId]['category'] = category;
+    renderTodos();
+    await setItem('allTasks', JSON.stringify(todos));
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function startDragging(id) {
+    startDragginId = id;
+}
+
 function addIdToTasks() {
     for(let i = 0; i < todos.length; i++) {
         const todo = todos[i];
@@ -383,19 +398,4 @@ function filterTodos() {
 
     document.getElementById('change-img').src = './assets/img/close.svg';
     document.getElementById('change-img-mobile').src = './assets/img/close.svg';
-}
-
-// Dragging Function
-async function moveTo(category) {
-    todos[startDragginId]['category'] = category;
-    renderTodos();
-    await setItem('allTasks', JSON.stringify(todos));
-}
-
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function startDragging(id) {
-    startDragginId = id;
 }
