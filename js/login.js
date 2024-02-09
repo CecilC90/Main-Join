@@ -111,8 +111,13 @@ async function login() {
     let userPassword = userInfos.password;
     if (password.value == userPassword) {
       console.log("login erfolgreich");
+<<<<<<< HEAD
+=======
+      window.location.href = "summary.html?msg=Login erfolgreich";      //Weiterleitung zur summary mit msg
+      //funktion um den User nach erfolgreichen Login zu speichern
+>>>>>>> f808c81cc3b52ca64694a48ce23492c817f85fbc
       addLoggedInUser(userInfos);
-      openPage("summary");
+      //openPage("summary");                                            // Wird nicht benötigt aufgrund von Zeile 88
     } else {
       console.log("passwort ist nicht korrekt");
       showLoginWorngPassword();
@@ -123,6 +128,13 @@ async function login() {
     console.log("Email noch nicht vorhanden");
   }
 }
+
+/*function greetingMobile() {
+  if (window.innerWidth < 608) {
+    document.getElementById('greetingContainer').classList.remove('d-none');
+  }
+}*/
+
 
 async function addUser() {
   showEmailAlreadyUsed(false);

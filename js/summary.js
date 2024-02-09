@@ -1,10 +1,38 @@
 let todos = [];
 
+async function renderSummary() {
+    await includesHTML();
+    showSelectedButton("summaryButton");
+    await loadLoggedInUser();
+    await loadAllTasks();
+    await checkIsMsgAvailable();
+    renderSummaryHTML();   
+    greeting();
+    renderTasks();  
+}
 
 async function render() {
     await includesHTML();
     showSelectedButton("summaryButton");
-    loadLoggedInUser();
+    await loadLoggedInUser();
+}
+
+function checkIsMsgAvailable() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const msg = urlParams.get("msg");
+
+    if (msg) {
+        showGreetingMobile();
+    }
+}
+
+function showGreetingMobile() {
+    if (window.innerWidth < 608) {
+        document.getElementById('greetingMobile').classList.add('d-flex');
+        document.getElementById('greetingMobile').classList.add('hidden');
+        document.getElementById('greetingMobile').classList.add('hidden-overlay');
+        document.getElementById('greetingMobile').classList.remove('d-none');
+    }
 }
 
 async function loadAllTasks() {
@@ -12,43 +40,40 @@ async function loadAllTasks() {
     todos = JSON.parse(respons);
 }
 
-async function renderSummary() {
-    await loadAllTasks();
-    await render();
-    greeting();
+async function greeting() {
+    let time = new Date().getHours();
+    let greetingContent;
 
-    renderTasks();
-}
-
-function greeting() {
-        let time = new Date().getHours();
-        let greeting;
-
-        if (time >= 5 && time < 12) {
-            greeting = 'Good morning';
-        } else if (time >= 12 && time < 18) {
-            greeting = 'Good afternoon';
-        } else {
-            greeting = 'Good evening';
-        }
-
-        document.getElementById('greeting').innerHTML = greeting;
-        if (loggedInUser.includes("Guest")) {
-            document.getElementById('name').innerHTML = "";
-        } else {
-            showName();
-        }
+    if (time >= 5 && time < 12) {
+        greetingContent = 'Good morning';
+    } else if (time >= 12 && time < 18) {
+        greetingContent = 'Good afternoon';
+    } else {
+        greetingContent = 'Good evening';
     }
 
+    document.querySelectorAll('.greeting-content').forEach(element => {
+        element.innerHTML = greetingContent;
+    });
+
+    if (!loggedInUser.includes("Guest")) {
+        showName();
+    }
+}
 
 function showName() {
+    let nameContainers = document.querySelectorAll('.name');
     if (loggedInUser === 'Guest') {
-        document.getElementById('name').innerHTML = '';
+        nameContainers.forEach(container => {
+            container.innerHTML = '';
+        });
     } else {
         let names = loggedInUser[0].split(' ');
         let firstName = names[0].charAt(0).toUpperCase() + names[0].slice(1).toLowerCase();
         let lastName = names[1].charAt(0).toUpperCase() + names[1].slice(1).toLowerCase();
-        document.getElementById('name').innerHTML = `${firstName} ${lastName}`;
+        nameContainers.forEach(container => {
+            container.innerHTML = `${firstName} ${lastName}`;
+        });
     }
 }
 
@@ -59,6 +84,7 @@ function renderTasks() {
     tasks();
     progressCount();
     awaitCount();
+    feedback();
 }
 
 function todoCount() {
@@ -113,6 +139,22 @@ function finished() {
         numberOfDone.innerHTML = `0`;
     } else {
         numberOfDone.innerHTML = `${countofDone}`;
+    }
+}
+
+function feedback() {
+    numberOfFeedback = document.getElementById('await');
+    let countofFeedback = 0
+    for (let i = 0; i < todos.length; i++) {
+        const todo = todos[i];
+        if (todo.category === "feedback") {
+            countofFeedback++;
+        }
+    }
+    if (countofFeedback < 1) {
+        numberOfFeedback.innerHTML = `0`;
+    } else {
+        numberOfFeedback.innerHTML = `${countofFeedback}`;
     }
 }
 
