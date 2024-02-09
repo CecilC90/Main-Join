@@ -309,16 +309,16 @@ function renderContact(index) {
             let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
             let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
             let resultInitials = firstLetter + secondLetter;
-            assignedContactsContainer.innerHTML += templateContactIcons(resultInitials, i);
-            renderContactColor(contact, i);
+            assignedContactsContainer.innerHTML += templateContactIcons(resultInitials, i, index);
+            renderContactColor(contact, i, index);
         }
     }
 
     renderMoreContactsIcon(index);
 }
 
-function renderContactColor(contact, i) {
-    let contactIcon = document.getElementById(`contactsIcon${i}`);
+function renderContactColor(contact, i, index) {
+    let contactIcon = document.getElementById(`contactsIcon-${index}-${i}`);
     let contactIconDetailview = document.getElementById(`contactIconDetailview${i}`);
 
     if(contactIcon) {

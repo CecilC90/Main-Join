@@ -30,8 +30,8 @@ function templateProgressbar(index) {
     `;
 }
 
-function templateContactIcons(resultInitials ,indexIcons) {
-  return `<div id="contactsIcon${indexIcons}" class="contactsIcon margin-left">${resultInitials}</div>`
+function templateContactIcons(resultInitials ,indexIcons, index) {
+  return `<div id="contactsIcon-${index}-${indexIcons}" class="contactsIcon margin-left">${resultInitials}</div>`
 }
 
 function templateMoreContactIcon(differenceLength) {
