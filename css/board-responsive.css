@@ -98,6 +98,10 @@
         background-color: #fff !important;
         position: static !important;
     }
+
+    #add-todo-content {
+        overflow: scroll;
+    }
 }
 
 @media(max-width: 1100px) {
@@ -113,6 +117,10 @@
 
     #dropdown-status {
         display: flex;
+    }
+
+    .position-relative {
+        position: relative;
     }
 }
 
@@ -220,7 +228,7 @@
     }
 
     .mobile-navbar {
-        z-index: 1000;
+        z-index: 99;
     }
 }
 

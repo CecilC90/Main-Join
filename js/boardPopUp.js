@@ -2,6 +2,44 @@ function doNotClose(event) { // General Function for closing Pop-Up Windows
     event.stopPropagation();
 }
 
+// General Function to handle Z-Index
+
+function regulateZIndexMenuAndHeader() {
+  let header = document.getElementById('header');
+  let menu = document.getElementById('menu');
+  let mobileMenu = document.getElementById('mobile-navbar');
+
+  header.style.zIndex = 0;
+  menu.style.zIndex = 0;
+  mobileMenu.style.zIndex = 0;
+}
+
+function regulateZIndexMenuAndHeaderAfterClose() {
+  let header = document.getElementById('header');
+  let menu = document.getElementById('menu');
+  let mobileMenu = document.getElementById('mobile-navbar');
+
+  header.style.zIndex = 99;
+  menu.style.zIndex = 99;
+  mobileMenu.style.zIndex = 99;
+}
+
+function regulatePositionStatic() {
+  let positionRelative = document.querySelectorAll('.position-relative');
+
+  positionRelative.forEach(element => {
+    element.style.position = 'static';
+  });
+}
+
+function regulatePositionRelative() {
+  let positionRelative = document.querySelectorAll('.position-relative');
+
+  positionRelative.forEach(element => {
+    element.style.position = 'relative';
+  });
+}
+
 // Detailview functions
 
 function showDetailView(index) {
@@ -17,6 +55,8 @@ function showDetailView(index) {
    renderSubtask(index);
    renderContactsDetailView(index);
    renderCheckboxAfterClose(index);
+   regulateZIndexMenuAndHeader();
+   regulatePositionStatic();
 }
 
 function renderSubtask(index) {
@@ -51,6 +91,8 @@ function closeDetailView() {
     let detailViewContainer = document.getElementById('show-detail-todo');
     detailViewContainer.style.display = 'none';
 
+    regulateZIndexMenuAndHeaderAfterClose();
+    regulatePositionRelative();
     renderTodos();
 }
 
@@ -406,7 +448,8 @@ function emptyInput() {
 
 // Addtask function
 
-function showAddTask() {
+function showAddTask(category) {
+    selectedCategory = category;
     let showAddTodoContainer = document.getElementById('show-add-todo');
     showAddTodoContainer.style.display = "flex";
     showAddTodoContainer.innerHTML = `<div onclick="doNotClose(event)" id="add-todo-content"></div>`;
@@ -421,6 +464,8 @@ function showAddTask() {
     renderSubtasks();
     loadEventListner();
     mobileAddTask();
+    regulatePositionStatic();
+    regulateZIndexMenuAndHeader();
 }
 
 function closeAddTask() {
@@ -428,6 +473,8 @@ function closeAddTask() {
     showAddTodoContainer.style.display = "none";
 
     renderTodos();
+    regulateZIndexMenuAndHeaderAfterClose();
+    regulatePositionRelative();
 }
 
 function mobileAddTask() {

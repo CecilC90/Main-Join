@@ -23,6 +23,10 @@ body {
     flex-direction: column;
 }
 
+#header {
+    z-index: 99;
+}
+
 /* Board Header */
 .board-header {
     padding-top: 100px;
@@ -189,10 +193,6 @@ a {
     cursor: pointer;
 }
 
-.position-relative {
-    position: relative;
-}
-
 #dropdown-status {
     display: none;
 }
@@ -200,8 +200,8 @@ a {
 .dropdown-change-status {
     display: flex;
     position: absolute;
-    top: 100%; /* Setzt den Container direkt unter das Elternelement */
-    right: 0; /* Ausrichtung nach rechts */
+    top: 100%; 
+    right: 0; 
     flex-direction: column;
     background-color: #2A3647;
     color: #fff;
@@ -313,36 +313,4 @@ a {
 
 #detail-content {
     background-color: #fff;
-}
-
-#show-add-todo {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.2);
-}
-
-#add-todo-content {
-    max-height: 90vh;
-    background-color: #fff;
-    border-radius: 24px;
-    padding: 40px;
-    overflow: scroll;
-    transform: translateX(100vw);
-    animation-name: SlideFromRight;
-    animation-duration: 225ms;
-    animation-fill-mode: forwards;
-}
-
-.boardAddToDo {
-    padding: 24px;
-}
-
-.boardAddToDo p {
-    margin: 0;
 }

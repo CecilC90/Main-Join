@@ -1,7 +1,7 @@
 function templateHTMLTodoContainer(element, index) {
     return /*HTML*/ `
     <div class="todo-content" onclick="showDetailView(${index})" draggable="true" ondragstart="startDragging(${element.id})" id="todo-container${index}">
-        <div class="space-between position-relative">
+        <div class="space-between position-relative" id="position-relative${index}">
           <span class="category-span" id="category-span${index}">${element.todoCategory}</span>
           <img id="dropdown-status" onclick="openDropDownStatus(event, ${index})" src="./assets/img/more.svg">
         </div>
@@ -78,7 +78,7 @@ async function templateHTMLEditTask(index) {
   return /* HTML */ `
   <div onclick="doNotClose(event)" id="detail-todo-content">
       <div class="space-end">
-        <img class="close-img" onclick="closeDetailView()" src="/assets/img/close.svg" alt="">
+        <img class="close-img" onclick="closeDetailView(${index})" src="/assets/img/close.svg" alt="">
       </div>
       <p class="edit-p">Title:</p>
       <input class="inputField editViewInput" id="new-title" type="text" value="${todos[index].title}">
