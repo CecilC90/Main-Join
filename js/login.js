@@ -23,6 +23,8 @@ let backgroundColors = [
 let contacts = [];
 let privacyPolic = false;
 let rememberMe = false;
+let rememberedEmail = [];
+let rememberedPassword = [];
 
 function init() {
   renderStartPage();
@@ -74,6 +76,7 @@ function renderStartPage() {
   content.innerHTML = renderStartPageHTML();
   let singUpButton = document.getElementById("signUpButtonContainer");
   singUpButton.innerHTML = renderSingUpButtonHTML();
+  loadRememberedUser();
 }
 
 function renderRegistrationPage() {
@@ -114,7 +117,8 @@ async function login() {
     userInfos = JSON.parse(respons);
     let userPassword = userInfos.password;
     if (password.value == userPassword) {
-      window.location.href = "summary.html?msg=Login erfolgreich";   
+      handleRememberMe(email, password);
+      window.location.href = "summary.html?msg=Login erfolgreich";
       addLoggedInUser(userInfos);
     } else {
       showLoginWorngPassword();
@@ -122,6 +126,37 @@ async function login() {
     document.getElementById("logInButton").disable = false;
   } else {
     showEmailNotExisting(true);
+  }
+}
+
+function handleRememberMe(email, password) {
+  if (rememberMe) {
+    rememberedEmail.push(email.value);
+    rememberedPassword.push(password.value);
+    let rememberedEmailAsText = JSON.stringify(rememberedEmail);
+    let rememberedPasswordAsText = JSON.stringify(rememberedPassword);
+    localStorage.setItem('rememberedEmail', rememberedEmailAsText);
+    localStorage.setItem('rememberedPassword', rememberedPasswordAsText);
+  }
+}
+
+function loadRememberedUser() {
+  let rememberedEmailAsText = localStorage.getItem('rememberedEmail');
+  let rememberedPasswordAsText = localStorage.getItem('rememberedPassword');
+  if (rememberedEmailAsText && rememberedPasswordAsText) {
+    rememberedEmail = JSON.parse(rememberedEmailAsText);
+    rememberedPassword = JSON.parse(rememberedPasswordAsText);
+  }
+  fillInputFieldsFromUser(rememberedEmail, rememberedPassword);
+}
+
+function fillInputFieldsFromUser(rememberedEmail, rememberedPassword) {
+  let emailInput = document.getElementById('email');
+  let passwordInput = document.getElementById('password');
+
+  if (rememberedEmail && rememberedPassword) {
+    emailInput.value = rememberedEmail;
+    passwordInput.value = rememberedPassword;
   }
 }
 
@@ -140,7 +175,7 @@ async function addUser() {
   }
   if (!loadUserEmail) {
     if (password.value == checkPasswort.value) {
-      if(privacyPolic){
+      if (privacyPolic) {
         showSignUpfinished();
         await setItem(email.value, userInfos);
         await addContact();
@@ -160,12 +195,12 @@ async function addContact() {
   const randomIndex = Math.floor(Math.random() * backgroundColors.length);
   await loadContacts();
   contacts.push({
-      id: Date.now(),
-      name: formatName(),
-      email: document.getElementById("email").value,
-      phone: '',
-      color: backgroundColors[randomIndex],
-      active: true,
+    id: Date.now(),
+    name: formatName(),
+    email: document.getElementById("email").value,
+    phone: '',
+    color: backgroundColors[randomIndex],
+    active: true,
   });
   await setItem('contacts', JSON.stringify(contacts));
 }
@@ -178,14 +213,14 @@ function formatName() {
   let name = document.getElementById("name");
   name = name.value.split(/[,.]/);
   for (var i = 0; i < name.length; i++) {
-      name[i] = name[i].trim();
-      name[i] = name[i].charAt(0).toUpperCase() + name[i].slice(1);
+    name[i] = name[i].trim();
+    name[i] = name[i].charAt(0).toUpperCase() + name[i].slice(1);
   }
   var formattedname = name.join(' ');
   return formattedname;
 }
 
-function goToStart(){
+function goToStart() {
   dontshowSignUpfinished();
   renderStartPage();
 }
@@ -218,9 +253,9 @@ function showEmailNotExisting(email) {
   }
 }
 
-function setRememberMe(){
+function setRememberMe() {
   let content = document.getElementById('rememberMeCheckbox');
-  if(rememberMe){
+  if (rememberMe) {
     content.src = '/assets/img/checkbox_unchecked.svg'
     rememberMe = false;
   } else {
@@ -229,9 +264,9 @@ function setRememberMe(){
   }
 }
 
-function setPrivacyPolic(){
+function setPrivacyPolic() {
   let content = document.getElementById('privacyPolicCheckbox');
-  if(privacyPolic){
+  if (privacyPolic) {
     content.src = '/assets/img/checkbox_unchecked.svg'
     privacyPolic = false;
   } else {
