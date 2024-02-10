@@ -53,8 +53,6 @@ async function loadContacts() {
     contacts = JSON.parse(await getItem('contacts'));
 }
 
-//Eventuelle probleme beim Sortieren der User???
-
 async function renderContacts() {
     sortedContacts = contacts;
     sortedContactList();
@@ -342,7 +340,6 @@ function openContatOptions(i) {
     document.getElementById('deleteMobile').onclick = function () { deleteContact(i, sortedContacts); };
     openContactOptionsMobile = true;
     event.stopPropagation();
-    //window.addEventListener("click", windowClick);
 }
 
 document.addEventListener('click', function (event) {

@@ -100,9 +100,27 @@ function openPage(page) {
 
 function userNavbar() {
   let navbar = document.getElementById('popUpUser');
-  if (navbar.style.display === 'flex') {
-    navbar.style.display = 'none';
-  } else {
-    navbar.style.display = 'flex';
+  navbar.style.display = 'flex';
+  loadEventListnerForNavbar();
+}
+
+function loadEventListnerForNavbar() {
+  let userIcon = document.getElementById("userNavar");
+  userIcon.addEventListener("click", function () {
+      let popUpUser = document.getElementById("popUpUser");
+      popUpUser.style.display = popUpUser.style.display === "flex" ? "none" : "flex";
+      
+  });
+
+  window.addEventListener("click", handleWindowClickNavbar);
+}
+
+function handleWindowClickNavbar(event) {
+  let userIcon = document.getElementById("userNavar");
+  let popUpUser = document.getElementById("popUpUser");
+  if (!userIcon.contains(event.target) && !popUpUser.contains(event.target)) {
+      popUpUser.style.display = "none";
+      window.removeEventListener("click", handleWindowClickNavbar);
   }
 }
+

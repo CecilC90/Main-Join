@@ -272,7 +272,7 @@ body {
 .menu-contact-mobile {
     display: none;
     position: absolute;
-    bottom: 25%;
+    bottom: 90px;
     right: 16px;
     width: 56px;
     height: 56px;
