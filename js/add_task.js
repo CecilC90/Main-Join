@@ -1,6 +1,6 @@
 let selectedPrio = "medium";
 let contacts = [];
-let category = ["Arbeit", "Privat", "Anderes"];
+let category = ["Technical Task", "User Story"];
 let subtasks = [];
 let mobileVersionIsOn;
 let selectedCategory = 'open';
