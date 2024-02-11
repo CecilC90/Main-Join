@@ -25,9 +25,13 @@ let privacyPolic = false;
 let rememberMe = false;
 let rememberedEmail = [];
 let rememberedPassword = [];
+let loginPassword = false;
+let registrationPassword = false;
+let registrationConfirmPassword = false;
 
 function init() {
   renderStartPage();
+  changePasswordIconLogin('passwordIconContainer', 'password');
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -126,6 +130,66 @@ async function login() {
     document.getElementById("logInButton").disable = false;
   } else {
     showEmailNotExisting(true);
+  }
+}
+
+function changePasswordIconLogin(iconId, inputField){
+  let content = document.getElementById(iconId);
+  let inputfield = document.getElementById(inputField).value;
+  if(inputfield.length == 0){
+    document.getElementById(inputField).type = 'password';
+    loginPassword = false;
+    content.innerHTML = passwordLockIcon();
+  } 
+  if(inputfield.length > 0  && loginPassword == false){
+    loginPassword = true;
+    content.innerHTML = passwordVisibilityOffIcon(iconId, inputField);
+  }
+}
+
+function changePasswordIconRegistration(iconId, inputField){
+  let content = document.getElementById(iconId);
+  let inputfield = document.getElementById(inputField).value;
+  if(inputfield.length == 0){
+    document.getElementById(inputField).type = 'password';
+    registrationPassword = false;
+    content.innerHTML = passwordLockIcon();
+  } 
+  if(inputfield.length > 0  && registrationPassword == false){
+    registrationPassword = true;
+    content.innerHTML = passwordVisibilityOffIcon(iconId, inputField);
+  }
+}
+
+function changePasswordIconRegistrationConfirm(iconId, inputField){
+  let content = document.getElementById(iconId);
+  let inputfield = document.getElementById(inputField).value;
+  if(inputfield.length == 0){
+    document.getElementById(inputField).type = 'password';
+    registrationConfirmPassword = false;
+    content.innerHTML = passwordLockIcon();
+  } 
+  if(inputfield.length > 0  && registrationConfirmPassword == false){
+    registrationConfirmPassword = true;
+    content.innerHTML = passwordVisibilityOffIcon(iconId, inputField);
+  }
+}
+
+function showPasswordClearText(iconId, inputField){
+  let content = document.getElementById(iconId);
+  let inputfield = document.getElementById(inputField);
+  if(inputfield.type == 'password'){
+    inputfield.type = 'text';
+    content.innerHTML = passwordVisibilityOnIcon(iconId, inputField);
+  } else {
+    inputfield.type = 'password';
+    content.innerHTML = passwordVisibilityOffIcon(iconId, inputField);
+  }
+}
+
+function checkVariable(variable){
+  if(variable == 'loginPassword'){
+    return loginPassword;
   }
 }
 

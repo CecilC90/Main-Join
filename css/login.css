@@ -130,6 +130,9 @@
   font-style: normal;
   font-weight: 400;
 }
+.passwordIcon{
+  cursor: pointer;
+}
 .rememberMeContainer {
   display: flex;
   align-items: center;

@@ -1,5 +1,5 @@
 function renderStartPageHTML() {
-  return /* html */`
+  return /* html */ `
     <form class="loginMask" onsubmit="login(); return false;">
       <div class="loginHeadline">
         <h1>Log in</h1>
@@ -12,8 +12,10 @@ function renderStartPageHTML() {
             <img src="./assets/img/mail.svg" alt="" />
           </div>
           <div class="inputField" id="inputPasswordField">
-            <input type="password" placeholder="password" id="password" required />
-            <img src="./assets/img/lock.svg" alt="" />
+            <input type="password" placeholder="password" id="password" onkeyup="changePasswordIcon('passwordIconContainer', 'password', 'loginPassword')" required />
+            <div id="passwordIconContainer">
+              <img id="passwordIcon" src="./assets/img/lock.svg" alt="" />
+            </div>
           </div>
         </div>
         <p class="wrongPasswordText" id="wrongPasswordText"></p>
@@ -27,6 +29,24 @@ function renderStartPageHTML() {
         <button class="buttonLight" onclick="addLoggedInGuest()">Guest Log in</button>
       </div>
     </form> 
+  `;
+}
+
+function passwordLockIcon() {
+  return /* html */ `
+    <img id="passwordIcon" src="./assets/img/lock.svg" alt="lock Icon" />
+  `;
+}
+
+function passwordVisibilityOffIcon(iconId, inputField){
+  return /* html */ `
+    <img id="passwordIcon" class="passwordIcon" onclick="showPasswordClearText('${iconId}', '${inputField}')" src="./assets/img/password_visibility_off.svg" alt="" />
+  `;
+}
+
+function passwordVisibilityOnIcon(iconId, inputField){
+  return /* html */ `
+    <img id="passwordIcon" class="passwordIcon" onclick="showPasswordClearText('${iconId}', '${inputField}')" src="./assets/img/password_visibility_on.svg" alt="" />
   `;
 }
 
@@ -58,12 +78,16 @@ function renderRegistrationPageHTML() {
            <img src="./assets/img/mail.svg" alt="" />
          </div>
          <div class="inputField">
-           <input type="password" placeholder="Password" id="password" required />
-           <img src="./assets/img/lock.svg" alt="" />
+           <input type="password" placeholder="Password" id="password" onkeyup="changePasswordIconRegistration('passwordIconContainer', 'password')" required />
+           <div id="passwordIconContainer">
+            <img src="./assets/img/lock.svg" alt="" />
+           </div>
          </div>
          <div class="inputField" id="inputPasswordField">
-           <input type="password" placeholder="Confirm Password" id="confirmPasswort" required />
-           <img src="./assets/img/lock.svg" alt="" />
+           <input type="password" placeholder="Confirm Password" id="confirmPasswort" onkeyup="changePasswordIconRegistrationConfirm('confirmPasswordIconContainer', 'confirmPasswort')" required />
+           <div id="confirmPasswordIconContainer">
+            <img src="./assets/img/lock.svg" alt="" />
+           </div>
          </div>
        </div>
        <p class="passwordNotConfirmText" id="passwordNotConfirmText"></p>
