@@ -4,13 +4,13 @@
     }
 }
 
-@media(max-width: 1170px) {
+@media(max-width: 1240px) {
     .greet-container {
-      display: none;
+        display: none;
     }
-  }
+}
 
-  @media(max-width: 911px) {
+@media(max-width: 911px) {
     .headline {
         padding-top: 48px;
         flex-direction: column;
@@ -34,7 +34,7 @@
     .seperator-mobile {
         display: block;
     }
-  
+
     .elipse {
         height: 40px;
         width: 40px;
@@ -83,9 +83,21 @@
     .summary-container {
         padding-right: 16px;
     }
-  }
+}
 
-  @media(max-width: 750px) {
+@media(max-width: 860px) {
+    .check-rectangle {
+        width: 508px;
+    }
+}
+
+@media(max-width: 810px) {
+    .check-rectangle {
+        width: 508px;
+    }
+}
+
+@media(max-width: 750px) {
     .summary-container {
         justify-content: center;
         padding: 0px 8px;
@@ -129,23 +141,23 @@
         height: 40px;
         width: 40px;
     }
-  }
+}
 
-  
 
-  @media(max-width: 470px) {
+
+@media(max-width: 470px) {
     .summary-container {
         margin-left: 0;
     }
-  }
+}
 
-  @media(max-width: 460px) {
+@media(max-width: 460px) {
     .button-container {
         padding: 18px 43px;
     }
-  }
+}
 
-  @media(max-width: 420px) {
+@media(max-width: 420px) {
     .check-rectangle {
         gap: 20px;
     }
@@ -154,16 +166,16 @@
         gap: 16px;
         justify-content: center;
     }
-  }
+}
 
-  @media(max-width: 410px) {
+@media(max-width: 410px) {
     .button-container {
         box-sizing: border-box;
         padding: 18px 43px;
     }
-  }
+}
 
-  @media(max-width: 400px) {
+@media(max-width: 400px) {
     .button-container {
         padding: 18px 32px;
     }
@@ -177,15 +189,15 @@
         max-width: 88px;
         padding: 12px;
     }
-  }
+}
 
-  @media(max-width: 350px) {
+@media(max-width: 350px) {
     .button-container {
         padding: 18px 24px
     }
-  }
+}
 
-  @media(max-height: 780px) {
+@media(max-height: 780px) {
     .fs-61 {
         font-size: 40px;
     }
@@ -210,4 +222,4 @@
     .main-task-container {
         gap: 20px;
     }
-  }
+}
