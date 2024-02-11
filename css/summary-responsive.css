@@ -93,7 +93,15 @@
 
 @media(max-width: 810px) {
     .check-rectangle {
-        width: 508px;
+        width: 450px;
+    }
+
+    .urgency-summary {
+        width: 450px;
+    }
+
+    .overview-container {
+        width: 450px;
     }
 }
 
@@ -104,6 +112,7 @@
         margin-left: 16px;
         box-sizing: border-box;
         margin-top: 80px;
+        width: 100%;
     }
 
     .headline {
@@ -143,6 +152,27 @@
     }
 }
 
+@media(max-width: 500px) {
+    .check-rectangle {
+        width: 350px;
+    }
+
+    .urgency-summary {
+        width: 350px;
+    }
+
+    .overview-container {
+        width: 350px;
+    }
+
+    .button-container {
+        padding: 38px 30px;
+    }
+
+    .task-container {
+        padding: 13px 22px;
+    }
+}
 
 
 @media(max-width: 470px) {
@@ -154,6 +184,37 @@
 @media(max-width: 460px) {
     .button-container {
         padding: 18px 43px;
+        width: 186px;
+    }
+
+    .urgency-container {
+        width: 396px;
+    }
+
+    .task-container {
+        width: 116px;
+        height: 116px;
+    }
+}
+
+@media(max-width: 427px) {
+    .button-container {
+        padding: 18px 10px;
+        width: 170px;
+    }
+
+    .urgency-container {
+        width: 370px;
+    }
+
+    .overview-container {
+        gap: 10px;
+    }
+}
+
+@media(max-width: 410px) {
+    .button-container {
+        
     }
 }
 
@@ -169,31 +230,56 @@
 }
 
 @media(max-width: 410px) {
-    .button-container {
-        box-sizing: border-box;
-        padding: 18px 43px;
-    }
+    
 }
 
 @media(max-width: 400px) {
-    .button-container {
-        padding: 18px 32px;
-    }
+   .button-container {
+    width: 160px;
+   }
+
+   .urgency-container {
+    width: 350px;
+   }
 
     .gap-18 {
         gap: 10px;
     }
 
+    .overview-container {
+        width: 350px;
+    }
+
     .task-container {
         height: 136px;
-        max-width: 88px;
+        max-width: 103px;
         padding: 12px;
     }
 }
 
-@media(max-width: 350px) {
+@media(max-width: 366px) {
     .button-container {
-        padding: 18px 24px
+        width: 128px;
+    }
+
+    .check-rectangle {
+        width: 300px;
+    }
+
+    .urgency-container {
+        width: 300px;
+    }
+
+    .urgency-summary {
+        width: 300px;
+    }
+
+    .overview-container {
+        width: 300px;
+    }
+
+    .task-container {
+        width: 88px;
     }
 }
 
