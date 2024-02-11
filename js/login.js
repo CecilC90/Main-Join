@@ -34,6 +34,20 @@ function init() {
   changePasswordIconLogin('passwordIconContainer', 'password');
 }
 
+function renderStartPage() {
+  let content = document.getElementById("loginMaskContainer");
+  content.innerHTML = renderStartPageHTML();
+  let singUpButton = document.getElementById("signUpButtonContainer");
+  singUpButton.innerHTML = renderSingUpButtonHTML();
+  loadRememberedUser();
+}
+
+function renderRegistrationPage() {
+  document.getElementById("signUpButtonContainer").innerHTML = "";
+  let content = document.getElementById("loginMaskContainer");
+  content.innerHTML = renderRegistrationPageHTML();
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   var slideImage = document.getElementById("slideImage");
   var content = document.getElementById("content");
@@ -74,20 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 500);
   }
 });
-
-function renderStartPage() {
-  let content = document.getElementById("loginMaskContainer");
-  content.innerHTML = renderStartPageHTML();
-  let singUpButton = document.getElementById("signUpButtonContainer");
-  singUpButton.innerHTML = renderSingUpButtonHTML();
-  loadRememberedUser();
-}
-
-function renderRegistrationPage() {
-  document.getElementById("signUpButtonContainer").innerHTML = "";
-  let content = document.getElementById("loginMaskContainer");
-  content.innerHTML = renderRegistrationPageHTML();
-}
 
 window.addEventListener("resize", setLogoPosition);
 
