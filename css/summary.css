@@ -233,7 +233,8 @@ a {
 }
 
 .task-container {
-    box-sizing: border-box;   
+    box-sizing: border-box;  
+    max-width: 172px; 
     height: 168px;
     padding: 38px 19px 38px 19px;
     text-align: center;
