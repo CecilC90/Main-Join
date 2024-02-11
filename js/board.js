@@ -398,7 +398,8 @@ function filterTodos() {
         const todo = todos[i];
         let todoContent = document.getElementById(`todo-container${i}`);
         let title = todo['title'];
-        if(title.toLowerCase().includes(search)) {
+        let description = todo['description'];
+        if(title.toLowerCase().includes(search) || description.toLowerCase().includes(search)) {
             todoContent.style.display = 'block';
         } else {
             todoContent.style.display = 'none';
