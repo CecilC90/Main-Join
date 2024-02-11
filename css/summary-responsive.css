@@ -173,6 +173,7 @@
 
     .task-container {
         height: 136px;
+        max-width: 88px;
         padding: 12px;
     }
   }
