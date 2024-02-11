@@ -1,8 +1,8 @@
-function renderAssingnedToDropdownListHTML(i, firstAndSecondLetter) {
+function renderAssingnedToDropdownListHTML(i, firstAndSecondLetter, color) {
   return /*html */ `
     <div class="dropdownContacts" id="dropdownContact${i}" onclick="setContactSelected(${i})">
       <div class="dropdownContactNameConatiner">
-        <div class="contactsIcon">${firstAndSecondLetter}</div>
+        <div class="contactsIcon" style="background-color: ${color}">${firstAndSecondLetter}</div>
         <p>${contacts[i]["name"]}</p>
       </div>
       <img id="dropdownContactImg${i}" src="/assets/img/checkbox_unchecked.svg" alt="checkbox_unchecked">
@@ -10,9 +10,9 @@ function renderAssingnedToDropdownListHTML(i, firstAndSecondLetter) {
   `;
 }
 
-function renderSelectedContactsIconsHTML(i) {
+function renderSelectedContactsIconsHTML(i, color) {
   return /* html */ `
-  <div class="contactsIcon">${getFirstAndSecondLetter(i)}</div>
+  <div class="contactsIcon" style="background-color: ${color}">${getFirstAndSecondLetter(i)}</div>
 `;
 }
 
@@ -69,20 +69,20 @@ function editSubtaskHTML(i) {
 
 function renderAddTaskHTML(){
   return /* html */ `
-  <form class="addTasks" onsubmit="addTask(); return false">
+  <div class="addTasks">
     <div class="leftContainer">
       <div class="taskTitle">
         <div class="inputContainer">
           <p>Title<span style="color: #FF8190;">*</span></p>
           <div class="inputField" id="titleField">
-            <input type="text" id="titleInputField" onkeyup="setBlueBorder('titleInputField', 'titleField'), clearRequiredText('requiredTextTitle')" placeholder="Enter a title"/>
+            <input type="text" id="titleInputField" onkeypress="addTaskOnEnter(event)" onkeyup="setBlueBorder('titleInputField', 'titleField'), clearRequiredText('requiredTextTitle')" placeholder="Enter a title"/>
           </div>
         </div>
         <p class="fildIisRequiredText" id="requiredTextTitle"></p>
       </div>
       <div class="inputContainer">
         <p>Description</p>
-        <textarea class="descriptionTextArea" id="descriptionTextArea" onkeyup="setBlueBorder('descriptionTextArea', 'descriptionTextArea')"></textarea>
+        <textarea class="descriptionTextArea" id="descriptionTextArea" onkeypress="addTaskOnEnter(event)" onkeyup="setBlueBorder('descriptionTextArea', 'descriptionTextArea')"></textarea>
       </div>
       <div class="inputContainer assingnedToConatiner">
         <p>Assingned to</p>
@@ -108,7 +108,7 @@ function renderAddTaskHTML(){
         <div class="inputContainer">
           <p>Due date<span style="color: #FF8190;">*</span></p>
           <div class="inputField" id="duedateField">
-            <input class="duedateInputField" id="duedateInputField" type="date" onkeyup="changeColorDuedate()" onchange="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate'), changeColorDuedate()"/>
+            <input class="duedateInputField" id="duedateInputField" type="date" onkeypress="addTaskOnEnter(event)" onkeyup="changeColorDuedate()" onchange="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate'), changeColorDuedate()"/>
           </div>
         </div>
         <p class="fildIisRequiredText" id="requiredTextDuedate"></p>
@@ -175,7 +175,7 @@ function renderAddTaskHTML(){
         <p>Category<span style="color: #FF8190;">*</span></p>
         <div>
           <div class="inputField" id="categoryField" onclick="removeBorader('categoryField')">
-            <input type="text" id="inputFieldCategory" placeholder="Select task category" />
+            <input type="text" id="inputFieldCategory" onkeypress="addTaskOnEnter(event)" placeholder="Select task category" />
             <img class="dropDownIcon" id="categoryDropdownIcon" src="/assets/img/arrow_drop_down.svg" alt="drop down icon" />
           </div>
           <div class="dropdownContenCategory" id="dropdownContenCategory">
@@ -186,7 +186,7 @@ function renderAddTaskHTML(){
       <div class="inputContainer">
         <p>Subtasks</p>
         <div class="inputField" id="subtaskField">
-          <input type="text" id="subtasksInput" onkeyup="showSubtasksDoneAndCancel(), setBlueBorder('subtasksInput', 'subtaskField')" placeholder="Add new subtask" />
+          <input type="text" id="subtasksInput" onkeypress="addSubtaskOnEnter(event)" onkeyup="showSubtasksDoneAndCancel(), setBlueBorder('subtasksInput', 'subtaskField')" placeholder="Add new subtask" />
           <div class="subtasksInputMenu" id="subtasksInputMenu">
             <img src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
           </div>
@@ -197,7 +197,7 @@ function renderAddTaskHTML(){
       </div>
     </div>
     <button style="display: none"></button>
-  </form>
+  </div>
   `
 }
 
