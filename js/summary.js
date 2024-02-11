@@ -4,12 +4,12 @@ async function renderSummary() {
     await includesHTML();
     showSelectedButton("summaryButton");
     await loadLoggedInUser();
-    
+
     await loadAllTasks();
     await checkIsMsgAvailable();
-    renderSummaryHTML();   
+    renderSummaryHTML();
     greeting();
-    renderTasks();  
+    renderTasks();
 }
 
 async function render() {

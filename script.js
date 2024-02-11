@@ -2,6 +2,7 @@ const STORAGE_TOKEN = "4EFBXYBGE7QJD8SZ3C5H1CD589HBSZGJ38CGAPOM";
 const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 
 let loggedInUser = [];
+let userNavbarOpen = false; 
 
 async function checkloggedInUser() {
   if (loggedInUser.length === 0) {
@@ -101,26 +102,16 @@ function openPage(page) {
 function userNavbar() {
   let navbar = document.getElementById('popUpUser');
   navbar.style.display = 'flex';
-  loadEventListnerForNavbar();
+  userNavbarOpen = true;
+  event.stopPropagation();
 }
 
-function loadEventListnerForNavbar() {
-  let userIcon = document.getElementById("userNavar");
-  userIcon.addEventListener("click", function () {
-      let popUpUser = document.getElementById("popUpUser");
-      popUpUser.style.display = popUpUser.style.display === "flex" ? "none" : "flex";
-      
-  });
-
-  window.addEventListener("click", handleWindowClickNavbar);
-}
-
-function handleWindowClickNavbar(event) {
-  let userIcon = document.getElementById("userNavar");
-  let popUpUser = document.getElementById("popUpUser");
-  if (!userIcon.contains(event.target) && !popUpUser.contains(event.target)) {
-      popUpUser.style.display = "none";
-      window.removeEventListener("click", handleWindowClickNavbar);
+document.addEventListener('click', function (event) {
+  if (userNavbarOpen) {
+      let navbar = document.getElementById('popUpUser');
+      if (!navbar.contains(event.target)) {
+        navbar.style.display = 'none';
+      }
+      userNavbarOpen = false;
   }
-}
-
+});
