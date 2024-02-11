@@ -197,8 +197,8 @@ function addSubtask() {
 }
 
 function addSubtaskOnEnter(event){
-  let subtasksInput = document.getElementById("subtasksInput");
-  if (event.key === "Enter" && subtasksInput.value > 0){
+  let subtasksInput = document.getElementById("subtasksInput").value;
+  if (event.key === "Enter" && subtasksInput.length > 0){
     addSubtask();
   }
 }
