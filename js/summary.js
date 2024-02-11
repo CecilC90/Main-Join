@@ -122,10 +122,24 @@ function urgent() {
     }
 }
 
-function deadlineHTML(i) {
-    deadline = document.getElementById('deadline');
-    deadline.innerHTML = `${todos[i].dueDate}`;
+function deadlineHTML() {
+    let deadline = document.getElementById('deadline');
+    let dueDate = returnNextDueDate(); 
+    
+    
+    deadline.innerHTML = dueDate;
 }
+
+function returnNextDueDate() {
+    let dueDate = new Date(Math.min(...todos.map((e) => new Date(e.dueDate).getTime())));    
+        let dueDateString = dueDate.toLocaleString("default", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+        });
+        return dueDateString;
+}
+
 
 function finished() {
     numberOfDone = document.getElementById('done');
