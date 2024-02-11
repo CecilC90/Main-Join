@@ -38,6 +38,7 @@ body {
 .search-and-add {
     display: flex;
     align-items: center;
+    margin-right: 50px;
 }
 
 #search {
@@ -106,6 +107,12 @@ body {
 
 /* Board-Section */
 
+.board-container {
+    max-height: 90vh; 
+    overflow-y: auto; 
+    padding-top: 50px;
+}
+
 .board-section {
     padding-top: 64px;
     padding-left: 300px;
@@ -117,14 +124,6 @@ body {
 .board-element {
     width: 300px;
     padding: 16px;
-}
-
-.board-element:first-child {
-    padding-left: 0;
-}
-
-.board-element:last-child {
-    padding-right: 0;
 }
 
 .add-task-btn {
@@ -174,6 +173,13 @@ a {
     text-align: center;
 }
 
+.dragging-over {
+    border: 1px solid grey;
+    background-color: #DDDDDD;
+    border-radius: 10px;
+    border-style: dotted;
+}
+
 .todo-content {
     margin-top: 20px;
     padding: 16px;
@@ -188,13 +194,10 @@ a {
     transform: rotate(5deg);
 }
 
-.todo-content img {
-    width: 35px;
-    cursor: pointer;
-}
-
 #dropdown-status {
     display: none;
+    width: 35px;
+    cursor: pointer;
 }
 
 .dropdown-change-status {
@@ -289,14 +292,14 @@ a {
     width: 50%;
     background-color: #e0e0e0;
     border-radius: 10px;
-    overflow: hidden; /* Stellt sicher, dass der innere Balken den border-radius des Containers respektiert */
+    overflow: hidden; 
   }
   
   .progress-bar {
     height: 100%;
     background-color: #0038FF;
     border-radius: 10px;
-    transition: width 0.4s ease; /* Fügt eine sanfte Übergangsaniamtion hinzu, wenn sich die Breite ändert */
+    transition: width 0.4s ease; 
   }
 
 .style-contacticon {

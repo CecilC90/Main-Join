@@ -180,6 +180,7 @@ function checkDoneTodo() {
 // Dragging Function
 async function moveTo(category) {
     todos[startDragginId]['category'] = category;
+    highlightOut(category);
     renderTodos();
     await setItem('allTasks', JSON.stringify(todos));
 }
@@ -197,6 +198,14 @@ function addIdToTasks() {
         const todo = todos[i];
         todo.id = i;
     }
+}
+
+function highlight(id) {
+    document.getElementById(id).classList.add('dragging-over');
+}
+
+function highlightOut(id) {
+    document.getElementById(id).classList.remove('dragging-over');
 }
 
 function renderColorForCategory(index) {

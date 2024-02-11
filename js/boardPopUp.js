@@ -125,6 +125,8 @@ async function editTask(index) {
     renderSelectedContactsIconsEditview();
     renderSubtasksEditview(index);
     loadPrioButton(index);
+    regulateZIndexMenuAndHeader();
+    regulatePositionStatic();
 }
 
 function loadPrioButton(index) {
