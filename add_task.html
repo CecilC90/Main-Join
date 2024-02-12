@@ -14,9 +14,9 @@
   </head>
   <body onload="init()">
     <div class="content">
-      <div w3-include-html="assets/templates/menu.html"></div>
-      <div w3-include-html="assets/templates/header.html"></div>
-      <div w3-include-html="assets/templates/mobileMenu.html"></div>
+      <div w3-include-html="./assets/templates/menu.html"></div>
+      <div w3-include-html="./assets/templates/header.html"></div>
+      <div w3-include-html="./assets/templates/mobileMenu.html"></div>
       <div class="addTaskContainer">
         <h1>Add Task</h1>
       
@@ -39,7 +39,7 @@
               </button>
             </div>
             <div>
-              <button class="buttonDarg" id="createTaskButton" onclick="addTask()">Create Task<img src="/assets/img/check_icon.svg" alt="" /></button>
+              <button class="buttonDarg" id="createTaskButton" onclick="addTask()">Create Task<img src="./assets/img/check_icon.svg" alt="" /></button>
             </div>
           </div>
         </footer>
@@ -47,7 +47,7 @@
     </div>
     <div class="finishedMessage" id="finishedMessageContainer" style="bottom: -100px; display: none;">
       <p>Task added to board</p>
-      <img src="/assets/img/BoardIconAddTaskFinished.svg" alt="BoardIcon">
+      <img src="./assets/img/BoardIconAddTaskFinished.svg" alt="BoardIcon">
     </div>
   </body>
 </html>

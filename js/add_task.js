@@ -131,10 +131,10 @@ function showSelectedDropdownContact(i) {
   let dropdownContactImg = document.getElementById("dropdownContactImg" + i);
   if (contacts[i]["selected"]) {
     dropdownContact.classList.replace("dropdownContacts", "dropdownContactsSelected");
-    dropdownContactImg.src = "/assets/img/checkbox_checked_white.svg";
+    dropdownContactImg.src = "./assets/img/checkbox_checked_white.svg";
   } else {
     dropdownContact.classList.replace("dropdownContactsSelected", "dropdownContacts");
-    dropdownContactImg.src = "/assets/img/checkbox_unchecked.svg";
+    dropdownContactImg.src = "./assets/img/checkbox_unchecked.svg";
   }
 }
 
@@ -165,9 +165,9 @@ function setSelectedCategory(i) {
 
 function toggleDropdownIcon(id, dispayStatus) {
   if (dispayStatus == "flex") {
-    document.getElementById(id).src = "/assets/img/arrow_drop_down_up.svg";
+    document.getElementById(id).src = "./assets/img/arrow_drop_down_up.svg";
   } else {
-    document.getElementById(id).src = "/assets/img/arrow_drop_down.svg";
+    document.getElementById(id).src = "./assets/img/arrow_drop_down.svg";
   }
 }
 

@@ -277,10 +277,10 @@ function renderPrioImg(index) {
 function prioLow(prioImg, prioImgDetail, index) {
     if(todos[index].priority == 'low') {
         if(prioImg) {
-            prioImg.src = 'assets/img/prio-low.svg';
+            prioImg.src = './assets/img/prio-low.svg';
         }
         if(prioImgDetail) {
-            prioImgDetail.src = 'assets/img/prio-low.svg';
+            prioImgDetail.src = './assets/img/prio-low.svg';
         }
     }
 }
@@ -288,10 +288,10 @@ function prioLow(prioImg, prioImgDetail, index) {
 function prioMedium(prioImg, prioImgDetail, index) {
     if(todos[index].priority == 'medium') {
         if(prioImg) {
-            prioImg.src = 'assets/img/prio-medium.svg';
+            prioImg.src = './assets/img/prio-medium.svg';
         }
         if(prioImgDetail) {
-            prioImgDetail.src = 'assets/img/prio-medium.svg';
+            prioImgDetail.src = './assets/img/prio-medium.svg';
         }
     }
 }
@@ -299,10 +299,10 @@ function prioMedium(prioImg, prioImgDetail, index) {
 function prioHigh(prioImg, prioImgDetail, index) {
     if(todos[index].priority == 'high') {
         if(prioImg) {
-            prioImg.src = 'assets/img/prio-urgent.svg';
+            prioImg.src = './assets/img/prio-urgent.svg';
         }
         if(prioImgDetail) {
-            prioImgDetail.src = 'assets/img/prio-urgent.svg';
+            prioImgDetail.src = './assets/img/prio-urgent.svg';
         }
     }
 }

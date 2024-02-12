@@ -5,7 +5,7 @@ function renderAssingnedToDropdownListHTML(i, firstAndSecondLetter, color) {
         <div class="contactsIcon" style="background-color: ${color}">${firstAndSecondLetter}</div>
         <p>${contacts[i]["name"]}</p>
       </div>
-      <img id="dropdownContactImg${i}" src="/assets/img/checkbox_unchecked.svg" alt="checkbox_unchecked">
+      <img id="dropdownContactImg${i}" src="./assets/img/checkbox_unchecked.svg" alt="checkbox_unchecked">
     </div>
   `;
 }
@@ -26,14 +26,14 @@ function renderCategoryDropdownListHTML(i) {
 
 function showSubtasksDoneAndCancelIcons(index) {
   return /* html */ `
- <img class="subtasksInputMenuimg" onclick="clearSubtaskInputField()" src="/assets/img/subtasks_cancel_icon.svg" alt="cancel_icon">
- <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
- <img class="subtasksInputMenuimg" onclick="addSubtask(${index})" src="/assets/img/subtasks_done_icon.svg" alt="done_icon">
+ <img class="subtasksInputMenuimg" onclick="clearSubtaskInputField()" src="./assets/img/subtasks_cancel_icon.svg" alt="cancel_icon">
+ <img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+ <img class="subtasksInputMenuimg" onclick="addSubtask(${index})" src="./assets/img/subtasks_done_icon.svg" alt="done_icon">
 `;
 }
 
 function showSubtasksAddIcon() {
-  return '<img src="/assets/img/subtasks_add_icon.svg" alt="add_icon">';
+  return '<img src="./assets/img/subtasks_add_icon.svg" alt="add_icon">';
 }
 
 function renderSubtasksHTML(i) {
@@ -45,9 +45,9 @@ function renderSubtasksHTML(i) {
         <P>${subtasks[i]}</P>
       </div>
       <div class="subtaskMenu">
-        <img src="/assets/img/subtasks_edit_icon.svg" onclick="editSubtask(${i})" alt="edit_icon">
-        <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
-        <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i})" alt="delete_icon">
+        <img src="./assets/img/subtasks_edit_icon.svg" onclick="editSubtask(${i})" alt="edit_icon">
+        <img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+        <img src="./assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i})" alt="delete_icon">
       </div>
     </div>
   </div>
@@ -59,9 +59,9 @@ function editSubtaskHTML(i) {
   <div class="subtaskEdit" id="subtaskEdit">
     <input type="text" id="editSubtask${i}" value="${subtasks[i]}">
     <div>
-      <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i})" alt="delete_icon">
-      <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
-      <img src="/assets/img/subtasks_done_icon.svg" onclick="editSubtaskDone(${i})" alt="done_icon">
+      <img src="./assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i})" alt="delete_icon">
+      <img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+      <img src="./assets/img/subtasks_done_icon.svg" onclick="editSubtaskDone(${i})" alt="done_icon">
     </div>
   </div>
  `;
@@ -89,7 +89,7 @@ function renderAddTaskHTML(){
         <div>
           <div class="inputField dropdown">
             <input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownList()" />
-            <img class="dropDownIcon" id="assignedToDropdownIcon" src="/assets/img/arrow_drop_down.svg" alt="" />
+            <img class="dropDownIcon" id="assignedToDropdownIcon" src="./assets/img/arrow_drop_down.svg" alt="" />
           </div>
           <div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo">
             <!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->
@@ -101,7 +101,7 @@ function renderAddTaskHTML(){
       </div>
     </div>
     <div class="seperatorContainer">
-      <img src="/assets/img/seperator_add_task.svg" alt="sepertor" />
+      <img src="./assets/img/seperator_add_task.svg" alt="sepertor" />
     </div>
     <div class="rightContainer">
       <div class="taskDueDate">
@@ -176,7 +176,7 @@ function renderAddTaskHTML(){
         <div>
           <div class="inputField" id="categoryField" onclick="removeBorader('categoryField')">
             <input type="text" id="inputFieldCategory" onkeypress="addTaskOnEnter(event)" placeholder="Select task category" />
-            <img class="dropDownIcon" id="categoryDropdownIcon" src="/assets/img/arrow_drop_down.svg" alt="drop down icon" />
+            <img class="dropDownIcon" id="categoryDropdownIcon" src="./assets/img/arrow_drop_down.svg" alt="drop down icon" />
           </div>
           <div class="dropdownContenCategory" id="dropdownContenCategory">
             <!-- hier wird über die function renderCategoryDropdownList() eingefügt-->
@@ -188,7 +188,7 @@ function renderAddTaskHTML(){
         <div class="inputField" id="subtaskField">
           <input type="text" id="subtasksInput" onkeypress="addSubtaskOnEnter(event)" onkeyup="showSubtasksDoneAndCancel(), setBlueBorder('subtasksInput', 'subtaskField')" placeholder="Add new subtask" />
           <div class="subtasksInputMenu" id="subtasksInputMenu">
-            <img src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
+            <img src="./assets/img/subtasks_add_icon.svg" alt="add_icon" />
           </div>
         </div>
         <div>
@@ -293,7 +293,7 @@ function renderAddTaskMobileHTML() {
       <div>
         <div class="inputField" id="categoryField" onclick="removeBorader('categoryField')">
           <input type="text" id="inputFieldCategory" placeholder="Select task category" />
-          <img class="dropDownIcon" id="categoryDropdownIcon" src="/assets/img/arrow_drop_down.svg" alt="drop down icon" />
+          <img class="dropDownIcon" id="categoryDropdownIcon" src="./assets/img/arrow_drop_down.svg" alt="drop down icon" />
         </div>
         <div class="dropdownContenCategory" id="dropdownContenCategory">
           <!-- hier wird über die function renderCategoryDropdownList() eingefügt-->
@@ -306,7 +306,7 @@ function renderAddTaskMobileHTML() {
       <div>
         <div class="inputField dropdown">
           <input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownList()" />
-          <img class="dropDownIcon" id="assignedToDropdownIcon" src="/assets/img/arrow_drop_down.svg" alt="" />
+          <img class="dropDownIcon" id="assignedToDropdownIcon" src="./assets/img/arrow_drop_down.svg" alt="" />
         </div>
         <div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo">
           <!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->
@@ -322,7 +322,7 @@ function renderAddTaskMobileHTML() {
       <div class="inputField" id="subtaskField">
         <input type="text" id="subtasksInput" onkeyup="showSubtasksDoneAndCancel(), setBlueBorder('subtasksInput', 'subtaskField')" placeholder="Add new subtask" />
         <div class="subtasksInputMenu" id="subtasksInputMenu">
-          <img src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
+          <img src="./assets/img/subtasks_add_icon.svg" alt="add_icon" />
         </div>
       </div>
       <div>
