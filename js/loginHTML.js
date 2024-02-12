@@ -12,7 +12,7 @@ function renderStartPageHTML() {
             <img src="./assets/img/mail.svg" alt="" />
           </div>
           <div class="inputField" id="inputPasswordField">
-            <input type="password" placeholder="password" id="password" onkeyup="changePasswordIcon('passwordIconContainer', 'password', 'loginPassword')" required />
+            <input type="password" placeholder="password" id="password" onkeyup="changePasswordIconLogin('passwordIconContainer', 'password', 'loginPassword')" required />
             <div id="passwordIconContainer">
               <img id="passwordIcon" src="./assets/img/lock.svg" alt="" />
             </div>

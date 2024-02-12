@@ -1,37 +1,37 @@
 let backgroundColors = [
-  '#ff0000', // Rot
-  '#00ff00', // Grün
-  '#0000ff', // Blau
-  '#ffff00', // Gelb
-  '#ff00ff', // Magenta
-  '#00ffff', // Cyan
-  '#ff9900', // Orange
-  '#9900ff', // Lila
-  '#009900', // Dunkelgrün
-  '#990000', // Dunkelrot
-  '#ffcc00', // Goldgelb
-  '#cc66ff', // Flieder
-  '#0099cc', // Türkis
-  '#ff6699', // Rosa
-  '#663300', // Braun
-  '#99cc00', // Olivgrün
-  '#6600cc', // Indigo
-  '#ff9966', // Pfirsich
-  '#336600', // Dunkelgrün
-  '#cc0000', // Dunkelrot
+  "#ff0000", // Rot
+  "#00ff00", // Grün
+  "#0000ff", // Blau
+  "#ffff00", // Gelb
+  "#ff00ff", // Magenta
+  "#00ffff", // Cyan
+  "#ff9900", // Orange
+  "#9900ff", // Lila
+  "#009900", // Dunkelgrün
+  "#990000", // Dunkelrot
+  "#ffcc00", // Goldgelb
+  "#cc66ff", // Flieder
+  "#0099cc", // Türkis
+  "#ff6699", // Rosa
+  "#663300", // Braun
+  "#99cc00", // Olivgrün
+  "#6600cc", // Indigo
+  "#ff9966", // Pfirsich
+  "#336600", // Dunkelgrün
+  "#cc0000", // Dunkelrot
 ];
 let contacts = [];
 let privacyPolic = false;
 let rememberMe = false;
-let rememberedEmail = [];
-let rememberedPassword = [];
+let saveRememberMeJson = [];
+let loadRememberMeJson = [];
 let loginPassword = false;
 let registrationPassword = false;
 let registrationConfirmPassword = false;
 
 function init() {
   renderStartPage();
-  changePasswordIconLogin('passwordIconContainer', 'password');
+  changePasswordIconLogin("passwordIconContainer", "password");
 }
 
 function renderStartPage() {
@@ -133,95 +133,83 @@ async function login() {
   }
 }
 
-function changePasswordIconLogin(iconId, inputField){
+function changePasswordIconLogin(iconId, inputField) {
   let content = document.getElementById(iconId);
   let inputfield = document.getElementById(inputField).value;
-  if(inputfield.length == 0){
-    document.getElementById(inputField).type = 'password';
+  if (inputfield.length == 0) {
+    document.getElementById(inputField).type = "password";
     loginPassword = false;
     content.innerHTML = passwordLockIcon();
-  } 
-  if(inputfield.length > 0  && loginPassword == false){
+  }
+  if (inputfield.length > 0 && loginPassword == false) {
     loginPassword = true;
     content.innerHTML = passwordVisibilityOffIcon(iconId, inputField);
   }
 }
 
-function changePasswordIconRegistration(iconId, inputField){
+function changePasswordIconRegistration(iconId, inputField) {
   let content = document.getElementById(iconId);
   let inputfield = document.getElementById(inputField).value;
-  if(inputfield.length == 0){
-    document.getElementById(inputField).type = 'password';
+  if (inputfield.length == 0) {
+    document.getElementById(inputField).type = "password";
     registrationPassword = false;
     content.innerHTML = passwordLockIcon();
-  } 
-  if(inputfield.length > 0  && registrationPassword == false){
+  }
+  if (inputfield.length > 0 && registrationPassword == false) {
     registrationPassword = true;
     content.innerHTML = passwordVisibilityOffIcon(iconId, inputField);
   }
 }
 
-function changePasswordIconRegistrationConfirm(iconId, inputField){
+function changePasswordIconRegistrationConfirm(iconId, inputField) {
   let content = document.getElementById(iconId);
   let inputfield = document.getElementById(inputField).value;
-  if(inputfield.length == 0){
-    document.getElementById(inputField).type = 'password';
+  if (inputfield.length == 0) {
+    document.getElementById(inputField).type = "password";
     registrationConfirmPassword = false;
     content.innerHTML = passwordLockIcon();
-  } 
-  if(inputfield.length > 0  && registrationConfirmPassword == false){
+  }
+  if (inputfield.length > 0 && registrationConfirmPassword == false) {
     registrationConfirmPassword = true;
     content.innerHTML = passwordVisibilityOffIcon(iconId, inputField);
   }
 }
 
-function showPasswordClearText(iconId, inputField){
+function showPasswordClearText(iconId, inputField) {
   let content = document.getElementById(iconId);
   let inputfield = document.getElementById(inputField);
-  if(inputfield.type == 'password'){
-    inputfield.type = 'text';
+  if (inputfield.type == "password") {
+    inputfield.type = "text";
     content.innerHTML = passwordVisibilityOnIcon(iconId, inputField);
   } else {
-    inputfield.type = 'password';
+    inputfield.type = "password";
     content.innerHTML = passwordVisibilityOffIcon(iconId, inputField);
   }
 }
 
-function checkVariable(variable){
-  if(variable == 'loginPassword'){
-    return loginPassword;
-  }
-}
-
 function handleRememberMe(email, password) {
-  if (rememberMe) {
-    rememberedEmail.push(email.value);
-    rememberedPassword.push(password.value);
-    let rememberedEmailAsText = JSON.stringify(rememberedEmail);
-    let rememberedPasswordAsText = JSON.stringify(rememberedPassword);
-    localStorage.setItem('rememberedEmail', rememberedEmailAsText);
-    localStorage.setItem('rememberedPassword', rememberedPasswordAsText);
+  let rememberMeInfos = { email: email.value, password: password.value, rememberMe: rememberMe };
+  saveRememberMeJson.push(rememberMeInfos);
+  let rememberMeAsText = JSON.stringify(saveRememberMeJson);
+  localStorage.setItem("rememberMe", rememberMeAsText);
+}
+
+function loadRememberedUser(){
+  let rememberMeAsText = localStorage.getItem("rememberMe");
+  if(rememberMeAsText){
+    loadRememberMeJson = JSON.parse(rememberMeAsText);
+    if(loadRememberMeJson[0]['rememberMe']){
+      fillInputFieldsFromUser();
+    }
   }
 }
 
-function loadRememberedUser() {
-  let rememberedEmailAsText = localStorage.getItem('rememberedEmail');
-  let rememberedPasswordAsText = localStorage.getItem('rememberedPassword');
-  if (rememberedEmailAsText && rememberedPasswordAsText) {
-    rememberedEmail = JSON.parse(rememberedEmailAsText);
-    rememberedPassword = JSON.parse(rememberedPasswordAsText);
-  }
-  fillInputFieldsFromUser(rememberedEmail, rememberedPassword);
-}
-
-function fillInputFieldsFromUser(rememberedEmail, rememberedPassword) {
-  let emailInput = document.getElementById('email');
-  let passwordInput = document.getElementById('password');
-
-  if (rememberedEmail && rememberedPassword) {
-    emailInput.value = rememberedEmail;
-    passwordInput.value = rememberedPassword;
-  }
+function fillInputFieldsFromUser(){
+  let emailInput = document.getElementById("email");
+  let passwordInput = document.getElementById("password");
+  emailInput.value = loadRememberMeJson[0]['email'];
+  passwordInput.value = loadRememberMeJson[0]['password'];
+  setRememberMe();
 }
 
 async function addUser() {
@@ -262,15 +250,15 @@ async function addContact() {
     id: Date.now(),
     name: formatName(),
     email: document.getElementById("email").value,
-    phone: '',
+    phone: "",
     color: backgroundColors[randomIndex],
     active: true,
   });
-  await setItem('contacts', JSON.stringify(contacts));
+  await setItem("contacts", JSON.stringify(contacts));
 }
 
 async function loadContacts() {
-  contacts = JSON.parse(await getItem('contacts'));
+  contacts = JSON.parse(await getItem("contacts"));
 }
 
 function formatName() {
@@ -280,7 +268,7 @@ function formatName() {
     name[i] = name[i].trim();
     name[i] = name[i].charAt(0).toUpperCase() + name[i].slice(1);
   }
-  var formattedname = name.join(' ');
+  var formattedname = name.join(" ");
   return formattedname;
 }
 
@@ -318,23 +306,23 @@ function showEmailNotExisting(email) {
 }
 
 function setRememberMe() {
-  let content = document.getElementById('rememberMeCheckbox');
+  let content = document.getElementById("rememberMeCheckbox");
   if (rememberMe) {
-    content.src = '/assets/img/checkbox_unchecked.svg'
+    content.src = "/assets/img/checkbox_unchecked.svg";
     rememberMe = false;
   } else {
-    content.src = '/assets/img/checkbox_checked.svg'
+    content.src = "/assets/img/checkbox_checked.svg";
     rememberMe = true;
   }
 }
 
 function setPrivacyPolic() {
-  let content = document.getElementById('privacyPolicCheckbox');
+  let content = document.getElementById("privacyPolicCheckbox");
   if (privacyPolic) {
-    content.src = '/assets/img/checkbox_unchecked.svg'
+    content.src = "/assets/img/checkbox_unchecked.svg";
     privacyPolic = false;
   } else {
-    content.src = '/assets/img/checkbox_checked.svg'
+    content.src = "/assets/img/checkbox_checked.svg";
     privacyPolic = true;
   }
 }
@@ -349,4 +337,3 @@ function dontshowSignUpfinished() {
   var conatiner = document.getElementById("finishedMessageContainer");
   conatiner.style.display = "none";
 }
-
