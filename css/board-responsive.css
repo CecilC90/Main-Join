@@ -15,8 +15,8 @@
 @media(max-width: 1430px) {
 
     .board-header {
-        width: calc(100vw - 330px);
         padding-left: 280px;
+        padding-right: 50px;
     }
 
     .board-section {
@@ -26,38 +26,26 @@
 
     #board-content-todo {
         display: flex;
-        margin-right: 30px;
-        margin-bottom: 30px;
         flex-wrap: nowrap;
         overflow-x: scroll;
-        padding: 2px 10px;
     }
 
     #board-content-progress {
         display: flex;
-        margin-right: 30px;
-        margin-bottom: 30px;
         flex-wrap: nowrap;
         overflow-x: scroll;
-        padding: 2px 10px;
     }
 
     #board-content-feedback {
         display: flex;
-        margin-right: 30px;
-        margin-bottom: 30px;
         flex-wrap: nowrap;
         overflow-x: scroll;
-        padding: 2px 10px;
     }
 
     #board-content-done {
         display: flex;
-        margin-right: 30px;
-        margin-bottom: 30px;
         flex-wrap: nowrap;
         overflow-x: scroll;
-        padding: 2px 10px;
     }
 
     .todo-content {
@@ -70,12 +58,12 @@
     }
 
     .board-element {
-        width: calc(100vw - 300px);
-        padding: 0;
+        width: 100%;
+        padding: 4px;
+        margin-right: 50px;
     }
 
     .margin-right {
-        margin-right: 30px;
         height: 24px;
     }
 

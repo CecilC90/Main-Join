@@ -177,37 +177,6 @@ function checkDoneTodo() {
     }
 }
 
-// Dragging Function
-async function moveTo(category) {
-    todos[startDragginId]['category'] = category;
-    highlightOut(category);
-    renderTodos();
-    await setItem('allTasks', JSON.stringify(todos));
-}
-
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function startDragging(id) {
-    startDragginId = id;
-}
-
-function addIdToTasks() {
-    for(let i = 0; i < todos.length; i++) {
-        const todo = todos[i];
-        todo.id = i;
-    }
-}
-
-function highlight(id) {
-    document.getElementById(id).classList.add('dragging-over');
-}
-
-function highlightOut(id) {
-    document.getElementById(id).classList.remove('dragging-over');
-}
-
 function renderColorForCategory(index) {
     let categoryContainer = document.getElementById(`category-span${index}`);
     let categoryContainerDetailView = document.getElementById(`category-span-detail${index}`);
@@ -385,27 +354,4 @@ function renderCounterAfterClose(index) {
         const counter = todos[index].counter;
         showCounter.innerHTML = counter;
     }
-}
-
-// Filter Function
-function filterTodos() {
-    let searchDestop = document.getElementById('search').value.toLowerCase();
-    let searachMobile = document.getElementById('search-mobile').value.toLowerCase();
-
-    let search = searchDestop || searachMobile;
-
-    for(let i = 0; i < todos.length; i++) {
-        const todo = todos[i];
-        let todoContent = document.getElementById(`todo-container${i}`);
-        let title = todo['title'];
-        let description = todo['description'];
-        if(title.toLowerCase().includes(search) || description.toLowerCase().includes(search)) {
-            todoContent.style.display = 'block';
-        } else {
-            todoContent.style.display = 'none';
-        }
-    }
-
-    document.getElementById('change-img').src = './assets/img/close.svg';
-    document.getElementById('change-img-mobile').src = './assets/img/close.svg';
 }

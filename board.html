@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./css/add_task.css">
     <script src="script.js"></script>
     <script src="js/board.js"></script>
+    <script src="js/boardGeneral.js"></script>
     <script src="js/boardPopUp.js"></script>
     <script src="js/boardHTML.js"></script>
     <script src="js/add_taskHTML.js"></script>
@@ -46,6 +47,7 @@
     <div class="inputField" id="mobile-searchbar">
         <input oninput="filterTodos()" type="text" id="search-mobile" placeholder="Find Task"><button><img id="change-img-mobile" onclick="emptyInput()" src="assets/img/search.svg" alt=""></button>
     </div>
+
     <section class="board-section">
         <div class="board-element" id="open" ondrop="moveTo('open')" ondragleave="highlightOut('open')" ondragover="allowDrop(event); highlight('open')">
             <div class="space-between margin-right">

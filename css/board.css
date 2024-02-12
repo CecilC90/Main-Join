@@ -116,9 +116,9 @@ body {
 .board-section {
     padding-top: 64px;
     padding-left: 300px;
+    padding-right: 50px;
     display: flex;
     justify-content: space-between;
-    width: calc(100vw - 350px);
 }
 
 .board-element {
@@ -163,14 +163,13 @@ a {
 
 .board-content {
     margin-top: 20px;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    margin-bottom: 20px;
+    padding: 8px 16px;
     border: 1px solid grey;
     background-color: #E7E7E7;
     border-radius: 10px;
     color: grey;
     border-style: dotted;
-    text-align: center;
 }
 
 .dragging-over {
