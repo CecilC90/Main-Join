@@ -20,7 +20,7 @@ function renderStartPageHTML() {
         </div>
         <p class="wrongPasswordText" id="wrongPasswordText"></p>
         <div class="rememberMeContainer">
-          <img onclick="setRememberMe()" class="checkbox" id="rememberMeCheckbox" src="/assets/img/checkbox_unchecked.svg" alt="checkbock">
+          <img onclick="setRememberMe()" class="checkbox" id="rememberMeCheckbox" src="./assets/img/checkbox_unchecked.svg" alt="checkbock">
           <p>Remember me</p>
         </div>
       </div>
@@ -92,7 +92,7 @@ function renderRegistrationPageHTML() {
        </div>
        <p class="passwordNotConfirmText" id="passwordNotConfirmText"></p>
        <div class="acceptPrivacyPolicContainer">
-         <img onclick="setPrivacyPolic()" class="checkbox" id="privacyPolicCheckbox" src="/assets/img/checkbox_unchecked.svg" alt="checkbock">
+         <img onclick="setPrivacyPolic()" class="checkbox" id="privacyPolicCheckbox" src="./assets/img/checkbox_unchecked.svg" alt="checkbock">
          <p>I accept the <a href="">Privacy Polic</a></p>
        </div>
      </div>

@@ -308,10 +308,10 @@ function showEmailNotExisting(email) {
 function setRememberMe() {
   let content = document.getElementById("rememberMeCheckbox");
   if (rememberMe) {
-    content.src = "/assets/img/checkbox_unchecked.svg";
+    content.src = "./assets/img/checkbox_unchecked.svg";
     rememberMe = false;
   } else {
-    content.src = "/assets/img/checkbox_checked.svg";
+    content.src = "./assets/img/checkbox_checked.svg";
     rememberMe = true;
   }
 }
@@ -319,10 +319,10 @@ function setRememberMe() {
 function setPrivacyPolic() {
   let content = document.getElementById("privacyPolicCheckbox");
   if (privacyPolic) {
-    content.src = "/assets/img/checkbox_unchecked.svg";
+    content.src = "./assets/img/checkbox_unchecked.svg";
     privacyPolic = false;
   } else {
-    content.src = "/assets/img/checkbox_checked.svg";
+    content.src = "./assets/img/checkbox_checked.svg";
     privacyPolic = true;
   }
 }
