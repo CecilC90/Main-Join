@@ -132,7 +132,7 @@
     cursor: pointer;
     width: 80px;
     height: 25px;
-    background: url('/assets/img/delete-btn.svg');
+    background: url('../assets/img/delete-btn.svg');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -141,14 +141,14 @@
 }
 
 .delete-btn:hover {
-    background-image: url('/assets/img/delete-btn-hover.svg');
+    background-image: url('../assets/img/delete-btn-hover.svg');
 }
 
 .edit-btn {
     cursor: pointer;
     width: 80px;
     height: 25px;
-    background: url('/assets/img/edit-btn.svg');
+    background: url('../assets/img/edit-btn.svg');
     background-size: contain;
     background-repeat: no-repeat;
     transition: background-image 0.3s ease-in-out;
@@ -156,7 +156,7 @@
 }
 
 .edit-btn:hover {
-    background-image: url('/assets/img/edit-btn-hover.svg');
+    background-image: url('../assets/img/edit-btn-hover.svg');
 }
 
 /* Edit */

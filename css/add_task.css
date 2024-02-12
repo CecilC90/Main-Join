@@ -138,7 +138,7 @@ p {
   color: #000 !important;
 }
 .duedateInputField[type="date"]::-webkit-calendar-picker-indicator {
-  background: url(/assets/img/calendar_icon.svg) no-repeat;
+  background: url(../assets/img/calendar_icon.svg) no-repeat;
   cursor: pointer;
 }
 .prioButtonConatiner {
@@ -462,7 +462,7 @@ footer {
     font-size: 16px;
   }
   .duedateInputField[type="date"]::-webkit-calendar-picker-indicator {
-    background: url(/assets/img/calendar_icon_mobile.svg) no-repeat;
+    background: url(../assets/img/calendar_icon_mobile.svg) no-repeat;
   }
   .addTaskContainer {
     padding-left: 16px;
