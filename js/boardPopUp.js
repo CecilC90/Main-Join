@@ -157,11 +157,11 @@ function prioBtnLow(low, changeImgLow, prioValue) {
     if(prioValue == 'low') {
         low.style.background = '#7ae229';
         low.style.color = '#fff';
-        changeImgLow.src = 'assets/img/prio-low-white.png';
+        changeImgLow.src = './assets/img/prio-low-white.png';
       } else {
         low.style.background = '#fff';
         low.style.color = 'black';
-        changeImgLow.src = 'assets/img/prio-low.svg';
+        changeImgLow.src = './assets/img/prio-low.svg';
       }
 }
 
@@ -169,11 +169,11 @@ function prioBtnMedium(medium, changeImgMedium, prioValue) {
     if(prioValue == 'medium') {
         medium.style.background = '#ffa800';
         medium.style.color = '#fff';
-        changeImgMedium.src = 'assets/img/prio-medium-white.png';
+        changeImgMedium.src = './assets/img/prio-medium-white.png';
       } else {
         medium.style.background = '#fff';
         medium.style.color = 'black';
-        changeImgMedium.src = 'assets/img/prio-medium.svg';
+        changeImgMedium.src = './assets/img/prio-medium.svg';
       }
 }
 
@@ -181,11 +181,11 @@ function prioBtnHigh(high, changeImgHigh, prioValue) {
     if(prioValue == 'high') {
         high.style.background = '#ff3d00';
         high.style.color = '#fff';
-        changeImgHigh.src = 'assets/img/prio-urgent-white.png';
+        changeImgHigh.src = './assets/img/prio-urgent-white.png';
       } else {
         high.style.background = '#fff';
         high.style.color = 'black';
-        changeImgHigh.src = 'assets/img/prio-urgent.svg';
+        changeImgHigh.src = './assets/img/prio-urgent.svg';
       }
 }
   
@@ -271,10 +271,10 @@ function renderAssingnedToDropdownListEditview() {
     let dropdownContactImg = document.getElementById("dropdownContactImgEditview" + i);
     if (contacts[i]["selected"]) {
       dropdownContact.classList.replace("dropdownContacts", "dropdownContactsSelected");
-      dropdownContactImg.src = "/assets/img/checkbox_checked_white.svg";
+      dropdownContactImg.src = "./assets/img/checkbox_checked_white.svg";
     } else {
       dropdownContact.classList.replace("dropdownContactsSelected", "dropdownContacts");
-      dropdownContactImg.src = "/assets/img/checkbox_unchecked.svg";
+      dropdownContactImg.src = "./assets/img/checkbox_unchecked.svg";
     }
   }
   
@@ -299,9 +299,9 @@ function renderAssingnedToDropdownListEditview() {
   
   function toggleDropdownIconEditview(id, dispayStatus) {
     if (dispayStatus == "flex") {
-        document.getElementById(id).src = "/assets/img/arrow_drop_down_up.svg";
+        document.getElementById(id).src = "./assets/img/arrow_drop_down_up.svg";
     } else {
-        document.getElementById(id).src = "/assets/img/arrow_drop_down.svg";
+        document.getElementById(id).src = "./assets/img/arrow_drop_down.svg";
     }
   }
       
@@ -312,7 +312,7 @@ function renderAssingnedToDropdownListEditview() {
           <div class="contactsIcon">${firstAndSecondLetter}</div>
           <p>${contacts[i]['name']}</p>
         </div>
-        <img id="dropdownContactImgEditview${i}" src="/assets/img/checkbox_unchecked.svg" alt="checkbox_unchecked">
+        <img id="dropdownContactImgEditview${i}" src="./assets/img/checkbox_unchecked.svg" alt="checkbox_unchecked">
       </div>
     `;
   }
@@ -337,9 +337,9 @@ function renderAssingnedToDropdownListEditview() {
           <P>${subtasks}</P>
         </div>
         <div class="subtaskMenu">
-          <img src="/assets/img/subtasks_edit_icon.svg" onclick="editSubtaskEditview(${i}, '${subtasks}', ${index})" alt="edit_icon">
-          <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
-          <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtaskEditview(${i}, ${index})" alt="delete_icon">
+          <img src="./assets/img/subtasks_edit_icon.svg" onclick="editSubtaskEditview(${i}, '${subtasks}', ${index})" alt="edit_icon">
+          <img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+          <img src="./assets/img/subtasks_delete_icon.svg" onclick="deleteSubtaskEditview(${i}, ${index})" alt="delete_icon">
         </div>
       </div>
     </div>
@@ -352,9 +352,9 @@ function renderAssingnedToDropdownListEditview() {
       <div class="subtaskEdit" id="subtaskEdit">
         <input type="text" id="editSubtask${i}" value="${editSubtask}">
         <div>
-          <img src="/assets/img/subtasks_delete_icon.svg" onclick="deleteSubtaskEditview(${i}, ${index})" alt="delete_icon">
-          <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
-          <img src="/assets/img/subtasks_done_icon.svg" onclick="editSubtaskDoneEditview(${i}, ${index})" alt="done_icon">
+          <img src="./assets/img/subtasks_delete_icon.svg" onclick="deleteSubtaskEditview(${i}, ${index})" alt="delete_icon">
+          <img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+          <img src="./assets/img/subtasks_done_icon.svg" onclick="editSubtaskDoneEditview(${i}, ${index})" alt="done_icon">
         </div>
       </div>
     `;
@@ -382,12 +382,12 @@ function renderAssingnedToDropdownListEditview() {
     let content = document.getElementById("subtasksInputMenuEditview");
     if (subtasksInput.value.length != 0) {
       content.innerHTML = /* html */ `
-        <img class="subtasksInputMenuimg" onclick="clearSubtaskInputFieldEditview()" src="/assets/img/subtasks_cancel_icon.svg" alt="cancel_icon">
-        <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
-        <img class="subtasksInputMenuimg" onclick="addSubtaskEditview(${index})" src="/assets/img/subtasks_done_icon.svg" alt="done_icon">
+        <img class="subtasksInputMenuimg" onclick="clearSubtaskInputFieldEditview()" src="./assets/img/subtasks_cancel_icon.svg" alt="cancel_icon">
+        <img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+        <img class="subtasksInputMenuimg" onclick="addSubtaskEditview(${index})" src="./assets/img/subtasks_done_icon.svg" alt="done_icon">
      `;
     } else {
-      content.innerHTML = '<img src="/assets/img/subtasks_add_icon.svg" alt="add_icon">';
+      content.innerHTML = '<img src="./assets/img/subtasks_add_icon.svg" alt="add_icon">';
     }
   }
   
@@ -444,7 +444,7 @@ function emptyInput() {
     document.getElementById('search-mobile').value = '';
     document.getElementById('search').value = '';
     renderTodos();
-    document.getElementById('change-img').src = 'assets/img/search.svg';
+    document.getElementById('change-img').src = './assets/img/search.svg';
     document.getElementById('change-img-mobile').src = './assets/img/search.svg';
 }
 

@@ -47,7 +47,7 @@ function templateHTMLDetailView(index) {
       <div onclick="doNotClose(event)" id="detail-todo-content">
           <div class="space-between">
               <span class="category-span" id="category-span-detail${index}">${todos[index].todoCategory}</span>
-              <img class="close-img" onclick="closeDetailView()" src="/assets/img/close.svg" alt="">
+              <img class="close-img" onclick="closeDetailView()" src="./assets/img/close.svg" alt="">
           </div>
           <h1 class="headline-detailview">${todos[index].title}</h1>
           <p>${todos[index].description}</p>
@@ -66,7 +66,7 @@ function templateHTMLDetailView(index) {
           <div class="checkbox-subtask-container" id="checkbox-subtask${index}"></div> 
           <div class="btn-container">
             <div class="delete-btn" onclick="deleteTask(${index})"></div>
-            <img src="/assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+            <img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
             <div class="edit-btn" onclick="editTask(${index})"></div>
           </div>
         </div>
@@ -78,7 +78,7 @@ async function templateHTMLEditTask(index) {
   return /* HTML */ `
   <div onclick="doNotClose(event)" id="detail-todo-content">
       <div class="space-end">
-        <img class="close-img" onclick="closeDetailView(${index})" src="/assets/img/close.svg" alt="">
+        <img class="close-img" onclick="closeDetailView(${index})" src="./assets/img/close.svg" alt="">
       </div>
       <p class="edit-p">Title:</p>
       <input class="inputField editViewInput" id="new-title" type="text" value="${todos[index].title}">
@@ -93,7 +93,7 @@ async function templateHTMLEditTask(index) {
             <div>
                 <div class="inputField dropdown">
                   <input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownListEditview()" />
-                  <img onclick="contactDropdown()" class="dropDownIcon" id="assignedToDropdownIconEditview" src="/assets/img/arrow_drop_down.svg" alt="" />
+                  <img onclick="contactDropdown()" class="dropDownIcon" id="assignedToDropdownIconEditview" src="./assets/img/arrow_drop_down.svg" alt="" />
                 </div>
                 <div class="dropdownContentAssignedTo" id="dropdownContentAssignedToEditview"></div> <!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->
               </div>
@@ -103,7 +103,7 @@ async function templateHTMLEditTask(index) {
               <div class="inputField" id="subtaskField">
                 <input type="text" id="subtasksInputEditview" onkeyup="showSubtasksDoneAndCancelEditview(${index})" placeholder="Add new subtask" />
                 <div class="subtasksInputMenu" id="subtasksInputMenuEditview">
-                  <img src="/assets/img/subtasks_add_icon.svg" alt="add_icon" />
+                  <img src="./assets/img/subtasks_add_icon.svg" alt="add_icon" />
                 </div>
               </div>
               <div>
@@ -111,7 +111,7 @@ async function templateHTMLEditTask(index) {
               </div>
             </div>
       <div class="btn-container">
-          <button id="ok-button" class="buttonDarg" onclick="changeTask(${index})" href="#">OK <img src="/assets/img/check-icon-white.svg" alt=""></button>
+          <button id="ok-button" class="buttonDarg" onclick="changeTask(${index})" href="#">OK <img src="./assets/img/check-icon-white.svg" alt=""></button>
       </div>
   </div>
   `;
@@ -122,15 +122,15 @@ function renderPrioButton(index) {
     prioButtonConatainer.innerHTML = `
       <div class="prioButton" id="prioButtonHighEditview" onclick="setPrioBtn('high', ${index})">
           <p>Urgent</p>
-          <img id="change-img-high" src="assets/img/prio-urgent.svg">
+          <img id="change-img-high" src="./assets/img/prio-urgent.svg">
       </div>
       <div class="prioButton" id="prioButtonMediumEditview" onclick="setPrioBtn('medium', ${index})">
           <p>Medium</p>
-          <img id="change-img-medium" src="assets/img/prio-medium.svg">
+          <img id="change-img-medium" src="./assets/img/prio-medium.svg">
       </div>
       <div class="prioButton" id="prioButtonLowEditview" onclick="setPrioBtn('low', ${index})">
           <p>Low</p>
-          <img id="change-img-low" src="assets/img/prio-low.svg">
+          <img id="change-img-low" src="./assets/img/prio-low.svg">
       </div>
     `;
 }
@@ -165,7 +165,7 @@ function templateAddTaskHeadline() {
   return `
     <div onclick="doNotClose(event)" class="space-between">
       <h1 class="headline">Add Task</h1>
-      <img class="close-img" onclick="closeAddTask()" src="/assets/img/close.svg" alt="">
+      <img class="close-img" onclick="closeAddTask()" src="./assets/img/close.svg" alt="">
     </div>
   `
 }
@@ -189,7 +189,7 @@ function templateAddTaskFooter() {
           </button>
           </div>
         <div>
-        <button id="createTaskButton" class="buttonDarg" onclick="addTask()">Create Task<img src="/assets/img/check_icon.svg" alt="" /></button>
+        <button id="createTaskButton" class="buttonDarg" onclick="addTask()">Create Task<img src="./assets/img/check_icon.svg" alt="" /></button>
         </div>
       </div>
     </footer>
