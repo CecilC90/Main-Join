@@ -190,14 +190,22 @@ function openUserInformation(i, sortedContacts, initials) {
 }
 
 function deleteContact(i, sortedContacts) {
-    contacts[i].active = false;
-    //sortedContacts.splice(i, 1);
-    //setItem('contacts', JSON.stringify(contacts));
+    sortedContacts.splice(i, 1);
+    setItem('contacts', JSON.stringify(contacts));
     renderContactList(sortedContacts);
     closeUserInformation();
     document.getElementById('contactOptionsMobile').style.display = "none";
     document.getElementById('contactsContainer').style.display = "flex";
     document.getElementById('infoContainer').style.display = "none";
+}
+
+function cancelInput() {
+    let name = document.getElementById('addName');
+    let email = document.getElementById('addEmail');
+    let phone = document.getElementById('addPhone');
+    name.value = "";
+    email.value = "";
+    phone.value = "";
 }
 
 function closeMainContact() {
@@ -318,7 +326,7 @@ function updateContactsInfo(i, event) {
 }
 
 async function addContact() {
-    const randomIndex = Math.floor(Math.random() * backgroundColors.length);
+    let randomIndex = Math.floor(Math.random() * backgroundColors.length);
 
     contacts.push({
         id: Date.now(),
