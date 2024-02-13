@@ -54,6 +54,7 @@
   align-items: center;
   margin-top: 67px;
   margin-right: 122px;
+  z-index: 2;
 }
 .signUpButtonContainer button {
   padding: 15px 16px;
