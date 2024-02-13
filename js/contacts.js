@@ -120,7 +120,6 @@ function sortingContacts (sortedContacts, contactlist, currentInitial) {
 
 function markLoggedinContact(sortedContacts, i) {
     if (sortedContacts[i].email.includes(loggedInUser.email)) {
-        console.log(loggedInUser.name)
         document.getElementById(`userCard${i}`).classList.add('markUserCard');
     }
 }
@@ -316,7 +315,7 @@ function closePopUp() {
     popUp.classList.add('d-none')
     addPopUp = document.getElementById('addContactPopUp');
     addPopUp.classList.add('d-none');
-    
+
     popUp.classList.remove('flex');
 }
 
