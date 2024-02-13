@@ -24,7 +24,7 @@
         padding-left: 280px;
     }
 
-    #board-content-todo {
+    #board-content-open {
         display: flex;
         flex-wrap: nowrap;
         overflow-x: scroll;
@@ -173,7 +173,7 @@
         margin-right: 0;
     }
 
-    #board-content-todo {
+    #board-content-open {
         margin-right: 0;
         margin-bottom: 16px;
     }

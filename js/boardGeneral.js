@@ -30,112 +30,76 @@ function highlightOut(id) {
 }
 
 // Filter Function
-function filterTodos() {
-    let searchDesktop = document.getElementById('search').value.toLowerCase();
+async function filterTodos() {
+    let searchDestop = document.getElementById('search').value.toLowerCase();
     let searachMobile = document.getElementById('search-mobile').value.toLowerCase();
+    let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    let visibility = {
+        'open': false,
+        'progress': false,
+        'feedback': false,
+        'done': false
+    };
+    let search = searchDestop || searachMobile;
 
-    let search = searchDesktop || searachMobile;
+    document.getElementById('search').addEventListener('input', function() {
+        if(this.value === '') {
+            document.getElementById('board-content-open').style.display = 'block';
+            document.getElementById('board-content-progress').style.display = 'block';
+            document.getElementById('board-content-feedback').style.display = 'block';
+            document.getElementById('board-content-done').style.display = 'block';
+            let contentOpen = document.getElementById('content-open');
+            let contentProgress = document.getElementById('content-progress');
+            let contentFeedback = document.getElementById('content-feedback');
+            let contentDone = document.getElementById('content-done');
+            contentOpen.classList.remove('board-content');
+            contentProgress.classList.remove('board-content');
+            contentFeedback.classList.remove('board-content');
+            contentDone.classList.remove('board-content');
+            contentOpen.innerHTML = '';
+            contentProgress.innerHTML = '';
+            contentFeedback.innerHTML = '';
+            contentDone.innerHTML = '';
+        }
+    });
+    document.getElementById('search-mobile').addEventListener('input', function() {
+        if(this.value === '') {
+            document.getElementById('board-content-open').style.display = 'block';
+            document.getElementById('board-content-progress').style.display = 'block';
+            document.getElementById('board-content-feedback').style.display = 'block';
+            document.getElementById('board-content-done').style.display = 'block';
+        }
+    });
 
     for(let i = 0; i < todos.length; i++) {
         const todo = todos[i];
         let todoContent = document.getElementById(`todo-container${i}`);
         let title = todo['title'];
-        let description = todo['description'];
         let category = todo['category'];
-        let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-
-        filterCategoryOpen(search, todoContent, title, description, category, screenWidth);
-        filterCategoryProgress(search, todoContent, title, description, category, screenWidth);
-        filterCategoryFeedback(search, todoContent, title, description, category, screenWidth);
-        filterCategoryDone(search, todoContent, title, description, category, screenWidth);
-    }
-}
-
-function filterCategoryOpen(search, todoContent, title, description, category, screenWidth) {
-    let contentOpen = document.getElementById('content-todo');
-    let boardContentOpen = document.getElementById('board-content-todo');
-    if(category === 'open') {
-        if(title.toLowerCase().includes(search) || description.toLowerCase().includes(search)) {
+        if(title.toLowerCase().includes(search)) {
             todoContent.style.display = 'block';
-            contentOpen.classList.remove('board-content');
-            contentOpen.innerHTML = '';
-            if(screenWidth > 1440) {
-                boardContentOpen.style.display = 'block';
-            } else {
-                boardContentOpen.style.display = 'flex';
-            }
+            visibility[category] = true;
         } else {
             todoContent.style.display = 'none';
-            contentOpen.classList.add('board-content');
-            contentOpen.innerHTML = 'No tasks in To do';
-            boardContentOpen.style.display = 'none';
         }
     }
-}
 
-function filterCategoryProgress(search, todoContent, title, description, category, screenWidth) {
-    let contentProgress = document.getElementById('content-progress');
-    let boardContentProgress = document.getElementById('board-content-progress');
-    if(category === 'progress') {
-        if(title.toLowerCase().includes(search) || description.toLowerCase().includes(search)) {
-            todoContent.style.display = 'block';
-            contentProgress.classList.remove('board-content');
-            contentProgress.innerHTML = '';
-            if(screenWidth > 1440) {
-                boardContentProgress.style.display = 'block';
-            } else {
-                boardContentProgress.style.display = 'flex';
-            }
+    for(let category in visibility) {
+        let content = document.getElementById(`content-${category}`);
+        let boardContent = document.getElementById(`board-content-${category}`);
+        if(!visibility[category]) {
+            content.classList.add('board-content');
+            content.innerHTML = 'No task found';
+            boardContent.style.display = 'none';
         } else {
-            todoContent.style.display = 'none';
-            contentProgress.classList.add('board-content');
-            contentProgress.innerHTML = 'No tasks in Progress';
-            boardContentProgress.style.display = 'none';
+            content.classList.remove('board-content');
+            content.innerHTML = '';
+            if(screenWidth > 1440) {
+                boardContent.style.display = 'block';
+            } else {
+                boardContent.style.display = 'flex';
+            }
         }
     }
-}
 
-function filterCategoryFeedback(search, todoContent, title, description, category, screenWidth) {
-    let contentFeedback = document.getElementById('content-feedback');
-    let boardContentFeedback = document.getElementById('board-content-feedback');
-    if(category === 'feedback') {
-        if(title.toLowerCase().includes(search) || description.toLowerCase().includes(search)) {
-            todoContent.style.display = 'block';
-            contentFeedback.classList.remove('board-content');
-            contentFeedback.innerHTML = '';
-            if(screenWidth > 1440) {
-                boardContentFeedback.style.display = 'block';
-            } else {
-                boardContentFeedback.style.display = 'flex';
-            }
-        } else {
-            todoContent.style.display = 'none';
-            contentFeedback.classList.add('board-content');
-            contentFeedback.innerHTML = 'No tasks in Feedback';
-            boardContentFeedback.style.display = 'none';
-        } 
-    }
-}
-
-function filterCategoryDone(search, todoContent, title, description, category, screenWidth) {
-    let contentDone = document.getElementById('content-done');
-    let boardContentDone = document.getElementById('board-content-done');
-
-    if(category === 'done') {
-        if(title.toLowerCase().includes(search) || description.toLowerCase().includes(search)) {
-            todoContent.style.display = 'block';
-            contentDone.classList.remove('board-content');
-            contentDone.innerHTML = '';
-            if(screenWidth > 1440) {
-                boardContentDone.style.display = 'block';
-            } else {
-                boardContentDone.style.display = 'flex';
-            }
-        } else {
-            todoContent.style.display = 'none';
-            contentDone.classList.add('board-content');
-            contentDone.innerHTML = 'No tasks in Done';
-            boardContentDone.style.display = 'none';
-        } 
-    }
 }
