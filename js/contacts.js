@@ -274,7 +274,6 @@ function openAddContactPopUp() {
     popUp = document.getElementById('popupContainer');
     popUp.classList.remove('d-none');
     popUp.classList.add('flex');
-    //popUp.style.display = "flex";
     addPopUp = document.getElementById('addContactPopUp');
     addPopUp.classList.remove('d-none');
 
@@ -286,6 +285,7 @@ function openAddContactPopUp() {
 }
 
 function closeAddContactPopUp(event) {
+
     if (event) {
         event.preventDefault();
     }
@@ -299,7 +299,6 @@ function closeAddContactPopUp(event) {
 function openEditContactPopUp(i) {
     popUp = document.getElementById('popupContainer');
     popUp.classList.add('flex');
-    //popUp.style.display = "flex";
     addPopUp = document.getElementById('addContactPopUp');
     addPopUp.classList.add('d-none');
     editPopUp = document.getElementById('editContactPopUp');
@@ -312,11 +311,13 @@ function openEditContactPopUp(i) {
     event.stopPropagation();
 }
 
-function closeEditContactPopUp() {
+function closePopUp() {
     popUp = document.getElementById('popupContainer');
-    popUp.style.display = "none";
+    popUp.classList.add('d-none')
     addPopUp = document.getElementById('addContactPopUp');
-    addPopUp.classList.remove('d-none');
+    addPopUp.classList.add('d-none');
+    
+    popUp.classList.remove('flex');
 }
 
 function resetAddInput() {
@@ -346,7 +347,6 @@ function updateContactsInfo(i, event) {
         email: document.getElementById('editEmail').value,
         phone: document.getElementById('editPhone').value,
         color: contacts[i]['color'],
-        active: true,
     };
 
     setItem('contacts', JSON.stringify(contacts));
@@ -366,12 +366,11 @@ async function addContact() {
         email: addEmail.value,
         phone: addPhone.value,
         color: backgroundColors[randomIndex],
-        active: true,
     });
 
     await setItem('contacts', JSON.stringify(contacts));
     renderContacts()
-    closeAddContactPopUp();
+    closePopUp();
 }
 
 function openContatOptions(i) {
@@ -403,7 +402,6 @@ document.addEventListener('click', function (event) {
             popUp.classList.add('d-none');
             editpopUp.classList.add('d-none');
             popUp.classList.remove('flex');
-            //popUp.style.display = 'none';
         }
         openPopupContainer = false;
     }
