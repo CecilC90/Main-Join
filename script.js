@@ -1,7 +1,7 @@
 const STORAGE_TOKEN = "4EFBXYBGE7QJD8SZ3C5H1CD589HBSZGJ38CGAPOM";
 const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 
-let loggedInUser = [];
+let loggedInUser = {};
 let userNavbarOpen = false; 
 
 async function checkloggedInUser() {
@@ -35,8 +35,12 @@ async function getItem(key) {
 }
 
 function addLoggedInUser(userInfos) {
+  let email = userInfos.email;
   let name = userInfos.name;
-  loggedInUser.push(name);
+  loggedInUser.name = name;
+  loggedInUser.email = email;
+  //loggedInUser.push(name);
+  //loggedInUser.push(email);
   saveLoggedInUser();
 }
 
@@ -64,20 +68,22 @@ function loadLoggedInUser() {
 
 function showUserInitials() {
   let userIcon = document.getElementById('Initial');
-  if (loggedInUser) {
-    if (loggedInUser.includes("Guest")) {
+  if (loggedInUser.name) {
+    if (loggedInUser.name.includes("Guest")) {
       let initials = "Guest";
       userIcon.innerHTML = `${initials.charAt(0).toUpperCase()}`;
     } else {
-      let splitName = loggedInUser[0].split(" ");
-      let initials = splitName[0].charAt(0) + splitName[1].charAt(0);
-      userIcon.innerHTML = `${initials.toUpperCase()}`;
+      let splitName = loggedInUser.name.split(" ");
+      if (splitName.length >= 2) {
+        let initials = splitName[0].charAt(0) + splitName[1].charAt(0);
+        userIcon.innerHTML = `${initials.toUpperCase()}`;
+      }
     }
   }
 }
 
 function logoutUser() {
-  logoutUser = loggedInUser.splice(0, 1);
+  loggedInUser = {};
   saveLoggedInUser();
   openPage('index');
 }

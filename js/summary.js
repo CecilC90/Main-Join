@@ -57,26 +57,31 @@ async function greeting() {
         element.innerHTML = greetingContent;
     });
 
-    if (!loggedInUser.includes("Guest")) {
+    if (!loggedInUser.name.includes("Guest")) {
         showName();
     }
 }
 
 function showName() {
     let nameContainers = document.querySelectorAll('.name');
-    if (loggedInUser === 'Guest') {
-        nameContainers.forEach(container => {
-            container.innerHTML = '';
-        });
-    } else {
-        let names = loggedInUser[0].split(' ');
-        let firstName = names[0].charAt(0).toUpperCase() + names[0].slice(1).toLowerCase();
-        let lastName = names[1].charAt(0).toUpperCase() + names[1].slice(1).toLowerCase();
-        nameContainers.forEach(container => {
-            container.innerHTML = `${firstName} ${lastName}`;
-        });
-    }
+    if (loggedInUser.name && typeof loggedInUser.name === 'string') {
+        if (loggedInUser.name === 'Guest') {
+            nameContainers.forEach(container => {
+                container.innerHTML = '';
+            });
+        } else {
+            let names = loggedInUser.name.split(' ');
+            if (names.length >= 2) {
+                let firstName = names[0].charAt(0).toUpperCase() + names[0].slice(1).toLowerCase();
+                let lastName = names[1].charAt(0).toUpperCase() + names[1].slice(1).toLowerCase();
+                nameContainers.forEach(container => {
+                    container.innerHTML = `${firstName} ${lastName}`;
+                });
+            } 
+        }
+    } 
 }
+
 
 function renderTasks() {
     todoCount();

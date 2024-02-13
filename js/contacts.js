@@ -42,7 +42,7 @@ async function getItem(key) {
 
 async function initContacts() {
     await includesHTML();
-    
+    await loadLoggedInUser();
     await loadContacts();
     renderContacts();
     loadLoggedInUser();
@@ -95,21 +95,40 @@ function renderContactList(sortedContacts) {
     let contactlist = document.getElementById('contactsList');
     contactlist.innerHTML = "";
     let currentInitial = null;
+    
+    sortingContacts (sortedContacts, contactlist, currentInitial);
+   
+}
 
+function sortingContacts (sortedContacts, contactlist, currentInitial) {
     for (let i = 0; i < sortedContacts.length; i++) {
         let sortedContact = sortedContacts[i];
-        if (sortedContact.active) {
+        
+        if (sortedContact) {
             let firstLetter = getFirstLetter(sortedContacts, i);
 
             if (firstLetter !== currentInitial) {
                 contactlist.innerHTML += renderFirstLetterHTML(firstLetter);
                 currentInitial = firstLetter;
             }
-
-            let initials = getMemberInitials(sortedContacts, i);
-            contactlist.innerHTML += renderContactsHTML(sortedContacts, i, initials);
+            renderInitials(sortedContacts, i);
+            markLoggedinContact(sortedContacts, i);
         }
     }
+}
+
+function markLoggedinContact(sortedContacts, i) {
+    if (sortedContacts[i].email.includes(loggedInUser.email)) {
+        console.log(loggedInUser.name)
+        document.getElementById(`userCard${i}`).classList.add('markUserCard');
+    }
+}
+
+
+function renderInitials(sortedContacts, i) {
+    let contactlist = document.getElementById('contactsList');
+    let initials = getMemberInitials(sortedContacts, i);
+    contactlist.innerHTML += renderContactsHTML(sortedContacts, i, initials);
 }
 
 
