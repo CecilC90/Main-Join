@@ -27,28 +27,28 @@
     #board-content-open {
         display: flex;
         flex-wrap: nowrap;
-        overflow-x: scroll;
+        overflow-x: auto;
         padding: 4px;
     }
 
     #board-content-progress {
         display: flex;
         flex-wrap: nowrap;
-        overflow-x: scroll;
+        overflow-x: auto;
         padding: 4px;
     }
 
     #board-content-feedback {
         display: flex;
         flex-wrap: nowrap;
-        overflow-x: scroll;
+        overflow-x: auto;
         padding: 4px;
     }
 
     #board-content-done {
         display: flex;
         flex-wrap: nowrap;
-        overflow-x: scroll;
+        overflow-x: auto;
         padding: 4px;
     }
 
