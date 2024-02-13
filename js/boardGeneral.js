@@ -73,13 +73,9 @@ function filterCategorys(category, visibility, screenWidth) {
             content.innerHTML = 'No task found';
             boardContent.style.display = 'none';
         } else {
+            
             content.classList.remove('board-content');
             content.innerHTML = '';
-            if(screenWidth > 1440) {
-                boardContent.style.display = 'block';
-            } else {
-                boardContent.style.display = 'flex';
-            }
         }
     }
 }
@@ -96,7 +92,7 @@ function ifNoTextInSearchbarDesktop() {
 function ifNoTextInSearchbarMobile() {
     document.getElementById('search-mobile').addEventListener('input', function() {
         if(this.value === '') {
-            contentDisplayBlock();
+            contentDisplayFlex();
             clearNoTaskFound();
         }
     });
@@ -107,6 +103,13 @@ function contentDisplayBlock() {
     document.getElementById('board-content-progress').style.display = 'block';
     document.getElementById('board-content-feedback').style.display = 'block';
     document.getElementById('board-content-done').style.display = 'block';
+}
+
+function contentDisplayFlex() {
+    document.getElementById('board-content-open').style.display = 'flex';
+    document.getElementById('board-content-progress').style.display = 'flex';
+    document.getElementById('board-content-feedback').style.display = 'flex';
+    document.getElementById('board-content-done').style.display = 'flex';
 }
 
 function clearNoTaskFound() {

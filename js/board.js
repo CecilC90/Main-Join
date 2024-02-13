@@ -35,7 +35,6 @@ async function renderHTML() {
 
 async function loadTasks() {
     todos = JSON.parse(await getItem('allTasks'));
-    console.log(todos);
 }
 
 async function loadContacts() {
