@@ -42,35 +42,12 @@ async function filterTodos() {
     };
     let search = searchDestop || searachMobile;
 
-    document.getElementById('search').addEventListener('input', function() {
-        if(this.value === '') {
-            document.getElementById('board-content-open').style.display = 'block';
-            document.getElementById('board-content-progress').style.display = 'block';
-            document.getElementById('board-content-feedback').style.display = 'block';
-            document.getElementById('board-content-done').style.display = 'block';
-            let contentOpen = document.getElementById('content-open');
-            let contentProgress = document.getElementById('content-progress');
-            let contentFeedback = document.getElementById('content-feedback');
-            let contentDone = document.getElementById('content-done');
-            contentOpen.classList.remove('board-content');
-            contentProgress.classList.remove('board-content');
-            contentFeedback.classList.remove('board-content');
-            contentDone.classList.remove('board-content');
-            contentOpen.innerHTML = '';
-            contentProgress.innerHTML = '';
-            contentFeedback.innerHTML = '';
-            contentDone.innerHTML = '';
-        }
-    });
-    document.getElementById('search-mobile').addEventListener('input', function() {
-        if(this.value === '') {
-            document.getElementById('board-content-open').style.display = 'block';
-            document.getElementById('board-content-progress').style.display = 'block';
-            document.getElementById('board-content-feedback').style.display = 'block';
-            document.getElementById('board-content-done').style.display = 'block';
-        }
-    });
+    ifNoTextInSearchbarDesktop();
+    ifNoTextInSearchbarMobile();
+    filterTitlesOfTodos(search, visibility, screenWidth);
+}
 
+function filterTitlesOfTodos(search, visibility, screenWidth) {
     for(let i = 0; i < todos.length; i++) {
         const todo = todos[i];
         let todoContent = document.getElementById(`todo-container${i}`);
@@ -84,6 +61,10 @@ async function filterTodos() {
         }
     }
 
+    filterCategorys(category, visibility, screenWidth)
+}
+
+function filterCategorys(category, visibility, screenWidth) {
     for(let category in visibility) {
         let content = document.getElementById(`content-${category}`);
         let boardContent = document.getElementById(`board-content-${category}`);
@@ -101,5 +82,47 @@ async function filterTodos() {
             }
         }
     }
-
 }
+
+function ifNoTextInSearchbarDesktop() {
+    document.getElementById('search').addEventListener('input', function() {
+        if(this.value === '') {
+            contentDisplayBlock();
+            clearNoTaskFound();
+        }
+    });
+}
+
+function ifNoTextInSearchbarMobile() {
+    document.getElementById('search-mobile').addEventListener('input', function() {
+        if(this.value === '') {
+            contentDisplayBlock();
+            clearNoTaskFound();
+        }
+    });
+}
+
+function contentDisplayBlock() {
+    document.getElementById('board-content-open').style.display = 'block';
+    document.getElementById('board-content-progress').style.display = 'block';
+    document.getElementById('board-content-feedback').style.display = 'block';
+    document.getElementById('board-content-done').style.display = 'block';
+}
+
+function clearNoTaskFound() {
+    let contentOpen = document.getElementById('content-open');
+    let contentProgress = document.getElementById('content-progress');
+    let contentFeedback = document.getElementById('content-feedback');
+    let contentDone = document.getElementById('content-done');
+
+    contentOpen.classList.remove('board-content');
+    contentProgress.classList.remove('board-content');
+    contentFeedback.classList.remove('board-content');
+    contentDone.classList.remove('board-content');
+    contentOpen.innerHTML = '';
+    contentProgress.innerHTML = '';
+    contentFeedback.innerHTML = '';
+    contentDone.innerHTML = '';
+}
+
+
