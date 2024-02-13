@@ -1,6 +1,7 @@
 let contacts = [];
 
 let openContactOptionsMobile = false;
+let openPopupContainer = false;
 let openUserOverview = false;
 
 let backgroundColors = [
@@ -271,10 +272,17 @@ function userInformationHTML(i, sortedContacts, initials) {
 
 function openAddContactPopUp() {
     popUp = document.getElementById('popupContainer');
-    popUp.style.display = "flex";
+    popUp.classList.remove('d-none');
+    popUp.classList.add('flex');
+    //popUp.style.display = "flex";
+    addPopUp = document.getElementById('addContactPopUp');
+    addPopUp.classList.remove('d-none');
+
     editPopUp = document.getElementById('editContactPopUp');
     editPopUp.classList.add('d-none');
     resetAddInput();
+    openPopupContainer = true;
+    event.stopPropagation();
 }
 
 function closeAddContactPopUp(event) {
@@ -290,13 +298,18 @@ function closeAddContactPopUp(event) {
 
 function openEditContactPopUp(i) {
     popUp = document.getElementById('popupContainer');
-    popUp.style.display = "flex";
+    popUp.classList.add('flex');
+    //popUp.style.display = "flex";
     addPopUp = document.getElementById('addContactPopUp');
     addPopUp.classList.add('d-none');
+    editPopUp = document.getElementById('editContactPopUp');
+    editPopUp.classList.remove('d-none');
     document.getElementById('editButton').onclick = function () { updateContactInfo(i, event); };
     document.getElementById('deleteButton').onclick = function () { deleteContact(i, sortedContacts); };
     loadMemberInfo(i);
     document.getElementById('contactOptionsMobile').style.display = "none";
+    openPopupContainer = true;
+    event.stopPropagation();
 }
 
 function closeEditContactPopUp() {
@@ -379,5 +392,21 @@ document.addEventListener('click', function (event) {
     }
 });
 
+
+document.addEventListener('click', function (event) {
+    if (openPopupContainer) {
+        let popUp = document.getElementById('popupContainer');
+        let addpopUp = document.getElementById('addContactPopUp');
+        let editpopUp = document.getElementById('editContactPopUp');
+        if (!addpopUp.contains(event.target)) {
+            addpopUp.classList.add('d-none');
+            popUp.classList.add('d-none');
+            editpopUp.classList.add('d-none');
+            popUp.classList.remove('flex');
+            //popUp.style.display = 'none';
+        }
+        openPopupContainer = false;
+    }
+});
 
 

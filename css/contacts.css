@@ -462,3 +462,7 @@ body {
 .markUserCard {
     border: 1px solid #ffc107;
 }
+
+.flex {
+    display: flex;
+}
