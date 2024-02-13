@@ -23,7 +23,7 @@ async function includesHTML() {
 }
 
 async function setItem(key, value) {
-  const payload = { key, value, token: STORAGE_TOKEN }; //wenn key und key gleich sind kann man es aus weg lassen { key, value, token:STORAGE_TOKEN}
+  const payload = { key, value, token: STORAGE_TOKEN };
   return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) });
 }
 
