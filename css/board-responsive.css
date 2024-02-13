@@ -28,24 +28,28 @@
         display: flex;
         flex-wrap: nowrap;
         overflow-x: scroll;
+        padding: 4px;
     }
 
     #board-content-progress {
         display: flex;
         flex-wrap: nowrap;
         overflow-x: scroll;
+        padding: 4px;
     }
 
     #board-content-feedback {
         display: flex;
         flex-wrap: nowrap;
         overflow-x: scroll;
+        padding: 4px;
     }
 
     #board-content-done {
         display: flex;
         flex-wrap: nowrap;
         overflow-x: scroll;
+        padding: 4px;
     }
 
     .todo-content {
@@ -97,6 +101,11 @@
 }
 
 @media(max-width: 1100px) {
+
+    .board-header {
+        padding-right: 30px;
+    }
+
     .board-header .inputField {
         display: none;
     }
@@ -134,19 +143,13 @@
         padding-left: 30px;
         width: 100vw;
     }
-    
-    .search-and-add {
-        margin-right: 30px;
-    }
 
     body, .board-section {
         overflow-y: hidden;
     }
 
     .board-section {
-        padding-top: 30px;
-        padding-left: 30px;
-        padding-right: 30px;
+        padding: 30px;
         width: 100vw;
         flex-wrap: nowrap;
         overflow-x: auto;
@@ -155,6 +158,7 @@
     .board-element {
         width: 100%;
         padding: 2px;
+        margin-right: 0;
     }
 
     #detail-todo-content {
@@ -226,6 +230,10 @@
     .mobile-navbar {
         z-index: 99;
     }
+
+    .dropdownContentAssignedTo {
+        width: 90% !important;
+    }
 }
 
 @media(max-width: 450px) {
@@ -241,10 +249,6 @@
     .board-section {
         padding-top: 30px;
         padding-left: 16px;
-    }
-
-    .search-and-add {
-        margin-right: 16px;
     }
 
     .board-element {
@@ -282,5 +286,24 @@
 
     .inputField input {
         font-size: 15px !important;
+    }
+
+    .board-header {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    #mobile-searchbar {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .board-section {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .board-element {
+        padding-right: 0;
     }
 }

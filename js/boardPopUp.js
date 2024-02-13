@@ -395,7 +395,6 @@ function renderAssingnedToDropdownListEditview() {
     let content = document.getElementById("subtasksInputEditview");
     content.value = "";
     showSubtasksDoneAndCancelEditview();
-    setBlueBorder('subtasksInput', 'subtaskField');
   }
 
   async function addSubtaskEditview(index) {
