@@ -173,4 +173,16 @@
     .right-container {
         padding-top: 88px;
     }
+
+    #addContactPopUp {
+        height: 100vh;
+    }
+    
+    #editContactPopUp {
+        height: 100vh;
+    }
+
+    .contact-popup {
+        border-radius: 0;
+    }
 }

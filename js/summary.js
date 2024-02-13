@@ -62,6 +62,16 @@ async function greeting() {
     }
 }
 
+function checkTime(time, greetingContent) {
+    if (time >= 5 && time < 12) {
+        greetingContent = 'Good morning';
+    } else if (time >= 12 && time < 18) {
+        greetingContent = 'Good afternoon';
+    } else {
+        greetingContent = 'Good evening';
+    }
+}
+
 function showName() {
     let nameContainers = document.querySelectorAll('.name');
     if (loggedInUser.name && typeof loggedInUser.name === 'string') {
