@@ -189,6 +189,10 @@
     margin-bottom: 8px;
 }
 
+#detail-todo-content p {
+    margin-bottom: 0px;
+}
+
 .edit-p-m0 {
     font-size: 18px;
     color: #2A3647;
