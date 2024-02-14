@@ -75,11 +75,9 @@ function renderAssingnedToDropdownList() {
   let content = document.getElementById("dropdownContentAssignedTo");
   content.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
-    if (contacts[i]["active"]) {
       let firstAndSecondLetter = getFirstAndSecondLetter(i);
       content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter, contacts[i]["color"]);
       showSelectedDropdownContact(i);
-    }
   }
 }
 
