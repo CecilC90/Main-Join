@@ -39,17 +39,15 @@ function addLoggedInUser(userInfos) {
   let name = userInfos.name;
   loggedInUser.name = name;
   loggedInUser.email = email;
-  //loggedInUser.push(name);
-  //loggedInUser.push(email);
   saveLoggedInUser();
 }
 
 function addLoggedInGuest() {
-  let guest = "Guest";
-  loggedInUser.push(guest);
+  loggedInUser.name = "Guest"; // Setzen Sie loggedInUser.name einfach auf "Guest"
   saveLoggedInUser();
   window.location.href = "summary.html?msg=Login erfolgreich";
 }
+
 
 
 function saveLoggedInUser() {
