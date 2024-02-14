@@ -73,13 +73,11 @@ function filterCategorys(category, visibility, screenWidth) {
             content.innerHTML = 'No task found';
             boardContent.style.display = 'none';
         } else {
-            if(screenWidth > 1440) {
             content.classList.remove('board-content');
             content.innerHTML = '';
             boardContent.style.display = 'block';
         }
     }
-}
 }
 
 function ifNoTextInSearchbarDesktop() {
