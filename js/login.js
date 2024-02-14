@@ -323,7 +323,6 @@ function setRememberMe() {
   } else {
     content.src = "./assets/img/checkbox_checked.svg";
     rememberMe = true;
-    setColorPrivacyPolicRed();
   }
 }
 
@@ -335,6 +334,7 @@ function setPrivacyPolic() {
   } else {
     content.src = "./assets/img/checkbox_checked.svg";
     privacyPolic = true;
+    setColorPrivacyPolicRed();
   }
 }
 
