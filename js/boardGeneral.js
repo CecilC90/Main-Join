@@ -1,7 +1,16 @@
 // Dragging Function
 async function moveTo(category) {
+    let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     todos[startDragginId]['category'] = category;
     highlightOut(category);
+    if(screenWidth > 1440) {
+        contentDisplayBlock();
+        clearNoTaskFound();
+    } else {
+        contentDisplayFlex();
+        clearNoTaskFound();
+    }
+    
     renderTodos();
     await setItem('allTasks', JSON.stringify(todos));
 }
