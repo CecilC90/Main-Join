@@ -1,7 +1,8 @@
 let contacts = [];
 
 let openContactOptionsMobile = false;
-let openPopupContainer = false;
+let openAddPopupContainer = false;
+let openEditPopupContainer = false;
 let openUserOverview = false;
 
 let backgroundColors = [
@@ -26,20 +27,6 @@ let backgroundColors = [
     '#336600', // Dunkelgrün
     '#cc0000', // Dunkelrot
 ];
-
-//--------------------------------------------
-async function setItem(key, value) {
-    const payload = { key, value, token: STORAGE_TOKEN }; //wenn key und key gleich sind kann man es aus weg lassen { key, value, token:STORAGE_TOKEN}
-    return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) });
-}
-
-async function getItem(key) {
-    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-    return fetch(url).then(res => res.json()).then(res => res.data.value).catch(function (err) {
-        console.log('fetch konnte nicht aufgeührt werden');
-    });;
-}
-//--------------------------------------
 
 async function initContacts() {
     await includesHTML();
@@ -279,7 +266,7 @@ function openAddContactPopUp() {
     editPopUp = document.getElementById('editContactPopUp');
     editPopUp.classList.add('d-none');
     resetAddInput();
-    openPopupContainer = true;
+    openAddPopupContainer = true;
     event.stopPropagation();
 }
 
@@ -306,7 +293,7 @@ function openEditContactPopUp(i) {
     document.getElementById('deleteButton').onclick = function () { deleteContact(i, sortedContacts); };
     loadMemberInfo(i);
     document.getElementById('contactOptionsMobile').style.display = "none";
-    openPopupContainer = true;
+    openEditPopupContainer = true;
     event.stopPropagation();
 }
 
@@ -390,9 +377,8 @@ document.addEventListener('click', function (event) {
     }
 });
 
-
 document.addEventListener('click', function (event) {
-    if (openPopupContainer) {
+    if (openAddPopupContainer) {
         let popUp = document.getElementById('popupContainer');
         let addpopUp = document.getElementById('addContactPopUp');
         let editpopUp = document.getElementById('editContactPopUp');
@@ -401,8 +387,23 @@ document.addEventListener('click', function (event) {
             popUp.classList.add('d-none');
             editpopUp.classList.add('d-none');
             popUp.classList.remove('flex');
+            openAddPopupContainer = false;
         }
-        openPopupContainer = false;
+    }
+});
+
+document.addEventListener('click', function (event) {
+    if (openEditPopupContainer) {
+        let popUp = document.getElementById('popupContainer');
+        let addpopUp = document.getElementById('addContactPopUp');
+        let editpopUp = document.getElementById('editContactPopUp');
+        if (!editpopUp.contains(event.target)) {
+            addpopUp.classList.add('d-none');
+            popUp.classList.add('d-none');
+            editpopUp.classList.add('d-none');
+            popUp.classList.remove('flex');
+            openEditPopupContainer = false;
+        }
     }
 });
 
