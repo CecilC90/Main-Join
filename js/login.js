@@ -232,6 +232,8 @@ async function addUser() {
         await setItem(email.value, userInfos);
         await addContact();
         setTimeout(goToStart, 500);
+      } else {
+        setColorPrivacyPolicRed();
       }
     } else {
       showPasswordNotConfirm();
@@ -304,6 +306,15 @@ function showEmailNotExisting(email) {
   }
 }
 
+function setColorPrivacyPolicRed(){
+  let content = document.getElementById('acceptPrivacyPolicContainer');
+  if(privacyPolic){
+    content.classList.remove('setColorPrivacyPolicRed');
+  } else {
+    content.classList.add('setColorPrivacyPolicRed');
+  }
+}
+
 function setRememberMe() {
   let content = document.getElementById("rememberMeCheckbox");
   if (rememberMe) {
@@ -312,6 +323,7 @@ function setRememberMe() {
   } else {
     content.src = "./assets/img/checkbox_checked.svg";
     rememberMe = true;
+    setColorPrivacyPolicRed();
   }
 }
 
