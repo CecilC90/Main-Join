@@ -240,6 +240,7 @@
     .board-header {
         padding-top: 70px;
         padding-left: 16px;
+        padding-right: 16px !important;
     }
 
     .headline {
@@ -249,18 +250,15 @@
     .board-section {
         padding-top: 30px;
         padding-left: 16px;
+        padding-right: 16px;
     }
 
     .board-element {
-        padding-right: 16px;
+        padding-right: 0;
     }
 
     .todo-content {
         flex: 0 0 250px;
-    }
-
-    #board-content-done {
-        margin-right: 16px; 
     }
 
     #detail-todo-content {
@@ -290,7 +288,7 @@
 
     .board-header {
         padding-left: 5px;
-        padding-right: 5px;
+        padding-right: 5px !important;
     }
 
     #mobile-searchbar {
