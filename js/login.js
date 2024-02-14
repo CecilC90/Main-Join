@@ -232,8 +232,6 @@ async function addUser() {
         await setItem(email.value, userInfos);
         await addContact();
         setTimeout(goToStart, 500);
-      } else {
-        setColorPrivacyPolicRed();
       }
     } else {
       showPasswordNotConfirm();
@@ -271,15 +269,6 @@ function formatName() {
   }
   var formattedname = name.join(" ");
   return formattedname;
-}
-
-function setColorPrivacyPolicRed(){
-  let content = document.getElementById('acceptPrivacyPolicContainer');
-  if(privacyPolic){
-    content.classList.remove('setColorPrivacyPolicRed');
-  } else {
-    content.classList.add('setColorPrivacyPolicRed');
-  }
 }
 
 function goToStart() {
@@ -335,7 +324,6 @@ function setPrivacyPolic() {
     content.src = "./assets/img/checkbox_checked.svg";
     privacyPolic = true;
   }
-  setColorPrivacyPolicRed();
 }
 
 function showSignUpfinished() {

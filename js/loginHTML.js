@@ -91,7 +91,7 @@ function renderRegistrationPageHTML() {
          </div>
        </div>
        <p class="passwordNotConfirmText" id="passwordNotConfirmText"></p>
-       <div class="acceptPrivacyPolicContainer" id="acceptPrivacyPolicContainer">
+       <div class="acceptPrivacyPolicContainer">
          <img onclick="setPrivacyPolic()" class="checkbox" id="privacyPolicCheckbox" src="./assets/img/checkbox_unchecked.svg" alt="checkbock">
          <p>I accept the <a href="">Privacy Polic</a></p>
        </div>
