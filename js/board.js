@@ -35,7 +35,6 @@ async function renderHTML() {
 
 async function loadTasks() {
     todos = JSON.parse(await getItem('allTasks'));
-    console.log(todos);
 }
 
 async function loadContacts() {
@@ -48,12 +47,10 @@ function pushColorForCategory() {
     for(let i = 0; i < todos.length; i++) {
         const todo = todos[i];
         const todoCategory = todo.todoCategory; 
-        if (todoCategory == 'Arbeit') {
+        if (todoCategory == 'User Story') {
             todo.categoryColor = '#0038FF';
-        } else if (todoCategory == 'Privat') {
+        } else if (todoCategory == 'Technical Task') {
             todo.categoryColor = '#1FD7C1';
-        } else if (todoCategory == 'Anderes') {
-            todo.categoryColor = '#E63946';
         } else {
             todo.categoryColor = randomColorsForCategory[randomColorIndex];
         }
@@ -62,7 +59,7 @@ function pushColorForCategory() {
 
 function renderTodos() {
 
-    let contentTodo = document.getElementById('board-content-todo');
+    let contentTodo = document.getElementById('board-content-open');
     let contentProgress = document.getElementById('board-content-progress');
     let contentFeedback = document.getElementById('board-content-feedback');
     let contentDone = document.getElementById('board-content-done');
@@ -131,7 +128,7 @@ function renderCategoryDone(todo, i, contentDone) {
 
 function checkOpenTodo() {
     let filteredOpenCategory = todos.filter(t => t['category'] === 'open') ;
-    let contentTodo = document.getElementById('board-content-todo');
+    let contentTodo = document.getElementById('board-content-open');
     if(filteredOpenCategory.length === 0) {
         contentTodo.classList.add('board-content');
         contentTodo.innerHTML = 'No tasks To do';
@@ -246,10 +243,10 @@ function renderPrioImg(index) {
 function prioLow(prioImg, prioImgDetail, index) {
     if(todos[index].priority == 'low') {
         if(prioImg) {
-            prioImg.src = './assets/img/prio-low.svg';
+            prioImg.src = 'assets/img/prio-low.svg';
         }
         if(prioImgDetail) {
-            prioImgDetail.src = './assets/img/prio-low.svg';
+            prioImgDetail.src = 'assets/img/prio-low.svg';
         }
     }
 }
@@ -257,10 +254,10 @@ function prioLow(prioImg, prioImgDetail, index) {
 function prioMedium(prioImg, prioImgDetail, index) {
     if(todos[index].priority == 'medium') {
         if(prioImg) {
-            prioImg.src = './assets/img/prio-medium.svg';
+            prioImg.src = 'assets/img/prio-medium.svg';
         }
         if(prioImgDetail) {
-            prioImgDetail.src = './assets/img/prio-medium.svg';
+            prioImgDetail.src = 'assets/img/prio-medium.svg';
         }
     }
 }
@@ -268,10 +265,10 @@ function prioMedium(prioImg, prioImgDetail, index) {
 function prioHigh(prioImg, prioImgDetail, index) {
     if(todos[index].priority == 'high') {
         if(prioImg) {
-            prioImg.src = './assets/img/prio-urgent.svg';
+            prioImg.src = 'assets/img/prio-urgent.svg';
         }
         if(prioImgDetail) {
-            prioImgDetail.src = './assets/img/prio-urgent.svg';
+            prioImgDetail.src = 'assets/img/prio-urgent.svg';
         }
     }
 }
@@ -295,6 +292,10 @@ function renderContact(index) {
     renderMoreContactsIcon(index);
 }
 
+function findContactById(contactId) {
+    return contacts.find(contact => contact.id === contactId);
+}
+
 function renderContactColor(contact, i, index) {
     let contactIcon = document.getElementById(`contactsIcon-${index}-${i}`);
     let contactIconDetailview = document.getElementById(`contactIconDetailview${i}`);
@@ -305,10 +306,6 @@ function renderContactColor(contact, i, index) {
     if(contactIconDetailview) {
         contactIconDetailview.style.backgroundColor += contact.color;
     }
-}
-
-function findContactById(contactId) {
-    return contacts.find(contact => contact.id === contactId);
 }
 
 
@@ -355,3 +352,4 @@ function renderCounterAfterClose(index) {
         showCounter.innerHTML = counter;
     }
 }
+

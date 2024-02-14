@@ -20,9 +20,9 @@
     <script src="js/add_task.js"></script>
 </head>
 <body onload="initBoard ()">
-    <div w3-include-html="./assets/templates/menu.html"></div>
-    <div w3-include-html="./assets/templates/header.html"></div>
-    <div w3-include-html="./assets/templates/mobileMenu.html"></div>
+    <div w3-include-html="assets/templates/menu.html"></div>
+    <div w3-include-html="assets/templates/header.html"></div>
+    <div w3-include-html="assets/templates/mobileMenu.html"></div>
 
     <div class="">
     <div class="board-container">
@@ -32,35 +32,35 @@
         </div>
         <div class="search-and-add">
             <div class="inputField">
-                <input oninput="filterTodos()" type="text" id="search" placeholder="Find Task"><button><img id="change-img" onclick="emptyInput()" src="./assets/img/search.svg" alt=""></button>
+                <input oninput="filterTodos()" type="text" id="search" placeholder="Find Task"><button><img id="change-img" onclick="emptyInput()" src="assets/img/search.svg" alt=""></button>
             </div>
             <div class="add-task-button">
-                <a href="#"><button onclick="showAddTask()" class="buttonDarg" id="add-task">Add Task <img src="./assets/img/add.svg" alt="add-task"></button></a>
+                <a href="#"><button onclick="showAddTask()" class="buttonDarg" id="add-task">Add Task <img src="assets/img/add.svg" alt=""></button></a>
             </div>
             <!-- Mobile Task-Button -->
             <div class="add-task-button-mobile">
-                <a href="add_task.html"><button class="buttonDarg" id="add-task-mobile"><img src="./assets/img/add.svg" alt=""></button></a>
+                <a href="add_task.html"><button class="buttonDarg" id="add-task-mobile"><img src="assets/img/add.svg" alt=""></button></a>
             </div>
         </div>
     </section>
     <!-- Mobile Searchbar -->
     <div class="inputField" id="mobile-searchbar">
-        <input oninput="filterTodos()" type="text" id="search-mobile" placeholder="Find Task"><button><img id="change-img-mobile" onclick="emptyInput()" src="./assets/img/search.svg" alt=""></button>
+        <input oninput="filterTodos()" type="text" id="search-mobile" placeholder="Find Task"><button><img id="change-img-mobile" onclick="emptyInput()" src="assets/img/search.svg" alt=""></button>
     </div>
 
     <section class="board-section">
         <div class="board-element" id="open" ondrop="moveTo('open')" ondragleave="highlightOut('open')" ondragover="allowDrop(event); highlight('open')">
             <div class="space-between margin-right">
                 <span>To do</span>
-                <a class="catgeory-link" id="todo-link"><img class="add-task-btn" onclick="showAddTask('open')" src="./assets/img/plus-button.svg" alt=""></a>
+                <a class="catgeory-link" id="todo-link"><img class="add-task-btn" onclick="showAddTask('open')" src="assets/img/plus-button.svg" alt=""></a>
             </div>
-            <div id="board-content-todo" class="board-content">No tasks To do</div>
-            <div id="content-todo"></div>
+            <div id="board-content-open" class="board-content">No tasks To do</div>
+            <div id="content-open"></div>
         </div>
         <div class="board-element" id="progress" ondrop="moveTo('progress')" ondragleave="highlightOut('progress')" ondragover="allowDrop(event); highlight('progress')">
             <div class="space-between margin-right">
                 <span>In progress</span>
-                <a class="catgeory-link" id="progress-link"><img class="add-task-btn" onclick="showAddTask('progress')" src="./assets/img/plus-button.svg" alt=""></a>
+                <a class="catgeory-link" id="progress-link"><img class="add-task-btn" onclick="showAddTask('progress')" src="assets/img/plus-button.svg" alt=""></a>
             </div>
             <div id="board-content-progress" class="board-content">No task in progress</div>
             <div id="content-progress"></div>
@@ -69,7 +69,7 @@
         <div class="board-element" id="feedback" ondrop="moveTo('feedback')" ondragleave="highlightOut('feedback')" ondragover="allowDrop(event); highlight('feedback')">
             <div class="space-between margin-right">
                 <span>Await feedback</span>
-                <a class="catgeory-link" id="feedback-link"><img class="add-task-btn" onclick="showAddTask('feedback')" src="./assets/img/plus-button.svg" alt=""></a>
+                <a class="catgeory-link" id="feedback-link"><img class="add-task-btn" onclick="showAddTask('feedback')" src="assets/img/plus-button.svg" alt=""></a>
             </div>
             <div id="board-content-feedback" class="board-content">No tasks await for feedback</div>
             <div id="content-feedback"></div>
@@ -92,7 +92,7 @@
     <div onclick="closeAddTask()" id="show-add-todo"></div>
     <div class="finishedMessage" id="finishedMessageContainer" style="bottom: -100px; display: none;">
         <p>Task added to board</p>
-        <img src="./assets/img/BoardIconAddTaskFinished.svg" alt="BoardIcon">
+        <img src="/assets/img/BoardIconAddTaskFinished.svg" alt="BoardIcon">
       </div>
 </div>
 

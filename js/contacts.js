@@ -1,6 +1,7 @@
 let contacts = [];
 
 let openContactOptionsMobile = false;
+let openPopupContainer = false;
 let openUserOverview = false;
 
 let backgroundColors = [
@@ -42,7 +43,7 @@ async function getItem(key) {
 
 async function initContacts() {
     await includesHTML();
-    
+    await loadLoggedInUser();
     await loadContacts();
     renderContacts();
     loadLoggedInUser();
@@ -95,21 +96,39 @@ function renderContactList(sortedContacts) {
     let contactlist = document.getElementById('contactsList');
     contactlist.innerHTML = "";
     let currentInitial = null;
+    
+    sortingContacts (sortedContacts, contactlist, currentInitial);
+   
+}
 
+function sortingContacts (sortedContacts, contactlist, currentInitial) {
     for (let i = 0; i < sortedContacts.length; i++) {
         let sortedContact = sortedContacts[i];
-        if (sortedContact.active) {
+        
+        if (sortedContact) {
             let firstLetter = getFirstLetter(sortedContacts, i);
 
             if (firstLetter !== currentInitial) {
                 contactlist.innerHTML += renderFirstLetterHTML(firstLetter);
                 currentInitial = firstLetter;
             }
-
-            let initials = getMemberInitials(sortedContacts, i);
-            contactlist.innerHTML += renderContactsHTML(sortedContacts, i, initials);
+            renderInitials(sortedContacts, i);
+            markLoggedinContact(sortedContacts, i);
         }
     }
+}
+
+function markLoggedinContact(sortedContacts, i) {
+    if (sortedContacts[i].email.includes(loggedInUser.email)) {
+        document.getElementById(`userCard${i}`).classList.add('markUserCard');
+    }
+}
+
+
+function renderInitials(sortedContacts, i) {
+    let contactlist = document.getElementById('contactsList');
+    let initials = getMemberInitials(sortedContacts, i);
+    contactlist.innerHTML += renderContactsHTML(sortedContacts, i, initials);
 }
 
 
@@ -190,14 +209,22 @@ function openUserInformation(i, sortedContacts, initials) {
 }
 
 function deleteContact(i, sortedContacts) {
-    contacts[i].active = false;
-    //sortedContacts.splice(i, 1);
-    //setItem('contacts', JSON.stringify(contacts));
+    sortedContacts.splice(i, 1);
+    setItem('contacts', JSON.stringify(contacts));
     renderContactList(sortedContacts);
     closeUserInformation();
     document.getElementById('contactOptionsMobile').style.display = "none";
     document.getElementById('contactsContainer').style.display = "flex";
     document.getElementById('infoContainer').style.display = "none";
+}
+
+function cancelInput() {
+    let name = document.getElementById('addName');
+    let email = document.getElementById('addEmail');
+    let phone = document.getElementById('addPhone');
+    name.value = "";
+    email.value = "";
+    phone.value = "";
 }
 
 function closeMainContact() {
@@ -244,13 +271,20 @@ function userInformationHTML(i, sortedContacts, initials) {
 
 function openAddContactPopUp() {
     popUp = document.getElementById('popupContainer');
-    popUp.style.display = "flex";
+    popUp.classList.remove('d-none');
+    popUp.classList.add('flex');
+    addPopUp = document.getElementById('addContactPopUp');
+    addPopUp.classList.remove('d-none');
+
     editPopUp = document.getElementById('editContactPopUp');
     editPopUp.classList.add('d-none');
     resetAddInput();
+    openPopupContainer = true;
+    event.stopPropagation();
 }
 
 function closeAddContactPopUp(event) {
+
     if (event) {
         event.preventDefault();
     }
@@ -263,20 +297,26 @@ function closeAddContactPopUp(event) {
 
 function openEditContactPopUp(i) {
     popUp = document.getElementById('popupContainer');
-    popUp.style.display = "flex";
+    popUp.classList.add('flex');
     addPopUp = document.getElementById('addContactPopUp');
     addPopUp.classList.add('d-none');
+    editPopUp = document.getElementById('editContactPopUp');
+    editPopUp.classList.remove('d-none');
     document.getElementById('editButton').onclick = function () { updateContactInfo(i, event); };
     document.getElementById('deleteButton').onclick = function () { deleteContact(i, sortedContacts); };
     loadMemberInfo(i);
     document.getElementById('contactOptionsMobile').style.display = "none";
+    openPopupContainer = true;
+    event.stopPropagation();
 }
 
-function closeEditContactPopUp() {
+function closePopUp() {
     popUp = document.getElementById('popupContainer');
-    popUp.style.display = "none";
+    popUp.classList.add('d-none')
     addPopUp = document.getElementById('addContactPopUp');
-    addPopUp.classList.remove('d-none');
+    addPopUp.classList.add('d-none');
+
+    popUp.classList.remove('flex');
 }
 
 function resetAddInput() {
@@ -306,7 +346,6 @@ function updateContactsInfo(i, event) {
         email: document.getElementById('editEmail').value,
         phone: document.getElementById('editPhone').value,
         color: contacts[i]['color'],
-        active: true,
     };
 
     setItem('contacts', JSON.stringify(contacts));
@@ -318,7 +357,7 @@ function updateContactsInfo(i, event) {
 }
 
 async function addContact() {
-    const randomIndex = Math.floor(Math.random() * backgroundColors.length);
+    let randomIndex = Math.floor(Math.random() * backgroundColors.length);
 
     contacts.push({
         id: Date.now(),
@@ -326,12 +365,11 @@ async function addContact() {
         email: addEmail.value,
         phone: addPhone.value,
         color: backgroundColors[randomIndex],
-        active: true,
     });
 
     await setItem('contacts', JSON.stringify(contacts));
     renderContacts()
-    closeAddContactPopUp();
+    closePopUp();
 }
 
 function openContatOptions(i) {
@@ -352,5 +390,20 @@ document.addEventListener('click', function (event) {
     }
 });
 
+
+document.addEventListener('click', function (event) {
+    if (openPopupContainer) {
+        let popUp = document.getElementById('popupContainer');
+        let addpopUp = document.getElementById('addContactPopUp');
+        let editpopUp = document.getElementById('editContactPopUp');
+        if (!addpopUp.contains(event.target)) {
+            addpopUp.classList.add('d-none');
+            popUp.classList.add('d-none');
+            editpopUp.classList.add('d-none');
+            popUp.classList.remove('flex');
+        }
+        openPopupContainer = false;
+    }
+});
 
 

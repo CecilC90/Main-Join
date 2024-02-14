@@ -458,3 +458,11 @@ body {
     font-style: normal;
     font-weight: 700;
 }
+
+.markUserCard {
+    border: 1px solid #ffc107;
+}
+
+.flex {
+    display: flex;
+}

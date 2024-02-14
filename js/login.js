@@ -254,7 +254,6 @@ async function addContact() {
     email: document.getElementById("email").value,
     phone: "",
     color: backgroundColors[randomIndex],
-    active: true,
   });
   await setItem("contacts", JSON.stringify(contacts));
 }

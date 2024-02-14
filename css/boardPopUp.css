@@ -13,9 +13,9 @@
 }
 
 #detail-todo-content {
-    overflow: scroll; 
+    overflow-x: scroll; 
     padding: 20px; 
-    width: 400px;
+    width: 450px;
     background-color: #fff;
     border-radius: 24px;
     max-height: 80vh;

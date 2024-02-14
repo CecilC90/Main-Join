@@ -6,7 +6,7 @@
         <div class="seperator-popUp"></div>
     </div>
     <div class="right-container">
-        <div class="close-icon" onclick="closeAddContactPopUp()">
+        <div class="close-icon" onclick="closePopUp()">
             <img src="./assets/img/close.svg" alt="">
         </div>
         <div class="person-icon">
@@ -30,8 +30,8 @@
                 </div>
             </div>
             <div class="addContactContainer">
-                <button class="buttonLight cancel" onclick="closeAddContactPopUp(event)">Cancel</button>
-                <button class="buttonDarg" >Create contact</button>
+                <button class="buttonLight cancel" id="cancel" onclick="cancelInput()">Cancel</button>
+                <button class="buttonDarg" id="createContact" >Create contact</button>
             </div>
         </form>
     </div>
