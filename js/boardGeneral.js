@@ -2,7 +2,7 @@
 async function moveTo(category) {
     todos[startDragginId]['category'] = category;
     highlightOut(category);
-    allTaskAreDisplayed()
+    allTaskAreDisplayed();
     renderTodos();
     await setItem('allTasks', JSON.stringify(todos));
 }
@@ -16,14 +16,6 @@ function allTaskAreDisplayed() {
         contentDisplayFlex();
         clearNoTaskFound();
     }
-}
-
-if(screenWidth > 1440) {
-    contentDisplayBlock();
-    clearNoTaskFound();
-} else {
-    contentDisplayFlex();
-    clearNoTaskFound();
 }
 
 function allowDrop(ev) {
