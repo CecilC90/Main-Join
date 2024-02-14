@@ -315,3 +315,43 @@
     font-size: 16px;
   }
 }
+
+@media(max-height: 700px) {
+.loginMaskContainer {
+  width: 100%;
+}
+  
+  .loginMask {
+    gap: 24px;
+    padding: 8px 16px;
+  }
+
+  .loginButtonContainer {
+    gap: 16px;
+  }
+
+  .signUpButtonContainer {
+    margin-bottom: 8px;
+  }
+
+  .wrongPasswordText {
+    margin-bottom: 8px;
+  }
+
+  .inputFieldsLogin {
+    gap: 24px;
+  }
+
+  .registrationMask {
+    gap: 16px;
+    padding: 16px 16px;
+  }
+
+  .passwordNotConfirmText {
+    margin-bottom: 8px;
+  }
+
+  .inputFieldsRegistration {
+    gap: 16px;
+  }
+}

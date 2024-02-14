@@ -1,4 +1,4 @@
-const STORAGE_TOKEN = "4EFBXYBGE7QJD8SZ3C5H1CD589HBSZGJ38CGAPOM";
+const STORAGE_TOKEN = "8XAOGSERHAHOR91S5HD7SD3UXKY6BFJ9FGXIYEQ7";
 const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 
 let loggedInUser = {};
@@ -43,7 +43,7 @@ function addLoggedInUser(userInfos) {
 }
 
 function addLoggedInGuest() {
-  loggedInUser.name = "Guest"; // Setzen Sie loggedInUser.name einfach auf "Guest"
+  loggedInUser.name = "Guest";
   saveLoggedInUser();
   window.location.href = "summary.html?msg=Login erfolgreich";
 }
