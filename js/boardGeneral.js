@@ -44,6 +44,7 @@ async function filterTodos() {
 
     ifNoTextInSearchbarDesktop();
     ifNoTextInSearchbarMobile();
+
     filterTitlesOfTodos(search, visibility, screenWidth);
 }
 
@@ -75,7 +76,11 @@ function filterCategorys(category, visibility, screenWidth) {
         } else {
             content.classList.remove('board-content');
             content.innerHTML = '';
-            boardContent.style.display = 'block';
+            if(screenWidth > 1440) {
+                boardContent.style.display = 'block';
+            } else {
+                boardContent.style.display = 'flex';
+            }
         }
     }
 }
