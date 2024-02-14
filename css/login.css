@@ -243,6 +243,12 @@
   font-size: 16px;
   text-decoration: none;
 }
+.setColorPrivacyPolicRed p{
+  color: #ff001f;
+}
+.setColorPrivacyPolicRed a{
+  color: #ff001f;
+}
 
 /* #endregion */
 
