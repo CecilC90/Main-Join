@@ -82,13 +82,13 @@ function renderAddTaskHTML(){
       </div>
       <div class="inputContainer">
         <p>Description</p>
-        <textarea class="descriptionTextArea" id="descriptionTextArea" onkeypress="addTaskOnEnter(event)" onkeyup="setBlueBorder('descriptionTextArea', 'descriptionTextArea')"></textarea>
+        <textarea class="descriptionTextArea" id="descriptionTextArea" onkeypress="addTaskOnEnter(event)" onkeyup="setBlueBorder('descriptionTextArea', 'descriptionTextArea')" placeholder="Enter a Descripton"></textarea>
       </div>
       <div class="inputContainer assingnedToConatiner">
         <p>Assingned to</p>
         <div>
           <div class="inputField dropdown">
-            <input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownList()" />
+            <input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownList()" placeholder="Add a Contact"/>
             <img class="dropDownIcon" id="assignedToDropdownIcon" src="./assets/img/arrow_drop_down.svg" alt="" />
           </div>
           <div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo">
@@ -216,7 +216,7 @@ function renderAddTaskMobileHTML() {
 
     <div class="inputContainer">
       <p>Description</p>
-      <textarea class="descriptionTextArea" id="descriptionTextArea" onkeyup="setBlueBorder('descriptionTextArea', 'descriptionTextArea')"></textarea>
+      <textarea class="descriptionTextArea" id="descriptionTextArea" onkeyup="setBlueBorder('descriptionTextArea', 'descriptionTextArea')" placeholder="Enter a Descripton"></textarea>
     </div>
 
     <div class="taskPrio">
@@ -305,7 +305,7 @@ function renderAddTaskMobileHTML() {
       <p>Assingned to</p>
       <div>
         <div class="inputField dropdown">
-          <input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownList()" />
+          <input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownList()" placeholder="Add a Contact"/>
           <img class="dropDownIcon" id="assignedToDropdownIcon" src="./assets/img/arrow_drop_down.svg" alt="" />
         </div>
         <div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo">

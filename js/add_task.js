@@ -215,9 +215,13 @@ function editSubtask(i) {
 }
 
 function editSubtaskDone(i) {
-  let content = document.getElementById("editSubtask" + i);
-  subtasks[i] = content.value;
-  renderSubtasks();
+  let content = document.getElementById("editSubtask" + i).value;
+  if(content.length > 0){
+    subtasks[i] = content;
+    renderSubtasks();
+  } else {
+    deleteSubtask(i);
+  }
 }
 
 function deleteSubtask(i) {
