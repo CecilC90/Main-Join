@@ -3,7 +3,7 @@ let contacts = [];
 let category = ["Technical Task", "User Story"];
 let subtasks = [];
 let mobileVersionIsOn;
-let selectedCategory = 'open';
+let selectedCategory = "open";
 
 async function init() {
   loadAddTaskContent();
@@ -75,9 +75,9 @@ function renderAssingnedToDropdownList() {
   let content = document.getElementById("dropdownContentAssignedTo");
   content.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
-      let firstAndSecondLetter = getFirstAndSecondLetter(i);
-      content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter, contacts[i]["color"]);
-      showSelectedDropdownContact(i);
+    let firstAndSecondLetter = getFirstAndSecondLetter(i);
+    content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter, contacts[i]["color"]);
+    showSelectedDropdownContact(i);
   }
 }
 
@@ -186,6 +186,22 @@ function clearSubtaskInputField() {
   setBlueBorder("subtasksInput", "subtaskField");
 }
 
+function checkDueDateNotInPast() {
+  let currentDate = new Date();
+  let inputDate = document.getElementById("duedateInputField").value;
+  let year = currentDate.getFullYear();
+  let month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  let day = currentDate.getDate().toString().padStart(2, "0");
+  let currentDateString = year + "-" + month + "-" + day;
+  if (currentDateString > inputDate) {
+    setRedBorder("duedateField");
+    document.getElementById('requiredTextDuedate').innerHTML = "Due date is in the Past!"
+    return false;
+  } else {
+    return true;
+  }
+}
+
 function addSubtask() {
   let subtasksInput = document.getElementById("subtasksInput");
   subtasks.push(subtasksInput.value);
@@ -194,9 +210,9 @@ function addSubtask() {
   renderSubtasks();
 }
 
-function addSubtaskOnEnter(event){
+function addSubtaskOnEnter(event) {
   let subtasksInput = document.getElementById("subtasksInput").value;
-  if (event.key === "Enter" && subtasksInput.length > 0){
+  if (event.key === "Enter" && subtasksInput.length > 0) {
     addSubtask();
   }
 }
@@ -216,7 +232,7 @@ function editSubtask(i) {
 
 function editSubtaskDone(i) {
   let content = document.getElementById("editSubtask" + i).value;
-  if(content.length > 0){
+  if (content.length > 0) {
     subtasks[i] = content;
     renderSubtasks();
   } else {
@@ -342,8 +358,8 @@ function handleWindowClick(event) {
   }
 }
 
-function addTaskOnEnter(event){
-  if (event.key === "Enter"){
+function addTaskOnEnter(event) {
+  if (event.key === "Enter") {
     addTask();
   }
 }
@@ -358,6 +374,10 @@ async function addTask() {
   if (checkIsFieldFilled("duedateInputField") == false) {
     setRedBorder("duedateField", "requiredTextDuedate");
     allInputsFilled = false;
+  } else {
+    if (checkDueDateNotInPast() == false) {
+      allInputsFilled = false;
+    }
   }
   if (checkIsFieldFilled("inputFieldCategory") == false) {
     setRedBorder("categoryField");
