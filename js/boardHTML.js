@@ -92,7 +92,7 @@ async function templateHTMLEditTask(index) {
           <p class="edit-p-m0">Assingned to</p>
             <div>
                 <div class="inputField dropdown">
-                  <input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownListEditview()" />
+                  <input type="text" id="contactInput" placeholder="Add a Contact" onkeyup="filterAssingnedToDropdownListEditview()" />
                   <img onclick="contactDropdown()" class="dropDownIcon" id="assignedToDropdownIconEditview" src="./assets/img/arrow_drop_down.svg" alt="" />
                 </div>
                 <div class="dropdownContentAssignedTo" id="dropdownContentAssignedToEditview"></div> <!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->

@@ -220,7 +220,7 @@ function renderAssingnedToDropdownListEditview() {
     content.innerHTML = "";
     for (let i = 0; i < contacts.length; i++) {
       let firstAndSecondLetter = getFirstAndSecondLetterEditview(i);
-      content.innerHTML += renderAssingnedToDropdownListHTMLEditview(i, firstAndSecondLetter);
+      content.innerHTML += renderAssingnedToDropdownListHTMLEditview(i, firstAndSecondLetter, contacts[i]["color"]);
       showSelectedDropdownContactEditview(i);
     }
   }
@@ -283,9 +283,7 @@ function renderAssingnedToDropdownListEditview() {
     content.innerHTML = "";
     for (let i = 0; i < contacts.length; i++) {
       if (contacts[i]["selected"]) {
-        content.innerHTML += /* html */ `
-          <div class="contactsIcon">${getFirstAndSecondLetter(i)}</div>
-        `;
+        content.innerHTML += renderSelectedContactsIconsHTML(i, contacts[i]["color"]);
       }
     }
   }
@@ -305,11 +303,11 @@ function renderAssingnedToDropdownListEditview() {
     }
   }
       
-  function renderAssingnedToDropdownListHTMLEditview(i, firstAndSecondLetter) {
+  function renderAssingnedToDropdownListHTMLEditview(i, firstAndSecondLetter, color) {
     return /*html */ `
       <div class="dropdownContacts" id="dropdownContactEditview${i}" onclick="setContactSelectedEditview(${i})">
         <div class="dropdownContactNameConatiner">
-          <div class="contactsIcon">${firstAndSecondLetter}</div>
+          <div class="contactsIcon" style="background-color: ${color}">${firstAndSecondLetter}</div>
           <p>${contacts[i]['name']}</p>
         </div>
         <img id="dropdownContactImgEditview${i}" src="./assets/img/checkbox_unchecked.svg" alt="checkbox_unchecked">
@@ -360,11 +358,13 @@ function renderAssingnedToDropdownListEditview() {
     `;
   }
   
-  function editSubtaskDoneEditview(i, index) {
+  async function editSubtaskDoneEditview(i, index) {
     let content = document.getElementById("editSubtask" + i);
     if(content.value !== '') {
-        todos[index].subtask[i].title = content.value;
-        renderSubtasksEditview(index);
+      todos[index].subtask[i].title = content.value;
+      renderSubtasksEditview(index);
+    } else {
+      deleteSubtaskEditview(i, index);
     }
   }
   
@@ -408,6 +408,7 @@ function renderAssingnedToDropdownListEditview() {
     );
     
     await setItem('allTasks', JSON.stringify(todos));
+    clearSubtaskInputFieldEditview();
     renderSubtasksEditview(index);
 }
 

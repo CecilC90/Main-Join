@@ -188,20 +188,38 @@ function renderColorForCategory(index) {
 function openDropDownStatus(event, index) {
     event.stopPropagation(); 
     let parentDiv = event.target.closest('.position-relative');
-
     let dropDown = parentDiv.querySelector('.dropdown-change-status');
+    let categorys = {
+        open: 'open',
+        progress: 'progress',
+        feedback: 'feedback',
+        done: 'done'
+    }
+
     if (!dropDown) {
         dropDown = document.createElement('div');
         dropDown.className = 'dropdown-change-status';
         dropDown.innerHTML = `
-            <span onclick="changeTo('open', ${index}, event)">To Do</span>
-            <span onclick="changeTo('progress', ${index}, event)">In progress</span>
-            <span onclick="changeTo('feedback', ${index}, event)">Await feedback</span>
-            <span onclick="changeTo('done', ${index}, event)">Done</span>
+            <span id="category-open" onclick="changeTo('open', ${index}, event)">To Do</span>
+            <span id="category-progress" onclick="changeTo('progress', ${index}, event)">In progress</span>
+            <span id="category-feedback" onclick="changeTo('feedback', ${index}, event)">Await feedback</span>
+            <span id="category-done" onclick="changeTo('done', ${index}, event)">Done</span>
         `;
         parentDiv.appendChild(dropDown);
+        hideCurrentCategory(index, categorys);
     } else {
         parentDiv.removeChild(dropDown);
+    }
+}
+
+function hideCurrentCategory(index, categorys) {
+    let todoCategory = todos[index].category;
+    for(let category in categorys) {
+        let linkToCategory = document.getElementById(`category-${category}`);
+        if(category === todoCategory) {
+            linkToCategory.style.pointerEvents = 'none';
+            linkToCategory.style.color = 'grey';
+        }
     }
 }
 
