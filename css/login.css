@@ -171,10 +171,12 @@
   font-style: normal;
   font-weight: 400;
   text-decoration: none;
+  width: 110px;
 }
 .footnotes a:hover {
   color: #29abe2;
   font-weight: 700;
+  cursor: pointer;;
 }
 /* #endregion */
 
