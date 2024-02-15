@@ -2,11 +2,16 @@ const STORAGE_TOKEN = "8XAOGSERHAHOR91S5HD7SD3UXKY6BFJ9FGXIYEQ7";
 const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 
 let loggedInUser = {};
-let userNavbarOpen = false; 
+let userNavbarOpen = false;
 
 async function checkloggedInUser() {
-  if (loggedInUser['name'] == undefined) {
+  if (loggedInUser['name'] == undefined && (window.location.pathname.includes("policy.html") || window.location.pathname.includes("legality.html"))) {
+    document.getElementById('menuButtonContainer').style.display = "none";
+    document.getElementById('mobile-navbar').innerHTML= "";
+  } else {
+    if (loggedInUser['name'] == undefined) {
       window.location.href = "index.html";
+    }
   }
 }
 
@@ -77,6 +82,8 @@ function showUserInitials() {
         userIcon.innerHTML = `${initials.toUpperCase()}`;
       }
     }
+  } else {
+    userIcon.innerHTML = '';
   }
 }
 
@@ -95,7 +102,7 @@ function showSelectedButton(selected) {
   document.getElementById(selected + 'Mobile').classList.add('selectedMobileMenuButton');
 }
 
-function showFooterButton(selected){
+function showFooterButton(selected) {
   document.getElementById(selected).classList.replace('menuFooterButton', 'selectedFooterButton');
 }
 
@@ -112,10 +119,10 @@ function userNavbar() {
 
 document.addEventListener('click', function (event) {
   if (userNavbarOpen) {
-      let navbar = document.getElementById('popUpUser');
-      if (!navbar.contains(event.target)) {
-        navbar.style.display = 'none';
-      }
-      userNavbarOpen = false;
+    let navbar = document.getElementById('popUpUser');
+    if (!navbar.contains(event.target)) {
+      navbar.style.display = 'none';
+    }
+    userNavbarOpen = false;
   }
 });

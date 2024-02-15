@@ -343,11 +343,8 @@ function updateContactsInfo(i, event) {
     loadContacts();
     renderContacts();
     closePopUp();
-    
-    mainCard = document.getElementById('userOverview');
-    mainCard.innerHTML = '';
-    document.getElementById('infoContainer').classList.add('d-none');
-    document.getElementById('contactsContainer').classList.remove('d-none');
+    openUserInformation(i, sortedContacts, getMemberInitials(sortedContacts, i));
+    highlightUsercard(i);
 }
 
 async function addContact() {
