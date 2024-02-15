@@ -1,10 +1,37 @@
+/**
+ * Array containing contact information objects.
+ * @type {Array<Object>}
+ */
 let contacts = [];
 
+/**
+ * Flag indicating whether the contact options for mobile are open.
+ * @type {boolean}
+ */
 let openContactOptionsMobile = false;
+
+/**
+ * Flag indicating whether the add contact popup container is open.
+ * @type {boolean}
+ */
 let openAddPopupContainer = false;
+
+/**
+ * Flag indicating whether the edit contact popup container is open.
+ * @type {boolean}
+ */
 let openEditPopupContainer = false;
+
+/**
+ * Flag indicating whether the user overview is open.
+ * @type {boolean}
+ */
 let openUserOverview = false;
 
+/**
+ * Array containing background color codes.
+ * @type {Array<string>}
+ */
 let backgroundColors = [
     '#ff0000', // Rot
     '#00ff00', // Grün
@@ -28,6 +55,10 @@ let backgroundColors = [
     '#cc0000', // Dunkelrot
 ];
 
+/**
+ * Initializes contacts by loading data and rendering the contact list.
+ * @returns {Promise<void>}
+ */
 async function initContacts() {
     await includesHTML();
     await loadLoggedInUser();
@@ -37,16 +68,26 @@ async function initContacts() {
     showSelectedButton("contactButton");
 }
 
+/**
+ * Loads contacts from storage.
+ * @returns {Promise<void>}
+ */
 async function loadContacts() {
     contacts = JSON.parse(await getItem('contacts'));
 }
 
+/**
+ * Renders the contact list.
+ */
 async function renderContacts() {
     sortedContacts = contacts;
     sortedContactList();
     renderContactList(sortedContacts);
 }
 
+/**
+ * Sorts the contacts list.
+ */
 function sortedContactList() {
     contacts.sort((a, b) => {
         let nameA = a.name.split(' ');
@@ -65,6 +106,12 @@ function sortedContactList() {
     });
 }
 
+/**
+ * Sorts the contacts by the second name if the first names are the same.
+ * @param {string[]} nameA - First name split by space.
+ * @param {string[]} nameB - Second name split by space.
+ * @returns {number} - Comparison result.
+ */
 function sortSecondName(nameA, nameB) {
     let secondLetterA = nameA.length > 1 ? nameA[1].charAt(0).toUpperCase() : '';
     let secondLetterB = nameB.length > 1 ? nameB[1].charAt(0).toUpperCase() : '';
@@ -79,15 +126,23 @@ function sortSecondName(nameA, nameB) {
     return 0;
 }
 
+/**
+ * Renders the contact list.
+ * @param {Array<Object>} sortedContacts - Sorted array of contact objects.
+ */
 function renderContactList(sortedContacts) {
     let contactlist = document.getElementById('contactsList');
     contactlist.innerHTML = "";
-    let currentInitial = null;
-    
+    let currentInitial = null;  
     sortingContacts (sortedContacts, contactlist, currentInitial);
-   
 }
 
+/**
+ * Sorts and renders the contacts.
+ * @param {Array<Object>} sortedContacts - Sorted array of contact objects.
+ * @param {HTMLElement} contactlist - HTML element for the contact list.
+ * @param {string} currentInitial - Current initial being processed.
+ */
 function sortingContacts (sortedContacts, contactlist, currentInitial) {
     for (let i = 0; i < sortedContacts.length; i++) {
         let sortedContact = sortedContacts[i];
@@ -105,24 +160,44 @@ function sortingContacts (sortedContacts, contactlist, currentInitial) {
     }
 }
 
+/**
+ * Marks the logged-in contact in the contact list.
+ * @param {Array<Object>} sortedContacts - Sorted array of contact objects.
+ * @param {number} i - Index of the contact being processed.
+ */
 function markLoggedinContact(sortedContacts, i) {
     if (sortedContacts[i].email.includes(loggedInUser.email)) {
         document.getElementById(`userCard${i}`).classList.add('markUserCard');
     }
 }
 
-
+/**
+ * Renders initials of the contact.
+ * @param {Array<Object>} sortedContacts - Sorted array of contact objects.
+ * @param {number} i - Index of the contact being processed.
+ */
 function renderInitials(sortedContacts, i) {
     let contactlist = document.getElementById('contactsList');
     let initials = getMemberInitials(sortedContacts, i);
     contactlist.innerHTML += renderContactsHTML(sortedContacts, i, initials);
 }
 
-
+/**
+ * Retrieves the first letter of the contact's name.
+ * @param {Array<Object>} sortedContacts - Sorted array of contact objects.
+ * @param {number} i - Index of the contact being processed.
+ * @returns {string} - First letter of the name.
+ */
 function getFirstLetter(sortedContacts, i) {
     return sortedContacts[i].name.charAt(0).toUpperCase(0);
 }
 
+/**
+ * Retrieves the initials of the contact's name.
+ * @param {Array<Object>} sortedContacts - Sorted array of contact objects.
+ * @param {number} i - Index of the contact being processed.
+ * @returns {string} - Initials of the name.
+ */
 function getMemberInitials(sortedContacts, i) {
     return sortedContacts[i].name.split(' ')
         .map(word => word.charAt(0))
@@ -130,6 +205,11 @@ function getMemberInitials(sortedContacts, i) {
         .toUpperCase();
 }
 
+/**
+ * Renders HTML for the first letter section in the contact list.
+ * @param {string} firstLetter - First letter of the name.
+ * @returns {string} - HTML string for the first letter section.
+ */
 function renderFirstLetterHTML(firstLetter) {
     return `
     <div class="first-letter">${firstLetter}</div>
@@ -137,6 +217,13 @@ function renderFirstLetterHTML(firstLetter) {
     `;
 }
 
+/**
+ * Renders HTML for the contact.
+ * @param {Array<Object>} sortedContacts - Sorted array of contact objects.
+ * @param {number} i - Index of the contact being processed.
+ * @param {string} initials - Initials of the name.
+ * @returns {string} - HTML string for the contact.
+ */
 function renderContactsHTML(sortedContacts, i, initials) {
     return `
     <div id="userCard${i}" class="user-card" onclick="toggleUserInformation(${i}, sortedContacts, '${initials}')">
@@ -149,6 +236,12 @@ function renderContactsHTML(sortedContacts, i, initials) {
     `;
 }
 
+/**
+ * Toggles user information display.
+ * @param {number} i - Index of the contact.
+ * @param {Array<Object>} sortedContacts - Sorted array of contact objects.
+ * @param {string} initials - Initials of the name.
+ */
 function toggleUserInformation(i, sortedContacts, initials) {
     resetUserCardStyles();
     highlightUsercard(i);
@@ -158,6 +251,9 @@ function toggleUserInformation(i, sortedContacts, initials) {
     openUserOverview = true;
 }
 
+/**
+ * Handles the screen width for responsive design.
+ */
 function handleScreenWidth() {
     if (window.innerWidth < 1280) {
         document.getElementById('contactsContainer').style.display = "none";
@@ -166,6 +262,10 @@ function handleScreenWidth() {
     }
 }
 
+/**
+ * Highlights the selected user card.
+ * @param {number} i - Index of the contact.
+ */
 function highlightUsercard(i) {
     let mainCard = document.getElementById('userOverview');
     let userCard = document.getElementById(`userCard${i}`);
@@ -173,6 +273,9 @@ function highlightUsercard(i) {
     userCard.style.color = 'white';
 }
 
+/**
+ * Resets styles for all user cards.
+ */
 function resetUserCardStyles() {
     let allUserCards = document.querySelectorAll('.user-card');
     allUserCards.forEach(userCard => {
@@ -181,12 +284,22 @@ function resetUserCardStyles() {
     });
 }
 
+/**
+ * Closes the user information section.
+ * @param {number} i - Index of the contact.
+ */
 function closeUserInformation(i) {
     let mainCard = document.getElementById('userOverview');
     mainCard.innerHTML = '';
     openUserOverview = false;
 }
 
+/**
+ * Opens the user information section.
+ * @param {number} i - Index of the contact.
+ * @param {Array<Object>} sortedContacts - Sorted array of contact objects.
+ * @param {string} initials - Initials of the name.
+ */
 function openUserInformation(i, sortedContacts, initials) {
     mainCard = document.getElementById('userOverview');
     mainCard.innerHTML = '';
@@ -195,6 +308,11 @@ function openUserInformation(i, sortedContacts, initials) {
     document.getElementById('initialsPopUp').style.backgroundColor = contacts[i]['color'];
 }
 
+/**
+ * Deletes a contact.
+ * @param {number} i - Index of the contact.
+ * @param {Array<Object>} sortedContacts - Sorted array of contact objects.
+ */
 function deleteContact(i, sortedContacts) {
     sortedContacts.splice(i, 1);
     setItem('contacts', JSON.stringify(contacts));
@@ -205,6 +323,9 @@ function deleteContact(i, sortedContacts) {
     document.getElementById('infoContainer').style.display = "none";
 }
 
+/**
+ * Cancels input operation.
+ */
 function cancelInput() {
     let name = document.getElementById('addName');
     let email = document.getElementById('addEmail');
@@ -214,6 +335,9 @@ function cancelInput() {
     phone.value = "";
 }
 
+/**
+ * Closes the main contact section.
+ */
 function closeMainContact() {
     resetUserCardStyles();
     document.getElementById('contactsContainer').style.display = "flex";
@@ -222,6 +346,13 @@ function closeMainContact() {
     document.getElementById('userOverview').innerHTML = "";
 }
 
+/**
+ * Generates HTML for displaying user information.
+ * @param {number} i - Index of the contact.
+ * @param {Array<Object>} sortedContacts - Sorted array of contact objects.
+ * @param {string} initials - Initials of the name.
+ * @returns {string} - HTML string for user information display.
+ */
 function userInformationHTML(i, sortedContacts, initials) {
     return `
     <div class="main-head-container">
@@ -256,6 +387,9 @@ function userInformationHTML(i, sortedContacts, initials) {
     `;
 }
 
+/**
+ * Opens the add contact popup.
+ */
 function openAddContactPopUp() {
     popUp = document.getElementById('popupContainer');
     popUp.classList.remove('d-none');
@@ -270,6 +404,10 @@ function openAddContactPopUp() {
     event.stopPropagation();
 }
 
+/**
+ * Closes the add contact popup.
+ * @param {Event} event - The event triggering the function.
+ */
 function closeAddContactPopUp(event) {
 
     if (event) {
@@ -282,6 +420,10 @@ function closeAddContactPopUp(event) {
     editPopUp.classList.remove('d-none');
 }
 
+/**
+ * Opens the edit contact popup.
+ * @param {number} i - Index of the contact.
+ */
 function openEditContactPopUp(i) {
     loadContacts();
     popUp = document.getElementById('popupContainer');
@@ -298,6 +440,9 @@ function openEditContactPopUp(i) {
     event.stopPropagation();
 }
 
+/**
+ * Closes the popup container.
+ */
 function closePopUp() {
     popUp = document.getElementById('popupContainer');
     popUp.classList.add('d-none')
@@ -309,6 +454,9 @@ function closePopUp() {
     loadContacts();
 }
 
+/**
+ * Resets input fields in the add contact popup.
+ */
 function resetAddInput() {
     let name = document.getElementById('addName');
     let email = document.getElementById('addEmail');
@@ -318,6 +466,10 @@ function resetAddInput() {
     phone.value = "";
 }
 
+/**
+ * Loads information of a member into the edit contact popup.
+ * @param {number} i - Index of the contact.
+ */
 function loadMemberInfo(i) {
     loadContacts();
     let name = document.getElementById('editName');
@@ -328,6 +480,11 @@ function loadMemberInfo(i) {
     phone.value = contacts[i].phone;
 }
 
+/**
+ * Updates contact information.
+ * @param {number} i - Index of the contact.
+ * @param {Event} event - The event triggering the function.
+ */
 function updateContactsInfo(i, event) {
     event.preventDefault();
 
@@ -347,6 +504,9 @@ function updateContactsInfo(i, event) {
     highlightUsercard(i);
 }
 
+/**
+ * Adds a new contact.
+ */
 async function addContact() {
     let randomIndex = Math.floor(Math.random() * backgroundColors.length);
 
@@ -363,6 +523,10 @@ async function addContact() {
     closePopUp();
 }
 
+/**
+ * Opens contact options for mobile.
+ * @param {number} i - Index of the contact.
+ */
 function openContatOptions(i) {
     document.getElementById('contactOptionsMobile').style.display = 'flex';
     document.getElementById('openEditMobile').onclick = function () { openEditContactPopUp(`${i}`); };
@@ -371,6 +535,11 @@ function openContatOptions(i) {
     event.stopPropagation();
 }
 
+/**
+ * Event listener for closing the contact options for mobile.
+ * Closes the mobile contact options when clicking outside.
+ * @param {Event} event - The event triggering the function.
+ */
 document.addEventListener('click', function (event) {
     if (openContactOptionsMobile) {
         let contactOptionsMobile = document.getElementById('contactOptionsMobile');
@@ -381,6 +550,11 @@ document.addEventListener('click', function (event) {
     }
 });
 
+/**
+ * Event listener for closing the add contact popup.
+ * Closes the add contact popup when clicking outside.
+ * @param {Event} event - The event triggering the function.
+ */
 document.addEventListener('click', function (event) {
     if (openAddPopupContainer) {
         let popUp = document.getElementById('popupContainer');
@@ -396,6 +570,11 @@ document.addEventListener('click', function (event) {
     }
 });
 
+/**
+ * Event listener for closing the edit contact popup.
+ * Closes the edit contact popup when clicking outside.
+ * @param {Event} event - The event triggering the function.
+ */
 document.addEventListener('click', function (event) {
     if (openEditPopupContainer) {
         let popUp = document.getElementById('popupContainer');
