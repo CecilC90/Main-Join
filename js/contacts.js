@@ -283,13 +283,14 @@ function closeAddContactPopUp(event) {
 }
 
 function openEditContactPopUp(i) {
+    loadContacts();
     popUp = document.getElementById('popupContainer');
     popUp.classList.add('flex');
     addPopUp = document.getElementById('addContactPopUp');
     addPopUp.classList.add('d-none');
     editPopUp = document.getElementById('editContactPopUp');
     editPopUp.classList.remove('d-none');
-    document.getElementById('editButton').onclick = function () { updateContactInfo(i, event); };
+    document.getElementById('editButton').onclick = function () { updateContactsInfo(i, event); };
     document.getElementById('deleteButton').onclick = function () { deleteContact(i, sortedContacts); };
     loadMemberInfo(i);
     document.getElementById('contactOptionsMobile').style.display = "none";
@@ -302,8 +303,10 @@ function closePopUp() {
     popUp.classList.add('d-none')
     addPopUp = document.getElementById('addContactPopUp');
     addPopUp.classList.add('d-none');
-
+    editPopUp = document.getElementById('editContactPopUp');
+    addPopUp.classList.add('d-none');
     popUp.classList.remove('flex');
+    loadContacts();
 }
 
 function resetAddInput() {
@@ -316,6 +319,7 @@ function resetAddInput() {
 }
 
 function loadMemberInfo(i) {
+    loadContacts();
     let name = document.getElementById('editName');
     let email = document.getElementById('editEmail');
     let phone = document.getElementById('editPhone');
@@ -338,9 +342,12 @@ function updateContactsInfo(i, event) {
     setItem('contacts', JSON.stringify(contacts));
     loadContacts();
     renderContacts();
-    closeEditContactPopUp();
+    closePopUp();
+    
     mainCard = document.getElementById('userOverview');
     mainCard.innerHTML = '';
+    document.getElementById('infoContainer').classList.add('d-none');
+    document.getElementById('contactsContainer').classList.remove('d-none');
 }
 
 async function addContact() {
