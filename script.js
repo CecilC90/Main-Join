@@ -5,7 +5,7 @@ let loggedInUser = {};
 let userNavbarOpen = false; 
 
 async function checkloggedInUser() {
-  if (loggedInUser.length === 0) {
+  if (loggedInUser['name'] == undefined) {
       window.location.href = "index.html";
   }
 }
