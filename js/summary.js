@@ -1,10 +1,13 @@
 let todos = [];
 
+/**
+ * Renders the summary page by including HTML, loading the logged-in user, and rendering various summary components.
+ * @returns {Promise<void>}
+ */
 async function renderSummary() {
     await includesHTML();
     showSelectedButton("summaryButton");
     await loadLoggedInUser();
-
     await loadAllTasks();
     await checkIsMsgAvailable();
     renderSummaryHTML();
@@ -12,12 +15,19 @@ async function renderSummary() {
     renderTasks();
 }
 
+/**
+ * Renders the summary page by including HTML and loading the logged-in user.
+ * @returns {Promise<void>}
+ */
 async function render() {
     await includesHTML();
     showSelectedButton("summaryButton");
     await loadLoggedInUser();
 }
 
+/**
+ * Checks if a message is available in the URL parameters and shows a greeting if it exists.
+ */
 function checkIsMsgAvailable() {
     const urlParams = new URLSearchParams(window.location.search);
     const msg = urlParams.get("msg");
@@ -27,6 +37,9 @@ function checkIsMsgAvailable() {
     }
 }
 
+/**
+ * Shows the greeting message on mobile devices.
+ */
 function showGreetingMobile() {
     if (window.innerWidth < 608) {
         document.getElementById('greetingMobile').classList.add('d-flex');
@@ -36,11 +49,18 @@ function showGreetingMobile() {
     }
 }
 
+/**
+ * Loads all tasks from the storage.
+ * @returns {Promise<void>}
+ */
 async function loadAllTasks() {
     let respons = await getItem("allTasks");
     todos = JSON.parse(respons);
 }
 
+/**
+ * Generates a greeting message based on the current time and displays it.
+ */
 async function greeting() {
     let time = new Date().getHours();
     let greetingContent;
@@ -62,6 +82,11 @@ async function greeting() {
     }
 }
 
+/**
+ * Checks the current time and sets the greeting message accordingly.
+ * @param {number} time - The current hour.
+ * @param {string} greetingContent - The content of the greeting message.
+ */
 function checkTime(time, greetingContent) {
     if (time >= 5 && time < 12) {
         greetingContent = 'Good morning';
@@ -72,6 +97,9 @@ function checkTime(time, greetingContent) {
     }
 }
 
+/**
+ * Displays the user's name if available and not "Guest".
+ */
 function showName() {
     let nameContainers = document.querySelectorAll('.name');
     if (loggedInUser.name && typeof loggedInUser.name === 'string') {
@@ -92,7 +120,9 @@ function showName() {
     } 
 }
 
-
+/**
+ * Renders various task-related components on the summary page.
+ */
 function renderTasks() {
     todoCount();
     finished();
@@ -103,6 +133,9 @@ function renderTasks() {
     feedback();
 }
 
+/**
+ * Counts the number of open todos and updates the corresponding display.
+ */
 function todoCount() {
     numberOftodos = document.getElementById('toDo');
     let countToDos = 0
@@ -119,6 +152,9 @@ function todoCount() {
     }
 }
 
+/**
+ * Counts the number of urgent tasks and updates the corresponding display.
+ */
 function urgent() {
     let numberOfUrgent = document.getElementById('high');
     let highPriorityCount = 0;
@@ -137,14 +173,19 @@ function urgent() {
     }
 }
 
+/**
+ * Generates HTML for displaying the next due date and updates the corresponding display.
+ */
 function deadlineHTML() {
     let deadline = document.getElementById('deadline');
     let dueDate = returnNextDueDate(); 
-    
-    
     deadline.innerHTML = dueDate;
 }
 
+/**
+ * Determines the next due date among the tasks.
+ * @returns {string} - The formatted next due date.
+ */
 function returnNextDueDate() {
     let dueDate = new Date(Math.min(...todos.map((e) => new Date(e.dueDate).getTime())));    
         let dueDateString = dueDate.toLocaleString("default", {
@@ -155,7 +196,9 @@ function returnNextDueDate() {
         return dueDateString;
 }
 
-
+/**
+ * Counts the number of completed tasks and updates the corresponding display.
+ */
 function finished() {
     numberOfDone = document.getElementById('done');
     let countofDone = 0
@@ -172,6 +215,9 @@ function finished() {
     }
 }
 
+/**
+ * Counts the number of tasks awaiting feedback and updates the corresponding display.
+ */
 function feedback() {
     numberOfFeedback = document.getElementById('await');
     let countofFeedback = 0
@@ -188,6 +234,9 @@ function feedback() {
     }
 }
 
+/**
+ * Counts the total number of tasks and updates the corresponding display.
+ */
 function tasks() {
     boardTasks = document.getElementById('boardTasks');
     if (todos.length < 1) {
@@ -197,6 +246,9 @@ function tasks() {
     }
 }
 
+/**
+ * Counts the number of tasks in progress and updates the corresponding display.
+ */
 function progressCount() {
     numberOfProgress = document.getElementById('progress');
     let countProgress = 0
@@ -213,6 +265,9 @@ function progressCount() {
     }
 }
 
+/**
+ * Counts the number of tasks awaiting action and updates the corresponding display.
+ */
 function awaitCount() {
     numberOfAwait = document.getElementById('await');
     let countAwait = 0
