@@ -7,7 +7,7 @@ let selectedCategory = "open";
 
 /**
  * Starts the page and launches all content functions
- * 
+ *
  */
 async function init() {
   await includesHTML();
@@ -20,7 +20,7 @@ async function init() {
 
 /**
  * all standard settings and dropdown elements
- * 
+ *
  */
 function loadContent() {
   setPrioButton("medium");
@@ -35,13 +35,13 @@ function loadContent() {
 /**
  * /**
  * starts the function checkScreenWidth when changing the page width
- * 
+ *
  */
 window.addEventListener("resize", checkScreenWidth);
 
 /**
- * sets the variable mobileVersionIsOn to true if the width is below 1220px 
- * 
+ * sets the variable mobileVersionIsOn to true if the width is below 1220px
+ *
  */
 function setMobileVersionIsOn() {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -53,8 +53,8 @@ function setMobileVersionIsOn() {
 }
 
 /**
- * renders the desktop or mobile version of HTML code depending on the width of the screen 
- * 
+ * renders the desktop or mobile version of HTML code depending on the width of the screen
+ *
  */
 function checkScreenWidth() {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -75,7 +75,7 @@ function checkScreenWidth() {
 
 /**
  * load the contacts from the backend
- * 
+ *
  */
 async function loadContacts() {
   let respons = await getItem("contacts");
@@ -84,7 +84,7 @@ async function loadContacts() {
 
 /**
  * changes the HTML code of the Prio buttons depending on the rollout
- * 
+ *
  * @param {string} prio the value high medium or low
  */
 function setPrioButton(prio) {
@@ -97,7 +97,7 @@ function setPrioButton(prio) {
 
 /**
  * creates the list of contacts that can be selected
- * 
+ *
  */
 function renderAssingnedToDropdownList() {
   let content = document.getElementById("dropdownContentAssignedTo");
@@ -111,22 +111,21 @@ function renderAssingnedToDropdownList() {
 
 /**
  * filters the list of contacts that can be selected
- * 
+ *
  */
 function filterAssingnedToDropdownList() {
+  debugger;
   let contactInput = document.getElementById("contactInput").value;
   contactInput = contactInput.toLowerCase();
   let content = document.getElementById("dropdownContentAssignedTo");
   content.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i]["name"].toLowerCase().includes(contactInput)) {
-      if (contacts[i]["active"]) {
-        let firstAndSecondLetter = getFirstAndSecondLetter(i);
-        content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter);
-        showSelectedDropdownContact(i);
-        dropdownContentAssignedTo.style.display = "flex";
-        toggleDropdownIcon("assignedToDropdownIcon", "flex");
-      }
+      let firstAndSecondLetter = getFirstAndSecondLetter(i);
+      content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter);
+      showSelectedDropdownContact(i);
+      dropdownContentAssignedTo.style.display = "flex";
+      toggleDropdownIcon("assignedToDropdownIcon", "flex");
     }
   }
   if (contactInput.length == 0) {
@@ -138,7 +137,7 @@ function filterAssingnedToDropdownList() {
 
 /**
  * creates a string with the first letter of each contact
- * 
+ *
  * @param {number} i number from the array contacts
  * @returns {string} first and second letter
  */
@@ -153,7 +152,7 @@ function getFirstAndSecondLetter(i) {
 
 /**
  * sets the contact to selected
- * 
+ *
  * @param {number} i number from the array contacts
  */
 function setContactSelected(i) {
@@ -169,7 +168,7 @@ function setContactSelected(i) {
 
 /**
  * changes the classe of the selected contacte
- * 
+ *
  * @param {number} i umber from the array contacts
  */
 function showSelectedDropdownContact(i) {
@@ -186,7 +185,7 @@ function showSelectedDropdownContact(i) {
 
 /**
  * creates the icons below the input field assigned To
- * 
+ *
  */
 function renderSelectedContactsIcons() {
   let content = document.getElementById("showSelectedDropdownContact");
@@ -200,7 +199,7 @@ function renderSelectedContactsIcons() {
 
 /**
  * creates the dropdown list of the category
- * 
+ *
  */
 function renderCategoryDropdownList() {
   let content = document.getElementById("dropdownContenCategory");
@@ -212,7 +211,7 @@ function renderCategoryDropdownList() {
 
 /**
  * inserts the selected category into the field
- * 
+ *
  * @param {number} i number from the array category
  */
 function setSelectedCategory(i) {
@@ -224,7 +223,7 @@ function setSelectedCategory(i) {
 
 /**
  * change the arrow in the dropdown menu
- * 
+ *
  * @param {string} id id of the icon to be changed
  * @param {string} dispayStatus flex or none what the dropdown currently has
  */
@@ -238,7 +237,7 @@ function toggleDropdownIcon(id, dispayStatus) {
 
 /**
  * displays the add or cancel icons for the subtask
- * 
+ *
  * @param {number} index number of the subtask
  */
 function showSubtasksDoneAndCancel(index) {
@@ -253,7 +252,7 @@ function showSubtasksDoneAndCancel(index) {
 
 /**
  * clears the input field subtask
- * 
+ *
  */
 function clearSubtaskInputField() {
   let content = document.getElementById("subtasksInput");
@@ -263,8 +262,8 @@ function clearSubtaskInputField() {
 }
 
 /**
- * checks that the date is not in the past 
- * 
+ * checks that the date is not in the past
+ *
  * @returns {boolean} returns whether it is in the past
  */
 function checkDueDateNotInPast() {
@@ -276,7 +275,7 @@ function checkDueDateNotInPast() {
   let currentDateString = year + "-" + month + "-" + day;
   if (currentDateString > inputDate) {
     setRedBorder("duedateField");
-    document.getElementById('requiredTextDuedate').innerHTML = "Due date is in the Past!"
+    document.getElementById("requiredTextDuedate").innerHTML = "Due date is in the Past!";
     return false;
   } else {
     return true;
@@ -285,7 +284,7 @@ function checkDueDateNotInPast() {
 
 /**
  * adds the subtask to the list
- * 
+ *
  */
 function addSubtask() {
   let subtasksInput = document.getElementById("subtasksInput");
@@ -297,7 +296,7 @@ function addSubtask() {
 
 /**
  * adds the subtask to the list when pressing enter
- * 
+ *
  * @param {event} event the key that is pressed is taken out
  */
 function addSubtaskOnEnter(event) {
@@ -309,7 +308,7 @@ function addSubtaskOnEnter(event) {
 
 /**
  * creates the list of subtasks
- * 
+ *
  */
 function renderSubtasks() {
   let subtasksList = document.getElementById("subtasksList");
@@ -321,7 +320,7 @@ function renderSubtasks() {
 
 /**
  * creates the field to change the subtask
- * 
+ *
  * @param {number} i nummber of the subtask id
  */
 function editSubtask(i) {
@@ -330,8 +329,8 @@ function editSubtask(i) {
 }
 
 /**
- * changes the substak in the arry and displays it 
- * 
+ * changes the substak in the arry and displays it
+ *
  * @param {number} i nummber of the subtask id
  */
 function editSubtaskDone(i) {
@@ -346,7 +345,7 @@ function editSubtaskDone(i) {
 
 /**
  * deletes the subtask
- * 
+ *
  * @param {number} i nummber of the subtask id
  */
 function deleteSubtask(i) {
@@ -356,7 +355,7 @@ function deleteSubtask(i) {
 
 /**
  * checks whether the input field is filled
- * 
+ *
  * @param {string} id id of the input field
  * @returns {boolean} filled yes or no
  */
@@ -371,7 +370,7 @@ function checkIsFieldFilled(id) {
 
 /**
  * creates a blue border around the input field
- * 
+ *
  * @param {string} id id of the input field
  * @param {string} conatiner id of the container where the input field is located
  */
@@ -386,7 +385,7 @@ function setBlueBorder(id, conatiner) {
 
 /**
  * creates a red border around the input field
- * 
+ *
  * @param {string} id id of the input field
  * @param {string} conatiner id of the container where the input field is located
  */
@@ -399,7 +398,7 @@ function setRedBorder(id, requiredConatiner) {
 
 /**
  * clears the text field with the error message
- * 
+ *
  * @param {string} requiredConatiner id of the text field
  */
 function clearRequiredText(requiredConatiner) {
@@ -408,7 +407,7 @@ function clearRequiredText(requiredConatiner) {
 
 /**
  * removes the border
- * 
+ *
  * @param {string} id id of the conteiner
  */
 function removeBorader(id) {
@@ -418,9 +417,9 @@ function removeBorader(id) {
 
 /**
  * changes the text color of dueDate
- * 
+ *
  */
-function changeColorDuedate() { 
+function changeColorDuedate() {
   let content = document.getElementById("duedateInputField");
   if (content.value) {
     content.classList.add("duedateColorBlack");
@@ -431,7 +430,7 @@ function changeColorDuedate() {
 
 /**
  * load the selected contacts into an extra array
- * 
+ *
  * @returns {Array} returns the selected contacte as an array
  */
 function loadSelectedContacts() {
@@ -446,7 +445,7 @@ function loadSelectedContacts() {
 
 /**
  * load the subtasks into an extra array
- * 
+ *
  * @returns {Array} returns the selected subtasks as an array
  */
 function loadAllSubtasks() {
@@ -463,7 +462,7 @@ function loadAllSubtasks() {
 
 /**
  * Load all tasks from the backend
- * 
+ *
  * @returns {JSON} Returns all tasks
  */
 async function loadAllTasks() {
@@ -472,7 +471,7 @@ async function loadAllTasks() {
 }
 /**
  * Saves all data to the backend
- * 
+ *
  * @param {JSON} allTasks All data from Add Task
  */
 async function saveAllTasks(allTasks) {
@@ -481,7 +480,7 @@ async function saveAllTasks(allTasks) {
 
 /**
  * shows the message that the task has been added
- * 
+ *
  */
 function showAddTaskToBoard() {
   var conatiner = document.getElementById("finishedMessageContainer");
@@ -491,7 +490,7 @@ function showAddTaskToBoard() {
 
 /**
  * adds the EventListner for the dropdowns
- * 
+ *
  */
 function loadEventListner() {
   let contactDropdown = document.getElementById("assignedToDropdownIcon");
@@ -513,7 +512,7 @@ function loadEventListner() {
 
 /**
  * adds the functions for the dropdown
- * 
+ *
  * @param {event} event where the mouse clicks on the screen
  */
 function handleWindowClick(event) {
@@ -533,7 +532,7 @@ function handleWindowClick(event) {
 
 /**
  * adds the task through ender
- * 
+ *
  * @param {event} event the key that is pressed is taken out
  */
 function addTaskOnEnter(event) {
@@ -542,8 +541,8 @@ function addTaskOnEnter(event) {
   }
 }
 /**
- * checks whether all fields for adding the task are filled in and displays fields that are not filled in 
- * 
+ * checks whether all fields for adding the task are filled in and displays fields that are not filled in
+ *
  */
 async function addTask() {
   document.getElementById("createTaskButton").disabled = true;
@@ -574,7 +573,7 @@ async function addTask() {
 
 /**
  * Prepares all data for saving to the backend
- * 
+ *
  */
 async function addToTaskBackend() {
   let title = document.getElementById("titleInputField").value;
@@ -602,7 +601,7 @@ async function addToTaskBackend() {
 
 /**
  * clears all fields
- * 
+ *
  */
 function clearTask() {
   for (let i = 0; i < contacts.length; i++) {
