@@ -5,8 +5,11 @@ let subtasks = [];
 let mobileVersionIsOn;
 let selectedCategory = "open";
 
+/**
+ * Starts the page and launches all content functions
+ * 
+ */
 async function init() {
-  loadAddTaskContent();
   await includesHTML();
   showSelectedButton("addTaskButton");
   await loadContacts();
@@ -15,11 +18,10 @@ async function init() {
   loadLoggedInUser();
 }
 
-function loadAddTaskContent() {
-  let content = document.getElementById("addTask");
-  content.innerHTML = renderAddTaskHTML();
-}
-
+/**
+ * all standard settings and dropdown elements
+ * 
+ */
 function loadContent() {
   setPrioButton("medium");
   renderAssingnedToDropdownList();
@@ -30,8 +32,17 @@ function loadContent() {
   window.addEventListener("click", handleWindowClick);
 }
 
+/**
+ * /**
+ * starts the function checkScreenWidth when changing the page width
+ * 
+ */
 window.addEventListener("resize", checkScreenWidth);
 
+/**
+ * sets the variable mobileVersionIsOn to true if the width is below 1220px 
+ * 
+ */
 function setMobileVersionIsOn() {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   if (screenWidth <= 1220) {
@@ -41,6 +52,10 @@ function setMobileVersionIsOn() {
   }
 }
 
+/**
+ * renders the desktop or mobile version of HTML code depending on the width of the screen 
+ * 
+ */
 function checkScreenWidth() {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   let content = document.getElementById("addTask");
@@ -58,11 +73,20 @@ function checkScreenWidth() {
   }
 }
 
+/**
+ * load the contacts from the backend
+ * 
+ */
 async function loadContacts() {
   let respons = await getItem("contacts");
   contacts = JSON.parse(respons);
 }
 
+/**
+ * changes the HTML code of the Prio buttons depending on the rollout
+ * 
+ * @param {string} prio the value high medium or low
+ */
 function setPrioButton(prio) {
   let selectedOldPrioID = "prioButton" + selectedPrio.charAt(0).toUpperCase() + selectedPrio.slice(1);
   let selectedPrioID = "prioButton" + prio.charAt(0).toUpperCase() + prio.slice(1);
@@ -71,6 +95,10 @@ function setPrioButton(prio) {
   selectedPrio = prio;
 }
 
+/**
+ * creates the list of contacts that can be selected
+ * 
+ */
 function renderAssingnedToDropdownList() {
   let content = document.getElementById("dropdownContentAssignedTo");
   content.innerHTML = "";
@@ -81,6 +109,10 @@ function renderAssingnedToDropdownList() {
   }
 }
 
+/**
+ * filters the list of contacts that can be selected
+ * 
+ */
 function filterAssingnedToDropdownList() {
   let contactInput = document.getElementById("contactInput").value;
   contactInput = contactInput.toLowerCase();
@@ -104,6 +136,12 @@ function filterAssingnedToDropdownList() {
   }
 }
 
+/**
+ * creates a string with the first letter of each contact
+ * 
+ * @param {number} i number from the array contacts
+ * @returns {string} first and second letter
+ */
 function getFirstAndSecondLetter(i) {
   let name = contacts[i]["name"];
   let splitName = name.split(" ");
@@ -113,6 +151,11 @@ function getFirstAndSecondLetter(i) {
   return result;
 }
 
+/**
+ * sets the contact to selected
+ * 
+ * @param {number} i number from the array contacts
+ */
 function setContactSelected(i) {
   if (contacts[i]["selected"]) {
     contacts[i]["selected"] = false;
@@ -124,6 +167,11 @@ function setContactSelected(i) {
   renderSelectedContactsIcons();
 }
 
+/**
+ * changes the classe of the selected contacte
+ * 
+ * @param {number} i umber from the array contacts
+ */
 function showSelectedDropdownContact(i) {
   let dropdownContact = document.getElementById("dropdownContact" + i);
   let dropdownContactImg = document.getElementById("dropdownContactImg" + i);
@@ -136,6 +184,10 @@ function showSelectedDropdownContact(i) {
   }
 }
 
+/**
+ * creates the icons below the input field assigned To
+ * 
+ */
 function renderSelectedContactsIcons() {
   let content = document.getElementById("showSelectedDropdownContact");
   content.innerHTML = "";
@@ -146,6 +198,10 @@ function renderSelectedContactsIcons() {
   }
 }
 
+/**
+ * creates the dropdown list of the category
+ * 
+ */
 function renderCategoryDropdownList() {
   let content = document.getElementById("dropdownContenCategory");
   content.innerHTML = "";
@@ -154,6 +210,11 @@ function renderCategoryDropdownList() {
   }
 }
 
+/**
+ * inserts the selected category into the field
+ * 
+ * @param {number} i number from the array category
+ */
 function setSelectedCategory(i) {
   let content = document.getElementById("inputFieldCategory");
   content.value = category[i];
@@ -161,6 +222,12 @@ function setSelectedCategory(i) {
   toggleDropdownIcon("categoryDropdownIcon", "none");
 }
 
+/**
+ * change the arrow in the dropdown menu
+ * 
+ * @param {string} id id of the icon to be changed
+ * @param {string} dispayStatus flex or none what the dropdown currently has
+ */
 function toggleDropdownIcon(id, dispayStatus) {
   if (dispayStatus == "flex") {
     document.getElementById(id).src = "./assets/img/arrow_drop_down_up.svg";
@@ -169,6 +236,11 @@ function toggleDropdownIcon(id, dispayStatus) {
   }
 }
 
+/**
+ * displays the add or cancel icons for the subtask
+ * 
+ * @param {number} index number of the subtask
+ */
 function showSubtasksDoneAndCancel(index) {
   let subtasksInput = document.getElementById("subtasksInput");
   let content = document.getElementById("subtasksInputMenu");
@@ -179,6 +251,10 @@ function showSubtasksDoneAndCancel(index) {
   }
 }
 
+/**
+ * clears the input field subtask
+ * 
+ */
 function clearSubtaskInputField() {
   let content = document.getElementById("subtasksInput");
   content.value = "";
@@ -186,6 +262,11 @@ function clearSubtaskInputField() {
   setBlueBorder("subtasksInput", "subtaskField");
 }
 
+/**
+ * checks that the date is not in the past 
+ * 
+ * @returns {boolean} returns whether it is in the past
+ */
 function checkDueDateNotInPast() {
   let currentDate = new Date();
   let inputDate = document.getElementById("duedateInputField").value;
@@ -202,6 +283,10 @@ function checkDueDateNotInPast() {
   }
 }
 
+/**
+ * adds the subtask to the list
+ * 
+ */
 function addSubtask() {
   let subtasksInput = document.getElementById("subtasksInput");
   subtasks.push(subtasksInput.value);
@@ -210,6 +295,11 @@ function addSubtask() {
   renderSubtasks();
 }
 
+/**
+ * adds the subtask to the list when pressing enter
+ * 
+ * @param {event} event the key that is pressed is taken out
+ */
 function addSubtaskOnEnter(event) {
   let subtasksInput = document.getElementById("subtasksInput").value;
   if (event.key === "Enter" && subtasksInput.length > 0) {
@@ -217,6 +307,10 @@ function addSubtaskOnEnter(event) {
   }
 }
 
+/**
+ * creates the list of subtasks
+ * 
+ */
 function renderSubtasks() {
   let subtasksList = document.getElementById("subtasksList");
   subtasksList.innerHTML = "";
@@ -225,11 +319,21 @@ function renderSubtasks() {
   }
 }
 
+/**
+ * creates the field to change the subtask
+ * 
+ * @param {number} i nummber of the subtask id
+ */
 function editSubtask(i) {
   let content = document.getElementById("subtask" + i);
   content.innerHTML = editSubtaskHTML(i);
 }
 
+/**
+ * changes the substak in the arry and displays it 
+ * 
+ * @param {number} i nummber of the subtask id
+ */
 function editSubtaskDone(i) {
   let content = document.getElementById("editSubtask" + i).value;
   if (content.length > 0) {
@@ -240,11 +344,22 @@ function editSubtaskDone(i) {
   }
 }
 
+/**
+ * deletes the subtask
+ * 
+ * @param {number} i nummber of the subtask id
+ */
 function deleteSubtask(i) {
   subtasks.splice(i, 1);
   renderSubtasks();
 }
 
+/**
+ * checks whether the input field is filled
+ * 
+ * @param {string} id id of the input field
+ * @returns {boolean} filled yes or no
+ */
 function checkIsFieldFilled(id) {
   let content = document.getElementById(id);
   if (content.value.length > 0) {
@@ -254,6 +369,12 @@ function checkIsFieldFilled(id) {
   }
 }
 
+/**
+ * creates a blue border around the input field
+ * 
+ * @param {string} id id of the input field
+ * @param {string} conatiner id of the container where the input field is located
+ */
 function setBlueBorder(id, conatiner) {
   if (checkIsFieldFilled(id)) {
     document.getElementById(conatiner).classList.add("correctInput");
@@ -263,6 +384,12 @@ function setBlueBorder(id, conatiner) {
   }
 }
 
+/**
+ * creates a red border around the input field
+ * 
+ * @param {string} id id of the input field
+ * @param {string} conatiner id of the container where the input field is located
+ */
 function setRedBorder(id, requiredConatiner) {
   document.getElementById(id).classList.add("wrongInput");
   if (requiredConatiner) {
@@ -270,16 +397,30 @@ function setRedBorder(id, requiredConatiner) {
   }
 }
 
+/**
+ * clears the text field with the error message
+ * 
+ * @param {string} requiredConatiner id of the text field
+ */
 function clearRequiredText(requiredConatiner) {
   document.getElementById(requiredConatiner).innerHTML = "";
 }
 
+/**
+ * removes the border
+ * 
+ * @param {string} id id of the conteiner
+ */
 function removeBorader(id) {
   document.getElementById(id).classList.remove("wrongInput");
   document.getElementById(id).classList.remove("correctInput");
 }
 
-function changeColorDuedate() {
+/**
+ * changes the text color of dueDate
+ * 
+ */
+function changeColorDuedate() { 
   let content = document.getElementById("duedateInputField");
   if (content.value) {
     content.classList.add("duedateColorBlack");
@@ -288,6 +429,11 @@ function changeColorDuedate() {
   }
 }
 
+/**
+ * load the selected contacts into an extra array
+ * 
+ * @returns {Array} returns the selected contacte as an array
+ */
 function loadSelectedContacts() {
   let selectedContacts = [];
   for (let i = 0; i < contacts.length; i++) {
@@ -298,6 +444,11 @@ function loadSelectedContacts() {
   return selectedContacts;
 }
 
+/**
+ * load the subtasks into an extra array
+ * 
+ * @returns {Array} returns the selected subtasks as an array
+ */
 function loadAllSubtasks() {
   let allSubtasks = [];
   for (let i = 0; i < subtasks.length; i++) {
@@ -310,21 +461,38 @@ function loadAllSubtasks() {
   return allSubtasks;
 }
 
+/**
+ * Load all tasks from the backend
+ * 
+ * @returns {JSON} Returns all tasks
+ */
 async function loadAllTasks() {
   let respons = await getItem("allTasks");
   return JSON.parse(respons);
 }
-
+/**
+ * Saves all data to the backend
+ * 
+ * @param {JSON} allTasks All data from Add Task
+ */
 async function saveAllTasks(allTasks) {
   await setItem("allTasks", allTasks);
 }
 
+/**
+ * shows the message that the task has been added
+ * 
+ */
 function showAddTaskToBoard() {
   var conatiner = document.getElementById("finishedMessageContainer");
   conatiner.style.display = "flex";
   conatiner.style.bottom = "calc(50% - " + conatiner.clientHeight / 2 + "px)";
 }
 
+/**
+ * adds the EventListner for the dropdowns
+ * 
+ */
 function loadEventListner() {
   let contactDropdown = document.getElementById("assignedToDropdownIcon");
   contactDropdown.addEventListener("click", function () {
@@ -343,6 +511,11 @@ function loadEventListner() {
   window.addEventListener("click", handleWindowClick);
 }
 
+/**
+ * adds the functions for the dropdown
+ * 
+ * @param {event} event where the mouse clicks on the screen
+ */
 function handleWindowClick(event) {
   let contactDropdown = document.getElementById("assignedToDropdownIcon");
   let categoryDropdown = document.getElementById("categoryDropdownIcon");
@@ -358,12 +531,20 @@ function handleWindowClick(event) {
   }
 }
 
+/**
+ * adds the task through ender
+ * 
+ * @param {event} event the key that is pressed is taken out
+ */
 function addTaskOnEnter(event) {
   if (event.key === "Enter") {
     addTask();
   }
 }
-
+/**
+ * checks whether all fields for adding the task are filled in and displays fields that are not filled in 
+ * 
+ */
 async function addTask() {
   document.getElementById("createTaskButton").disabled = true;
   let allInputsFilled = true;
@@ -391,6 +572,10 @@ async function addTask() {
   document.getElementById("createTaskButton").disabled = false;
 }
 
+/**
+ * Prepares all data for saving to the backend
+ * 
+ */
 async function addToTaskBackend() {
   let title = document.getElementById("titleInputField").value;
   let description = document.getElementById("descriptionTextArea").value;
@@ -415,6 +600,10 @@ async function addToTaskBackend() {
   await saveAllTasks(allTasks);
 }
 
+/**
+ * clears all fields
+ * 
+ */
 function clearTask() {
   for (let i = 0; i < contacts.length; i++) {
     contacts[i]["selected"] = false;
