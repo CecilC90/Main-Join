@@ -135,6 +135,36 @@ function renderPrioButton(index) {
     `;
 }
 
+function renderAssingnedToDropdownListHTMLEditview(i, firstAndSecondLetter, color) {
+  return /*html */ `
+    <div class="dropdownContacts" id="dropdownContactEditview${i}" onclick="setContactSelectedEditview(${i})">
+      <div class="dropdownContactNameConatiner">
+        <div class="contactsIcon" style="background-color: ${color}">${firstAndSecondLetter}</div>
+        <p>${contacts[i]['name']}</p>
+      </div>
+      <img id="dropdownContactImgEditview${i}" src="./assets/img/checkbox_unchecked.svg" alt="checkbox_unchecked">
+    </div>
+  `;
+}
+
+function renderSubtasksHTMLEditview(i, subtasks, index) {
+  return /* html */ `
+  <div id="subtaskEditview${i}" ondblclick="editSubtaskEditview(${i})">
+    <div class="subtask">
+      <div class="subtaskText">
+        <p>&bull;</p>
+        <P>${subtasks}</P>
+      </div>
+      <div class="subtaskMenu">
+        <img src="./assets/img/subtasks_edit_icon.svg" onclick="editSubtaskEditview(${i}, '${subtasks}', ${index})" alt="edit_icon">
+        <img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+        <img src="./assets/img/subtasks_delete_icon.svg" onclick="deleteSubtaskEditview(${i}, ${index})" alt="delete_icon">
+      </div>
+    </div>
+  </div>
+  `;
+}
+
 function addHeadlineAssignedToContacts() {
   return `<span class="label">Assigned To:</span>`;
 }

@@ -1,8 +1,6 @@
-function doNotClose(event) { // General Function for closing Pop-Up Windows
+function doNotClose(event) { 
     event.stopPropagation();
 }
-
-// General Function to handle Z-Index
 
 function regulateZIndexMenuAndHeader() {
   let header = document.getElementById('header');
@@ -42,6 +40,11 @@ function regulatePositionRelative() {
 
 // Detailview functions
 
+/**
+ * Displays the detail view of a task based on its index.
+ * 
+ * @param {number} index - The index of the todo to display in detail view.
+ */
 function showDetailView(index) {
    let detailViewContainer = document.getElementById('show-detail-todo');
    detailViewContainer.style.display = 'flex';
@@ -59,6 +62,11 @@ function showDetailView(index) {
    regulatePositionStatic();
 }
 
+/**
+ * Displays the subtasks of a task based on its index.
+ * 
+ * @param {number} index - The index of the todo to display in detail view.
+ */
 function renderSubtask(index) {
     let subtasks = document.getElementById(`checkbox-subtask${index}`);
     if(todos[index].subtask.length > 0) {
@@ -70,6 +78,11 @@ function renderSubtask(index) {
     }
 }
 
+/**
+ * Displays the contacts of a task based on its index.
+ * 
+ * @param {number} index - The index of the todo to display in detail view.
+ */
 function renderContactsDetailView(index) {
     let assignedContactsContainer = document.getElementById(`assigned-contacts-detailview${index}`);
     if(todos[index].assignedContacts.length > 0) {
@@ -87,6 +100,10 @@ function renderContactsDetailView(index) {
     }
 }
 
+/**
+ * To close the detail View width a onclick-event.
+ * 
+ */
 function closeDetailView() {
     let detailViewContainer = document.getElementById('show-detail-todo');
     detailViewContainer.style.display = 'none';
@@ -96,6 +113,11 @@ function closeDetailView() {
     renderTodos();
 }
 
+/**
+ * Displays a Checkbox if the subtask is done.
+ * 
+ * @param {number} index - The index of the todo to display in detail view.
+ */
 function renderCheckboxAfterClose(index) {
     for(let i = 0; i < todos[index].subtask.length; i++) {
         let checkboxSubtask = document.getElementById(`subtask${index}-${i}`);
@@ -105,6 +127,11 @@ function renderCheckboxAfterClose(index) {
     }
 }
 
+/**
+ * Delete a task with a onclick-event
+ * 
+ * @param {number} index - The index of the todo to display in detail view.
+ */
 async function deleteTask(index) {
     todos.splice(index);
 
@@ -115,6 +142,11 @@ async function deleteTask(index) {
 
 // Editview functions
 
+/**
+ * Displays the edit view of a task based on its index.
+ * 
+ * @param {number} index - The index of the todo to display in edit view.
+ */
 async function editTask(index) {
     let detailViewContainer = document.getElementById('show-detail-todo');
     detailViewContainer.innerHTML = await templateHTMLEditTask(index);
@@ -130,12 +162,22 @@ async function editTask(index) {
     regulatePositionStatic();
 }
 
+/**
+ * Displays the prio button based on its index.
+ * 
+ * @param {number} index - The index of the todo to display in edit view.
+ */
 function loadPrioButton(index) {
     let prioValue = todos[index].priority;
 
     setPrioBtn(prioValue, index);
 }
 
+/**
+ * 
+ * @param {string} prioValue - The value of the priority 
+ * @param {number} index - The index of the todo to display in edit view.
+ */
 function setPrioBtn(prioValue, index) {
     todos[index] = {
       ...todos[index],
@@ -154,6 +196,13 @@ function setPrioBtn(prioValue, index) {
     prioBtnHigh(high, changeImgHigh, prioValue);
 }
 
+/**
+ * Change the background color, font color, and the image width with an `onclick` event. (Prio: Low)
+ * 
+ * @param {HTMLElement} low - HTML Element to change the characteristics for the Priority 'Low' Btn.
+ * @param {HTMLElement} changeImgLow - HTML Element to change the IMG for the Priority 'Low'.
+ * @param {string} prioValue - Passes the value 'Low'.
+ */
 function prioBtnLow(low, changeImgLow, prioValue) {
     if(prioValue == 'low') {
         low.style.background = '#7ae229';
@@ -166,6 +215,13 @@ function prioBtnLow(low, changeImgLow, prioValue) {
       }
 }
 
+/**
+ * Change the background color, font color, and the image width with an `onclick` event. (Prio: Medium)
+ * 
+ * @param {HTMLElement} medium - HTML Element to change the characteristics for the Priority 'Medium' Btn.
+ * @param {HTMLElement} changeImgMedium - HTML Element to change the IMG for the Priority 'Medium'.
+ * @param {string} prioValue - Passes the value 'Medium'.
+ */
 function prioBtnMedium(medium, changeImgMedium, prioValue) {
     if(prioValue == 'medium') {
         medium.style.background = '#ffa800';
@@ -178,6 +234,13 @@ function prioBtnMedium(medium, changeImgMedium, prioValue) {
       }
 }
 
+/**
+ * Change the background color, font color, and the image width with an `onclick` event. (Prio: High)
+ * 
+ * @param {HTMLElement} high - HTML Element to change the characteristics for the Priority 'High' Btn.
+ * @param {HTMLElement} changeImgHigh - HTML Element to change the IMG for the Priority 'High'.
+ * @param {string} prioValue - Passes the value 'High'.
+ */
 function prioBtnHigh(high, changeImgHigh, prioValue) {
     if(prioValue == 'high') {
         high.style.background = '#ff3d00';
@@ -189,7 +252,26 @@ function prioBtnHigh(high, changeImgHigh, prioValue) {
         changeImgHigh.src = './assets/img/prio-urgent.svg';
       }
 }
-  
+
+/**
+ * Ensures that no date in the past can be displayed.
+ * 
+ */
+function checkDueDateNotInPastEditview() {
+  let currentDate = new Date();
+  let inputDate = document.getElementById("new-date");
+  let year = currentDate.getFullYear();
+  let month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  let day = currentDate.getDate().toString().padStart(2, "0");
+  let currentDateString = year + "-" + month + "-" + day;
+  inputDate.setAttribute("min", currentDateString);
+}
+
+/**
+ * Function to change the assigned contacts
+ * 
+ * @param {number} index - The index of the todo to display in edit view.
+ */
 function changeSelectedContacts(index) {
 
     for (let i = 0; i < todos[index].assignedContacts.length; i++) {
@@ -205,6 +287,11 @@ function changeSelectedContacts(index) {
     }
 }
 
+/**
+ * Push the selected contacts to the backend.
+ * 
+ * @param {number} index - The index of the todo to display in edit view.
+ */
 function pushSelecetedContactsToTodos(index) {
     for(let i = 0; i < contacts.length; i++) {
         const contact = contacts[i].id;
@@ -214,18 +301,12 @@ function pushSelecetedContactsToTodos(index) {
     }
 }
 
-function checkDueDateNotInPastEditview() {
-  let currentDate = new Date();
-  let inputDate = document.getElementById("new-date");
-  let year = currentDate.getFullYear();
-  let month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
-  let day = currentDate.getDate().toString().padStart(2, "0");
-  let currentDateString = year + "-" + month + "-" + day;
-  inputDate.setAttribute("min", currentDateString);
-}
-
 // Assigned Contacts editview
 
+/**
+ * Creates the list of contacts that can be selected.
+ * 
+ */
 function renderAssingnedToDropdownListEditview() {
     let content = document.getElementById("dropdownContentAssignedToEditview");
     content.innerHTML = "";
@@ -236,6 +317,10 @@ function renderAssingnedToDropdownListEditview() {
     }
   }
   
+  /**
+   * Filters the list of contacts that can be selected.
+   * 
+   */
   function filterAssingnedToDropdownListEditview(){
     let contactInput = document.getElementById('contactInput').value;
     contactInput = contactInput.toLowerCase();
@@ -257,6 +342,12 @@ function renderAssingnedToDropdownListEditview() {
     }
   }
   
+  /**
+   * Creates a string with the first letter of each contact.
+   * 
+   * @param {number} i - Number from the array contacts.
+   * @returns {string} - First and second letter.
+   */
   function getFirstAndSecondLetterEditview(i) {
     let name = contacts[i]["name"];
     let splitName = name.split(" ");
@@ -266,6 +357,11 @@ function renderAssingnedToDropdownListEditview() {
     return result;
   }
   
+  /**
+   * Sets the contact to selected
+   * 
+   * @param {number} i - Number from the array contacts.
+   */
   function setContactSelectedEditview(i) {
     if (contacts[i]["selected"]) {
       contacts[i]["selected"] = false;
@@ -277,6 +373,11 @@ function renderAssingnedToDropdownListEditview() {
     renderSelectedContactsIconsEditview();
   }
   
+  /**
+   * Changes the classe of the selected contacte
+   * 
+   * @param {number} i - Number from the array contacts.
+   */
   function showSelectedDropdownContactEditview(i) {
     let dropdownContact = document.getElementById("dropdownContactEditview" + i);
     let dropdownContactImg = document.getElementById("dropdownContactImgEditview" + i);
@@ -289,6 +390,10 @@ function renderAssingnedToDropdownListEditview() {
     }
   }
   
+  /**
+   * Creates the icons below the input field assigned To
+   * 
+   */
   function renderSelectedContactsIconsEditview() {
     let content = document.getElementById("showSelectedDropdownContactEditview");
     content.innerHTML = "";
@@ -299,13 +404,22 @@ function renderAssingnedToDropdownListEditview() {
     }
   }
   
+  /**
+   * Toggle dropdown visibility
+   * 
+   */
   function contactDropdown() {
-      // Toggle dropdown visibility
         dropdownContentAssignedToEditview.style.display = dropdownContentAssignedToEditview.style.display === "flex" ? "none" : "flex";
         let dispayStatus = dropdownContentAssignedToEditview.style.display;
         toggleDropdownIconEditview("assignedToDropdownIconEditview", dispayStatus);
       };
   
+  /**
+   * Change the arrow in the dropdown menu.
+   * 
+   * @param {string} id - Id of the icon to be changed.
+   * @param {string} dispayStatus - Flex or none what the dropdown currently has.
+   */
   function toggleDropdownIconEditview(id, dispayStatus) {
     if (dispayStatus == "flex") {
         document.getElementById(id).src = "./assets/img/arrow_drop_down_up.svg";
@@ -313,21 +427,15 @@ function renderAssingnedToDropdownListEditview() {
         document.getElementById(id).src = "./assets/img/arrow_drop_down.svg";
     }
   }
-      
-  function renderAssingnedToDropdownListHTMLEditview(i, firstAndSecondLetter, color) {
-    return /*html */ `
-      <div class="dropdownContacts" id="dropdownContactEditview${i}" onclick="setContactSelectedEditview(${i})">
-        <div class="dropdownContactNameConatiner">
-          <div class="contactsIcon" style="background-color: ${color}">${firstAndSecondLetter}</div>
-          <p>${contacts[i]['name']}</p>
-        </div>
-        <img id="dropdownContactImgEditview${i}" src="./assets/img/checkbox_unchecked.svg" alt="checkbox_unchecked">
-      </div>
-    `;
-  }
+
 
   // Subtask Editview
 
+  /**
+   * Creates the list of subtasks
+   * 
+   * @param {number} index - The index of the todo to display in edit view.
+   */
   function renderSubtasksEditview(index) {
     let subtasksList = document.getElementById("subtasksListEditview");
     subtasksList.innerHTML = "";
@@ -336,25 +444,14 @@ function renderAssingnedToDropdownListEditview() {
       subtasksList.innerHTML += renderSubtasksHTMLEditview(i, subtasks, index);
     }
   }
-
-  function renderSubtasksHTMLEditview(i, subtasks, index) {
-    return /* html */ `
-    <div id="subtaskEditview${i}" ondblclick="editSubtaskEditview(${i})">
-      <div class="subtask">
-        <div class="subtaskText">
-          <p>&bull;</p>
-          <P>${subtasks}</P>
-        </div>
-        <div class="subtaskMenu">
-          <img src="./assets/img/subtasks_edit_icon.svg" onclick="editSubtaskEditview(${i}, '${subtasks}', ${index})" alt="edit_icon">
-          <img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
-          <img src="./assets/img/subtasks_delete_icon.svg" onclick="deleteSubtaskEditview(${i}, ${index})" alt="delete_icon">
-        </div>
-      </div>
-    </div>
-    `;
-  }
   
+  /**
+   * creates the field to change the subtask.
+   * 
+   * @param {number} i - The index of the subtask.
+   * @param {string} editSubtask - The current Value of the Subtask.
+   * @param {number} index - The index of the todo to display in edit view.
+   */
   function editSubtaskEditview(i, editSubtask, index) {
     let content = document.getElementById("subtaskEditview" + i);
     content.innerHTML = /* html */ `
@@ -369,6 +466,12 @@ function renderAssingnedToDropdownListEditview() {
     `;
   }
   
+  /**
+   * changes the substak in the arry and displays it.
+   * 
+   * @param {number} i - The index of the subtask.
+   * @param {number} index - The index of the todo to display in edit view.
+   */
   async function editSubtaskDoneEditview(i, index) {
     let content = document.getElementById("editSubtask" + i);
     if(content.value !== '') {
@@ -379,6 +482,12 @@ function renderAssingnedToDropdownListEditview() {
     }
   }
   
+  /**
+   * delete the subtask 
+   * 
+   * @param {number} i - The index of the subtask.
+   * @param {number} index - The index of the todo to display in edit view.
+   */
   async function deleteSubtaskEditview(i, index) {
     if(todos[index].subtask[i].subtaskDone == true) {
       todos[index].counter--;
@@ -388,6 +497,11 @@ function renderAssingnedToDropdownListEditview() {
     renderSubtasksEditview(index);
   }
 
+  /**
+   * displays the add or cancel icons for the subtask
+   * 
+   * @param {number} index - The index of the todo to display in edit view.
+   */
   function showSubtasksDoneAndCancelEditview(index) {
     let subtasksInput = document.getElementById("subtasksInputEditview");
     let content = document.getElementById("subtasksInputMenuEditview");
@@ -402,12 +516,21 @@ function renderAssingnedToDropdownListEditview() {
     }
   }
   
+  /**
+   * Clear the input field for Subtask
+   * 
+   */
   function clearSubtaskInputFieldEditview() {
     let content = document.getElementById("subtasksInputEditview");
     content.value = "";
     showSubtasksDoneAndCancelEditview();
   }
 
+  /**
+   * Add the edit Subtask to the Backend
+   * 
+   * @param {number} index - The index of the todo to display in edit view.
+   */
   async function addSubtaskEditview(index) {
     let subtasksInput = document.getElementById("subtasksInputEditview");
     let addSubtask = todos[index].subtask;
@@ -423,6 +546,11 @@ function renderAssingnedToDropdownListEditview() {
     renderSubtasksEditview(index);
 }
 
+/**
+ * Function to change the task and load it into the backend
+ * 
+ * @param {number} index - The index of the todo to display in edit view. 
+ */
 async function changeTask(index) {
     let newTitle = document.getElementById('new-title');
     let newDescription = document.getElementById('new-description');
@@ -451,16 +579,13 @@ async function changeTask(index) {
     renderTodos();
 }
 
-function emptyInput() {
-    document.getElementById('search-mobile').value = '';
-    document.getElementById('search').value = '';
-    renderTodos();
-    document.getElementById('change-img').src = './assets/img/search.svg';
-    document.getElementById('change-img-mobile').src = './assets/img/search.svg';
-}
-
 // Addtask function
 
+/**
+ * Function to load all Functions from the add_task.js
+ * 
+ * @param {string} category - Task becomes the passed status
+ */
 function showAddTask(category) {
     selectedCategory = category;
     let showAddTodoContainer = document.getElementById('show-add-todo');
