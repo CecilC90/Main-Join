@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: add_taskHTML.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: add_taskHTML.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * creates the contackt list
+ * 
+ * @param {number} i number of the contact in the array
+ * @param {string} firstAndSecondLetter first and second letter
+ * @param {string} color color code of the contactes
+ * @returns {string} HTML code
+ */
+function renderAssingnedToDropdownListHTML(i, firstAndSecondLetter, color) {
+  return /*html */ `
+    &lt;div class="dropdownContacts" id="dropdownContact${i}" onclick="setContactSelected(${i})">
+      &lt;div class="dropdownContactNameConatiner">
+        &lt;div class="contactsIcon" style="background-color: ${color}">${firstAndSecondLetter}&lt;/div>
+        &lt;p>${contacts[i]["name"]}&lt;/p>
+      &lt;/div>
+      &lt;img id="dropdownContactImg${i}" src="./assets/img/checkbox_unchecked.svg" alt="checkbox_unchecked">
+    &lt;/div>
+  `;
+}
+
+/**
+ * creates the contackt icons
+ * 
+ * @param {number} i number of the contact in the array
+ * @param {string} color color code of the contactes
+ * @returns {string} HTML code
+ */
+function renderSelectedContactsIconsHTML(i, color) {
+  return /* html */ `
+  &lt;div class="contactsIcon" style="background-color: ${color}">${getFirstAndSecondLetter(i)}&lt;/div>
+`;
+}
+
+/**
+ * creates the category list
+ * 
+ * @param {*} i number of the category in the array
+ * @returns {string} HTML code
+ */
+function renderCategoryDropdownListHTML(i) {
+  return /* html */ `
+    &lt;div class="dropdownCategory" onclick="setSelectedCategory(${i})">
+      &lt;p>${category[i]}&lt;/p>
+    &lt;/div>
+  `;
+}
+
+/**
+ * creates the Subtasks Done And Cancel Icons
+ * 
+ * @param {number} number of the subtask in the array
+ * @returns {string} HTML code
+ */
+function showSubtasksDoneAndCancelIcons(index) {
+  return /* html */ `
+ &lt;img class="subtasksInputMenuimg" onclick="clearSubtaskInputField()" src="./assets/img/subtasks_cancel_icon.svg" alt="cancel_icon">
+ &lt;img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+ &lt;img class="subtasksInputMenuimg" onclick="addSubtask(${index})" src="./assets/img/subtasks_done_icon.svg" alt="done_icon">
+`;
+}
+
+/**
+ * creates the Subtasks Add Icons
+ * 
+ * @returns {string} HTML code
+ */
+function showSubtasksAddIcon() {
+  return '&lt;img src="./assets/img/subtasks_add_icon.svg" alt="add_icon">';
+}
+
+/**
+ * creates the subtask list
+ * 
+ * @param {number} i of the subtask in the array
+ * @returns {string} HTML code
+ */
+function renderSubtasksHTML(i) {
+  return /* html */ `
+  &lt;div id="subtask${i}" ondblclick="editSubtask(${i})">
+    &lt;div class="subtask">
+      &lt;div class="subtaskText">
+        &lt;p>&amp;bull;&lt;/p>
+        &lt;P>${subtasks[i]}&lt;/P>
+      &lt;/div>
+      &lt;div class="subtaskMenu">
+        &lt;img src="./assets/img/subtasks_edit_icon.svg" onclick="editSubtask(${i})" alt="edit_icon">
+        &lt;img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+        &lt;img src="./assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i})" alt="delete_icon">
+      &lt;/div>
+    &lt;/div>
+  &lt;/div>
+  `;
+}
+
+/**
+ * creates the subtask edit field
+ * 
+ * @param {number} i of the subtask in the array 
+ * @returns {string} HTML code
+ */
+function editSubtaskHTML(i) {
+  return /* html */ `
+  &lt;div class="subtaskEdit" id="subtaskEdit">
+    &lt;input type="text" id="editSubtask${i}" value="${subtasks[i]}">
+    &lt;div>
+      &lt;img src="./assets/img/subtasks_delete_icon.svg" onclick="deleteSubtask(${i})" alt="delete_icon">
+      &lt;img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+      &lt;img src="./assets/img/subtasks_done_icon.svg" onclick="editSubtaskDone(${i})" alt="done_icon">
+    &lt;/div>
+  &lt;/div>
+ `;
+}
+
+/**
+ * creates the AddTask container
+ * 
+ * @returns {string} HTML code
+ */
+function renderAddTaskHTML(){
+  return /* html */ `
+  &lt;div class="addTasks">
+    &lt;div class="leftContainer">
+      &lt;div class="taskTitle">
+        &lt;div class="inputContainer">
+          &lt;p>Title&lt;span style="color: #FF8190;">*&lt;/span>&lt;/p>
+          &lt;div class="inputField" id="titleField">
+            &lt;input type="text" id="titleInputField" onkeypress="addTaskOnEnter(event)" onkeyup="setBlueBorder('titleInputField', 'titleField'), clearRequiredText('requiredTextTitle')" placeholder="Enter a title"/>
+          &lt;/div>
+        &lt;/div>
+        &lt;p class="fildIisRequiredText" id="requiredTextTitle">&lt;/p>
+      &lt;/div>
+      &lt;div class="inputContainer">
+        &lt;p>Description&lt;/p>
+        &lt;textarea class="descriptionTextArea" id="descriptionTextArea" onkeypress="addTaskOnEnter(event)" onkeyup="setBlueBorder('descriptionTextArea', 'descriptionTextArea')" placeholder="Enter a Descripton">&lt;/textarea>
+      &lt;/div>
+      &lt;div class="inputContainer assingnedToConatiner">
+        &lt;p>Assingned to&lt;/p>
+        &lt;div>
+          &lt;div class="inputField dropdown">
+            &lt;input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownList()" placeholder="Add a Contact"/>
+            &lt;img class="dropDownIcon" id="assignedToDropdownIcon" src="./assets/img/arrow_drop_down.svg" alt="" />
+          &lt;/div>
+          &lt;div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo">
+            &lt;!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->
+          &lt;/div>
+        &lt;/div>
+        &lt;div class="contactesIconsContainer" id="showSelectedDropdownContact">
+          &lt;!-- hier wird über die function renderSelectedContactsIcons() eingefügt-->
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+    &lt;div class="seperatorContainer">
+      &lt;img src="./assets/img/seperator_add_task.svg" alt="sepertor" />
+    &lt;/div>
+    &lt;div class="rightContainer">
+      &lt;div class="taskDueDate">
+        &lt;div class="inputContainer">
+          &lt;p>Due date&lt;span style="color: #FF8190;">*&lt;/span>&lt;/p>
+          &lt;div class="inputField" id="duedateField">
+            &lt;input class="duedateInputField" id="duedateInputField" type="date" onkeypress="addTaskOnEnter(event)" onkeyup="changeColorDuedate()" onchange="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate'), changeColorDuedate()"/>
+          &lt;/div>
+        &lt;/div>
+        &lt;p class="fildIisRequiredText" id="requiredTextDuedate">&lt;/p>
+      &lt;/div>
+      &lt;div class="taskPrio">
+        &lt;p>Prio&lt;/p>
+        &lt;div class="prioButtonConatiner">
+          &lt;div class="prioButton" id="prioButtonHigh" onclick="setPrioButton('high')">
+            &lt;p>Urgent&lt;/p>
+            &lt;svg width="21" height="16" viewBox="0 0 21 16" fill="none">
+              &lt;g clip-path="url(#clip0_156_1031)">
+                &lt;path
+                  d="M19.2597 15.4466C19.0251 15.447 18.7965 15.3722 18.6077 15.2331L10.3556 9.14989L2.10356 15.2331C1.98771 15.3186 1.85613 15.3806 1.71633 15.4153C1.57652 15.4501 1.43124 15.457 1.28877 15.4356C1.14631 15.4142 1.00944 15.3651 0.885997 15.2908C0.762552 15.2166 0.654943 15.1189 0.569314 15.0031C0.483684 14.8873 0.421712 14.7558 0.386936 14.6161C0.352159 14.4764 0.345259 14.3313 0.366629 14.1889C0.409788 13.9014 0.565479 13.6428 0.799451 13.47L9.70356 6.89951C9.89226 6.75992 10.1208 6.68457 10.3556 6.68457C10.5904 6.68457 10.819 6.75992 11.0077 6.89951L19.9118 13.47C20.0977 13.6069 20.2356 13.799 20.3057 14.0189C20.3759 14.2388 20.3747 14.4752 20.3024 14.6944C20.2301 14.9135 20.0904 15.1043 19.9031 15.2394C19.7159 15.3745 19.4907 15.447 19.2597 15.4466Z"
+                  fill="#FF3D00"
+                />
+                &lt;path
+                  d="M19.2597 9.69746C19.0251 9.69786 18.7965 9.62301 18.6077 9.48391L10.3556 3.40075L2.10356 9.48391C1.86959 9.65672 1.57651 9.72958 1.28878 9.68645C1.00105 9.64332 0.742254 9.48775 0.569318 9.25395C0.396382 9.02015 0.323475 8.72728 0.366634 8.43976C0.409793 8.15225 0.565483 7.89364 0.799455 7.72084L9.70356 1.15036C9.89226 1.01077 10.1208 0.935425 10.3556 0.935425C10.5904 0.935425 10.819 1.01077 11.0077 1.15036L19.9118 7.72084C20.0977 7.85775 20.2356 8.04987 20.3057 8.26975C20.3759 8.48962 20.3747 8.72603 20.3024 8.94521C20.2301 9.1644 20.0904 9.35515 19.9031 9.49024C19.7159 9.62533 19.4907 9.69785 19.2597 9.69746Z"
+                  fill="#FF3D00"
+                />
+              &lt;/g>
+              &lt;defs>
+                &lt;clipPath id="clip0_156_1031">
+                  &lt;rect width="20" height="14.5098" fill="white" transform="translate(0.355469 0.936768)" />
+                &lt;/clipPath>
+              &lt;/defs>
+            &lt;/svg>
+          &lt;/div>
+          &lt;div class="prioButton" id="prioButtonMedium" onclick="setPrioButton('medium')">
+            &lt;p>Medium&lt;/p>
+            &lt;svg width="21" height="8" viewBox="0 0 21 8" fill="none">
+              &lt;g clip-path="url(#clip0_156_1016)">
+                &lt;path
+                  d="M19.7596 7.91693H1.95136C1.66071 7.91693 1.38197 7.80063 1.17645 7.59362C0.970928 7.3866 0.855469 7.10584 0.855469 6.81308C0.855469 6.52032 0.970928 6.23955 1.17645 6.03254C1.38197 5.82553 1.66071 5.70923 1.95136 5.70923H19.7596C20.0502 5.70923 20.329 5.82553 20.5345 6.03254C20.74 6.23955 20.8555 6.52032 20.8555 6.81308C20.8555 7.10584 20.74 7.3866 20.5345 7.59362C20.329 7.80063 20.0502 7.91693 19.7596 7.91693Z"
+                  fill="#FFA800"
+                />
+                &lt;path
+                  d="M19.7596 2.67376H1.95136C1.66071 2.67376 1.38197 2.55746 1.17645 2.35045C0.970928 2.14344 0.855469 1.86267 0.855469 1.56991C0.855469 1.27715 0.970928 0.996386 1.17645 0.789374C1.38197 0.582363 1.66071 0.466064 1.95136 0.466064L19.7596 0.466064C20.0502 0.466064 20.329 0.582363 20.5345 0.789374C20.74 0.996386 20.8555 1.27715 20.8555 1.56991C20.8555 1.86267 20.74 2.14344 20.5345 2.35045C20.329 2.55746 20.0502 2.67376 19.7596 2.67376Z"
+                  fill="#FFA800"
+                />
+              &lt;/g>
+              &lt;defs>
+                &lt;clipPath id="clip0_156_1016">
+                  &lt;rect width="20" height="7.45098" fill="white" transform="translate(0.855469 0.466064)" />
+                &lt;/clipPath>
+              &lt;/defs>
+            &lt;/svg>
+          &lt;/div>
+          &lt;div class="prioButton" id="prioButtonLow" onclick="setPrioButton('low')">
+            &lt;p>Low&lt;/p>
+            &lt;svg width="21" height="16" viewBox="0 0 21 16" fill="none">
+              &lt;path
+                d="M10.8555 9.69779C10.6209 9.69819 10.3923 9.62335 10.2035 9.48427L1.30038 2.91453C1.18454 2.82898 1.0867 2.72146 1.01245 2.59812C0.938193 2.47478 0.888977 2.33803 0.867609 2.19569C0.824455 1.90821 0.897354 1.61537 1.07027 1.3816C1.24319 1.14782 1.50196 0.992265 1.78965 0.949143C2.07734 0.906021 2.3704 0.978866 2.60434 1.15165L10.8555 7.23414L19.1066 1.15165C19.2224 1.0661 19.354 1.00418 19.4938 0.969432C19.6336 0.934685 19.7788 0.927791 19.9213 0.949143C20.0637 0.970495 20.2006 1.01967 20.324 1.09388C20.4474 1.16808 20.555 1.26584 20.6407 1.3816C20.7263 1.49735 20.7883 1.62882 20.823 1.7685C20.8578 1.90818 20.8647 2.05334 20.8433 2.19569C20.822 2.33803 20.7727 2.47478 20.6985 2.59812C20.6242 2.72146 20.5264 2.82898 20.4106 2.91453L11.5075 9.48427C11.3186 9.62335 11.0901 9.69819 10.8555 9.69779Z"
+                fill="#7AE229"
+              />
+              &lt;path
+                d="M10.8555 15.4463C10.6209 15.4467 10.3923 15.3719 10.2035 15.2328L1.30038 8.66307C1.06644 8.49028 0.910763 8.2317 0.867609 7.94422C0.824455 7.65674 0.897354 7.3639 1.07027 7.13013C1.24319 6.89636 1.50196 6.7408 1.78965 6.69768C2.07734 6.65456 2.3704 6.7274 2.60434 6.90019L10.8555 12.9827L19.1066 6.90019C19.3405 6.7274 19.6336 6.65456 19.9213 6.69768C20.209 6.7408 20.4678 6.89636 20.6407 7.13013C20.8136 7.3639 20.8865 7.65674 20.8433 7.94422C20.8002 8.2317 20.6445 8.49028 20.4106 8.66307L11.5075 15.2328C11.3186 15.3719 11.0901 15.4467 10.8555 15.4463Z"
+                fill="#7AE229"
+              />
+            &lt;/svg>
+          &lt;/div>
+        &lt;/div>
+      &lt;/div>
+      &lt;div class="inputContainer categoryContainer">
+        &lt;p>Category&lt;span style="color: #FF8190;">*&lt;/span>&lt;/p>
+        &lt;div>
+          &lt;div class="inputField" id="categoryField" onclick="removeBorader('categoryField')">
+            &lt;input type="text" id="inputFieldCategory" onkeypress="addTaskOnEnter(event)" placeholder="Select task category" />
+            &lt;img class="dropDownIcon" id="categoryDropdownIcon" src="./assets/img/arrow_drop_down.svg" alt="drop down icon" />
+          &lt;/div>
+          &lt;div class="dropdownContenCategory" id="dropdownContenCategory">
+            &lt;!-- hier wird über die function renderCategoryDropdownList() eingefügt-->
+          &lt;/div>
+        &lt;/div>
+      &lt;/div>
+      &lt;div class="inputContainer">
+        &lt;p>Subtasks&lt;/p>
+        &lt;div class="inputField" id="subtaskField">
+          &lt;input type="text" id="subtasksInput" onkeypress="addSubtaskOnEnter(event)" onkeyup="showSubtasksDoneAndCancel(), setBlueBorder('subtasksInput', 'subtaskField')" placeholder="Add new subtask" />
+          &lt;div class="subtasksInputMenu" id="subtasksInputMenu">
+            &lt;img src="./assets/img/subtasks_add_icon.svg" alt="add_icon" />
+          &lt;/div>
+        &lt;/div>
+        &lt;div>
+          &lt;div class="subtasksList" id="subtasksList">&lt;/div>
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+    &lt;button style="display: none">&lt;/button>
+  &lt;/div>
+  `
+}
+
+/**
+ * creates the AddTaskMobile container
+ * 
+ * @returns {string} HTML code
+ */
+function renderAddTaskMobileHTML() {
+  return /* html */ `
+  &lt;div class="addTasks">
+    &lt;div class="taskTitle">
+      &lt;div class="inputContainer">
+        &lt;p>Title&lt;span style="color: #FF8190;">*&lt;/span>&lt;/p>
+        &lt;div class="inputField" id="titleField">
+          &lt;input type="text" id="titleInputField" onkeyup="setBlueBorder('titleInputField', 'titleField'), clearRequiredText('requiredTextTitle')" placeholder="Enter a title" required />
+        &lt;/div>
+      &lt;/div>
+      &lt;p class="fildIisRequiredText" id="requiredTextTitle">&lt;/p>
+    &lt;/div>
+
+    &lt;div class="inputContainer">
+      &lt;p>Description&lt;/p>
+      &lt;textarea class="descriptionTextArea" id="descriptionTextArea" onkeyup="setBlueBorder('descriptionTextArea', 'descriptionTextArea')" placeholder="Enter a Descripton">&lt;/textarea>
+    &lt;/div>
+
+    &lt;div class="taskPrio">
+      &lt;p>Prio&lt;/p>
+      &lt;div class="prioButtonConatiner">
+        &lt;div class="prioButton" id="prioButtonHigh" onclick="setPrioButton('high')">
+          &lt;p>Urgent&lt;/p>
+          &lt;svg width="21" height="16" viewBox="0 0 21 16" fill="none">
+            &lt;g clip-path="url(#clip0_156_1031)">
+              &lt;path
+                d="M19.2597 15.4466C19.0251 15.447 18.7965 15.3722 18.6077 15.2331L10.3556 9.14989L2.10356 15.2331C1.98771 15.3186 1.85613 15.3806 1.71633 15.4153C1.57652 15.4501 1.43124 15.457 1.28877 15.4356C1.14631 15.4142 1.00944 15.3651 0.885997 15.2908C0.762552 15.2166 0.654943 15.1189 0.569314 15.0031C0.483684 14.8873 0.421712 14.7558 0.386936 14.6161C0.352159 14.4764 0.345259 14.3313 0.366629 14.1889C0.409788 13.9014 0.565479 13.6428 0.799451 13.47L9.70356 6.89951C9.89226 6.75992 10.1208 6.68457 10.3556 6.68457C10.5904 6.68457 10.819 6.75992 11.0077 6.89951L19.9118 13.47C20.0977 13.6069 20.2356 13.799 20.3057 14.0189C20.3759 14.2388 20.3747 14.4752 20.3024 14.6944C20.2301 14.9135 20.0904 15.1043 19.9031 15.2394C19.7159 15.3745 19.4907 15.447 19.2597 15.4466Z"
+                fill="#FF3D00"
+              />
+              &lt;path
+                d="M19.2597 9.69746C19.0251 9.69786 18.7965 9.62301 18.6077 9.48391L10.3556 3.40075L2.10356 9.48391C1.86959 9.65672 1.57651 9.72958 1.28878 9.68645C1.00105 9.64332 0.742254 9.48775 0.569318 9.25395C0.396382 9.02015 0.323475 8.72728 0.366634 8.43976C0.409793 8.15225 0.565483 7.89364 0.799455 7.72084L9.70356 1.15036C9.89226 1.01077 10.1208 0.935425 10.3556 0.935425C10.5904 0.935425 10.819 1.01077 11.0077 1.15036L19.9118 7.72084C20.0977 7.85775 20.2356 8.04987 20.3057 8.26975C20.3759 8.48962 20.3747 8.72603 20.3024 8.94521C20.2301 9.1644 20.0904 9.35515 19.9031 9.49024C19.7159 9.62533 19.4907 9.69785 19.2597 9.69746Z"
+                fill="#FF3D00"
+              />
+           &lt;/g>
+            &lt;defs>
+              &lt;clipPath id="clip0_156_1031">
+                &lt;rect width="20" height="14.5098" fill="white" transform="translate(0.355469 0.936768)" />
+              &lt;/clipPath>
+            &lt;/defs>
+          &lt;/svg>
+        &lt;/div>
+        &lt;div class="prioButton" id="prioButtonMedium" onclick="setPrioButton('medium')">
+          &lt;p>Medium&lt;/p>
+          &lt;svg width="21" height="8" viewBox="0 0 21 8" fill="none">
+            &lt;g clip-path="url(#clip0_156_1016)">
+              &lt;path
+                d="M19.7596 7.91693H1.95136C1.66071 7.91693 1.38197 7.80063 1.17645 7.59362C0.970928 7.3866 0.855469 7.10584 0.855469 6.81308C0.855469 6.52032 0.970928 6.23955 1.17645 6.03254C1.38197 5.82553 1.66071 5.70923 1.95136 5.70923H19.7596C20.0502 5.70923 20.329 5.82553 20.5345 6.03254C20.74 6.23955 20.8555 6.52032 20.8555 6.81308C20.8555 7.10584 20.74 7.3866 20.5345 7.59362C20.329 7.80063 20.0502 7.91693 19.7596 7.91693Z"
+                fill="#FFA800"
+              />
+              &lt;path
+                d="M19.7596 2.67376H1.95136C1.66071 2.67376 1.38197 2.55746 1.17645 2.35045C0.970928 2.14344 0.855469 1.86267 0.855469 1.56991C0.855469 1.27715 0.970928 0.996386 1.17645 0.789374C1.38197 0.582363 1.66071 0.466064 1.95136 0.466064L19.7596 0.466064C20.0502 0.466064 20.329 0.582363 20.5345 0.789374C20.74 0.996386 20.8555 1.27715 20.8555 1.56991C20.8555 1.86267 20.74 2.14344 20.5345 2.35045C20.329 2.55746 20.0502 2.67376 19.7596 2.67376Z"
+                fill="#FFA800"
+              />
+            &lt;/g>
+            &lt;defs>
+              &lt;clipPath id="clip0_156_1016">
+                &lt;rect width="20" height="7.45098" fill="white" transform="translate(0.855469 0.466064)" />
+              &lt;/clipPath>
+            &lt;/defs>
+          &lt;/svg>
+        &lt;/div>
+        &lt;div class="prioButton" id="prioButtonLow" onclick="setPrioButton('low')">
+          &lt;p>Low&lt;/p>
+          &lt;svg width="21" height="16" viewBox="0 0 21 16" fill="none">
+            &lt;path
+              d="M10.8555 9.69779C10.6209 9.69819 10.3923 9.62335 10.2035 9.48427L1.30038 2.91453C1.18454 2.82898 1.0867 2.72146 1.01245 2.59812C0.938193 2.47478 0.888977 2.33803 0.867609 2.19569C0.824455 1.90821 0.897354 1.61537 1.07027 1.3816C1.24319 1.14782 1.50196 0.992265 1.78965 0.949143C2.07734 0.906021 2.3704 0.978866 2.60434 1.15165L10.8555 7.23414L19.1066 1.15165C19.2224 1.0661 19.354 1.00418 19.4938 0.969432C19.6336 0.934685 19.7788 0.927791 19.9213 0.949143C20.0637 0.970495 20.2006 1.01967 20.324 1.09388C20.4474 1.16808 20.555 1.26584 20.6407 1.3816C20.7263 1.49735 20.7883 1.62882 20.823 1.7685C20.8578 1.90818 20.8647 2.05334 20.8433 2.19569C20.822 2.33803 20.7727 2.47478 20.6985 2.59812C20.6242 2.72146 20.5264 2.82898 20.4106 2.91453L11.5075 9.48427C11.3186 9.62335 11.0901 9.69819 10.8555 9.69779Z"
+              fill="#7AE229"
+            />
+            &lt;path
+              d="M10.8555 15.4463C10.6209 15.4467 10.3923 15.3719 10.2035 15.2328L1.30038 8.66307C1.06644 8.49028 0.910763 8.2317 0.867609 7.94422C0.824455 7.65674 0.897354 7.3639 1.07027 7.13013C1.24319 6.89636 1.50196 6.7408 1.78965 6.69768C2.07734 6.65456 2.3704 6.7274 2.60434 6.90019L10.8555 12.9827L19.1066 6.90019C19.3405 6.7274 19.6336 6.65456 19.9213 6.69768C20.209 6.7408 20.4678 6.89636 20.6407 7.13013C20.8136 7.3639 20.8865 7.65674 20.8433 7.94422C20.8002 8.2317 20.6445 8.49028 20.4106 8.66307L11.5075 15.2328C11.3186 15.3719 11.0901 15.4467 10.8555 15.4463Z"
+              fill="#7AE229"
+            />
+          &lt;/svg>
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+
+    &lt;div class="taskDueDate">
+      &lt;div class="inputContainer">
+        &lt;p>Due date&lt;span style="color: #FF8190;">*&lt;/span>&lt;/p>
+        &lt;div class="inputField" id="duedateField">
+        &lt;input class="duedateInputField" id="duedateInputField" type="date" onkeyup="changeColorDuedate()" onchange="setBlueBorder('duedateInputField', 'duedateField'), clearRequiredText('requiredTextDuedate'), changeColorDuedate()"/>
+        &lt;/div>
+      &lt;/div>
+      &lt;p class="fildIisRequiredText" id="requiredTextDuedate">&lt;/p>
+    &lt;/div>
+
+    &lt;div class="inputContainer categoryContainer">
+      &lt;p>Category&lt;span style="color: #FF8190;">*&lt;/span>&lt;/p>
+      &lt;div>
+        &lt;div class="inputField" id="categoryField" onclick="removeBorader('categoryField')">
+          &lt;input type="text" id="inputFieldCategory" placeholder="Select task category" />
+          &lt;img class="dropDownIcon" id="categoryDropdownIcon" src="./assets/img/arrow_drop_down.svg" alt="drop down icon" />
+        &lt;/div>
+        &lt;div class="dropdownContenCategory" id="dropdownContenCategory">
+          &lt;!-- hier wird über die function renderCategoryDropdownList() eingefügt-->
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+
+    &lt;div class="inputContainer assingnedToConatiner">
+      &lt;p>Assingned to&lt;/p>
+      &lt;div>
+        &lt;div class="inputField dropdown">
+          &lt;input type="text" id="contactInput" onkeyup="filterAssingnedToDropdownList()" placeholder="Add a Contact"/>
+          &lt;img class="dropDownIcon" id="assignedToDropdownIcon" src="./assets/img/arrow_drop_down.svg" alt="" />
+        &lt;/div>
+        &lt;div class="dropdownContentAssignedTo" id="dropdownContentAssignedTo">
+          &lt;!-- hier wird über die function renderAssingnedToDropdownList() eingefügt-->
+        &lt;/div>
+      &lt;/div>
+      &lt;div class="contactesIconsContainer" id="showSelectedDropdownContact">
+        &lt;!-- hier wird über die function renderSelectedContactsIcons() eingefügt-->
+      &lt;/div>
+    &lt;/div>
+      
+    &lt;div class="inputContainer">
+      &lt;p>Subtasks&lt;/p>
+      &lt;div class="inputField" id="subtaskField">
+        &lt;input type="text" id="subtasksInput" onkeyup="showSubtasksDoneAndCancel(), setBlueBorder('subtasksInput', 'subtaskField')" placeholder="Add new subtask" />
+        &lt;div class="subtasksInputMenu" id="subtasksInputMenu">
+          &lt;img src="./assets/img/subtasks_add_icon.svg" alt="add_icon" />
+        &lt;/div>
+      &lt;/div>
+      &lt;div>
+        &lt;div class="subtasksList" id="subtasksList">&lt;/div>
+      &lt;/div>
+    &lt;/div>
+  &lt;/div>
+`;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#addSubtaskOnEnter">addSubtaskOnEnter</a></li><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#addTaskOnEnter">addTaskOnEnter</a></li><li><a href="global.html#addToTaskBackend">addToTaskBackend</a></li><li><a href="global.html#addUser">addUser</a></li><li><a href="global.html#awaitCount">awaitCount</a></li><li><a href="global.html#backgroundColors">backgroundColors</a></li><li><a href="global.html#cancelInput">cancelInput</a></li><li><a href="global.html#changeColorDuedate">changeColorDuedate</a></li><li><a href="global.html#changePasswordIconLogin">changePasswordIconLogin</a></li><li><a href="global.html#changePasswordIconRegistration">changePasswordIconRegistration</a></li><li><a href="global.html#changePasswordIconRegistrationConfirm">changePasswordIconRegistrationConfirm</a></li><li><a href="global.html#checkDueDateNotInPast">checkDueDateNotInPast</a></li><li><a href="global.html#checkIsFieldFilled">checkIsFieldFilled</a></li><li><a href="global.html#checkIsMsgAvailable">checkIsMsgAvailable</a></li><li><a href="global.html#checkScreenWidth">checkScreenWidth</a></li><li><a href="global.html#checkTime">checkTime</a></li><li><a href="global.html#clearRequiredText">clearRequiredText</a></li><li><a href="global.html#clearSubtaskInputField">clearSubtaskInputField</a></li><li><a href="global.html#clearTask">clearTask</a></li><li><a href="global.html#closeAddContactPopUp">closeAddContactPopUp</a></li><li><a href="global.html#closeMainContact">closeMainContact</a></li><li><a href="global.html#closePopUp">closePopUp</a></li><li><a href="global.html#closeUserInformation">closeUserInformation</a></li><li><a href="global.html#contacts">contacts</a></li><li><a href="global.html#deadlineHTML">deadlineHTML</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#dontshowSignUpfinished">dontshowSignUpfinished</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editSubtaskDone">editSubtaskDone</a></li><li><a href="global.html#editSubtaskHTML">editSubtaskHTML</a></li><li><a href="global.html#feedback">feedback</a></li><li><a href="global.html#fillInputFieldsFromUser">fillInputFieldsFromUser</a></li><li><a href="global.html#filterAssingnedToDropdownList">filterAssingnedToDropdownList</a></li><li><a href="global.html#finished">finished</a></li><li><a href="global.html#formatName">formatName</a></li><li><a href="global.html#getFirstAndSecondLetter">getFirstAndSecondLetter</a></li><li><a href="global.html#getFirstLetter">getFirstLetter</a></li><li><a href="global.html#getMemberInitials">getMemberInitials</a></li><li><a href="global.html#goToStart">goToStart</a></li><li><a href="global.html#greeting">greeting</a></li><li><a href="global.html#handleRememberMe">handleRememberMe</a></li><li><a href="global.html#handleScreenWidth">handleScreenWidth</a></li><li><a href="global.html#handleWindowClick">handleWindowClick</a></li><li><a href="global.html#highlightUsercard">highlightUsercard</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initContacts">initContacts</a></li><li><a href="global.html#initializePolicyPage">initializePolicyPage</a></li><li><a href="global.html#loadAllSubtasks">loadAllSubtasks</a></li><li><a href="global.html#loadAllTasks">loadAllTasks</a></li><li><a href="global.html#loadContacts">loadContacts</a></li><li><a href="global.html#loadContent">loadContent</a></li><li><a href="global.html#loadEventListner">loadEventListner</a></li><li><a href="global.html#loadMemberInfo">loadMemberInfo</a></li><li><a href="global.html#loadRememberedUser">loadRememberedUser</a></li><li><a href="global.html#loadSelectedContacts">loadSelectedContacts</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#markLoggedinContact">markLoggedinContact</a></li><li><a href="global.html#openAddContactPopUp">openAddContactPopUp</a></li><li><a href="global.html#openAddPopupContainer">openAddPopupContainer</a></li><li><a href="global.html#openContactOptionsMobile">openContactOptionsMobile</a></li><li><a href="global.html#openContatOptions">openContatOptions</a></li><li><a href="global.html#openEditContactPopUp">openEditContactPopUp</a></li><li><a href="global.html#openEditPopupContainer">openEditPopupContainer</a></li><li><a href="global.html#openUserInformation">openUserInformation</a></li><li><a href="global.html#openUserOverview">openUserOverview</a></li><li><a href="global.html#passwordLockIcon">passwordLockIcon</a></li><li><a href="global.html#passwordVisibilityOffIcon">passwordVisibilityOffIcon</a></li><li><a href="global.html#passwordVisibilityOnIcon">passwordVisibilityOnIcon</a></li><li><a href="global.html#progressCount">progressCount</a></li><li><a href="global.html#removeBorader">removeBorader</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderAddTaskHTML">renderAddTaskHTML</a></li><li><a href="global.html#renderAddTaskMobileHTML">renderAddTaskMobileHTML</a></li><li><a href="global.html#renderAssingnedToDropdownList">renderAssingnedToDropdownList</a></li><li><a href="global.html#renderAssingnedToDropdownListHTML">renderAssingnedToDropdownListHTML</a></li><li><a href="global.html#renderCategoryDropdownList">renderCategoryDropdownList</a></li><li><a href="global.html#renderCategoryDropdownListHTML">renderCategoryDropdownListHTML</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderContactsHTML">renderContactsHTML</a></li><li><a href="global.html#renderFirstLetterHTML">renderFirstLetterHTML</a></li><li><a href="global.html#renderInitials">renderInitials</a></li><li><a href="global.html#renderRegistrationPage">renderRegistrationPage</a></li><li><a href="global.html#renderRegistrationPageHTML">renderRegistrationPageHTML</a></li><li><a href="global.html#renderSelectedContactsIcons">renderSelectedContactsIcons</a></li><li><a href="global.html#renderSelectedContactsIconsHTML">renderSelectedContactsIconsHTML</a></li><li><a href="global.html#renderSingUpButtonHTML">renderSingUpButtonHTML</a></li><li><a href="global.html#renderStartPage">renderStartPage</a></li><li><a href="global.html#renderStartPageHTML">renderStartPageHTML</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderSubtasksHTML">renderSubtasksHTML</a></li><li><a href="global.html#renderSummary">renderSummary</a></li><li><a href="global.html#renderTasks">renderTasks</a></li><li><a href="global.html#resetAddInput">resetAddInput</a></li><li><a href="global.html#resetUserCardStyles">resetUserCardStyles</a></li><li><a href="global.html#returnNextDueDate">returnNextDueDate</a></li><li><a href="global.html#saveAllTasks">saveAllTasks</a></li><li><a href="global.html#setBlueBorder">setBlueBorder</a></li><li><a href="global.html#setColorPrivacyPolicRed">setColorPrivacyPolicRed</a></li><li><a href="global.html#setContactSelected">setContactSelected</a></li><li><a href="global.html#setLogoPosition">setLogoPosition</a></li><li><a href="global.html#setMobileVersionIsOn">setMobileVersionIsOn</a></li><li><a href="global.html#setPrioButton">setPrioButton</a></li><li><a href="global.html#setPrivacyPolic">setPrivacyPolic</a></li><li><a href="global.html#setRedBorder">setRedBorder</a></li><li><a href="global.html#setRememberMe">setRememberMe</a></li><li><a href="global.html#setSelectedCategory">setSelectedCategory</a></li><li><a href="global.html#showAddTaskToBoard">showAddTaskToBoard</a></li><li><a href="global.html#showEmailAlreadyUsed">showEmailAlreadyUsed</a></li><li><a href="global.html#showEmailNotExisting">showEmailNotExisting</a></li><li><a href="global.html#showGreetingMobile">showGreetingMobile</a></li><li><a href="global.html#showLoginWorngPassword">showLoginWorngPassword</a></li><li><a href="global.html#showName">showName</a></li><li><a href="global.html#showPasswordClearText">showPasswordClearText</a></li><li><a href="global.html#showPasswordNotConfirm">showPasswordNotConfirm</a></li><li><a href="global.html#showSelectedDropdownContact">showSelectedDropdownContact</a></li><li><a href="global.html#showSignUpfinished">showSignUpfinished</a></li><li><a href="global.html#showSubtasksAddIcon">showSubtasksAddIcon</a></li><li><a href="global.html#showSubtasksDoneAndCancel">showSubtasksDoneAndCancel</a></li><li><a href="global.html#showSubtasksDoneAndCancelIcons">showSubtasksDoneAndCancelIcons</a></li><li><a href="global.html#sortSecondName">sortSecondName</a></li><li><a href="global.html#sortedContactList">sortedContactList</a></li><li><a href="global.html#sortingContacts">sortingContacts</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#todoCount">todoCount</a></li><li><a href="global.html#toggleDropdownIcon">toggleDropdownIcon</a></li><li><a href="global.html#toggleUserInformation">toggleUserInformation</a></li><li><a href="global.html#updateContactsInfo">updateContactsInfo</a></li><li><a href="global.html#urgent">urgent</a></li><li><a href="global.html#userInformationHTML">userInformationHTML</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Feb 16 2024 13:00:26 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

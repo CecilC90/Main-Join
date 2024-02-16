@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: login.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: login.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let backgroundColors = [
+  "#ff0000", // Rot
+  "#00ff00", // Grün
+  "#0000ff", // Blau
+  "#ffff00", // Gelb
+  "#ff00ff", // Magenta
+  "#00ffff", // Cyan
+  "#ff9900", // Orange
+  "#9900ff", // Lila
+  "#009900", // Dunkelgrün
+  "#990000", // Dunkelrot
+  "#ffcc00", // Goldgelb
+  "#cc66ff", // Flieder
+  "#0099cc", // Türkis
+  "#ff6699", // Rosa
+  "#663300", // Braun
+  "#99cc00", // Olivgrün
+  "#6600cc", // Indigo
+  "#ff9966", // Pfirsich
+  "#336600", // Dunkelgrün
+  "#cc0000", // Dunkelrot
+];
+let contacts = [];
+let privacyPolic = false;
+let rememberMe = false;
+let saveRememberMeJson = [];
+let loadRememberMeJson = [];
+let loginPassword = false;
+let registrationPassword = false;
+let registrationConfirmPassword = false;
+/**
+ * launches the page
+ * 
+ */
+function init() {
+  renderStartPage();
+  changePasswordIconLogin("passwordIconContainer", "password");
+}
+/**
+ * Load the start page to log in
+ * 
+ */
+function renderStartPage() {
+  let content = document.getElementById("loginMaskContainer");
+  content.innerHTML = renderStartPageHTML();
+  let singUpButton = document.getElementById("signUpButtonContainer");
+  singUpButton.innerHTML = renderSingUpButtonHTML();
+  loadRememberedUser();
+}
+
+/**
+ * change the login page to the registration page
+ * 
+ */
+function renderRegistrationPage() {
+  document.getElementById("signUpButtonContainer").innerHTML = "";
+  let content = document.getElementById("loginMaskContainer");
+  content.innerHTML = renderRegistrationPageHTML();
+}
+
+/**
+ * triggers the logo slide in the desktop and mobile version
+ * 
+ */
+document.addEventListener("DOMContentLoaded", function () {
+  var slideImage = document.getElementById("slideImage");
+  var content = document.getElementById("content");
+  var loginMaskContainer = document.getElementById("loginMaskContainer");
+  var initialTop = window.innerHeight / 2 - slideImage.clientHeight / 2;
+  var initialLeft = window.innerWidth / 2 - slideImage.clientWidth / 2;
+  var slideImageColors = document.querySelectorAll(".slideImageColor");
+  if (window.innerWidth >= 750) {
+    slideImage.style.top = initialTop + "px";
+    slideImage.style.left = initialLeft + "px";
+    slideImageColors.forEach(function (path) {
+      path.setAttribute("fill", "#2A3647");
+    });
+    setTimeout(function () {
+      slideImage.style.top = "80px";
+      slideImage.style.left = "77px";
+      slideImage.style.transform = "translate(0, 0) scale(1)";
+      slideImage.style.width = "100.03px";
+      slideImage.style.height = "121.97px";
+      content.style.opacity = 1;
+      loginMaskContainer.style.opacity = 1;
+    }, 500);
+  }else if (window.innerHeight &lt;= 700) {
+    slideImage.style.top = initialTop + "px";
+    slideImage.style.left = initialLeft + "px";
+    setTimeout(function () {
+      slideImage.style.top = "8px";
+      slideImage.style.left = "16px";
+      slideImage.style.transform = "translate(0, 0) scale(1)";
+      slideImage.style.width = "54px";
+      slideImage.style.height = "68.03px";
+      content.style.opacity = 1;
+      loginMaskContainer.style.opacity = 1;
+      document.body.style.backgroundColor = "#F6F7F8";
+      slideImageColors.forEach(function (path) {
+        path.setAttribute("fill", "#2A3647");
+      });
+    }, 500);
+  } else {
+    slideImage.style.top = initialTop + "px";
+    slideImage.style.left = initialLeft + "px";
+    setTimeout(function () {
+      slideImage.style.top = "37px";
+      slideImage.style.left = "38px";
+      slideImage.style.transform = "translate(0, 0) scale(1)";
+      slideImage.style.width = "64px";
+      slideImage.style.height = "78.03px";
+      content.style.opacity = 1;
+      loginMaskContainer.style.opacity = 1;
+      document.body.style.backgroundColor = "#F6F7F8";
+      slideImageColors.forEach(function (path) {
+        path.setAttribute("fill", "#2A3647");
+      });
+    }, 500);
+  }
+});
+
+/**
+ * starts the function setLogoPosition when changing the page width
+ * 
+ */
+window.addEventListener("resize", setLogoPosition);
+
+/**
+ * changes the position of the logo when changing the page width
+ * 
+ */
+function setLogoPosition() {
+  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  if (screenWidth &lt;= 750) {
+    slideImage.style.top = "37px";
+    slideImage.style.left = "38px";
+    slideImage.style.transform = "translate(0, 0) scale(1)";
+    slideImage.style.width = "64px";
+    slideImage.style.height = "78.03px";
+    document.body.style.backgroundColor = "#F6F7F8";
+  } else {
+    slideImage.style.top = "80px";
+    slideImage.style.left = "77px";
+    slideImage.style.transform = "translate(0, 0) scale(1)";
+    slideImage.style.width = "100.03px";
+    slideImage.style.height = "121.97px";
+    document.body.style.backgroundColor = "#F6F7F8";
+  }
+}
+
+/**
+ * checks the login input data with the backend
+ * 
+ */
+async function login() {
+  document.getElementById("logInButton").disable = true;
+  showEmailNotExisting(false);
+  let email = document.getElementById("email");
+  let password = document.getElementById("password");
+  let respons = await getItem(email.value);
+  let userInfos;
+  if (respons != undefined) {
+    userInfos = JSON.parse(respons);
+    let userPassword = userInfos.password;
+    if (password.value == userPassword) {
+      handleRememberMe(email, password);
+      window.location.href = "summary.html?msg=Login erfolgreich";
+      addLoggedInUser(userInfos);
+    } else {
+      showLoginWorngPassword();
+    }
+    document.getElementById("logInButton").disable = false;
+  } else {
+    showEmailNotExisting(true);
+  }
+}
+
+/**
+ * change the icon of the password if one is entered and make it visible when clicking on it
+ * 
+ * @param {string} iconId the id of the conatiner with the icon
+ * @param {string} inputField the id of the conatiner with the password
+ */
+function changePasswordIconLogin(iconId, inputField) {
+  let content = document.getElementById(iconId);
+  let inputfield = document.getElementById(inputField).value;
+  if (inputfield.length == 0) {
+    document.getElementById(inputField).type = "password";
+    loginPassword = false;
+    content.innerHTML = passwordLockIcon();
+  }
+  if (inputfield.length > 0 &amp;&amp; loginPassword == false) {
+    loginPassword = true;
+    content.innerHTML = passwordVisibilityOffIcon(iconId, inputField);
+  }
+}
+
+/**
+ * change the icon of the password if one is entered and make it visible when clicking on it
+ * 
+ * @param {string} iconId the id of the conatiner with the icon
+ * @param {string} inputField the id of the conatiner with the password
+ */
+function changePasswordIconRegistration(iconId, inputField) {
+  let content = document.getElementById(iconId);
+  let inputfield = document.getElementById(inputField).value;
+  if (inputfield.length == 0) {
+    document.getElementById(inputField).type = "password";
+    registrationPassword = false;
+    content.innerHTML = passwordLockIcon();
+  }
+  if (inputfield.length > 0 &amp;&amp; registrationPassword == false) {
+    registrationPassword = true;
+    content.innerHTML = passwordVisibilityOffIcon(iconId, inputField);
+  }
+}
+
+/**
+ * change the icon of the password if one is entered and make it visible when clicking on it
+ * 
+ * @param {string} iconId the id of the conatiner with the icon
+ * @param {string} inputField the id of the conatiner with the password
+ */
+function changePasswordIconRegistrationConfirm(iconId, inputField) {
+  let content = document.getElementById(iconId);
+  let inputfield = document.getElementById(inputField).value;
+  if (inputfield.length == 0) {
+    document.getElementById(inputField).type = "password";
+    registrationConfirmPassword = false;
+    content.innerHTML = passwordLockIcon();
+  }
+  if (inputfield.length > 0 &amp;&amp; registrationConfirmPassword == false) {
+    registrationConfirmPassword = true;
+    content.innerHTML = passwordVisibilityOffIcon(iconId, inputField);
+  }
+}
+
+/**
+ * displays the password in plain text
+ * 
+ * @param {string} iconId the id of the conatiner with the icon
+ * @param {string} inputField the id of the conatiner with the password
+ */
+function showPasswordClearText(iconId, inputField) {
+  let content = document.getElementById(iconId);
+  let inputfield = document.getElementById(inputField);
+  if (inputfield.type == "password") {
+    inputfield.type = "text";
+    content.innerHTML = passwordVisibilityOnIcon(iconId, inputField);
+  } else {
+    inputfield.type = "password";
+    content.innerHTML = passwordVisibilityOffIcon(iconId, inputField);
+  }
+}
+
+/**
+ * writes the data for the remember me in the local storage
+ * 
+ * @param {HTMLElement} email 
+ * @param {HTMLElement} password 
+ */
+function handleRememberMe(email, password) {
+  let rememberMeInfos = { email: email.value, password: password.value, rememberMe: rememberMe };
+  saveRememberMeJson.push(rememberMeInfos);
+  let rememberMeAsText = JSON.stringify(saveRememberMeJson);
+  localStorage.setItem("rememberMe", rememberMeAsText);
+}
+
+/**
+ * load the data for the remember me from the local storage
+ * 
+ */
+function loadRememberedUser(){
+  let rememberMeAsText = localStorage.getItem("rememberMe");
+  if(rememberMeAsText){
+    loadRememberMeJson = JSON.parse(rememberMeAsText);
+    if(loadRememberMeJson[0]['rememberMe']){
+      fillInputFieldsFromUser();
+    }
+  }
+}
+
+/**
+ * because the data for the remember me is available, the function enters it in the appropriate fields
+ * 
+ */
+function fillInputFieldsFromUser(){
+  let emailInput = document.getElementById("email");
+  let passwordInput = document.getElementById("password");
+  emailInput.value = loadRememberMeJson[0]['email'];
+  passwordInput.value = loadRememberMeJson[0]['password'];
+  setRememberMe();
+}
+
+/**
+ * the function writes the data of a new user to the backend and checks the correctness beforehand
+ * 
+ */
+async function addUser() {
+  showEmailAlreadyUsed(false);
+  document.getElementById("registrationButton").disable = true;
+  let email = document.getElementById("email");
+  let name = document.getElementById("name");
+  let password = document.getElementById("password");
+  let checkPasswort = document.getElementById("confirmPasswort");
+  let userInfos = { name: name.value, password: password.value, email: email.value, id: new Date().getTime() };
+  let respons = await getItem(email.value);
+  let loadUserEmail;
+  if (respons != undefined) {
+    loadUserEmail = JSON.parse(respons);
+  }
+  if (!loadUserEmail) {
+    if (password.value == checkPasswort.value) {
+      if (privacyPolic) {
+        showSignUpfinished();
+        await setItem(email.value, userInfos);
+        await addContact();
+        setTimeout(goToStart, 500);
+      } else {
+        setColorPrivacyPolicRed();
+      }
+    } else {
+      showPasswordNotConfirm();
+      document.getElementById("registrationButton").disable = false;
+    }
+  } else {
+    showEmailAlreadyUsed(true);
+    document.getElementById("registrationButton").disable = false;
+  }
+}
+
+/**
+ * writes the data of a new user into the backend for the contacte
+ * 
+ */
+async function addContact() {
+  const randomIndex = Math.floor(Math.random() * backgroundColors.length);
+  await loadContacts();
+  contacts.push({
+    id: Date.now(),
+    name: formatName(),
+    email: document.getElementById("email").value,
+    phone: "",
+    color: backgroundColors[randomIndex],
+  });
+  await setItem("contacts", JSON.stringify(contacts));
+}
+
+/**
+ * load the contacts from the backend
+ * 
+ */
+async function loadContacts() {
+  contacts = JSON.parse(await getItem("contacts"));
+}
+
+/**
+ * change the entered name so that it is correctly present in the backend
+ * 
+ * @returns {string}
+ */
+function formatName() {
+  let name = document.getElementById("name");
+  name = name.value.split(/[,.]/);
+  for (var i = 0; i &lt; name.length; i++) {
+    name[i] = name[i].trim();
+    name[i] = name[i].charAt(0).toUpperCase() + name[i].slice(1);
+  }
+  var formattedname = name.join(" ");
+  return formattedname;
+}
+
+/**
+ * goes back to the start page
+ * 
+ */
+function goToStart() {
+  dontshowSignUpfinished();
+  renderStartPage();
+}
+
+/**
+ * change the border of the login password
+ * 
+ */
+function showLoginWorngPassword() {
+  let textField = document.getElementById("wrongPasswordText");
+  textField.innerHTML = "Wrong password Ups! Try again.";
+  document.getElementById("inputPasswordField").classList.add("wrongInput");
+}
+
+/**
+ * changes the border of the confirm password
+ * 
+ */
+function showPasswordNotConfirm() {
+  let textField = document.getElementById("passwordNotConfirmText");
+  textField.innerHTML = "Ups! your password don’t match";
+  document.getElementById("inputPasswordField").classList.add("wrongInput");
+}
+
+/**
+ * changes the border of the email field when registering
+ * 
+ * @param {boolean} email yes or no whether the border is added or removed
+ */
+function showEmailAlreadyUsed(email) {
+  if (email == true) {
+    document.getElementById("inputEmailField").classList.add("wrongInput");
+  } else {
+    document.getElementById("inputEmailField").classList.remove("wrongInput");
+  }
+}
+
+/**
+ * changes the border of the email field when logging in
+ * 
+ * @param {boolean} email yes or no whether the border is added or removed
+ */
+function showEmailNotExisting(email) {
+  if (email == true) {
+    document.getElementById("inputEmailField").classList.add("wrongInput");
+  } else {
+    document.getElementById("inputEmailField").classList.remove("wrongInput");
+  }
+}
+
+/**
+ * checks if privacyPolic is true and if not makes the text red
+ * 
+ */
+function setColorPrivacyPolicRed(){
+  let content = document.getElementById('acceptPrivacyPolicContainer');
+  if(privacyPolic){
+    content.classList.remove('setColorPrivacyPolicRed');
+  } else {
+    content.classList.add('setColorPrivacyPolicRed');
+  }
+}
+
+/**
+ * changes the checkbox Remember Me
+ * 
+ */
+function setRememberMe() {
+  let content = document.getElementById("rememberMeCheckbox");
+  if (rememberMe) {
+    content.src = "./assets/img/checkbox_unchecked.svg";
+    rememberMe = false;
+  } else {
+    content.src = "./assets/img/checkbox_checked.svg";
+    rememberMe = true;
+  }
+}
+
+/**
+ * changes the checkbox Privacy Polic
+ * 
+ */
+function setPrivacyPolic() {
+  let content = document.getElementById("privacyPolicCheckbox");
+  if (privacyPolic) {
+    content.src = "./assets/img/checkbox_unchecked.svg";
+    privacyPolic = false;
+  } else {
+    content.src = "./assets/img/checkbox_checked.svg";
+    privacyPolic = true;
+    setColorPrivacyPolicRed();
+  }
+}
+
+/**
+ * lets the message regestrirung fly in successfully
+ * 
+ */
+function showSignUpfinished() {
+  var conatiner = document.getElementById("finishedMessageContainer");
+  conatiner.style.display = "flex";
+  conatiner.style.bottom = "calc(50% - " + conatiner.clientHeight / 2 + "px)";
+}
+
+/**
+ * removes the message regestrirung successfully fly in
+ * 
+ */
+function dontshowSignUpfinished() {
+  var conatiner = document.getElementById("finishedMessageContainer");
+  conatiner.style.display = "none";
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#addSubtaskOnEnter">addSubtaskOnEnter</a></li><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#addTaskOnEnter">addTaskOnEnter</a></li><li><a href="global.html#addToTaskBackend">addToTaskBackend</a></li><li><a href="global.html#addUser">addUser</a></li><li><a href="global.html#awaitCount">awaitCount</a></li><li><a href="global.html#backgroundColors">backgroundColors</a></li><li><a href="global.html#cancelInput">cancelInput</a></li><li><a href="global.html#changeColorDuedate">changeColorDuedate</a></li><li><a href="global.html#changePasswordIconLogin">changePasswordIconLogin</a></li><li><a href="global.html#changePasswordIconRegistration">changePasswordIconRegistration</a></li><li><a href="global.html#changePasswordIconRegistrationConfirm">changePasswordIconRegistrationConfirm</a></li><li><a href="global.html#checkDueDateNotInPast">checkDueDateNotInPast</a></li><li><a href="global.html#checkIsFieldFilled">checkIsFieldFilled</a></li><li><a href="global.html#checkIsMsgAvailable">checkIsMsgAvailable</a></li><li><a href="global.html#checkScreenWidth">checkScreenWidth</a></li><li><a href="global.html#checkTime">checkTime</a></li><li><a href="global.html#clearRequiredText">clearRequiredText</a></li><li><a href="global.html#clearSubtaskInputField">clearSubtaskInputField</a></li><li><a href="global.html#clearTask">clearTask</a></li><li><a href="global.html#closeAddContactPopUp">closeAddContactPopUp</a></li><li><a href="global.html#closeMainContact">closeMainContact</a></li><li><a href="global.html#closePopUp">closePopUp</a></li><li><a href="global.html#closeUserInformation">closeUserInformation</a></li><li><a href="global.html#contacts">contacts</a></li><li><a href="global.html#deadlineHTML">deadlineHTML</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#dontshowSignUpfinished">dontshowSignUpfinished</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editSubtaskDone">editSubtaskDone</a></li><li><a href="global.html#editSubtaskHTML">editSubtaskHTML</a></li><li><a href="global.html#feedback">feedback</a></li><li><a href="global.html#fillInputFieldsFromUser">fillInputFieldsFromUser</a></li><li><a href="global.html#filterAssingnedToDropdownList">filterAssingnedToDropdownList</a></li><li><a href="global.html#finished">finished</a></li><li><a href="global.html#formatName">formatName</a></li><li><a href="global.html#getFirstAndSecondLetter">getFirstAndSecondLetter</a></li><li><a href="global.html#getFirstLetter">getFirstLetter</a></li><li><a href="global.html#getMemberInitials">getMemberInitials</a></li><li><a href="global.html#goToStart">goToStart</a></li><li><a href="global.html#greeting">greeting</a></li><li><a href="global.html#handleRememberMe">handleRememberMe</a></li><li><a href="global.html#handleScreenWidth">handleScreenWidth</a></li><li><a href="global.html#handleWindowClick">handleWindowClick</a></li><li><a href="global.html#highlightUsercard">highlightUsercard</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initContacts">initContacts</a></li><li><a href="global.html#initializePolicyPage">initializePolicyPage</a></li><li><a href="global.html#loadAllSubtasks">loadAllSubtasks</a></li><li><a href="global.html#loadAllTasks">loadAllTasks</a></li><li><a href="global.html#loadContacts">loadContacts</a></li><li><a href="global.html#loadContent">loadContent</a></li><li><a href="global.html#loadEventListner">loadEventListner</a></li><li><a href="global.html#loadMemberInfo">loadMemberInfo</a></li><li><a href="global.html#loadRememberedUser">loadRememberedUser</a></li><li><a href="global.html#loadSelectedContacts">loadSelectedContacts</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#markLoggedinContact">markLoggedinContact</a></li><li><a href="global.html#openAddContactPopUp">openAddContactPopUp</a></li><li><a href="global.html#openAddPopupContainer">openAddPopupContainer</a></li><li><a href="global.html#openContactOptionsMobile">openContactOptionsMobile</a></li><li><a href="global.html#openContatOptions">openContatOptions</a></li><li><a href="global.html#openEditContactPopUp">openEditContactPopUp</a></li><li><a href="global.html#openEditPopupContainer">openEditPopupContainer</a></li><li><a href="global.html#openUserInformation">openUserInformation</a></li><li><a href="global.html#openUserOverview">openUserOverview</a></li><li><a href="global.html#passwordLockIcon">passwordLockIcon</a></li><li><a href="global.html#passwordVisibilityOffIcon">passwordVisibilityOffIcon</a></li><li><a href="global.html#passwordVisibilityOnIcon">passwordVisibilityOnIcon</a></li><li><a href="global.html#progressCount">progressCount</a></li><li><a href="global.html#removeBorader">removeBorader</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderAddTaskHTML">renderAddTaskHTML</a></li><li><a href="global.html#renderAddTaskMobileHTML">renderAddTaskMobileHTML</a></li><li><a href="global.html#renderAssingnedToDropdownList">renderAssingnedToDropdownList</a></li><li><a href="global.html#renderAssingnedToDropdownListHTML">renderAssingnedToDropdownListHTML</a></li><li><a href="global.html#renderCategoryDropdownList">renderCategoryDropdownList</a></li><li><a href="global.html#renderCategoryDropdownListHTML">renderCategoryDropdownListHTML</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderContactsHTML">renderContactsHTML</a></li><li><a href="global.html#renderFirstLetterHTML">renderFirstLetterHTML</a></li><li><a href="global.html#renderInitials">renderInitials</a></li><li><a href="global.html#renderRegistrationPage">renderRegistrationPage</a></li><li><a href="global.html#renderRegistrationPageHTML">renderRegistrationPageHTML</a></li><li><a href="global.html#renderSelectedContactsIcons">renderSelectedContactsIcons</a></li><li><a href="global.html#renderSelectedContactsIconsHTML">renderSelectedContactsIconsHTML</a></li><li><a href="global.html#renderSingUpButtonHTML">renderSingUpButtonHTML</a></li><li><a href="global.html#renderStartPage">renderStartPage</a></li><li><a href="global.html#renderStartPageHTML">renderStartPageHTML</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderSubtasksHTML">renderSubtasksHTML</a></li><li><a href="global.html#renderSummary">renderSummary</a></li><li><a href="global.html#renderTasks">renderTasks</a></li><li><a href="global.html#resetAddInput">resetAddInput</a></li><li><a href="global.html#resetUserCardStyles">resetUserCardStyles</a></li><li><a href="global.html#returnNextDueDate">returnNextDueDate</a></li><li><a href="global.html#saveAllTasks">saveAllTasks</a></li><li><a href="global.html#setBlueBorder">setBlueBorder</a></li><li><a href="global.html#setColorPrivacyPolicRed">setColorPrivacyPolicRed</a></li><li><a href="global.html#setContactSelected">setContactSelected</a></li><li><a href="global.html#setLogoPosition">setLogoPosition</a></li><li><a href="global.html#setMobileVersionIsOn">setMobileVersionIsOn</a></li><li><a href="global.html#setPrioButton">setPrioButton</a></li><li><a href="global.html#setPrivacyPolic">setPrivacyPolic</a></li><li><a href="global.html#setRedBorder">setRedBorder</a></li><li><a href="global.html#setRememberMe">setRememberMe</a></li><li><a href="global.html#setSelectedCategory">setSelectedCategory</a></li><li><a href="global.html#showAddTaskToBoard">showAddTaskToBoard</a></li><li><a href="global.html#showEmailAlreadyUsed">showEmailAlreadyUsed</a></li><li><a href="global.html#showEmailNotExisting">showEmailNotExisting</a></li><li><a href="global.html#showGreetingMobile">showGreetingMobile</a></li><li><a href="global.html#showLoginWorngPassword">showLoginWorngPassword</a></li><li><a href="global.html#showName">showName</a></li><li><a href="global.html#showPasswordClearText">showPasswordClearText</a></li><li><a href="global.html#showPasswordNotConfirm">showPasswordNotConfirm</a></li><li><a href="global.html#showSelectedDropdownContact">showSelectedDropdownContact</a></li><li><a href="global.html#showSignUpfinished">showSignUpfinished</a></li><li><a href="global.html#showSubtasksAddIcon">showSubtasksAddIcon</a></li><li><a href="global.html#showSubtasksDoneAndCancel">showSubtasksDoneAndCancel</a></li><li><a href="global.html#showSubtasksDoneAndCancelIcons">showSubtasksDoneAndCancelIcons</a></li><li><a href="global.html#sortSecondName">sortSecondName</a></li><li><a href="global.html#sortedContactList">sortedContactList</a></li><li><a href="global.html#sortingContacts">sortingContacts</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#todoCount">todoCount</a></li><li><a href="global.html#toggleDropdownIcon">toggleDropdownIcon</a></li><li><a href="global.html#toggleUserInformation">toggleUserInformation</a></li><li><a href="global.html#updateContactsInfo">updateContactsInfo</a></li><li><a href="global.html#urgent">urgent</a></li><li><a href="global.html#userInformationHTML">userInformationHTML</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Feb 16 2024 13:00:26 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

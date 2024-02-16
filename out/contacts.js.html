@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: contacts.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: contacts.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Array containing contact information objects.
+ * @type {Array&lt;Object>}
+ */
+let contacts = [];
+
+/**
+ * Flag indicating whether the contact options for mobile are open.
+ * @type {boolean}
+ */
+let openContactOptionsMobile = false;
+
+/**
+ * Flag indicating whether the add contact popup container is open.
+ * @type {boolean}
+ */
+let openAddPopupContainer = false;
+
+/**
+ * Flag indicating whether the edit contact popup container is open.
+ * @type {boolean}
+ */
+let openEditPopupContainer = false;
+
+/**
+ * Flag indicating whether the user overview is open.
+ * @type {boolean}
+ */
+let openUserOverview = false;
+
+/**
+ * Array containing background color codes.
+ * @type {Array&lt;string>}
+ */
+let backgroundColors = [
+    '#ff0000', // Rot
+    '#00ff00', // Grün
+    '#0000ff', // Blau
+    '#ffff00', // Gelb
+    '#ff00ff', // Magenta
+    '#00ffff', // Cyan
+    '#ff9900', // Orange
+    '#9900ff', // Lila
+    '#009900', // Dunkelgrün
+    '#990000', // Dunkelrot
+    '#ffcc00', // Goldgelb
+    '#cc66ff', // Flieder
+    '#0099cc', // Türkis
+    '#ff6699', // Rosa
+    '#663300', // Braun
+    '#99cc00', // Olivgrün
+    '#6600cc', // Indigo
+    '#ff9966', // Pfirsich
+    '#336600', // Dunkelgrün
+    '#cc0000', // Dunkelrot
+];
+
+/**
+ * Initializes contacts by loading data and rendering the contact list.
+ * @returns {Promise&lt;void>}
+ */
+async function initContacts() {
+    await includesHTML();
+    await loadLoggedInUser();
+    await loadContacts();
+    renderContacts();
+    loadLoggedInUser();
+    showSelectedButton("contactButton");
+}
+
+/**
+ * Loads contacts from storage.
+ * @returns {Promise&lt;void>}
+ */
+async function loadContacts() {
+    contacts = JSON.parse(await getItem('contacts'));
+}
+
+/**
+ * Renders the contact list.
+ */
+async function renderContacts() {
+    sortedContacts = contacts;
+    sortedContactList();
+    renderContactList(sortedContacts);
+}
+
+/**
+ * Sorts the contacts list.
+ */
+function sortedContactList() {
+    contacts.sort((a, b) => {
+        let nameA = a.name.split(' ');
+        let nameB = b.name.split(' ');
+        let firstLetterA = nameA[0].charAt(0).toUpperCase();
+        let firstLetterB = nameB[0].charAt(0).toUpperCase();
+
+        if (firstLetterA &lt; firstLetterB) {
+            return -1;
+        }
+        if (firstLetterA > firstLetterB) {
+            return 1;
+        }
+
+        return sortSecondName(nameA, nameB);
+    });
+}
+
+/**
+ * Sorts the contacts by the second name if the first names are the same.
+ * @param {string[]} nameA - First name split by space.
+ * @param {string[]} nameB - Second name split by space.
+ * @returns {number} - Comparison result.
+ */
+function sortSecondName(nameA, nameB) {
+    let secondLetterA = nameA.length > 1 ? nameA[1].charAt(0).toUpperCase() : '';
+    let secondLetterB = nameB.length > 1 ? nameB[1].charAt(0).toUpperCase() : '';
+
+    if (secondLetterA &lt; secondLetterB) {
+        return -1;
+    }
+    if (secondLetterA > secondLetterB) {
+        return 1;
+    }
+
+    return 0;
+}
+
+/**
+ * Renders the contact list.
+ * @param {Array&lt;Object>} sortedContacts - Sorted array of contact objects.
+ */
+function renderContactList(sortedContacts) {
+    let contactlist = document.getElementById('contactsList');
+    contactlist.innerHTML = "";
+    let currentInitial = null;  
+    sortingContacts (sortedContacts, contactlist, currentInitial);
+}
+
+/**
+ * Sorts and renders the contacts.
+ * @param {Array&lt;Object>} sortedContacts - Sorted array of contact objects.
+ * @param {HTMLElement} contactlist - HTML element for the contact list.
+ * @param {string} currentInitial - Current initial being processed.
+ */
+function sortingContacts (sortedContacts, contactlist, currentInitial) {
+    for (let i = 0; i &lt; sortedContacts.length; i++) {
+        let sortedContact = sortedContacts[i];
+        
+        if (sortedContact) {
+            let firstLetter = getFirstLetter(sortedContacts, i);
+
+            if (firstLetter !== currentInitial) {
+                contactlist.innerHTML += renderFirstLetterHTML(firstLetter);
+                currentInitial = firstLetter;
+            }
+            renderInitials(sortedContacts, i);
+            markLoggedinContact(sortedContacts, i);
+        }
+    }
+}
+
+/**
+ * Marks the logged-in contact in the contact list.
+ * @param {Array&lt;Object>} sortedContacts - Sorted array of contact objects.
+ * @param {number} i - Index of the contact being processed.
+ */
+function markLoggedinContact(sortedContacts, i) {
+    if (sortedContacts[i].email.includes(loggedInUser.email)) {
+        document.getElementById(`userCard${i}`).classList.add('markUserCard');
+    }
+}
+
+/**
+ * Renders initials of the contact.
+ * @param {Array&lt;Object>} sortedContacts - Sorted array of contact objects.
+ * @param {number} i - Index of the contact being processed.
+ */
+function renderInitials(sortedContacts, i) {
+    let contactlist = document.getElementById('contactsList');
+    let initials = getMemberInitials(sortedContacts, i);
+    contactlist.innerHTML += renderContactsHTML(sortedContacts, i, initials);
+}
+
+/**
+ * Retrieves the first letter of the contact's name.
+ * @param {Array&lt;Object>} sortedContacts - Sorted array of contact objects.
+ * @param {number} i - Index of the contact being processed.
+ * @returns {string} - First letter of the name.
+ */
+function getFirstLetter(sortedContacts, i) {
+    return sortedContacts[i].name.charAt(0).toUpperCase(0);
+}
+
+/**
+ * Retrieves the initials of the contact's name.
+ * @param {Array&lt;Object>} sortedContacts - Sorted array of contact objects.
+ * @param {number} i - Index of the contact being processed.
+ * @returns {string} - Initials of the name.
+ */
+function getMemberInitials(sortedContacts, i) {
+    return sortedContacts[i].name.split(' ')
+        .map(word => word.charAt(0))
+        .join('')
+        .toUpperCase();
+}
+
+/**
+ * Renders HTML for the first letter section in the contact list.
+ * @param {string} firstLetter - First letter of the name.
+ * @returns {string} - HTML string for the first letter section.
+ */
+function renderFirstLetterHTML(firstLetter) {
+    return `
+    &lt;div class="first-letter">${firstLetter}&lt;/div>
+    &lt;div class="underline">&lt;/div>
+    `;
+}
+
+/**
+ * Renders HTML for the contact.
+ * @param {Array&lt;Object>} sortedContacts - Sorted array of contact objects.
+ * @param {number} i - Index of the contact being processed.
+ * @param {string} initials - Initials of the name.
+ * @returns {string} - HTML string for the contact.
+ */
+function renderContactsHTML(sortedContacts, i, initials) {
+    return `
+    &lt;div id="userCard${i}" class="user-card" onclick="toggleUserInformation(${i}, sortedContacts, '${initials}')">
+        &lt;div class="contact-icon" id="initials" style= background-color:${contacts[i]['color']}>${initials}&lt;/div>
+        &lt;div class=contact-container>
+            &lt;span>${sortedContacts[i].name}&lt;/span>
+            &lt;span class="email">${sortedContacts[i].email}&lt;/span>
+        &lt;/div>
+    &lt;div>
+    `;
+}
+
+/**
+ * Toggles user information display.
+ * @param {number} i - Index of the contact.
+ * @param {Array&lt;Object>} sortedContacts - Sorted array of contact objects.
+ * @param {string} initials - Initials of the name.
+ */
+function toggleUserInformation(i, sortedContacts, initials) {
+    resetUserCardStyles();
+    highlightUsercard(i);
+    openUserInformation(i, sortedContacts, initials);
+    handleScreenWidth();
+    document.getElementById('menuContactMobile').onclick = function () { openContatOptions(i); };
+    openUserOverview = true;
+}
+
+/**
+ * Handles the screen width for responsive design.
+ */
+function handleScreenWidth() {
+    if (window.innerWidth &lt; 1280) {
+        document.getElementById('contactsContainer').style.display = "none";
+        document.getElementById('infoContainer').style.display = "block";
+        document.getElementById('menuContactMobile').classList.remove('d-none');
+    }
+}
+
+/**
+ * Highlights the selected user card.
+ * @param {number} i - Index of the contact.
+ */
+function highlightUsercard(i) {
+    let mainCard = document.getElementById('userOverview');
+    let userCard = document.getElementById(`userCard${i}`);
+    userCard.style.backgroundColor = '#2A3647';
+    userCard.style.color = 'white';
+}
+
+/**
+ * Resets styles for all user cards.
+ */
+function resetUserCardStyles() {
+    let allUserCards = document.querySelectorAll('.user-card');
+    allUserCards.forEach(userCard => {
+        userCard.style.backgroundColor = '';
+        userCard.style.color = '';
+    });
+}
+
+/**
+ * Closes the user information section.
+ * @param {number} i - Index of the contact.
+ */
+function closeUserInformation(i) {
+    let mainCard = document.getElementById('userOverview');
+    mainCard.innerHTML = '';
+    openUserOverview = false;
+}
+
+/**
+ * Opens the user information section.
+ * @param {number} i - Index of the contact.
+ * @param {Array&lt;Object>} sortedContacts - Sorted array of contact objects.
+ * @param {string} initials - Initials of the name.
+ */
+function openUserInformation(i, sortedContacts, initials) {
+    mainCard = document.getElementById('userOverview');
+    mainCard.innerHTML = '';
+    mainCard.innerHTML = userInformationHTML(i, sortedContacts, initials);
+    document.getElementById('initialsPopUp').innerHTML = `${initials}`;
+    document.getElementById('initialsPopUp').style.backgroundColor = contacts[i]['color'];
+}
+
+/**
+ * Deletes a contact.
+ * @param {number} i - Index of the contact.
+ * @param {Array&lt;Object>} sortedContacts - Sorted array of contact objects.
+ */
+function deleteContact(i, sortedContacts) {
+    sortedContacts.splice(i, 1);
+    setItem('contacts', JSON.stringify(contacts));
+    renderContactList(sortedContacts);
+    closeUserInformation();
+    document.getElementById('contactOptionsMobile').style.display = "none";
+    document.getElementById('contactsContainer').style.display = "flex";
+    document.getElementById('infoContainer').style.display = "none";
+}
+
+/**
+ * Cancels input operation.
+ */
+function cancelInput() {
+    let name = document.getElementById('addName');
+    let email = document.getElementById('addEmail');
+    let phone = document.getElementById('addPhone');
+    name.value = "";
+    email.value = "";
+    phone.value = "";
+}
+
+/**
+ * Closes the main contact section.
+ */
+function closeMainContact() {
+    resetUserCardStyles();
+    document.getElementById('contactsContainer').style.display = "flex";
+    document.getElementById('infoContainer').style.display = "none";
+    document.getElementById('menuContactMobile').style.display = "none";
+    document.getElementById('userOverview').innerHTML = "";
+}
+
+/**
+ * Generates HTML for displaying user information.
+ * @param {number} i - Index of the contact.
+ * @param {Array&lt;Object>} sortedContacts - Sorted array of contact objects.
+ * @param {string} initials - Initials of the name.
+ * @returns {string} - HTML string for user information display.
+ */
+function userInformationHTML(i, sortedContacts, initials) {
+    return `
+    &lt;div class="main-head-container">
+        &lt;div>
+            &lt;div class="main-contact-icon" style= background-color:${contacts[i]['color']}>${initials}&lt;/div>
+        &lt;/div>
+        &lt;div>
+            &lt;div class="name-container">${sortedContacts[i].name}&lt;/div>
+            &lt;div class="action-icons-container">
+                &lt;div class="edit-delete-container" onclick ="openEditContactPopUp(${i})">
+                    &lt;img src="./assets/img/contacts-edit.svg" alt="Edit icon">
+                    &lt;span>Edit&lt;/span>
+                &lt;/div>
+                &lt;div class="edit-delete-container" onclick="deleteContact(${i}, sortedContacts)">
+                    &lt;img src="./assets/img/delete.svg" alt="Delete icon">
+                    &lt;span>Delete&lt;/span>
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
+    &lt;/div>
+    &lt;div class="contact-info-container">
+        &lt;div class="information-headline">Contact Information&lt;/div>
+        &lt;div class="contact-detail">
+            &lt;div class="detail-title">Email&lt;/div>
+            &lt;div class="detail-email">${sortedContacts[i].email}&lt;/div>
+        &lt;/div>
+        &lt;div>
+            &lt;div class="detail-title">Phone&lt;/div>
+            &lt;div class="detail-info">number&lt;/div>
+        &lt;/div>
+    &lt;/div>
+    `;
+}
+
+/**
+ * Opens the add contact popup.
+ */
+function openAddContactPopUp() {
+    popUp = document.getElementById('popupContainer');
+    popUp.classList.remove('d-none');
+    popUp.classList.add('flex');
+    addPopUp = document.getElementById('addContactPopUp');
+    addPopUp.classList.remove('d-none');
+
+    editPopUp = document.getElementById('editContactPopUp');
+    editPopUp.classList.add('d-none');
+    resetAddInput();
+    openAddPopupContainer = true;
+    event.stopPropagation();
+}
+
+/**
+ * Closes the add contact popup.
+ * @param {Event} event - The event triggering the function.
+ */
+function closeAddContactPopUp(event) {
+
+    if (event) {
+        event.preventDefault();
+    }
+
+    popUp = document.getElementById('popupContainer');
+    popUp.style.display = "none";
+    editPopUp = document.getElementById('editContactPopUp');
+    editPopUp.classList.remove('d-none');
+}
+
+/**
+ * Opens the edit contact popup.
+ * @param {number} i - Index of the contact.
+ */
+function openEditContactPopUp(i) {
+    loadContacts();
+    popUp = document.getElementById('popupContainer');
+    popUp.classList.add('flex');
+    addPopUp = document.getElementById('addContactPopUp');
+    addPopUp.classList.add('d-none');
+    editPopUp = document.getElementById('editContactPopUp');
+    editPopUp.classList.remove('d-none');
+    document.getElementById('editButton').onclick = function () { updateContactsInfo(i, event); };
+    document.getElementById('deleteButton').onclick = function () { deleteContact(i, sortedContacts); };
+    loadMemberInfo(i);
+    document.getElementById('contactOptionsMobile').style.display = "none";
+    openEditPopupContainer = true;
+    event.stopPropagation();
+}
+
+/**
+ * Closes the popup container.
+ */
+function closePopUp() {
+    popUp = document.getElementById('popupContainer');
+    popUp.classList.add('d-none')
+    addPopUp = document.getElementById('addContactPopUp');
+    addPopUp.classList.add('d-none');
+    editPopUp = document.getElementById('editContactPopUp');
+    addPopUp.classList.add('d-none');
+    popUp.classList.remove('flex');
+    loadContacts();
+}
+
+/**
+ * Resets input fields in the add contact popup.
+ */
+function resetAddInput() {
+    let name = document.getElementById('addName');
+    let email = document.getElementById('addEmail');
+    let phone = document.getElementById('addPhone');
+    name.value = "";
+    email.value = "";
+    phone.value = "";
+}
+
+/**
+ * Loads information of a member into the edit contact popup.
+ * @param {number} i - Index of the contact.
+ */
+function loadMemberInfo(i) {
+    loadContacts();
+    let name = document.getElementById('editName');
+    let email = document.getElementById('editEmail');
+    let phone = document.getElementById('editPhone');
+    name.value = contacts[i].name;
+    email.value = contacts[i].email;
+    phone.value = contacts[i].phone;
+}
+
+/**
+ * Updates contact information.
+ * @param {number} i - Index of the contact.
+ * @param {Event} event - The event triggering the function.
+ */
+function updateContactsInfo(i, event) {
+    event.preventDefault();
+
+    contacts[i] = {
+        id: contacts[i]['id'],
+        name: document.getElementById('editName').value,
+        email: document.getElementById('editEmail').value,
+        phone: document.getElementById('editPhone').value,
+        color: contacts[i]['color'],
+    };
+
+    setItem('contacts', JSON.stringify(contacts));
+    loadContacts();
+    renderContacts();
+    closePopUp();
+    openUserInformation(i, sortedContacts, getMemberInitials(sortedContacts, i));
+    highlightUsercard(i);
+}
+
+/**
+ * Adds a new contact.
+ */
+async function addContact() {
+    let randomIndex = Math.floor(Math.random() * backgroundColors.length);
+
+    contacts.push({
+        id: Date.now(),
+        name: addName.value,
+        email: addEmail.value,
+        phone: addPhone.value,
+        color: backgroundColors[randomIndex],
+    });
+
+    await setItem('contacts', JSON.stringify(contacts));
+    renderContacts()
+    closePopUp();
+}
+
+/**
+ * Opens contact options for mobile.
+ * @param {number} i - Index of the contact.
+ */
+function openContatOptions(i) {
+    document.getElementById('contactOptionsMobile').style.display = 'flex';
+    document.getElementById('openEditMobile').onclick = function () { openEditContactPopUp(`${i}`); };
+    document.getElementById('deleteMobile').onclick = function () { deleteContact(i, sortedContacts); };
+    openContactOptionsMobile = true;
+    event.stopPropagation();
+}
+
+/**
+ * Event listener for closing the contact options for mobile.
+ * Closes the mobile contact options when clicking outside.
+ * @param {Event} event - The event triggering the function.
+ */
+document.addEventListener('click', function (event) {
+    if (openContactOptionsMobile) {
+        let contactOptionsMobile = document.getElementById('contactOptionsMobile');
+        if (!contactOptionsMobile.contains(event.target)) {
+            contactOptionsMobile.style.display = 'none';
+        }
+        openContactOptionsMobile = false;
+    }
+});
+
+/**
+ * Event listener for closing the add contact popup.
+ * Closes the add contact popup when clicking outside.
+ * @param {Event} event - The event triggering the function.
+ */
+document.addEventListener('click', function (event) {
+    if (openAddPopupContainer) {
+        let popUp = document.getElementById('popupContainer');
+        let addpopUp = document.getElementById('addContactPopUp');
+        let editpopUp = document.getElementById('editContactPopUp');
+        if (!addpopUp.contains(event.target)) {
+            addpopUp.classList.add('d-none');
+            popUp.classList.add('d-none');
+            editpopUp.classList.add('d-none');
+            popUp.classList.remove('flex');
+            openAddPopupContainer = false;
+        }
+    }
+});
+
+/**
+ * Event listener for closing the edit contact popup.
+ * Closes the edit contact popup when clicking outside.
+ * @param {Event} event - The event triggering the function.
+ */
+document.addEventListener('click', function (event) {
+    if (openEditPopupContainer) {
+        let popUp = document.getElementById('popupContainer');
+        let addpopUp = document.getElementById('addContactPopUp');
+        let editpopUp = document.getElementById('editContactPopUp');
+        if (!editpopUp.contains(event.target)) {
+            addpopUp.classList.add('d-none');
+            popUp.classList.add('d-none');
+            editpopUp.classList.add('d-none');
+            popUp.classList.remove('flex');
+            openEditPopupContainer = false;
+        }
+    }
+});
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#addSubtaskOnEnter">addSubtaskOnEnter</a></li><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#addTaskOnEnter">addTaskOnEnter</a></li><li><a href="global.html#addToTaskBackend">addToTaskBackend</a></li><li><a href="global.html#addUser">addUser</a></li><li><a href="global.html#awaitCount">awaitCount</a></li><li><a href="global.html#backgroundColors">backgroundColors</a></li><li><a href="global.html#cancelInput">cancelInput</a></li><li><a href="global.html#changeColorDuedate">changeColorDuedate</a></li><li><a href="global.html#changePasswordIconLogin">changePasswordIconLogin</a></li><li><a href="global.html#changePasswordIconRegistration">changePasswordIconRegistration</a></li><li><a href="global.html#changePasswordIconRegistrationConfirm">changePasswordIconRegistrationConfirm</a></li><li><a href="global.html#checkDueDateNotInPast">checkDueDateNotInPast</a></li><li><a href="global.html#checkIsFieldFilled">checkIsFieldFilled</a></li><li><a href="global.html#checkIsMsgAvailable">checkIsMsgAvailable</a></li><li><a href="global.html#checkScreenWidth">checkScreenWidth</a></li><li><a href="global.html#checkTime">checkTime</a></li><li><a href="global.html#clearRequiredText">clearRequiredText</a></li><li><a href="global.html#clearSubtaskInputField">clearSubtaskInputField</a></li><li><a href="global.html#clearTask">clearTask</a></li><li><a href="global.html#closeAddContactPopUp">closeAddContactPopUp</a></li><li><a href="global.html#closeMainContact">closeMainContact</a></li><li><a href="global.html#closePopUp">closePopUp</a></li><li><a href="global.html#closeUserInformation">closeUserInformation</a></li><li><a href="global.html#contacts">contacts</a></li><li><a href="global.html#deadlineHTML">deadlineHTML</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#dontshowSignUpfinished">dontshowSignUpfinished</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editSubtaskDone">editSubtaskDone</a></li><li><a href="global.html#editSubtaskHTML">editSubtaskHTML</a></li><li><a href="global.html#feedback">feedback</a></li><li><a href="global.html#fillInputFieldsFromUser">fillInputFieldsFromUser</a></li><li><a href="global.html#filterAssingnedToDropdownList">filterAssingnedToDropdownList</a></li><li><a href="global.html#finished">finished</a></li><li><a href="global.html#formatName">formatName</a></li><li><a href="global.html#getFirstAndSecondLetter">getFirstAndSecondLetter</a></li><li><a href="global.html#getFirstLetter">getFirstLetter</a></li><li><a href="global.html#getMemberInitials">getMemberInitials</a></li><li><a href="global.html#goToStart">goToStart</a></li><li><a href="global.html#greeting">greeting</a></li><li><a href="global.html#handleRememberMe">handleRememberMe</a></li><li><a href="global.html#handleScreenWidth">handleScreenWidth</a></li><li><a href="global.html#handleWindowClick">handleWindowClick</a></li><li><a href="global.html#highlightUsercard">highlightUsercard</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initContacts">initContacts</a></li><li><a href="global.html#initializePolicyPage">initializePolicyPage</a></li><li><a href="global.html#loadAllSubtasks">loadAllSubtasks</a></li><li><a href="global.html#loadAllTasks">loadAllTasks</a></li><li><a href="global.html#loadContacts">loadContacts</a></li><li><a href="global.html#loadContent">loadContent</a></li><li><a href="global.html#loadEventListner">loadEventListner</a></li><li><a href="global.html#loadMemberInfo">loadMemberInfo</a></li><li><a href="global.html#loadRememberedUser">loadRememberedUser</a></li><li><a href="global.html#loadSelectedContacts">loadSelectedContacts</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#markLoggedinContact">markLoggedinContact</a></li><li><a href="global.html#openAddContactPopUp">openAddContactPopUp</a></li><li><a href="global.html#openAddPopupContainer">openAddPopupContainer</a></li><li><a href="global.html#openContactOptionsMobile">openContactOptionsMobile</a></li><li><a href="global.html#openContatOptions">openContatOptions</a></li><li><a href="global.html#openEditContactPopUp">openEditContactPopUp</a></li><li><a href="global.html#openEditPopupContainer">openEditPopupContainer</a></li><li><a href="global.html#openUserInformation">openUserInformation</a></li><li><a href="global.html#openUserOverview">openUserOverview</a></li><li><a href="global.html#passwordLockIcon">passwordLockIcon</a></li><li><a href="global.html#passwordVisibilityOffIcon">passwordVisibilityOffIcon</a></li><li><a href="global.html#passwordVisibilityOnIcon">passwordVisibilityOnIcon</a></li><li><a href="global.html#progressCount">progressCount</a></li><li><a href="global.html#removeBorader">removeBorader</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderAddTaskHTML">renderAddTaskHTML</a></li><li><a href="global.html#renderAddTaskMobileHTML">renderAddTaskMobileHTML</a></li><li><a href="global.html#renderAssingnedToDropdownList">renderAssingnedToDropdownList</a></li><li><a href="global.html#renderAssingnedToDropdownListHTML">renderAssingnedToDropdownListHTML</a></li><li><a href="global.html#renderCategoryDropdownList">renderCategoryDropdownList</a></li><li><a href="global.html#renderCategoryDropdownListHTML">renderCategoryDropdownListHTML</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderContactsHTML">renderContactsHTML</a></li><li><a href="global.html#renderFirstLetterHTML">renderFirstLetterHTML</a></li><li><a href="global.html#renderInitials">renderInitials</a></li><li><a href="global.html#renderRegistrationPage">renderRegistrationPage</a></li><li><a href="global.html#renderRegistrationPageHTML">renderRegistrationPageHTML</a></li><li><a href="global.html#renderSelectedContactsIcons">renderSelectedContactsIcons</a></li><li><a href="global.html#renderSelectedContactsIconsHTML">renderSelectedContactsIconsHTML</a></li><li><a href="global.html#renderSingUpButtonHTML">renderSingUpButtonHTML</a></li><li><a href="global.html#renderStartPage">renderStartPage</a></li><li><a href="global.html#renderStartPageHTML">renderStartPageHTML</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderSubtasksHTML">renderSubtasksHTML</a></li><li><a href="global.html#renderSummary">renderSummary</a></li><li><a href="global.html#renderTasks">renderTasks</a></li><li><a href="global.html#resetAddInput">resetAddInput</a></li><li><a href="global.html#resetUserCardStyles">resetUserCardStyles</a></li><li><a href="global.html#returnNextDueDate">returnNextDueDate</a></li><li><a href="global.html#saveAllTasks">saveAllTasks</a></li><li><a href="global.html#setBlueBorder">setBlueBorder</a></li><li><a href="global.html#setColorPrivacyPolicRed">setColorPrivacyPolicRed</a></li><li><a href="global.html#setContactSelected">setContactSelected</a></li><li><a href="global.html#setLogoPosition">setLogoPosition</a></li><li><a href="global.html#setMobileVersionIsOn">setMobileVersionIsOn</a></li><li><a href="global.html#setPrioButton">setPrioButton</a></li><li><a href="global.html#setPrivacyPolic">setPrivacyPolic</a></li><li><a href="global.html#setRedBorder">setRedBorder</a></li><li><a href="global.html#setRememberMe">setRememberMe</a></li><li><a href="global.html#setSelectedCategory">setSelectedCategory</a></li><li><a href="global.html#showAddTaskToBoard">showAddTaskToBoard</a></li><li><a href="global.html#showEmailAlreadyUsed">showEmailAlreadyUsed</a></li><li><a href="global.html#showEmailNotExisting">showEmailNotExisting</a></li><li><a href="global.html#showGreetingMobile">showGreetingMobile</a></li><li><a href="global.html#showLoginWorngPassword">showLoginWorngPassword</a></li><li><a href="global.html#showName">showName</a></li><li><a href="global.html#showPasswordClearText">showPasswordClearText</a></li><li><a href="global.html#showPasswordNotConfirm">showPasswordNotConfirm</a></li><li><a href="global.html#showSelectedDropdownContact">showSelectedDropdownContact</a></li><li><a href="global.html#showSignUpfinished">showSignUpfinished</a></li><li><a href="global.html#showSubtasksAddIcon">showSubtasksAddIcon</a></li><li><a href="global.html#showSubtasksDoneAndCancel">showSubtasksDoneAndCancel</a></li><li><a href="global.html#showSubtasksDoneAndCancelIcons">showSubtasksDoneAndCancelIcons</a></li><li><a href="global.html#sortSecondName">sortSecondName</a></li><li><a href="global.html#sortedContactList">sortedContactList</a></li><li><a href="global.html#sortingContacts">sortingContacts</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#todoCount">todoCount</a></li><li><a href="global.html#toggleDropdownIcon">toggleDropdownIcon</a></li><li><a href="global.html#toggleUserInformation">toggleUserInformation</a></li><li><a href="global.html#updateContactsInfo">updateContactsInfo</a></li><li><a href="global.html#urgent">urgent</a></li><li><a href="global.html#userInformationHTML">userInformationHTML</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Feb 16 2024 13:00:26 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

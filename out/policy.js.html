@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: policy.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,26 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: policy.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Initializes the policy page by including HTML, loading the logged-in user, and showing the footer button for privacy policy.
+ * @returns {Promise&lt;void>}
+ */
+async function initializePolicyPage() {
+    await includesHTML();
+    await loadLoggedInUser();
+    showFooterButton('privacyPolicyButton');
+}</code></pre>
+        </article>
+    </section>
 
 
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: loginHTML.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,156 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: loginHTML.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * creates the login container
+ * 
+ * @returns {string} HTML Code
+ */
+function renderStartPageHTML() {
+  return /* html */ `
+    &lt;form class="loginMask" onsubmit="login(); return false;">
+      &lt;div class="loginHeadline">
+        &lt;h1>Log in&lt;/h1>
+        &lt;img src="./assets/img/underlin_login.svg" alt="underlined" />
+      &lt;/div>
+      &lt;div class="inputFieldsContainer">
+        &lt;div class="inputFieldsLogin">
+          &lt;div class="inputField" id="inputEmailField">
+            &lt;input type="email" placeholder="Email" id="email" required />
+            &lt;img src="./assets/img/mail.svg" alt="" />
+          &lt;/div>
+          &lt;div class="inputField" id="inputPasswordField">
+            &lt;input type="password" placeholder="password" id="password" onkeyup="changePasswordIconLogin('passwordIconContainer', 'password', 'loginPassword')" required />
+            &lt;div id="passwordIconContainer">
+              &lt;img id="passwordIcon" src="./assets/img/lock.svg" alt="" />
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>
+        &lt;p class="wrongPasswordText" id="wrongPasswordText">&lt;/p>
+        &lt;div class="rememberMeContainer">
+          &lt;img onclick="setRememberMe()" class="checkbox" id="rememberMeCheckbox" src="./assets/img/checkbox_unchecked.svg" alt="checkbock">
+          &lt;p>Remember me&lt;/p>
+        &lt;/div>
+      &lt;/div>
+      &lt;div class="loginButtonContainer">
+        &lt;button class="buttonDarg" id="logInButton">Log in&lt;/button>
+        &lt;button class="buttonLight" onclick="addLoggedInGuest()">Guest Log in&lt;/button>
+      &lt;/div>
+    &lt;/form> 
+  `;
+}
 
+/**
+ * creates the password lock icon
+ * 
+ * @returns {string} HTML Code
+ */
+function passwordLockIcon() {
+  return /* html */ `
+    &lt;img id="passwordIcon" src="./assets/img/lock.svg" alt="lock Icon" />
+  `;
+}
 
-    <h3> </h3>
+/**
+ * creates the password eye closed icon
+ * 
+ * @param {string} iconId the id of the conatiner with the icon
+ * @param {string} inputField the id of the conatiner with the password
+ * @returns {string} HTML Code
+ */
+function passwordVisibilityOffIcon(iconId, inputField){
+  return /* html */ `
+    &lt;img id="passwordIcon" class="passwordIcon" onclick="showPasswordClearText('${iconId}', '${inputField}')" src="./assets/img/password_visibility_off.svg" alt="" />
+  `;
+}
 
+/**
+ * creates the password eye open icon
+ * 
+ * @param {string} iconId the id of the conatiner with the icon
+ * @param {string} inputField the id of the conatiner with the password
+ * @returns {string} HTML Code
+ */
+function passwordVisibilityOnIcon(iconId, inputField){
+  return /* html */ `
+    &lt;img id="passwordIcon" class="passwordIcon" onclick="showPasswordClearText('${iconId}', '${inputField}')" src="./assets/img/password_visibility_on.svg" alt="" />
+  `;
+}
 
+/**
+ * creates the sing up button
+ * 
+ * @returns {string} HTML Code
+ */
+function renderSingUpButtonHTML() {
+  return `
+      &lt;p>Not a Join user?&lt;/p>
+      &lt;button class="buttonDarg" onclick="renderRegistrationPage()">Sign up&lt;/button>
+    `;
+}
 
-
-
-
-
-
-
-
-    
-
-
-
-
-
+/**
+ * creates the regestations conatiner
+ * 
+ * @returns {string} HTML Code
+ */
+function renderRegistrationPageHTML() {
+  return /* html */ `
+   &lt;form class="registrationMask" onsubmit="addUser(); return false;">
+     &lt;div class="registrationHeadlineContainer">
+       &lt;img class="registrationBackIcon" src="./assets/img/arrow-left-line.svg" alt="" onclick="renderStartPage()">
+       &lt;div class="registrationHeadline">
+         &lt;h1>Sing Up&lt;/h1>
+         &lt;img src="./assets/img/underlin_login.svg" alt="underlined" />
+       &lt;/div>
+     &lt;/div>
+     &lt;div class="inputFieldsContainer">
+       &lt;div class="inputFieldsRegistration">
+         &lt;div class="inputField">
+           &lt;input type="text" placeholder="Name" id="name" required />
+           &lt;img src="./assets/img/person.svg" alt="" />
+         &lt;/div>
+         &lt;div class="inputField" id="inputEmailField">
+           &lt;input type="email" placeholder="Email" id="email" onkeyup="showEmailAlreadyUsed(false)" required />
+           &lt;img src="./assets/img/mail.svg" alt="" />
+         &lt;/div>
+         &lt;div class="inputField">
+           &lt;input type="password" placeholder="Password" id="password" onkeyup="changePasswordIconRegistration('passwordIconContainer', 'password')" required />
+           &lt;div id="passwordIconContainer">
+            &lt;img src="./assets/img/lock.svg" alt="" />
+           &lt;/div>
+         &lt;/div>
+         &lt;div class="inputField" id="inputPasswordField">
+           &lt;input type="password" placeholder="Confirm Password" id="confirmPasswort" onkeyup="changePasswordIconRegistrationConfirm('confirmPasswordIconContainer', 'confirmPasswort')" required />
+           &lt;div id="confirmPasswordIconContainer">
+            &lt;img src="./assets/img/lock.svg" alt="" />
+           &lt;/div>
+         &lt;/div>
+       &lt;/div>
+       &lt;p class="passwordNotConfirmText" id="passwordNotConfirmText">&lt;/p>
+       &lt;div class="acceptPrivacyPolicContainer" id="acceptPrivacyPolicContainer">
+         &lt;img onclick="setPrivacyPolic()" class="checkbox" id="privacyPolicCheckbox" src="./assets/img/checkbox_unchecked.svg" alt="checkbock">
+         &lt;p>I accept the &lt;a href="">Privacy Polic&lt;/a>&lt;/p>
+       &lt;/div>
+     &lt;/div>
+     &lt;div class="loginButtonContainer">
+       &lt;button class="buttonDarg" id="registrationButton">Sign up&lt;/button>
+     &lt;/div>
+   &lt;/form>
+  `;
+}
+</code></pre>
+        </article>
+    </section>
 
 
 
