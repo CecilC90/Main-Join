@@ -1,3 +1,8 @@
+/**
+ * creates the login container
+ * 
+ * @returns {string} HTML Code
+ */
 function renderStartPageHTML() {
   return /* html */ `
     <form class="loginMask" onsubmit="login(); return false;">
@@ -32,24 +37,48 @@ function renderStartPageHTML() {
   `;
 }
 
+/**
+ * creates the password lock icon
+ * 
+ * @returns {string} HTML Code
+ */
 function passwordLockIcon() {
   return /* html */ `
     <img id="passwordIcon" src="./assets/img/lock.svg" alt="lock Icon" />
   `;
 }
 
+/**
+ * creates the password eye closed icon
+ * 
+ * @param {string} iconId the id of the conatiner with the icon
+ * @param {string} inputField the id of the conatiner with the password
+ * @returns {string} HTML Code
+ */
 function passwordVisibilityOffIcon(iconId, inputField){
   return /* html */ `
     <img id="passwordIcon" class="passwordIcon" onclick="showPasswordClearText('${iconId}', '${inputField}')" src="./assets/img/password_visibility_off.svg" alt="" />
   `;
 }
 
+/**
+ * creates the password eye open icon
+ * 
+ * @param {string} iconId the id of the conatiner with the icon
+ * @param {string} inputField the id of the conatiner with the password
+ * @returns {string} HTML Code
+ */
 function passwordVisibilityOnIcon(iconId, inputField){
   return /* html */ `
     <img id="passwordIcon" class="passwordIcon" onclick="showPasswordClearText('${iconId}', '${inputField}')" src="./assets/img/password_visibility_on.svg" alt="" />
   `;
 }
 
+/**
+ * creates the sing up button
+ * 
+ * @returns {string} HTML Code
+ */
 function renderSingUpButtonHTML() {
   return `
       <p>Not a Join user?</p>
@@ -57,6 +86,11 @@ function renderSingUpButtonHTML() {
     `;
 }
 
+/**
+ * creates the regestations conatiner
+ * 
+ * @returns {string} HTML Code
+ */
 function renderRegistrationPageHTML() {
   return /* html */ `
    <form class="registrationMask" onsubmit="addUser(); return false;">
