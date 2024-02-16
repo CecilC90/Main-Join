@@ -427,7 +427,6 @@ function renderContact(index) {
  * This function searches for all IDs in the contacts and compares them with the passed ID
  * 
  * @param {number} contactId - returns an ID assigned to each contact
- * @returns 
  */
 function findContactById(contactId) {
     return contacts.find(contact => contact.id === contactId);
