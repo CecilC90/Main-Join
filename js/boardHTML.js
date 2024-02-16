@@ -50,7 +50,7 @@ function templateHTMLDetailView(index) {
               <img class="close-img" onclick="closeDetailView()" src="./assets/img/close.svg" alt="">
           </div>
           <h1 class="headline-detailview">${todos[index].title}</h1>
-          <p>${todos[index].description}</p>
+          <p class="description-detailview">${todos[index].description}</p>
           <div class="task-info">
             <div>
               <span class="label">Due Date:</span>
@@ -81,9 +81,9 @@ async function templateHTMLEditTask(index) {
         <img class="close-img" onclick="closeDetailView(${index})" src="./assets/img/close.svg" alt="">
       </div>
       <p class="edit-p">Title:</p>
-      <input class="inputField editViewInput" id="new-title" type="text" value="${todos[index].title}">
+      <input class="inputField editViewInput" id="new-title" type="text" placeholder="Enter a Title" value="${todos[index].title}">
       <p class="edit-p">Description:</p>
-      <textarea class="descriptionTextArea editViewTextarea" id="new-description" type="text" value="">${todos[index].description}</textarea>
+      <textarea class="descriptionTextArea editViewTextarea" id="new-description" type="text" placeholder="Enter a Description">${todos[index].description}</textarea>
       <p class="edit-p">Due Date:</p>
       <input class="inputField editViewInput" id="new-date" type="date" value="${todos[index].dueDate}">
       <p class="edit-p">Priority:</p>

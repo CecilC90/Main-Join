@@ -37,7 +37,7 @@
     margin: 20px 0;
 }
 
-#detail-todo-content p {
+.description-detailview {
     margin-bottom: 20px;
 }
 
@@ -187,10 +187,6 @@
     font-size: 18px;
     color: #2A3647;
     margin-bottom: 8px;
-}
-
-#detail-todo-content p {
-    margin-bottom: 0px;
 }
 
 .edit-p-m0 {

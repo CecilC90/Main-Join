@@ -3,26 +3,19 @@ let randomColorsForCategory = ['#003366', '#004D40', '#1B5E20', '#B71C1C', '#4A1
 
 let startDragginId;
 
-//--------------------------------------------
-async function setItem(key, value) {
-    const payload = { key, value, token: STORAGE_TOKEN }; //wenn key und key gleich sind kann man es aus weg lassen { key, value, token:STORAGE_TOKEN}
-    return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) });
-}
-
-async function getItem(key) {
-    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-    return fetch(url).then(res => res.json()).then(res => res.data.value).catch(function (err) {
-        console.log('fetch konnte nicht aufgeührt werden');
-    });;
-}
-
-//--------------------------------------
-
+/**
+ * This function is called to get all the data when the page loads
+ * 
+ */
 function initBoard() {
     includesHTML();
     renderHTML();
 }
 
+/**
+ * This function is called to render all the data
+ * 
+ */
 async function renderHTML() {
     await loadTasks();
     await loadContacts();
@@ -33,17 +26,28 @@ async function renderHTML() {
     showSelectedButton("boardButton");
 }
 
+/**
+ * This function load all Tasks from the Backend
+ * 
+ */
 async function loadTasks() {
     todos = JSON.parse(await getItem('allTasks'));
 }
 
+/**
+ * This function load all Contacts from the Backend
+ * 
+ */
 async function loadContacts() {
     contacts = JSON.parse(await getItem('contacts'));
 }
 
+/**
+ * This function generate a color (random color if the category don't declared) for all categorys in a Task.
+ * 
+ */
 function pushColorForCategory() {
     let randomColorIndex = Math.floor(Math.random() * randomColorsForCategory.length);
-
     for(let i = 0; i < todos.length; i++) {
         const todo = todos[i];
         const todoCategory = todo.todoCategory; 
@@ -57,18 +61,19 @@ function pushColorForCategory() {
     }
 }
 
+/**
+ * This function calls 4 possible states to render existing tasks appropriately
+ * 
+ */
 function renderTodos() {
-
     let contentTodo = document.getElementById('board-content-open');
     let contentProgress = document.getElementById('board-content-progress');
     let contentFeedback = document.getElementById('board-content-feedback');
     let contentDone = document.getElementById('board-content-done');
-
     checkOpenTodo();
     checkProgressTodo();
     checkFeedbackTodo();
     checkDoneTodo();
-
     for(let i = 0; i < todos.length; i++) {
         const todo = todos[i];
         renderCategoryOpen(todo, i, contentTodo);
@@ -78,6 +83,13 @@ function renderTodos() {
     }
 }
 
+/**
+ * This function render all important data for the task in the category 'open'
+ * 
+ * @param {todo[]} todo - An array of Task objects.
+ * @param {number} i - The current Index of Task
+ * @param {HTMLElement} contentTodo - The HTML element in which the tasks are rendered (category: open)
+ */
 function renderCategoryOpen(todo, i, contentTodo) {
     if(todo.category == 'open') {
         contentTodo.innerHTML += templateHTMLTodoContainer(todo, i);
@@ -90,6 +102,13 @@ function renderCategoryOpen(todo, i, contentTodo) {
     }
 }
 
+/**
+ * This function render all important data for the task in the category 'progress'
+ * 
+ * @param {todo[]} todo - An array of Task objects
+ * @param {number} i - The current Index of Task
+ * @param {HTMLElement} contentProgress - The HTML element in which the tasks are rendered (category: progress)
+ */
 function renderCategoryProgress(todo, i, contentProgress) {
     if(todo['category'] == 'progress') {
         contentProgress.innerHTML += templateHTMLTodoContainer(todo, i);
@@ -102,6 +121,13 @@ function renderCategoryProgress(todo, i, contentProgress) {
     }
 }
 
+/**
+ * This function render all important data for the task in the category 'feedback'
+ * 
+ * @param {todo[]} todo - An array of Task objects
+ * @param {number} i - The current Index of Task
+ * @param {HTMLElement} contentFeedback - The HTML element in which the tasks are rendered (category: feedback)
+ */
 function renderCategoryFeedback(todo, i, contentFeedback) {
     if(todo['category'] == 'feedback') {
         contentFeedback.innerHTML += templateHTMLTodoContainer(todo, i);
@@ -114,18 +140,10 @@ function renderCategoryFeedback(todo, i, contentFeedback) {
     }
 }
 
-function renderCategoryDone(todo, i, contentDone) {
-    if(todo['category'] == 'done') {
-        contentDone.innerHTML += templateHTMLTodoContainer(todo, i);
-        renderColorForCategory(i);
-        renderSubtaskProgressbar(i);
-        renderPrioImg(i);
-        renderContact(i);
-        renderCounterAfterClose(i);
-        changeProgressbar(i);
-    }
-}
-
+/**
+ * Checks whether a task is available in the status 'open', if not then the message is displayed: 'No tasks To Do'
+ * 
+ */
 function checkOpenTodo() {
     let filteredOpenCategory = todos.filter(t => t['category'] === 'open') ;
     let contentTodo = document.getElementById('board-content-open');
@@ -138,6 +156,10 @@ function checkOpenTodo() {
     }
 } 
 
+/**
+ * Checks whether a task is available in the status 'progress', if not then the message is displayed: 'No tasks in progress'
+ * 
+ */
 function checkProgressTodo() {
     let filteredOpenCategory = todos.filter(t => t['category'] === 'progress') ;
     let contentProgress = document.getElementById('board-content-progress');
@@ -150,6 +172,10 @@ function checkProgressTodo() {
     }
 }
 
+/**
+ * Checks whether a task is available in the status 'feedback', if not then the message is displayed: 'No task sin feedback'
+ * 
+ */
 function checkFeedbackTodo() {
     let filteredOpenCategory = todos.filter(t => t['category'] === 'feedback') ;
     let contentFeedback = document.getElementById('board-content-feedback');
@@ -162,6 +188,10 @@ function checkFeedbackTodo() {
     }
 }
 
+/**
+ * Checks whether a task is available in the status 'done', if not then the message is displayed: 'No tasks ars done'
+ * 
+ */
 function checkDoneTodo() {
     let filteredOpenCategory = todos.filter(t => t['category'] === 'done');
     let contentDone = document.getElementById('board-content-done');
@@ -174,6 +204,30 @@ function checkDoneTodo() {
     }
 }
 
+/**
+ * This function render all important data for the task in the category 'feedback'
+ * 
+ * @param {todo[]} todo - An array of Task objects
+ * @param {number} i - The current Index of Task
+ * @param {HTMLElement} contentDone - The HTML element in which the tasks are rendered (category: feedback) 
+ */
+function renderCategoryDone(todo, i, contentDone) {
+    if(todo['category'] == 'done') {
+        contentDone.innerHTML += templateHTMLTodoContainer(todo, i);
+        renderColorForCategory(i);
+        renderSubtaskProgressbar(i);
+        renderPrioImg(i);
+        renderContact(i);
+        renderCounterAfterClose(i);
+        changeProgressbar(i);
+    }
+}
+
+/**
+ * Render for every Category an background Color
+ * 
+ * @param {number} index - The current index of the task
+ */
 function renderColorForCategory(index) {
     let categoryContainer = document.getElementById(`category-span${index}`);
     let categoryContainerDetailView = document.getElementById(`category-span-detail${index}`);
@@ -185,6 +239,12 @@ function renderColorForCategory(index) {
     }
 }
 
+/**
+ * A function that displays a drop-down menu in the mobile view to switch between states
+ * 
+ * @param {event} event - Event to stop propagation
+ * @param {number} index - The current index of the task
+ */
 function openDropDownStatus(event, index) {
     event.stopPropagation(); 
     let parentDiv = event.target.closest('.position-relative');
@@ -212,6 +272,12 @@ function openDropDownStatus(event, index) {
     }
 }
 
+/**
+ * Function that hides and grays out the current status
+ * 
+ * @param {number} index - The current index of the task
+ * @param {JSON} categorys - A JSON that has all the states in it
+ */
 function hideCurrentCategory(index, categorys) {
     let todoCategory = todos[index].category;
     for(let category in categorys) {
@@ -223,6 +289,13 @@ function hideCurrentCategory(index, categorys) {
     }
 }
 
+/**
+ * Function that changes the current state and loads it into the backend
+ * 
+ * @param {string} newStatus - The current State
+ * @param {number} index - The current index of the task
+ * @param {event} event - Event to stop propagation
+ */
 async function changeTo(newStatus, index, event) {
     event.stopPropagation();
     todos[index].category = newStatus;
@@ -231,7 +304,11 @@ async function changeTo(newStatus, index, event) {
     renderTodos();
 }
 
-
+/**
+ * Function that show the progressbar the task
+ * 
+ * @param {number} index 
+ */
 function renderSubtaskProgressbar(index) {
     let progressbarContent = document.getElementById(`progress-content${index}`);
     if(todos[index].subtask.length > 0) {
@@ -241,6 +318,11 @@ function renderSubtaskProgressbar(index) {
     subtaskMaxLength(index);
 }
 
+/**
+ * Function to check how many subtaks are in the current task and show the Number
+ * 
+ * @param {number} index 
+ */
 function subtaskMaxLength(index) {
     let showMaxLength = document.getElementById(`subtask-maxlength${index}`);
     let maxLength = todos[index].subtask.length;
@@ -250,6 +332,11 @@ function subtaskMaxLength(index) {
     }
 }
 
+/**
+ * Displays the current priority of the task
+ * 
+ * @param {number} index - The current index of the task
+ */
 function renderPrioImg(index) {
     let prioImg = document.getElementById(`prio-img${index}`);
     let prioImgDetail = document.getElementById(`prio-img-detail${index}`);
@@ -258,6 +345,13 @@ function renderPrioImg(index) {
     prioHigh(prioImg, prioImgDetail, index);
 }
 
+/**
+ * Indicates priority 'low'
+ * 
+ * @param {HTMLElement} prioImg - To show the Icon ('low') on the Board
+ * @param {HTMLElement} prioImgDetail - To show the Icon ('low') on the Detailview
+ * @param {number} index - The current index of the task
+ */
 function prioLow(prioImg, prioImgDetail, index) {
     if(todos[index].priority == 'low') {
         if(prioImg) {
@@ -269,6 +363,13 @@ function prioLow(prioImg, prioImgDetail, index) {
     }
 }
 
+/**
+ * Indicates priority 'medium'
+ * 
+ * @param {HTMLElement} prioImg - To show the Icon ('low') on the Board
+ * @param {HTMLElement} prioImgDetail - To show the Icon ('low') on the Detailview
+ * @param {number} index - The current index of the task
+ */
 function prioMedium(prioImg, prioImgDetail, index) {
     if(todos[index].priority == 'medium') {
         if(prioImg) {
@@ -280,6 +381,13 @@ function prioMedium(prioImg, prioImgDetail, index) {
     }
 }
 
+/**
+ * Indicates priority 'high'
+ * 
+ * @param {HTMLElement} prioImg - To show the Icon ('low') on the Board
+ * @param {HTMLElement} prioImgDetail - To show the Icon ('low') on the Detailview
+ * @param {number} index - The current index of the task
+ */
 function prioHigh(prioImg, prioImgDetail, index) {
     if(todos[index].priority == 'high') {
         if(prioImg) {
@@ -291,6 +399,11 @@ function prioHigh(prioImg, prioImgDetail, index) {
     }
 }
 
+/**
+ * Displays the selected contacts for a task
+ * 
+ * @param {number} index - The current index of the task
+ */
 function renderContact(index) {
     let assignedContactsContainer = document.getElementById(`assigned-contacts${index}`);
     if(todos[index].assignedContacts.length > 0) {
@@ -310,6 +423,12 @@ function renderContact(index) {
     renderMoreContactsIcon(index);
 }
 
+/**
+ * This function searches for all IDs in the contacts and compares them with the passed ID
+ * 
+ * @param {number} contactId - returns an ID assigned to each contact
+ * @returns 
+ */
 function findContactById(contactId) {
     return contacts.find(contact => contact.id === contactId);
 }
@@ -326,7 +445,11 @@ function renderContactColor(contact, i, index) {
     }
 }
 
-
+/**
+ * If more than 4 contacts are selected, a 'More' Icon
+ * 
+ * @param {number} index - The current index of the task
+ */
 function renderMoreContactsIcon(index) {
     let assignedContactsContainer = document.getElementById(`assigned-contacts${index}`);
     if(todos[index].assignedContacts.length > 4) {
@@ -335,6 +458,11 @@ function renderMoreContactsIcon(index) {
     }
 }
 
+/**
+ * 
+ * @param {number} index - The current index of the task
+ * @param {number} i - The current index of the subtask
+ */
 async function subtaskCounter(index, i) {
     let showCounter = document.getElementById(`subtask-counter${index}`);
     let checkboxSubtask = document.getElementById(`subtask${index}-${i}`);
@@ -351,6 +479,11 @@ async function subtaskCounter(index, i) {
     changeProgressbar(index);
 }
 
+/**
+ * Adjusts the progress bar according to the number of selected subtasks
+ * 
+ * @param {number} index - The current index of the task
+ */
 function changeProgressbar(index) {
     let progressBar = document.getElementById(`progress-bar${index}`);
     let maxLength = todos[index].subtask.length; 
@@ -362,6 +495,11 @@ function changeProgressbar(index) {
     }
 }
 
+/**
+ * Shows the number of selected subtasks even after closing various views
+ * 
+ * @param {number} index 
+ */
 function renderCounterAfterClose(index) {
     let showCounter = document.getElementById(`subtask-counter${index}`);
 
