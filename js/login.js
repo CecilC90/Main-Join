@@ -29,14 +29,17 @@ let loginPassword = false;
 let registrationPassword = false;
 let registrationConfirmPassword = false;
 /**
- * 
+ * launches the page
  * 
  */
 function init() {
   renderStartPage();
   changePasswordIconLogin("passwordIconContainer", "password");
 }
-
+/**
+ * Load the start page to log in
+ * 
+ */
 function renderStartPage() {
   let content = document.getElementById("loginMaskContainer");
   content.innerHTML = renderStartPageHTML();
@@ -45,12 +48,20 @@ function renderStartPage() {
   loadRememberedUser();
 }
 
+/**
+ * change the login page to the registration page
+ * 
+ */
 function renderRegistrationPage() {
   document.getElementById("signUpButtonContainer").innerHTML = "";
   let content = document.getElementById("loginMaskContainer");
   content.innerHTML = renderRegistrationPageHTML();
 }
 
+/**
+ * triggers the logo slide in the desktop and mobile version
+ * 
+ */
 document.addEventListener("DOMContentLoaded", function () {
   var slideImage = document.getElementById("slideImage");
   var content = document.getElementById("content");
@@ -108,8 +119,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+/**
+ * starts the function setLogoPosition when changing the page width
+ * 
+ */
 window.addEventListener("resize", setLogoPosition);
 
+/**
+ * changes the position of the logo when changing the page width
+ * 
+ */
 function setLogoPosition() {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   if (screenWidth <= 750) {
@@ -129,6 +148,10 @@ function setLogoPosition() {
   }
 }
 
+/**
+ * checks the login input data with the backend
+ * 
+ */
 async function login() {
   document.getElementById("logInButton").disable = true;
   showEmailNotExisting(false);
@@ -152,6 +175,12 @@ async function login() {
   }
 }
 
+/**
+ * change the icon of the password if one is entered and make it visible when clicking on it
+ * 
+ * @param {string} iconId the id of the conatiner with the icon
+ * @param {string} inputField the id of the conatiner with the password
+ */
 function changePasswordIconLogin(iconId, inputField) {
   let content = document.getElementById(iconId);
   let inputfield = document.getElementById(inputField).value;
@@ -166,6 +195,12 @@ function changePasswordIconLogin(iconId, inputField) {
   }
 }
 
+/**
+ * change the icon of the password if one is entered and make it visible when clicking on it
+ * 
+ * @param {string} iconId the id of the conatiner with the icon
+ * @param {string} inputField the id of the conatiner with the password
+ */
 function changePasswordIconRegistration(iconId, inputField) {
   let content = document.getElementById(iconId);
   let inputfield = document.getElementById(inputField).value;
@@ -180,6 +215,12 @@ function changePasswordIconRegistration(iconId, inputField) {
   }
 }
 
+/**
+ * change the icon of the password if one is entered and make it visible when clicking on it
+ * 
+ * @param {string} iconId the id of the conatiner with the icon
+ * @param {string} inputField the id of the conatiner with the password
+ */
 function changePasswordIconRegistrationConfirm(iconId, inputField) {
   let content = document.getElementById(iconId);
   let inputfield = document.getElementById(inputField).value;
@@ -194,6 +235,12 @@ function changePasswordIconRegistrationConfirm(iconId, inputField) {
   }
 }
 
+/**
+ * displays the password in plain text
+ * 
+ * @param {string} iconId the id of the conatiner with the icon
+ * @param {string} inputField the id of the conatiner with the password
+ */
 function showPasswordClearText(iconId, inputField) {
   let content = document.getElementById(iconId);
   let inputfield = document.getElementById(inputField);
@@ -206,6 +253,12 @@ function showPasswordClearText(iconId, inputField) {
   }
 }
 
+/**
+ * writes the data for the remember me in the local storage
+ * 
+ * @param {HTMLElement} email 
+ * @param {HTMLElement} password 
+ */
 function handleRememberMe(email, password) {
   let rememberMeInfos = { email: email.value, password: password.value, rememberMe: rememberMe };
   saveRememberMeJson.push(rememberMeInfos);
@@ -213,6 +266,10 @@ function handleRememberMe(email, password) {
   localStorage.setItem("rememberMe", rememberMeAsText);
 }
 
+/**
+ * load the data for the remember me from the local storage
+ * 
+ */
 function loadRememberedUser(){
   let rememberMeAsText = localStorage.getItem("rememberMe");
   if(rememberMeAsText){
@@ -223,6 +280,10 @@ function loadRememberedUser(){
   }
 }
 
+/**
+ * because the data for the remember me is available, the function enters it in the appropriate fields
+ * 
+ */
 function fillInputFieldsFromUser(){
   let emailInput = document.getElementById("email");
   let passwordInput = document.getElementById("password");
@@ -231,6 +292,10 @@ function fillInputFieldsFromUser(){
   setRememberMe();
 }
 
+/**
+ * the function writes the data of a new user to the backend and checks the correctness beforehand
+ * 
+ */
 async function addUser() {
   showEmailAlreadyUsed(false);
   document.getElementById("registrationButton").disable = true;
@@ -264,6 +329,10 @@ async function addUser() {
   }
 }
 
+/**
+ * writes the data of a new user into the backend for the contacte
+ * 
+ */
 async function addContact() {
   const randomIndex = Math.floor(Math.random() * backgroundColors.length);
   await loadContacts();
@@ -277,10 +346,19 @@ async function addContact() {
   await setItem("contacts", JSON.stringify(contacts));
 }
 
+/**
+ * load the contacts from the backend
+ * 
+ */
 async function loadContacts() {
   contacts = JSON.parse(await getItem("contacts"));
 }
 
+/**
+ * change the entered name so that it is correctly present in the backend
+ * 
+ * @returns {string}
+ */
 function formatName() {
   let name = document.getElementById("name");
   name = name.value.split(/[,.]/);
@@ -292,23 +370,40 @@ function formatName() {
   return formattedname;
 }
 
+/**
+ * goes back to the start page
+ * 
+ */
 function goToStart() {
   dontshowSignUpfinished();
   renderStartPage();
 }
 
+/**
+ * change the border of the login password
+ * 
+ */
 function showLoginWorngPassword() {
   let textField = document.getElementById("wrongPasswordText");
   textField.innerHTML = "Wrong password Ups! Try again.";
   document.getElementById("inputPasswordField").classList.add("wrongInput");
 }
 
+/**
+ * changes the border of the confirm password
+ * 
+ */
 function showPasswordNotConfirm() {
   let textField = document.getElementById("passwordNotConfirmText");
   textField.innerHTML = "Ups! your password don’t match";
   document.getElementById("inputPasswordField").classList.add("wrongInput");
 }
 
+/**
+ * changes the border of the email field when registering
+ * 
+ * @param {boolean} email yes or no whether the border is added or removed
+ */
 function showEmailAlreadyUsed(email) {
   if (email == true) {
     document.getElementById("inputEmailField").classList.add("wrongInput");
@@ -317,6 +412,11 @@ function showEmailAlreadyUsed(email) {
   }
 }
 
+/**
+ * changes the border of the email field when logging in
+ * 
+ * @param {boolean} email yes or no whether the border is added or removed
+ */
 function showEmailNotExisting(email) {
   if (email == true) {
     document.getElementById("inputEmailField").classList.add("wrongInput");
@@ -325,6 +425,10 @@ function showEmailNotExisting(email) {
   }
 }
 
+/**
+ * checks if privacyPolic is true and if not makes the text red
+ * 
+ */
 function setColorPrivacyPolicRed(){
   let content = document.getElementById('acceptPrivacyPolicContainer');
   if(privacyPolic){
@@ -334,6 +438,10 @@ function setColorPrivacyPolicRed(){
   }
 }
 
+/**
+ * changes the checkbox Remember Me
+ * 
+ */
 function setRememberMe() {
   let content = document.getElementById("rememberMeCheckbox");
   if (rememberMe) {
@@ -345,6 +453,10 @@ function setRememberMe() {
   }
 }
 
+/**
+ * changes the checkbox Privacy Polic
+ * 
+ */
 function setPrivacyPolic() {
   let content = document.getElementById("privacyPolicCheckbox");
   if (privacyPolic) {
@@ -357,12 +469,20 @@ function setPrivacyPolic() {
   }
 }
 
+/**
+ * lets the message regestrirung fly in successfully
+ * 
+ */
 function showSignUpfinished() {
   var conatiner = document.getElementById("finishedMessageContainer");
   conatiner.style.display = "flex";
   conatiner.style.bottom = "calc(50% - " + conatiner.clientHeight / 2 + "px)";
 }
 
+/**
+ * removes the message regestrirung successfully fly in
+ * 
+ */
 function dontshowSignUpfinished() {
   var conatiner = document.getElementById("finishedMessageContainer");
   conatiner.style.display = "none";

@@ -40,7 +40,7 @@ async function includesHTML() {
  * 
  * @param {string} key under which key the data should be stored
  * @param {string} value value is which data should be written to the backend
- * @returns {boolean} returns whether the upload to the backend was successful
+ * @returns {object} returns whether the upload to the backend was successful
  */
 async function setItem(key, value) {
   const payload = { key, value, token: STORAGE_TOKEN };
