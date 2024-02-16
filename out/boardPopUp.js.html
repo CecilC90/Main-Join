@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: boardPopUp.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: boardPopUp.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>function doNotClose(event) { 
+    event.stopPropagation();
+}
+
+function regulateZIndexMenuAndHeader() {
+  let header = document.getElementById('header');
+  let menu = document.getElementById('menu');
+  let mobileMenu = document.getElementById('mobile-navbar');
+
+  header.style.zIndex = 0;
+  menu.style.zIndex = 0;
+  mobileMenu.style.zIndex = 0;
+}
+
+function regulateZIndexMenuAndHeaderAfterClose() {
+  let header = document.getElementById('header');
+  let menu = document.getElementById('menu');
+  let mobileMenu = document.getElementById('mobile-navbar');
+
+  header.style.zIndex = 99;
+  menu.style.zIndex = 99;
+  mobileMenu.style.zIndex = 99;
+}
+
+function regulatePositionStatic() {
+  let positionRelative = document.querySelectorAll('.position-relative');
+
+  positionRelative.forEach(element => {
+    element.style.position = 'static';
+  });
+}
+
+function regulatePositionRelative() {
+  let positionRelative = document.querySelectorAll('.position-relative');
+
+  positionRelative.forEach(element => {
+    element.style.position = 'relative';
+  });
+}
+
+// Detailview functions
+
+/**
+ * Displays the detail view of a task based on its index.
+ * 
+ * @param {number} index - The index of the todo to display in detail view.
+ */
+function showDetailView(index) {
+   let detailViewContainer = document.getElementById('show-detail-todo');
+   detailViewContainer.style.display = 'flex';
+
+   detailViewContainer.innerHTML = templateHTMLDetailView(index);
+
+   document.getElementById('detail-todo-content').style.animationPlayState = 'running';
+
+   renderColorForCategory(index);
+   renderPrioImg(index);
+   renderSubtask(index);
+   renderContactsDetailView(index);
+   renderCheckboxAfterClose(index);
+   regulateZIndexMenuAndHeader();
+   regulatePositionStatic();
+}
+
+/**
+ * Displays the subtasks of a task based on its index.
+ * 
+ * @param {number} index - The index of the todo to display in detail view.
+ */
+function renderSubtask(index) {
+    let subtasks = document.getElementById(`checkbox-subtask${index}`);
+    if(todos[index].subtask.length > 0) {
+        subtasks.innerHTML = addHeadlineSubtasks();
+        for(let i = 0; i &lt; todos[index].subtask.length; i++) {
+            let currentIndexSubtask = todos[index].subtask[i].title;
+            subtasks.innerHTML += subtasksContainerHTML(index, i, currentIndexSubtask);
+        }
+    }
+}
+
+/**
+ * Displays the contacts of a task based on its index.
+ * 
+ * @param {number} index - The index of the todo to display in detail view.
+ */
+function renderContactsDetailView(index) {
+    let assignedContactsContainer = document.getElementById(`assigned-contacts-detailview${index}`);
+    if(todos[index].assignedContacts.length > 0) {
+        assignedContactsContainer.innerHTML = addHeadlineAssignedToContacts();
+        for(let i = 0; i &lt; todos[index].assignedContacts.length; i++) {
+            const contactId = todos[index].assignedContacts[i];
+            const contact = findContactById(contactId);
+            let splitName = contact.name.split(" ");
+            let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
+            let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
+            let resultInitials = firstLetter + secondLetter;
+            assignedContactsContainer.innerHTML += assignedContactsContainerHTML(contact, resultInitials, i);
+            renderContactColor(contact, i);
+        }
+    }
+}
+
+/**
+ * To close the detail View width a onclick-event.
+ * 
+ */
+function closeDetailView() {
+    let detailViewContainer = document.getElementById('show-detail-todo');
+    detailViewContainer.style.display = 'none';
+
+    regulateZIndexMenuAndHeaderAfterClose();
+    regulatePositionRelative();
+    renderTodos();
+}
+
+/**
+ * Displays a Checkbox if the subtask is done.
+ * 
+ * @param {number} index - The index of the todo to display in detail view.
+ */
+function renderCheckboxAfterClose(index) {
+    for(let i = 0; i &lt; todos[index].subtask.length; i++) {
+        let checkboxSubtask = document.getElementById(`subtask${index}-${i}`);
+
+        const isChecked = todos[index].subtask[i].subtaskDone;
+        checkboxSubtask.checked = isChecked;
+    }
+}
+
+/**
+ * Delete a task with a onclick-event
+ * 
+ * @param {number} index - The index of the todo to display in detail view.
+ */
+async function deleteTask(index) {
+    todos.splice(index);
+
+    await setItem('allTasks', JSON.stringify(todos));
+    closeDetailView();
+    renderTodos;
+}
+
+// Editview functions
+
+/**
+ * Displays the edit view of a task based on its index.
+ * 
+ * @param {number} index - The index of the todo to display in edit view.
+ */
+async function editTask(index) {
+    let detailViewContainer = document.getElementById('show-detail-todo');
+    detailViewContainer.innerHTML = await templateHTMLEditTask(index);
+
+    checkDueDateNotInPastEditview();
+    renderPrioButton(index);
+    changeSelectedContacts(index);
+    renderAssingnedToDropdownListEditview();
+    renderSelectedContactsIconsEditview();
+    renderSubtasksEditview(index);
+    loadPrioButton(index);
+    regulateZIndexMenuAndHeader();
+    regulatePositionStatic();
+}
+
+/**
+ * Displays the prio button based on its index.
+ * 
+ * @param {number} index - The index of the todo to display in edit view.
+ */
+function loadPrioButton(index) {
+    let prioValue = todos[index].priority;
+
+    setPrioBtn(prioValue, index);
+}
+
+/**
+ * 
+ * @param {string} prioValue - The value of the priority 
+ * @param {number} index - The index of the todo to display in edit view.
+ */
+function setPrioBtn(prioValue, index) {
+    todos[index] = {
+      ...todos[index],
+      priority: prioValue
+    }
+  
+    let low = document.getElementById('prioButtonLowEditview');
+    let medium = document.getElementById('prioButtonMediumEditview');
+    let high = document.getElementById('prioButtonHighEditview');
+    let changeImgLow = document.getElementById('change-img-low');
+    let changeImgMedium = document.getElementById('change-img-medium');
+    let changeImgHigh = document.getElementById('change-img-high');
+  
+    prioBtnLow(low, changeImgLow, prioValue);
+    prioBtnMedium(medium, changeImgMedium, prioValue);
+    prioBtnHigh(high, changeImgHigh, prioValue);
+}
+
+/**
+ * Change the background color, font color, and the image width with an `onclick` event. (Prio: Low)
+ * 
+ * @param {HTMLElement} low - HTML Element to change the characteristics for the Priority 'Low' Btn.
+ * @param {HTMLElement} changeImgLow - HTML Element to change the IMG for the Priority 'Low'.
+ * @param {string} prioValue - Passes the value 'Low'.
+ */
+function prioBtnLow(low, changeImgLow, prioValue) {
+    if(prioValue == 'low') {
+        low.style.background = '#7ae229';
+        low.style.color = '#fff';
+        changeImgLow.src = './assets/img/prio-low-white.png';
+      } else {
+        low.style.background = '#fff';
+        low.style.color = 'black';
+        changeImgLow.src = './assets/img/prio-low.svg';
+      }
+}
+
+/**
+ * Change the background color, font color, and the image width with an `onclick` event. (Prio: Medium)
+ * 
+ * @param {HTMLElement} medium - HTML Element to change the characteristics for the Priority 'Medium' Btn.
+ * @param {HTMLElement} changeImgMedium - HTML Element to change the IMG for the Priority 'Medium'.
+ * @param {string} prioValue - Passes the value 'Medium'.
+ */
+function prioBtnMedium(medium, changeImgMedium, prioValue) {
+    if(prioValue == 'medium') {
+        medium.style.background = '#ffa800';
+        medium.style.color = '#fff';
+        changeImgMedium.src = './assets/img/prio-medium-white.png';
+      } else {
+        medium.style.background = '#fff';
+        medium.style.color = 'black';
+        changeImgMedium.src = './assets/img/prio-medium.svg';
+      }
+}
+
+/**
+ * Change the background color, font color, and the image width with an `onclick` event. (Prio: High)
+ * 
+ * @param {HTMLElement} high - HTML Element to change the characteristics for the Priority 'High' Btn.
+ * @param {HTMLElement} changeImgHigh - HTML Element to change the IMG for the Priority 'High'.
+ * @param {string} prioValue - Passes the value 'High'.
+ */
+function prioBtnHigh(high, changeImgHigh, prioValue) {
+    if(prioValue == 'high') {
+        high.style.background = '#ff3d00';
+        high.style.color = '#fff';
+        changeImgHigh.src = './assets/img/prio-urgent-white.png';
+      } else {
+        high.style.background = '#fff';
+        high.style.color = 'black';
+        changeImgHigh.src = './assets/img/prio-urgent.svg';
+      }
+}
+
+/**
+ * Ensures that no date in the past can be displayed.
+ * 
+ */
+function checkDueDateNotInPastEditview() {
+  let currentDate = new Date();
+  let inputDate = document.getElementById("new-date");
+  let year = currentDate.getFullYear();
+  let month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  let day = currentDate.getDate().toString().padStart(2, "0");
+  let currentDateString = year + "-" + month + "-" + day;
+  inputDate.setAttribute("min", currentDateString);
+}
+
+/**
+ * Function to change the assigned contacts
+ * 
+ * @param {number} index - The index of the todo to display in edit view.
+ */
+function changeSelectedContacts(index) {
+
+    for (let i = 0; i &lt; todos[index].assignedContacts.length; i++) {
+        let todosContact = todos[index].assignedContacts[i];
+
+        for (let j = 0; j &lt; contacts.length; j++) {
+            let contact = contacts[j];
+
+            if (todosContact === contact.id) {
+                contact.selected = true;
+            }
+        }
+    }
+}
+
+/**
+ * Push the selected contacts to the backend.
+ * 
+ * @param {number} index - The index of the todo to display in edit view.
+ */
+function pushSelecetedContactsToTodos(index) {
+    for(let i = 0; i &lt; contacts.length; i++) {
+        const contact = contacts[i].id;
+        if(contact.selected == true){
+            todos[index].assignedContacts.push(contact);
+        }
+    }
+}
+
+// Assigned Contacts editview
+
+/**
+ * Creates the list of contacts that can be selected.
+ * 
+ */
+function renderAssingnedToDropdownListEditview() {
+    let content = document.getElementById("dropdownContentAssignedToEditview");
+    content.innerHTML = "";
+    for (let i = 0; i &lt; contacts.length; i++) {
+      let firstAndSecondLetter = getFirstAndSecondLetterEditview(i);
+      content.innerHTML += renderAssingnedToDropdownListHTMLEditview(i, firstAndSecondLetter, contacts[i]["color"]);
+      showSelectedDropdownContactEditview(i);
+    }
+  }
+  
+  /**
+   * Filters the list of contacts that can be selected.
+   * 
+   */
+  function filterAssingnedToDropdownListEditview(){
+    let contactInput = document.getElementById('contactInput').value;
+    contactInput = contactInput.toLowerCase();
+    let content = document.getElementById("dropdownContentAssignedToEditview");
+    content.innerHTML = '';
+    for (let i = 0; i &lt; contacts.length; i++) {
+      if(contacts[i]['name'].toLowerCase().includes(contactInput)){
+        let firstAndSecondLetter = getFirstAndSecondLetterEditview(i);
+        content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter);
+        showSelectedDropdownContactEditview(i);
+        dropdownContentAssignedToEditview.style.display = "flex";
+        toggleDropdownIconEditview("assignedToDropdownIconEditview", "flex");
+      }
+    }
+    if(contactInput.length == 0){
+      renderAssingnedToDropdownListEditview();
+      dropdownContentAssignedToEditview.style.display = "none";
+      toggleDropdownIconEditview("assignedToDropdownIconEditview", "none");
+    }
+  }
+  
+  /**
+   * Creates a string with the first letter of each contact.
+   * 
+   * @param {number} i - Number from the array contacts.
+   * @returns {string} - First and second letter.
+   */
+  function getFirstAndSecondLetterEditview(i) {
+    let name = contacts[i]["name"];
+    let splitName = name.split(" ");
+    let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
+    let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
+    let result = firstLetter + secondLetter;
+    return result;
+  }
+  
+  /**
+   * Sets the contact to selected
+   * 
+   * @param {number} i - Number from the array contacts.
+   */
+  function setContactSelectedEditview(i) {
+    if (contacts[i]["selected"]) {
+      contacts[i]["selected"] = false;
+      showSelectedDropdownContactEditview(i);
+    } else {
+      contacts[i]["selected"] = true;
+      showSelectedDropdownContactEditview(i);
+    }
+    renderSelectedContactsIconsEditview();
+  }
+  
+  /**
+   * Changes the classe of the selected contacte
+   * 
+   * @param {number} i - Number from the array contacts.
+   */
+  function showSelectedDropdownContactEditview(i) {
+    let dropdownContact = document.getElementById("dropdownContactEditview" + i);
+    let dropdownContactImg = document.getElementById("dropdownContactImgEditview" + i);
+    if (contacts[i]["selected"]) {
+      dropdownContact.classList.replace("dropdownContacts", "dropdownContactsSelected");
+      dropdownContactImg.src = "./assets/img/checkbox_checked_white.svg";
+    } else {
+      dropdownContact.classList.replace("dropdownContactsSelected", "dropdownContacts");
+      dropdownContactImg.src = "./assets/img/checkbox_unchecked.svg";
+    }
+  }
+  
+  /**
+   * Creates the icons below the input field assigned To
+   * 
+   */
+  function renderSelectedContactsIconsEditview() {
+    let content = document.getElementById("showSelectedDropdownContactEditview");
+    content.innerHTML = "";
+    for (let i = 0; i &lt; contacts.length; i++) {
+      if (contacts[i]["selected"]) {
+        content.innerHTML += renderSelectedContactsIconsHTML(i, contacts[i]["color"]);
+      }
+    }
+  }
+  
+  /**
+   * Toggle dropdown visibility
+   * 
+   */
+  function contactDropdown() {
+        dropdownContentAssignedToEditview.style.display = dropdownContentAssignedToEditview.style.display === "flex" ? "none" : "flex";
+        let dispayStatus = dropdownContentAssignedToEditview.style.display;
+        toggleDropdownIconEditview("assignedToDropdownIconEditview", dispayStatus);
+      };
+  
+  /**
+   * Change the arrow in the dropdown menu.
+   * 
+   * @param {string} id - Id of the icon to be changed.
+   * @param {string} dispayStatus - Flex or none what the dropdown currently has.
+   */
+  function toggleDropdownIconEditview(id, dispayStatus) {
+    if (dispayStatus == "flex") {
+        document.getElementById(id).src = "./assets/img/arrow_drop_down_up.svg";
+    } else {
+        document.getElementById(id).src = "./assets/img/arrow_drop_down.svg";
+    }
+  }
+
+
+  // Subtask Editview
+
+  /**
+   * Creates the list of subtasks
+   * 
+   * @param {number} index - The index of the todo to display in edit view.
+   */
+  function renderSubtasksEditview(index) {
+    let subtasksList = document.getElementById("subtasksListEditview");
+    subtasksList.innerHTML = "";
+    for (let i = 0; i &lt; todos[index].subtask.length; i++) {
+      let subtasks = todos[index].subtask[i].title;  
+      subtasksList.innerHTML += renderSubtasksHTMLEditview(i, subtasks, index);
+    }
+  }
+  
+  /**
+   * creates the field to change the subtask.
+   * 
+   * @param {number} i - The index of the subtask.
+   * @param {string} editSubtask - The current Value of the Subtask.
+   * @param {number} index - The index of the todo to display in edit view.
+   */
+  function editSubtaskEditview(i, editSubtask, index) {
+    let content = document.getElementById("subtaskEditview" + i);
+    content.innerHTML = /* html */ `
+      &lt;div class="subtaskEdit" id="subtaskEdit">
+        &lt;input type="text" id="editSubtask${i}" value="${editSubtask}">
+        &lt;div>
+          &lt;img src="./assets/img/subtasks_delete_icon.svg" onclick="deleteSubtaskEditview(${i}, ${index})" alt="delete_icon">
+          &lt;img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+          &lt;img src="./assets/img/subtasks_done_icon.svg" onclick="editSubtaskDoneEditview(${i}, ${index})" alt="done_icon">
+        &lt;/div>
+      &lt;/div>
+    `;
+  }
+  
+  /**
+   * changes the substak in the arry and displays it.
+   * 
+   * @param {number} i - The index of the subtask.
+   * @param {number} index - The index of the todo to display in edit view.
+   */
+  async function editSubtaskDoneEditview(i, index) {
+    let content = document.getElementById("editSubtask" + i);
+    if(content.value !== '') {
+      todos[index].subtask[i].title = content.value;
+      renderSubtasksEditview(index);
+    } else {
+      deleteSubtaskEditview(i, index);
+    }
+  }
+  
+  /**
+   * delete the subtask 
+   * 
+   * @param {number} i - The index of the subtask.
+   * @param {number} index - The index of the todo to display in edit view.
+   */
+  async function deleteSubtaskEditview(i, index) {
+    if(todos[index].subtask[i].subtaskDone == true) {
+      todos[index].counter--;
+    }
+    todos[index].subtask.splice(i, 1);
+    await setItem('allTasks', JSON.stringify(todos));
+    renderSubtasksEditview(index);
+  }
+
+  /**
+   * displays the add or cancel icons for the subtask
+   * 
+   * @param {number} index - The index of the todo to display in edit view.
+   */
+  function showSubtasksDoneAndCancelEditview(index) {
+    let subtasksInput = document.getElementById("subtasksInputEditview");
+    let content = document.getElementById("subtasksInputMenuEditview");
+    if (subtasksInput.value.length != 0) {
+      content.innerHTML = /* html */ `
+        &lt;img class="subtasksInputMenuimg" onclick="clearSubtaskInputFieldEditview()" src="./assets/img/subtasks_cancel_icon.svg" alt="cancel_icon">
+        &lt;img src="./assets/img/subtasks_seperator.svg" alt="subtasks_seperator">
+        &lt;img class="subtasksInputMenuimg" onclick="addSubtaskEditview(${index})" src="./assets/img/subtasks_done_icon.svg" alt="done_icon">
+     `;
+    } else {
+      content.innerHTML = '&lt;img src="./assets/img/subtasks_add_icon.svg" alt="add_icon">';
+    }
+  }
+  
+  /**
+   * Clear the input field for Subtask
+   * 
+   */
+  function clearSubtaskInputFieldEditview() {
+    let content = document.getElementById("subtasksInputEditview");
+    content.value = "";
+    showSubtasksDoneAndCancelEditview();
+  }
+
+  /**
+   * Add the edit Subtask to the Backend
+   * 
+   * @param {number} index - The index of the todo to display in edit view.
+   */
+  async function addSubtaskEditview(index) {
+    let subtasksInput = document.getElementById("subtasksInputEditview");
+    let addSubtask = todos[index].subtask;
+    addSubtask.push(
+        {
+            title: subtasksInput.value,
+            selected: false
+        }
+    );
+    
+    await setItem('allTasks', JSON.stringify(todos));
+    clearSubtaskInputFieldEditview();
+    renderSubtasksEditview(index);
+}
+
+/**
+ * Function to change the task and load it into the backend
+ * 
+ * @param {number} index - The index of the todo to display in edit view. 
+ */
+async function changeTask(index) {
+    let newTitle = document.getElementById('new-title');
+    let newDescription = document.getElementById('new-description');
+    let newDate = document.getElementById('new-date');
+
+    todos[index].assignedContacts = [];
+
+    for(let j = 0; j &lt; contacts.length; j++) {
+        let contact = contacts[j];
+
+        if(contact.selected) {
+            todos[index].assignedContacts.push(contact.id);
+        }
+    }
+
+    todos[index] = {
+        ...todos[index],
+        title: newTitle.value,
+        description: newDescription.value,
+        dueDate: newDate.value,
+    }
+
+    await setItem('allTasks', JSON.stringify(todos));
+
+    showDetailView(index);
+    renderTodos();
+}
+
+// Addtask function
+
+/**
+ * Function to load all Functions from the add_task.js
+ * 
+ * @param {string} category - Task becomes the passed status
+ */
+function showAddTask(category) {
+    selectedCategory = category;
+    let showAddTodoContainer = document.getElementById('show-add-todo');
+    showAddTodoContainer.style.display = "flex";
+    showAddTodoContainer.innerHTML = `&lt;div onclick="doNotClose(event)" id="add-todo-content">&lt;/div>`;
+    document.getElementById('add-todo-content').innerHTML = templateAddTaskHeadline();
+    document.getElementById('add-todo-content').innerHTML += renderAddTaskHTML();
+    document.getElementById('add-todo-content').innerHTML += templateAddTaskFooter();
+
+    setPrioButton("medium");
+    renderAssingnedToDropdownList();
+    renderCategoryDropdownList();
+    renderSelectedContactsIcons();
+    renderSubtasks();
+    loadEventListner();
+    mobileAddTask();
+    regulatePositionStatic();
+    regulateZIndexMenuAndHeader();
+}
+
+function closeAddTask() {
+    let showAddTodoContainer = document.getElementById('show-add-todo');
+    showAddTodoContainer.style.display = "none";
+
+    renderTodos();
+    regulateZIndexMenuAndHeaderAfterClose();
+    regulatePositionRelative();
+}
+
+function mobileAddTask() {
+    let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    if (screenWidth &lt; 750) {
+        document.getElementById('todo-link').href = 'add_task.html';
+        document.getElementById('progress-link').href = 'add_task.html';
+        document.getElementById('feedback-link').href = 'add_task.html';
+    } 
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addContact">addContact</a></li><li><a href="global.html#addIdToTasks">addIdToTasks</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#addSubtaskEditview">addSubtaskEditview</a></li><li><a href="global.html#addSubtaskOnEnter">addSubtaskOnEnter</a></li><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#addTaskOnEnter">addTaskOnEnter</a></li><li><a href="global.html#addToTaskBackend">addToTaskBackend</a></li><li><a href="global.html#addUser">addUser</a></li><li><a href="global.html#allTaskAreDisplayed">allTaskAreDisplayed</a></li><li><a href="global.html#allowDrop">allowDrop</a></li><li><a href="global.html#awaitCount">awaitCount</a></li><li><a href="global.html#backgroundColors">backgroundColors</a></li><li><a href="global.html#cancelInput">cancelInput</a></li><li><a href="global.html#changeColorDuedate">changeColorDuedate</a></li><li><a href="global.html#changePasswordIconLogin">changePasswordIconLogin</a></li><li><a href="global.html#changePasswordIconRegistration">changePasswordIconRegistration</a></li><li><a href="global.html#changePasswordIconRegistrationConfirm">changePasswordIconRegistrationConfirm</a></li><li><a href="global.html#changeProgressbar">changeProgressbar</a></li><li><a href="global.html#changeSelectedContacts">changeSelectedContacts</a></li><li><a href="global.html#changeTask">changeTask</a></li><li><a href="global.html#changeTo">changeTo</a></li><li><a href="global.html#checkDoneTodo">checkDoneTodo</a></li><li><a href="global.html#checkDueDateNotInPast">checkDueDateNotInPast</a></li><li><a href="global.html#checkDueDateNotInPastEditview">checkDueDateNotInPastEditview</a></li><li><a href="global.html#checkFeedbackTodo">checkFeedbackTodo</a></li><li><a href="global.html#checkIsFieldFilled">checkIsFieldFilled</a></li><li><a href="global.html#checkIsMsgAvailable">checkIsMsgAvailable</a></li><li><a href="global.html#checkOpenTodo">checkOpenTodo</a></li><li><a href="global.html#checkProgressTodo">checkProgressTodo</a></li><li><a href="global.html#checkScreenWidth">checkScreenWidth</a></li><li><a href="global.html#checkTime">checkTime</a></li><li><a href="global.html#clearNoTaskFound">clearNoTaskFound</a></li><li><a href="global.html#clearRequiredText">clearRequiredText</a></li><li><a href="global.html#clearSubtaskInputField">clearSubtaskInputField</a></li><li><a href="global.html#clearSubtaskInputFieldEditview">clearSubtaskInputFieldEditview</a></li><li><a href="global.html#clearTask">clearTask</a></li><li><a href="global.html#closeAddContactPopUp">closeAddContactPopUp</a></li><li><a href="global.html#closeDetailView">closeDetailView</a></li><li><a href="global.html#closeMainContact">closeMainContact</a></li><li><a href="global.html#closePopUp">closePopUp</a></li><li><a href="global.html#closeUserInformation">closeUserInformation</a></li><li><a href="global.html#contactDropdown">contactDropdown</a></li><li><a href="global.html#contacts">contacts</a></li><li><a href="global.html#contentDisplayBlock">contentDisplayBlock</a></li><li><a href="global.html#contentDisplayFlex">contentDisplayFlex</a></li><li><a href="global.html#deadlineHTML">deadlineHTML</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteSubtaskEditview">deleteSubtaskEditview</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#dontshowSignUpfinished">dontshowSignUpfinished</a></li><li><a href="global.html#editSubtask">editSubtask</a></li><li><a href="global.html#editSubtaskDone">editSubtaskDone</a></li><li><a href="global.html#editSubtaskDoneEditview">editSubtaskDoneEditview</a></li><li><a href="global.html#editSubtaskEditview">editSubtaskEditview</a></li><li><a href="global.html#editSubtaskHTML">editSubtaskHTML</a></li><li><a href="global.html#editTask">editTask</a></li><li><a href="global.html#feedback">feedback</a></li><li><a href="global.html#fillInputFieldsFromUser">fillInputFieldsFromUser</a></li><li><a href="global.html#filterAssingnedToDropdownList">filterAssingnedToDropdownList</a></li><li><a href="global.html#filterAssingnedToDropdownListEditview">filterAssingnedToDropdownListEditview</a></li><li><a href="global.html#filterCategorys">filterCategorys</a></li><li><a href="global.html#filterTitlesOfTodos">filterTitlesOfTodos</a></li><li><a href="global.html#filterTodos">filterTodos</a></li><li><a href="global.html#findContactById">findContactById</a></li><li><a href="global.html#finished">finished</a></li><li><a href="global.html#formatName">formatName</a></li><li><a href="global.html#getFirstAndSecondLetter">getFirstAndSecondLetter</a></li><li><a href="global.html#getFirstAndSecondLetterEditview">getFirstAndSecondLetterEditview</a></li><li><a href="global.html#getFirstLetter">getFirstLetter</a></li><li><a href="global.html#getMemberInitials">getMemberInitials</a></li><li><a href="global.html#goToStart">goToStart</a></li><li><a href="global.html#greeting">greeting</a></li><li><a href="global.html#handleRememberMe">handleRememberMe</a></li><li><a href="global.html#handleScreenWidth">handleScreenWidth</a></li><li><a href="global.html#handleWindowClick">handleWindowClick</a></li><li><a href="global.html#hideCurrentCategory">hideCurrentCategory</a></li><li><a href="global.html#highlight">highlight</a></li><li><a href="global.html#highlightOut">highlightOut</a></li><li><a href="global.html#highlightUsercard">highlightUsercard</a></li><li><a href="global.html#ifNoTextInSearchbarDesktop">ifNoTextInSearchbarDesktop</a></li><li><a href="global.html#ifNoTextInSearchbarMobile">ifNoTextInSearchbarMobile</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#initContacts">initContacts</a></li><li><a href="global.html#initializePolicyPage">initializePolicyPage</a></li><li><a href="global.html#loadAllSubtasks">loadAllSubtasks</a></li><li><a href="global.html#loadAllTasks">loadAllTasks</a></li><li><a href="global.html#loadContacts">loadContacts</a></li><li><a href="global.html#loadContent">loadContent</a></li><li><a href="global.html#loadEventListner">loadEventListner</a></li><li><a href="global.html#loadMemberInfo">loadMemberInfo</a></li><li><a href="global.html#loadPrioButton">loadPrioButton</a></li><li><a href="global.html#loadRememberedUser">loadRememberedUser</a></li><li><a href="global.html#loadSelectedContacts">loadSelectedContacts</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#markLoggedinContact">markLoggedinContact</a></li><li><a href="global.html#moveTo">moveTo</a></li><li><a href="global.html#openAddContactPopUp">openAddContactPopUp</a></li><li><a href="global.html#openAddPopupContainer">openAddPopupContainer</a></li><li><a href="global.html#openContactOptionsMobile">openContactOptionsMobile</a></li><li><a href="global.html#openContatOptions">openContatOptions</a></li><li><a href="global.html#openDropDownStatus">openDropDownStatus</a></li><li><a href="global.html#openEditContactPopUp">openEditContactPopUp</a></li><li><a href="global.html#openEditPopupContainer">openEditPopupContainer</a></li><li><a href="global.html#openUserInformation">openUserInformation</a></li><li><a href="global.html#openUserOverview">openUserOverview</a></li><li><a href="global.html#passwordLockIcon">passwordLockIcon</a></li><li><a href="global.html#passwordVisibilityOffIcon">passwordVisibilityOffIcon</a></li><li><a href="global.html#passwordVisibilityOnIcon">passwordVisibilityOnIcon</a></li><li><a href="global.html#prioBtnHigh">prioBtnHigh</a></li><li><a href="global.html#prioBtnLow">prioBtnLow</a></li><li><a href="global.html#prioBtnMedium">prioBtnMedium</a></li><li><a href="global.html#prioHigh">prioHigh</a></li><li><a href="global.html#prioLow">prioLow</a></li><li><a href="global.html#prioMedium">prioMedium</a></li><li><a href="global.html#progressCount">progressCount</a></li><li><a href="global.html#pushColorForCategory">pushColorForCategory</a></li><li><a href="global.html#pushSelecetedContactsToTodos">pushSelecetedContactsToTodos</a></li><li><a href="global.html#removeBorader">removeBorader</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#renderAddTaskHTML">renderAddTaskHTML</a></li><li><a href="global.html#renderAddTaskMobileHTML">renderAddTaskMobileHTML</a></li><li><a href="global.html#renderAssingnedToDropdownList">renderAssingnedToDropdownList</a></li><li><a href="global.html#renderAssingnedToDropdownListEditview">renderAssingnedToDropdownListEditview</a></li><li><a href="global.html#renderAssingnedToDropdownListHTML">renderAssingnedToDropdownListHTML</a></li><li><a href="global.html#renderCategoryDone">renderCategoryDone</a></li><li><a href="global.html#renderCategoryDropdownList">renderCategoryDropdownList</a></li><li><a href="global.html#renderCategoryDropdownListHTML">renderCategoryDropdownListHTML</a></li><li><a href="global.html#renderCategoryFeedback">renderCategoryFeedback</a></li><li><a href="global.html#renderCategoryOpen">renderCategoryOpen</a></li><li><a href="global.html#renderCategoryProgress">renderCategoryProgress</a></li><li><a href="global.html#renderCheckboxAfterClose">renderCheckboxAfterClose</a></li><li><a href="global.html#renderColorForCategory">renderColorForCategory</a></li><li><a href="global.html#renderContact">renderContact</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderContactsDetailView">renderContactsDetailView</a></li><li><a href="global.html#renderContactsHTML">renderContactsHTML</a></li><li><a href="global.html#renderCounterAfterClose">renderCounterAfterClose</a></li><li><a href="global.html#renderFirstLetterHTML">renderFirstLetterHTML</a></li><li><a href="global.html#renderHTML">renderHTML</a></li><li><a href="global.html#renderInitials">renderInitials</a></li><li><a href="global.html#renderMoreContactsIcon">renderMoreContactsIcon</a></li><li><a href="global.html#renderPrioImg">renderPrioImg</a></li><li><a href="global.html#renderRegistrationPage">renderRegistrationPage</a></li><li><a href="global.html#renderRegistrationPageHTML">renderRegistrationPageHTML</a></li><li><a href="global.html#renderSelectedContactsIcons">renderSelectedContactsIcons</a></li><li><a href="global.html#renderSelectedContactsIconsEditview">renderSelectedContactsIconsEditview</a></li><li><a href="global.html#renderSelectedContactsIconsHTML">renderSelectedContactsIconsHTML</a></li><li><a href="global.html#renderSingUpButtonHTML">renderSingUpButtonHTML</a></li><li><a href="global.html#renderStartPage">renderStartPage</a></li><li><a href="global.html#renderStartPageHTML">renderStartPageHTML</a></li><li><a href="global.html#renderSubtask">renderSubtask</a></li><li><a href="global.html#renderSubtaskProgressbar">renderSubtaskProgressbar</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderSubtasksEditview">renderSubtasksEditview</a></li><li><a href="global.html#renderSubtasksHTML">renderSubtasksHTML</a></li><li><a href="global.html#renderSummary">renderSummary</a></li><li><a href="global.html#renderTasks">renderTasks</a></li><li><a href="global.html#renderTodos">renderTodos</a></li><li><a href="global.html#resetAddInput">resetAddInput</a></li><li><a href="global.html#resetUserCardStyles">resetUserCardStyles</a></li><li><a href="global.html#returnNextDueDate">returnNextDueDate</a></li><li><a href="global.html#saveAllTasks">saveAllTasks</a></li><li><a href="global.html#setBlueBorder">setBlueBorder</a></li><li><a href="global.html#setColorPrivacyPolicRed">setColorPrivacyPolicRed</a></li><li><a href="global.html#setContactSelected">setContactSelected</a></li><li><a href="global.html#setContactSelectedEditview">setContactSelectedEditview</a></li><li><a href="global.html#setLogoPosition">setLogoPosition</a></li><li><a href="global.html#setMobileVersionIsOn">setMobileVersionIsOn</a></li><li><a href="global.html#setPrioBtn">setPrioBtn</a></li><li><a href="global.html#setPrioButton">setPrioButton</a></li><li><a href="global.html#setPrivacyPolic">setPrivacyPolic</a></li><li><a href="global.html#setRedBorder">setRedBorder</a></li><li><a href="global.html#setRememberMe">setRememberMe</a></li><li><a href="global.html#setSelectedCategory">setSelectedCategory</a></li><li><a href="global.html#showAddTask">showAddTask</a></li><li><a href="global.html#showAddTaskToBoard">showAddTaskToBoard</a></li><li><a href="global.html#showDetailView">showDetailView</a></li><li><a href="global.html#showEmailAlreadyUsed">showEmailAlreadyUsed</a></li><li><a href="global.html#showEmailNotExisting">showEmailNotExisting</a></li><li><a href="global.html#showGreetingMobile">showGreetingMobile</a></li><li><a href="global.html#showLoginWorngPassword">showLoginWorngPassword</a></li><li><a href="global.html#showName">showName</a></li><li><a href="global.html#showPasswordClearText">showPasswordClearText</a></li><li><a href="global.html#showPasswordNotConfirm">showPasswordNotConfirm</a></li><li><a href="global.html#showSelectedDropdownContact">showSelectedDropdownContact</a></li><li><a href="global.html#showSelectedDropdownContactEditview">showSelectedDropdownContactEditview</a></li><li><a href="global.html#showSignUpfinished">showSignUpfinished</a></li><li><a href="global.html#showSubtasksAddIcon">showSubtasksAddIcon</a></li><li><a href="global.html#showSubtasksDoneAndCancel">showSubtasksDoneAndCancel</a></li><li><a href="global.html#showSubtasksDoneAndCancelEditview">showSubtasksDoneAndCancelEditview</a></li><li><a href="global.html#showSubtasksDoneAndCancelIcons">showSubtasksDoneAndCancelIcons</a></li><li><a href="global.html#sortSecondName">sortSecondName</a></li><li><a href="global.html#sortedContactList">sortedContactList</a></li><li><a href="global.html#sortingContacts">sortingContacts</a></li><li><a href="global.html#startDragging">startDragging</a></li><li><a href="global.html#subtaskCounter">subtaskCounter</a></li><li><a href="global.html#subtaskMaxLength">subtaskMaxLength</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#todoCount">todoCount</a></li><li><a href="global.html#toggleDropdownIcon">toggleDropdownIcon</a></li><li><a href="global.html#toggleDropdownIconEditview">toggleDropdownIconEditview</a></li><li><a href="global.html#toggleUserInformation">toggleUserInformation</a></li><li><a href="global.html#updateContactsInfo">updateContactsInfo</a></li><li><a href="global.html#urgent">urgent</a></li><li><a href="global.html#userInformationHTML">userInformationHTML</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Feb 16 2024 22:57:30 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
