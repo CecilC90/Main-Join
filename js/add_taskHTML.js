@@ -1,3 +1,11 @@
+/**
+ * creates the contackt list
+ * 
+ * @param {number} i number of the contact in the array
+ * @param {string} firstAndSecondLetter first and second letter
+ * @param {string} color color code of the contactes
+ * @returns {string} HTML code
+ */
 function renderAssingnedToDropdownListHTML(i, firstAndSecondLetter, color) {
   return /*html */ `
     <div class="dropdownContacts" id="dropdownContact${i}" onclick="setContactSelected(${i})">
@@ -10,12 +18,25 @@ function renderAssingnedToDropdownListHTML(i, firstAndSecondLetter, color) {
   `;
 }
 
+/**
+ * creates the contackt icons
+ * 
+ * @param {number} i number of the contact in the array
+ * @param {string} color color code of the contactes
+ * @returns {string} HTML code
+ */
 function renderSelectedContactsIconsHTML(i, color) {
   return /* html */ `
   <div class="contactsIcon" style="background-color: ${color}">${getFirstAndSecondLetter(i)}</div>
 `;
 }
 
+/**
+ * creates the category list
+ * 
+ * @param {*} i number of the category in the array
+ * @returns {string} HTML code
+ */
 function renderCategoryDropdownListHTML(i) {
   return /* html */ `
     <div class="dropdownCategory" onclick="setSelectedCategory(${i})">
@@ -24,6 +45,12 @@ function renderCategoryDropdownListHTML(i) {
   `;
 }
 
+/**
+ * creates the Subtasks Done And Cancel Icons
+ * 
+ * @param {number} number of the subtask in the array
+ * @returns {string} HTML code
+ */
 function showSubtasksDoneAndCancelIcons(index) {
   return /* html */ `
  <img class="subtasksInputMenuimg" onclick="clearSubtaskInputField()" src="./assets/img/subtasks_cancel_icon.svg" alt="cancel_icon">
@@ -32,10 +59,21 @@ function showSubtasksDoneAndCancelIcons(index) {
 `;
 }
 
+/**
+ * creates the Subtasks Add Icons
+ * 
+ * @returns {string} HTML code
+ */
 function showSubtasksAddIcon() {
   return '<img src="./assets/img/subtasks_add_icon.svg" alt="add_icon">';
 }
 
+/**
+ * creates the subtask list
+ * 
+ * @param {number} i of the subtask in the array
+ * @returns {string} HTML code
+ */
 function renderSubtasksHTML(i) {
   return /* html */ `
   <div id="subtask${i}" ondblclick="editSubtask(${i})">
@@ -54,6 +92,12 @@ function renderSubtasksHTML(i) {
   `;
 }
 
+/**
+ * creates the subtask edit field
+ * 
+ * @param {number} i of the subtask in the array 
+ * @returns {string} HTML code
+ */
 function editSubtaskHTML(i) {
   return /* html */ `
   <div class="subtaskEdit" id="subtaskEdit">
@@ -67,6 +111,11 @@ function editSubtaskHTML(i) {
  `;
 }
 
+/**
+ * creates the AddTask container
+ * 
+ * @returns {string} HTML code
+ */
 function renderAddTaskHTML(){
   return /* html */ `
   <div class="addTasks">
@@ -201,6 +250,11 @@ function renderAddTaskHTML(){
   `
 }
 
+/**
+ * creates the AddTaskMobile container
+ * 
+ * @returns {string} HTML code
+ */
 function renderAddTaskMobileHTML() {
   return /* html */ `
   <div class="addTasks">
