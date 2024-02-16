@@ -119,6 +119,7 @@ async function editTask(index) {
     let detailViewContainer = document.getElementById('show-detail-todo');
     detailViewContainer.innerHTML = await templateHTMLEditTask(index);
 
+    checkDueDateNotInPastEditview();
     renderPrioButton(index);
     changeSelectedContacts(index);
     renderAssingnedToDropdownListEditview();
@@ -211,6 +212,16 @@ function pushSelecetedContactsToTodos(index) {
             todos[index].assignedContacts.push(contact);
         }
     }
+}
+
+function checkDueDateNotInPastEditview() {
+  let currentDate = new Date();
+  let inputDate = document.getElementById("new-date");
+  let year = currentDate.getFullYear();
+  let month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  let day = currentDate.getDate().toString().padStart(2, "0");
+  let currentDateString = year + "-" + month + "-" + day;
+  inputDate.setAttribute("min", currentDateString);
 }
 
 // Assigned Contacts editview
