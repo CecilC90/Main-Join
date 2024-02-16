@@ -54,7 +54,7 @@ async function filterTodos() {
     };
     let search = searchDestop || searachMobile;
 
-    ifNoTextInSearchbarDesktop();
+    ifNoTextInSearchbarDesktop(screenWidth);
     ifNoTextInSearchbarMobile();
 
     filterTitlesOfTodos(search, visibility, screenWidth);
@@ -97,10 +97,14 @@ function filterCategorys(category, visibility, screenWidth) {
     }
 }
 
-function ifNoTextInSearchbarDesktop() {
+function ifNoTextInSearchbarDesktop(screenWidth) {
     document.getElementById('search').addEventListener('input', function() {
         if(this.value === '') {
-            contentDisplayBlock();
+            if(screenWidth > 1430) {
+                contentDisplayBlock();
+            } else {
+                contentDisplayFlex();
+            }
             clearNoTaskFound();
         }
     });
