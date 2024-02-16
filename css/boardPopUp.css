@@ -13,8 +13,7 @@
 }
 
 #detail-todo-content {
-    overflow-x: scroll; 
-    overflow-y: hidden;
+    overflow: auto; 
     padding: 20px; 
     width: 450px;
     background-color: #fff;
