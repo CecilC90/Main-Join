@@ -28,7 +28,10 @@ let loadRememberMeJson = [];
 let loginPassword = false;
 let registrationPassword = false;
 let registrationConfirmPassword = false;
-
+/**
+ * 
+ * 
+ */
 function init() {
   renderStartPage();
   changePasswordIconLogin("passwordIconContainer", "password");
