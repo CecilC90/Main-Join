@@ -122,7 +122,7 @@ function filterAssingnedToDropdownList() {
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i]["name"].toLowerCase().includes(contactInput)) {
       let firstAndSecondLetter = getFirstAndSecondLetter(i);
-      content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter);
+      content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter, contacts[i]["color"]);
       showSelectedDropdownContact(i);
       dropdownContentAssignedTo.style.display = "flex";
       toggleDropdownIcon("assignedToDropdownIcon", "flex");
