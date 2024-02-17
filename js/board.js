@@ -7,8 +7,9 @@ let startDragginId;
  * This function is called to get all the data when the page loads
  * 
  */
-function initBoard() {
-    includesHTML();
+async function initBoard() {
+    await includesHTML();
+    loadLoggedInUser();
     renderHTML();
 }
 
@@ -19,7 +20,6 @@ function initBoard() {
 async function renderHTML() {
     await loadTasks();
     await loadContacts();
-    loadLoggedInUser();
     pushColorForCategory();
     renderTodos();
     addIdToTasks();
