@@ -9,6 +9,7 @@ let startDragginId;
  */
 function initBoard() {
     includesHTML();
+    loadLoggedInUser();
     renderHTML();
 }
 
@@ -19,7 +20,6 @@ function initBoard() {
 async function renderHTML() {
     await loadTasks();
     await loadContacts();
-    loadLoggedInUser();
     pushColorForCategory();
     renderTodos();
     addIdToTasks();
