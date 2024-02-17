@@ -1,7 +1,12 @@
+/**
+ * An array to store todo items.
+ * @type {Array<Object>}
+ */
 let todos = [];
 
 /**
  * Renders the summary page by including HTML, loading the logged-in user, and rendering various summary components.
+ * 
  * @returns {Promise<void>}
  */
 async function renderSummary() {
@@ -17,6 +22,7 @@ async function renderSummary() {
 
 /**
  * Renders the summary page by including HTML and loading the logged-in user.
+ * 
  * @returns {Promise<void>}
  */
 async function render() {

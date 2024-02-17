@@ -381,7 +381,7 @@ function userInformationHTML(i, sortedContacts, initials) {
         </div>
         <div>
             <div class="detail-title">Phone</div>
-            <div class="detail-info">number</div>
+            <div class="detail-info">${sortedContacts[i].phone}</div>
         </div>
     </div>
     `;
