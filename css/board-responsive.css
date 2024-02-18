@@ -161,10 +161,6 @@
         margin-right: 0;
     }
 
-    #detail-todo-content {
-        width: 55vh;
-    }
-
     .add-task-button {
         display: none;
     }

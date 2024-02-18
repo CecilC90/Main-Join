@@ -147,6 +147,12 @@ function renderAssingnedToDropdownListHTMLEditview(i, firstAndSecondLetter, colo
   `;
 }
 
+function renderSelectedContactsIconsEditviewHTML(i, index, color) {
+  return /* html */ `
+  <div class="contactsIcon" style="background-color: ${color}">${getFirstAndSecondLetterEditview(i, index)}</div>
+`;
+}
+
 function renderSubtasksHTMLEditview(i, subtasks, index) {
   return /* html */ `
   <div id="subtaskEditview${i}" ondblclick="editSubtaskEditview(${i})">

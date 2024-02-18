@@ -1,7 +1,16 @@
+/**
+ * Event to stop the Propagation (Edit and Detailview).
+ * 
+ * @param {event} event 
+ */
 function doNotClose(event) { 
     event.stopPropagation();
 }
 
+/**
+ * Regulates the z-index of the header and the menu (If Popup open).
+ * 
+ */
 function regulateZIndexMenuAndHeader() {
   let header = document.getElementById('header');
   let menu = document.getElementById('menu');
@@ -12,6 +21,10 @@ function regulateZIndexMenuAndHeader() {
   mobileMenu.style.zIndex = 0;
 }
 
+/**
+ * Regulates the z-index of the header and the menu (If Popup close).
+ * 
+ */
 function regulateZIndexMenuAndHeaderAfterClose() {
   let header = document.getElementById('header');
   let menu = document.getElementById('menu');
@@ -22,6 +35,10 @@ function regulateZIndexMenuAndHeaderAfterClose() {
   mobileMenu.style.zIndex = 99;
 }
 
+/**
+ * Regulate Position to static.
+ * 
+ */
 function regulatePositionStatic() {
   let positionRelative = document.querySelectorAll('.position-relative');
 
@@ -30,6 +47,10 @@ function regulatePositionStatic() {
   });
 }
 
+/**
+ * Regulate Position to relative.
+ * 
+ */
 function regulatePositionRelative() {
   let positionRelative = document.querySelectorAll('.position-relative');
 
@@ -154,8 +175,8 @@ async function editTask(index) {
     checkDueDateNotInPastEditview();
     renderPrioButton(index);
     changeSelectedContacts(index);
-    renderAssingnedToDropdownListEditview();
-    renderSelectedContactsIconsEditview();
+    renderAssingnedToDropdownListEditview(index);
+    renderSelectedContactsIconsEditview(index);
     renderSubtasksEditview(index);
     loadPrioButton(index);
     regulateZIndexMenuAndHeader();
@@ -311,7 +332,7 @@ function renderAssingnedToDropdownListEditview() {
     let content = document.getElementById("dropdownContentAssignedToEditview");
     content.innerHTML = "";
     for (let i = 0; i < contacts.length; i++) {
-      let firstAndSecondLetter = getFirstAndSecondLetterEditview(i);
+      let firstAndSecondLetter = getFirstAndSecondLetter(i);
       content.innerHTML += renderAssingnedToDropdownListHTMLEditview(i, firstAndSecondLetter, contacts[i]["color"]);
       showSelectedDropdownContactEditview(i);
     }
@@ -328,7 +349,7 @@ function renderAssingnedToDropdownListEditview() {
     content.innerHTML = '';
     for (let i = 0; i < contacts.length; i++) {
       if(contacts[i]['name'].toLowerCase().includes(contactInput)){
-        let firstAndSecondLetter = getFirstAndSecondLetterEditview(i);
+        let firstAndSecondLetter = getFirstAndSecondLetter(i);
         content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter);
         showSelectedDropdownContactEditview(i);
         dropdownContentAssignedToEditview.style.display = "flex";
@@ -348,8 +369,10 @@ function renderAssingnedToDropdownListEditview() {
    * @param {number} i - Number from the array contacts.
    * @returns {string} - First and second letter.
    */
-  function getFirstAndSecondLetterEditview(i) {
-    let name = contacts[i]["name"];
+  function getFirstAndSecondLetterEditview(i, index) {
+    let assignedContact = todos[index].assignedContacts[i];
+    const contact = findContactById(assignedContact);
+    let name = contact.name;
     let splitName = name.split(" ");
     let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
     let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
@@ -362,15 +385,17 @@ function renderAssingnedToDropdownListEditview() {
    * 
    * @param {number} i - Number from the array contacts.
    */
-  function setContactSelectedEditview(i) {
-    if (contacts[i]["selected"]) {
-      contacts[i]["selected"] = false;
+  function setContactSelectedEditview(i, index) {
+    let assignedContact = todos[index].assignedContacts[i];
+    const contact = findContactById(assignedContact);
+    if (contact.selected) {
+      contact.selected = false;
       showSelectedDropdownContactEditview(i);
     } else {
-      contacts[i]["selected"] = true;
+      contact.selected = true;
       showSelectedDropdownContactEditview(i);
     }
-    renderSelectedContactsIconsEditview();
+    renderSelectedContactsIconsEditview(index);
   }
   
   /**
@@ -394,12 +419,15 @@ function renderAssingnedToDropdownListEditview() {
    * Creates the icons below the input field assigned To
    * 
    */
-  function renderSelectedContactsIconsEditview() {
+  function renderSelectedContactsIconsEditview(index) {
     let content = document.getElementById("showSelectedDropdownContactEditview");
     content.innerHTML = "";
-    for (let i = 0; i < contacts.length; i++) {
-      if (contacts[i]["selected"]) {
-        content.innerHTML += renderSelectedContactsIconsHTML(i, contacts[i]["color"]);
+    for(let i = 0; i < todos[index].assignedContacts.length; i++) {
+      const contactId = todos[index].assignedContacts[i];
+      const contact = findContactById(contactId);
+      let contactSelected = contact.selected;
+      if (contactSelected) {
+        content.innerHTML += renderSelectedContactsIconsEditviewHTML(i, index, contact.color);
       }
     }
   }
@@ -606,6 +634,10 @@ function showAddTask(category) {
     regulateZIndexMenuAndHeader();
 }
 
+/**
+ * Function to close add Task
+ * 
+ */
 function closeAddTask() {
     let showAddTodoContainer = document.getElementById('show-add-todo');
     showAddTodoContainer.style.display = "none";
@@ -615,6 +647,10 @@ function closeAddTask() {
     regulatePositionRelative();
 }
 
+/**
+ * Linking from a width of 750px to addTask.html
+ * 
+ */
 function mobileAddTask() {
     let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     if (screenWidth < 750) {
