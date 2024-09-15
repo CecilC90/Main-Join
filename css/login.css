@@ -215,7 +215,6 @@
 .inputFieldsRegistration {
   display: flex;
   flex-direction: column;
-  gap: 24px;
 }
 .passwordNotConfirmText {
   margin-block-start: 0;
@@ -250,6 +249,12 @@
 }
 .setColorPrivacyPolicRed a{
   color: #ff001f;
+}
+
+.errMessage{
+  height: 24px;
+  color: #ff001f;
+  font-size: 12px;
 }
 /* #endregion */
 
@@ -353,7 +358,7 @@
     margin-bottom: 8px;
   }
 
-  .inputFieldsRegistration {
-    gap: 16px;
+  .errMessage {
+    height: 16px;
   }
 }

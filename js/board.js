@@ -26,21 +26,7 @@ async function renderHTML() {
     showSelectedButton("boardButton");
 }
 
-/**
- * This function load all Tasks from the Backend
- * 
- */
-async function loadTasks() {
-    todos = JSON.parse(await getItem('allTasks'));
-}
 
-/**
- * This function load all Contacts from the Backend
- * 
- */
-async function loadContacts() {
-    contacts = JSON.parse(await getItem('contacts'));
-}
 
 /**
  * This function generate a color (random color if the category don't declared) for all categorys in a Task.
@@ -312,6 +298,7 @@ async function changeTo(newStatus, index, event) {
 function renderSubtaskProgressbar(index) {
     let progressbarContent = document.getElementById(`progress-content${index}`);
     if(todos[index].subtask.length > 0) {
+        console.log(todos[index].subtask.length);
       progressbarContent.innerHTML = templateProgressbar(index); 
     }
   

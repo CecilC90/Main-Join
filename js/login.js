@@ -30,7 +30,7 @@ let registrationPassword = false;
 let registrationConfirmPassword = false;
 /**
  * launches the page
- * 
+ *
  */
 function init() {
   renderStartPage();
@@ -38,7 +38,7 @@ function init() {
 }
 /**
  * Load the start page to log in
- * 
+ *
  */
 function renderStartPage() {
   let content = document.getElementById("loginMaskContainer");
@@ -50,7 +50,7 @@ function renderStartPage() {
 
 /**
  * change the login page to the registration page
- * 
+ *
  */
 function renderRegistrationPage() {
   document.getElementById("signUpButtonContainer").innerHTML = "";
@@ -60,7 +60,7 @@ function renderRegistrationPage() {
 
 /**
  * triggers the logo slide in the desktop and mobile version
- * 
+ *
  */
 document.addEventListener("DOMContentLoaded", function () {
   var slideImage = document.getElementById("slideImage");
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
       content.style.opacity = 1;
       loginMaskContainer.style.opacity = 1;
     }, 500);
-  }else if (window.innerHeight <= 700) {
+  } else if (window.innerHeight <= 700) {
     slideImage.style.top = initialTop + "px";
     slideImage.style.left = initialLeft + "px";
     setTimeout(function () {
@@ -121,16 +121,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /**
  * starts the function setLogoPosition when changing the page width
- * 
+ *
  */
 window.addEventListener("resize", setLogoPosition);
 
 /**
  * changes the position of the logo when changing the page width
- * 
+ *
  */
 function setLogoPosition() {
-  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  let screenWidth =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
   if (screenWidth <= 750) {
     slideImage.style.top = "37px";
     slideImage.style.left = "38px";
@@ -150,26 +153,38 @@ function setLogoPosition() {
 
 /**
  * checks the login input data with the backend
- * 
+ *
  */
 async function login() {
   document.getElementById("logInButton").disable = true;
   showEmailNotExisting(false);
-  let email = document.getElementById("email");
-  let password = document.getElementById("password");
-  let respons = await getItem(email.value);
-  let userInfos;
-  if (respons != undefined) {
-    userInfos = JSON.parse(respons);
-    let userPassword = userInfos.password;
-    if (password.value == userPassword) {
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
+  let userInfosData = await getItem(`/userInfos`);
+
+  CheckInfoData(userInfosData, email, password);
+}
+
+function CheckInfoData(userInfosData, email, password) {
+  for (let key in userInfosData) {
+    if (userInfosData[key].email === email) {
+      userInfos = userInfosData[key];
+      break;
+    }
+  }
+
+  processLogin(email, password, userInfos);
+}
+
+function processLogin(email, password, userInfos) {
+  if (userInfos) {
+    if (password === userInfos.password) {
       handleRememberMe(email, password);
       window.location.href = "summary.html?msg=Login erfolgreich";
       addLoggedInUser(userInfos);
     } else {
       showLoginWorngPassword();
     }
-    document.getElementById("logInButton").disable = false;
   } else {
     showEmailNotExisting(true);
   }
@@ -177,7 +192,7 @@ async function login() {
 
 /**
  * change the icon of the password if one is entered and make it visible when clicking on it
- * 
+ *
  * @param {string} iconId the id of the conatiner with the icon
  * @param {string} inputField the id of the conatiner with the password
  */
@@ -197,7 +212,7 @@ function changePasswordIconLogin(iconId, inputField) {
 
 /**
  * change the icon of the password if one is entered and make it visible when clicking on it
- * 
+ *
  * @param {string} iconId the id of the conatiner with the icon
  * @param {string} inputField the id of the conatiner with the password
  */
@@ -217,7 +232,7 @@ function changePasswordIconRegistration(iconId, inputField) {
 
 /**
  * change the icon of the password if one is entered and make it visible when clicking on it
- * 
+ *
  * @param {string} iconId the id of the conatiner with the icon
  * @param {string} inputField the id of the conatiner with the password
  */
@@ -237,7 +252,7 @@ function changePasswordIconRegistrationConfirm(iconId, inputField) {
 
 /**
  * displays the password in plain text
- * 
+ *
  * @param {string} iconId the id of the conatiner with the icon
  * @param {string} inputField the id of the conatiner with the password
  */
@@ -255,12 +270,16 @@ function showPasswordClearText(iconId, inputField) {
 
 /**
  * writes the data for the remember me in the local storage
- * 
- * @param {HTMLElement} email 
- * @param {HTMLElement} password 
+ *
+ * @param {HTMLElement} email
+ * @param {HTMLElement} password
  */
 function handleRememberMe(email, password) {
-  let rememberMeInfos = { email: email.value, password: password.value, rememberMe: rememberMe };
+  let rememberMeInfos = {
+    email: email,
+    password: password,
+    rememberMe: rememberMe,
+  };
   saveRememberMeJson.push(rememberMeInfos);
   let rememberMeAsText = JSON.stringify(saveRememberMeJson);
   localStorage.setItem("rememberMe", rememberMeAsText);
@@ -268,13 +287,13 @@ function handleRememberMe(email, password) {
 
 /**
  * load the data for the remember me from the local storage
- * 
+ *
  */
-function loadRememberedUser(){
+function loadRememberedUser() {
   let rememberMeAsText = localStorage.getItem("rememberMe");
-  if(rememberMeAsText){
+  if (rememberMeAsText) {
     loadRememberMeJson = JSON.parse(rememberMeAsText);
-    if(loadRememberMeJson[0]['rememberMe']){
+    if (loadRememberMeJson[0]["rememberMe"]) {
       fillInputFieldsFromUser();
     }
   }
@@ -282,19 +301,29 @@ function loadRememberedUser(){
 
 /**
  * because the data for the remember me is available, the function enters it in the appropriate fields
- * 
+ *
  */
-function fillInputFieldsFromUser(){
+function fillInputFieldsFromUser() {
   let emailInput = document.getElementById("email");
   let passwordInput = document.getElementById("password");
-  emailInput.value = loadRememberMeJson[0]['email'];
-  passwordInput.value = loadRememberMeJson[0]['password'];
+  emailInput.value = loadRememberMeJson[0]["email"];
+  passwordInput.value = loadRememberMeJson[0]["password"];
   setRememberMe();
+}
+
+async function postData(path = "", data = {}) {
+  let response = await fetch(BASE_URL + path + ".json", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 }
 
 /**
  * the function writes the data of a new user to the backend and checks the correctness beforehand
- * 
+ *
  */
 async function addUser() {
   showEmailAlreadyUsed(false);
@@ -303,76 +332,94 @@ async function addUser() {
   let name = document.getElementById("name");
   let password = document.getElementById("password");
   let checkPasswort = document.getElementById("confirmPasswort");
-  let userInfos = { name: name.value, password: password.value, email: email.value, id: new Date().getTime() };
-  let respons = await getItem(email.value);
-  let loadUserEmail;
-  if (respons != undefined) {
-    loadUserEmail = JSON.parse(respons);
+  let userInfos = {
+    name: name.value,
+    password: password.value,
+    email: email.value,
+  };
+  let contactInfos = { name: name.value, email: email.value };
+  let userInfosData = await getItem(`/userInfos`);
+
+  CheckSignup(checkPasswort, userInfos, userInfosData, contactInfos);
+}
+
+async function CheckSignup(
+  checkPasswort,
+  userInfos,
+  userInfosData,
+  contactInfos
+) {
+  let emailExists = false;
+
+  for (let key in userInfosData) {
+    if (userInfosData[key].email === userInfos.email) {
+      emailExists = true;
+      break;
+    }
   }
-  if (!loadUserEmail) {
-    if (password.value == checkPasswort.value) {
+  if (!emailExists) {
+    if (password.value === checkPasswort.value) {
       if (privacyPolic) {
+        await postData("/userInfos", userInfos);
         showSignUpfinished();
-        await setItem(email.value, userInfos);
-        await addContact();
+        await addContact(contactInfos);
         setTimeout(goToStart, 500);
       } else {
         setColorPrivacyPolicRed();
+        document.getElementById("registrationButton").disabled = false;
       }
     } else {
       showPasswordNotConfirm();
-      document.getElementById("registrationButton").disable = false;
+      document.getElementById("registrationButton").disabled = false;
     }
   } else {
     showEmailAlreadyUsed(true);
-    document.getElementById("registrationButton").disable = false;
+    document.getElementById("registrationButton").disabled = false;
   }
 }
 
 /**
- * writes the data of a new user into the backend for the contacte
- * 
+ * writes the data of a new user into the backend for the contact
+ *
  */
-async function addContact() {
+async function addContact(userInfos) {
   const randomIndex = Math.floor(Math.random() * backgroundColors.length);
-  await loadContacts();
-  contacts.push({
-    id: Date.now(),
-    name: formatName(),
-    email: document.getElementById("email").value,
-    phone: "",
-    color: backgroundColors[randomIndex],
-  });
-  await setItem("contacts", JSON.stringify(contacts));
+  userInfos.phone = "";
+  userInfos.color = backgroundColors[randomIndex];
+  //await loadContacts();
+  await postData("/contacts", userInfos);
 }
 
 /**
- * load the contacts from the backend
- * 
+ * Loads contacts from the memory and adds them to the global contacts variable.
+ * @returns {Promise<void>}
  */
 async function loadContacts() {
-  contacts = JSON.parse(await getItem("contacts"));
+  let contactsData = await getData("/contacts");
+  if (contactsData) {
+    contacts.push(...Object.values(contactsData));
+  }
+  console.log(contacts);
 }
-
 /**
  * change the entered name so that it is correctly present in the backend
- * 
+ *
  * @returns {string}
  */
 function formatName() {
   let name = document.getElementById("name");
   name = name.value.split(/[,.]/);
-  for (var i = 0; i < name.length; i++) {
+  for (let i = 0; i < name.length; i++) {
     name[i] = name[i].trim();
     name[i] = name[i].charAt(0).toUpperCase() + name[i].slice(1);
   }
-  var formattedname = name.join(" ");
+  let formattedname = name.join(" ");
   return formattedname;
 }
 
 /**
  * goes back to the start page
- * 
+ *
  */
 function goToStart() {
   dontshowSignUpfinished();
@@ -381,7 +428,7 @@ function goToStart() {
 
 /**
  * change the border of the login password
- * 
+ *
  */
 function showLoginWorngPassword() {
   let textField = document.getElementById("wrongPasswordText");
@@ -391,7 +438,7 @@ function showLoginWorngPassword() {
 
 /**
  * changes the border of the confirm password
- * 
+ *
  */
 function showPasswordNotConfirm() {
   let textField = document.getElementById("passwordNotConfirmText");
@@ -401,12 +448,13 @@ function showPasswordNotConfirm() {
 
 /**
  * changes the border of the email field when registering
- * 
+ *
  * @param {boolean} email yes or no whether the border is added or removed
  */
 function showEmailAlreadyUsed(email) {
   if (email == true) {
     document.getElementById("inputEmailField").classList.add("wrongInput");
+    document.getElementById("errMessageMail").innerHTML = `Email already used`;
   } else {
     document.getElementById("inputEmailField").classList.remove("wrongInput");
   }
@@ -414,7 +462,7 @@ function showEmailAlreadyUsed(email) {
 
 /**
  * changes the border of the email field when logging in
- * 
+ *
  * @param {boolean} email yes or no whether the border is added or removed
  */
 function showEmailNotExisting(email) {
@@ -427,20 +475,20 @@ function showEmailNotExisting(email) {
 
 /**
  * checks if privacyPolic is true and if not makes the text red
- * 
+ *
  */
-function setColorPrivacyPolicRed(){
-  let content = document.getElementById('acceptPrivacyPolicContainer');
-  if(privacyPolic){
-    content.classList.remove('setColorPrivacyPolicRed');
+function setColorPrivacyPolicRed() {
+  let content = document.getElementById("acceptPrivacyPolicContainer");
+  if (privacyPolic) {
+    content.classList.remove("setColorPrivacyPolicRed");
   } else {
-    content.classList.add('setColorPrivacyPolicRed');
+    content.classList.add("setColorPrivacyPolicRed");
   }
 }
 
 /**
  * changes the checkbox Remember Me
- * 
+ *
  */
 function setRememberMe() {
   let content = document.getElementById("rememberMeCheckbox");
@@ -455,7 +503,7 @@ function setRememberMe() {
 
 /**
  * changes the checkbox Privacy Polic
- * 
+ *
  */
 function setPrivacyPolic() {
   let content = document.getElementById("privacyPolicCheckbox");
@@ -471,17 +519,17 @@ function setPrivacyPolic() {
 
 /**
  * lets the message regestrirung fly in successfully
- * 
+ *
  */
 function showSignUpfinished() {
-  var conatiner = document.getElementById("finishedMessageContainer");
+  let conatiner = document.getElementById("finishedMessageContainer");
   conatiner.style.display = "flex";
   conatiner.style.bottom = "calc(50% - " + conatiner.clientHeight / 2 + "px)";
 }
 
 /**
  * removes the message regestrirung successfully fly in
- * 
+ *
  */
 function dontshowSignUpfinished() {
   var conatiner = document.getElementById("finishedMessageContainer");

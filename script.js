@@ -1,8 +1,16 @@
-const STORAGE_TOKEN = "8XAOGSERHAHOR91S5HD7SD3UXKY6BFJ9FGXIYEQ7";
-const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
+//const STORAGE_TOKEN = "8XAOGSERHAHOR91S5HD7SD3UXKY6BFJ9FGXIYEQ7";
+//const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
+const BASE_URL = "https://joinstorage-4b6b8-default-rtdb.europe-west1.firebasedatabase.app/";
 
 let loggedInUser = {};
 let userNavbarOpen = false;
+
+
+async function getData(path="") {
+  let response = await fetch(BASE_URL + path + ".json");
+  let responsToJason = await response.json();
+  console.log(responsToJason);
+}
 
 /**
  * the function checks whether you are authorized to go to the page and if not you are taken back to index.html
@@ -35,17 +43,6 @@ async function includesHTML() {
   }
 }
 
-/**
- * the function svae data from in the backend
- * 
- * @param {string} key under which key the data should be stored
- * @param {string} value value is which data should be written to the backend
- * @returns {object} returns whether the upload to the backend was successful
- */
-async function setItem(key, value) {
-  const payload = { key, value, token: STORAGE_TOKEN };
-  return fetch(STORAGE_URL, { method: "POST", body: JSON.stringify(payload) });
-}
 
 /**
  * the function reads data from the backend
@@ -53,12 +50,11 @@ async function setItem(key, value) {
  * @param {string} key the key is for which data should be loaded from the backend
  * @returns {string} gives the content from the back
  */
-async function getItem(key) {
-  const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-  return fetch(url).then(res => res.json()).then(res => res.data.value).catch(function (err) {
-    console.log('fetch konnte nicht aufgeührt werden');
-  });;
+async function getItem(path = "") {
+  let response = await fetch(BASE_URL + path + ".json");
+  return await response.json();
 }
+
 
 /**
  * the function prepares the data for saving
@@ -195,3 +191,43 @@ document.addEventListener('click', function (event) {
     userNavbarOpen = false;
   }
 });
+
+/**
+ * Loads contacts from storage.
+ * @returns {Promise<void>}
+ */
+async function loadContacts(path = "/contacts") {
+  let response = await fetch(BASE_URL + path + ".json");
+  let data = await response.json();
+
+  contacts = Object.keys(data).map((key) => {
+    let contact = data[key];
+    contact.id = key;
+    return contact;
+  });
+  console.log(contacts);
+}
+
+async function loadTasks(path = "/tasks") {
+  let response = await fetch(BASE_URL + path + ".json");
+  let data = await response.json();
+
+  todos = Object.keys(data).map((key) => {
+    let todo = data[key];
+    todo.id = key;
+    todo.subtask = todo.subtask || [];
+    todo.assignedContacts = todo.assignedContacts || [];
+    return todo;
+  });
+  console.log(todos);
+}
+
+async function postData(path = "", data = {}) {
+  let response = await fetch(BASE_URL + path + ".json", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+}

@@ -44,7 +44,10 @@ window.addEventListener("resize", checkScreenWidth);
  *
  */
 function setMobileVersionIsOn() {
-  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  let screenWidth =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
   if (screenWidth <= 1220) {
     mobileVersionIsOn = false;
   } else {
@@ -57,7 +60,10 @@ function setMobileVersionIsOn() {
  *
  */
 function checkScreenWidth() {
-  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  let screenWidth =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
   let content = document.getElementById("addTask");
   if (screenWidth <= 1220 && mobileVersionIsOn == false) {
     window.removeEventListener("click", handleWindowClick);
@@ -74,24 +80,21 @@ function checkScreenWidth() {
 }
 
 /**
- * load the contacts from the backend
- *
- */
-async function loadContacts() {
-  let respons = await getItem("contacts");
-  contacts = JSON.parse(respons);
-}
-
-/**
  * changes the HTML code of the Prio buttons depending on the rollout
  *
  * @param {string} prio the value high medium or low
  */
 function setPrioButton(prio) {
-  let selectedOldPrioID = "prioButton" + selectedPrio.charAt(0).toUpperCase() + selectedPrio.slice(1);
-  let selectedPrioID = "prioButton" + prio.charAt(0).toUpperCase() + prio.slice(1);
-  document.getElementById(selectedOldPrioID).classList.replace(selectedOldPrioID, "prioButton");
-  document.getElementById(selectedPrioID).classList.replace("prioButton", selectedPrioID);
+  let selectedOldPrioID =
+    "prioButton" + selectedPrio.charAt(0).toUpperCase() + selectedPrio.slice(1);
+  let selectedPrioID =
+    "prioButton" + prio.charAt(0).toUpperCase() + prio.slice(1);
+  document
+    .getElementById(selectedOldPrioID)
+    .classList.replace(selectedOldPrioID, "prioButton");
+  document
+    .getElementById(selectedPrioID)
+    .classList.replace("prioButton", selectedPrioID);
   selectedPrio = prio;
 }
 
@@ -104,7 +107,11 @@ function renderAssingnedToDropdownList() {
   content.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
     let firstAndSecondLetter = getFirstAndSecondLetter(i);
-    content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter, contacts[i]["color"]);
+    content.innerHTML += renderAssingnedToDropdownListHTML(
+      i,
+      firstAndSecondLetter,
+      contacts[i]["color"]
+    );
     showSelectedDropdownContact(i);
   }
 }
@@ -122,7 +129,11 @@ function filterAssingnedToDropdownList() {
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i]["name"].toLowerCase().includes(contactInput)) {
       let firstAndSecondLetter = getFirstAndSecondLetter(i);
-      content.innerHTML += renderAssingnedToDropdownListHTML(i, firstAndSecondLetter, contacts[i]["color"]);
+      content.innerHTML += renderAssingnedToDropdownListHTML(
+        i,
+        firstAndSecondLetter,
+        contacts[i]["color"]
+      );
       showSelectedDropdownContact(i);
       dropdownContentAssignedTo.style.display = "flex";
       toggleDropdownIcon("assignedToDropdownIcon", "flex");
@@ -145,7 +156,9 @@ function getFirstAndSecondLetter(i) {
   let name = contacts[i]["name"];
   let splitName = name.split(" ");
   let firstLetter = splitName[0].trim().charAt(0).toUpperCase();
-  let secondLetter = splitName[1] ? splitName[1].trim().charAt(0).toUpperCase() : "";
+  let secondLetter = splitName[1]
+    ? splitName[1].trim().charAt(0).toUpperCase()
+    : "";
   let result = firstLetter + secondLetter;
   return result;
 }
@@ -175,10 +188,16 @@ function showSelectedDropdownContact(i) {
   let dropdownContact = document.getElementById("dropdownContact" + i);
   let dropdownContactImg = document.getElementById("dropdownContactImg" + i);
   if (contacts[i]["selected"]) {
-    dropdownContact.classList.replace("dropdownContacts", "dropdownContactsSelected");
+    dropdownContact.classList.replace(
+      "dropdownContacts",
+      "dropdownContactsSelected"
+    );
     dropdownContactImg.src = "./assets/img/checkbox_checked_white.svg";
   } else {
-    dropdownContact.classList.replace("dropdownContactsSelected", "dropdownContacts");
+    dropdownContact.classList.replace(
+      "dropdownContactsSelected",
+      "dropdownContacts"
+    );
     dropdownContactImg.src = "./assets/img/checkbox_unchecked.svg";
   }
 }
@@ -192,7 +211,10 @@ function renderSelectedContactsIcons() {
   content.innerHTML = "";
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i]["selected"]) {
-      content.innerHTML += renderSelectedContactsIconsHTML(i, contacts[i]["color"]);
+      content.innerHTML += renderSelectedContactsIconsHTML(
+        i,
+        contacts[i]["color"]
+      );
     }
   }
 }
@@ -275,7 +297,8 @@ function checkDueDateNotInPast() {
   let currentDateString = year + "-" + month + "-" + day;
   if (currentDateString > inputDate) {
     setRedBorder("duedateField");
-    document.getElementById("requiredTextDuedate").innerHTML = "Due date is in the Past!";
+    document.getElementById("requiredTextDuedate").innerHTML =
+      "Due date is in the Past!";
     return false;
   } else {
     return true;
@@ -392,7 +415,8 @@ function setBlueBorder(id, conatiner) {
 function setRedBorder(id, requiredConatiner) {
   document.getElementById(id).classList.add("wrongInput");
   if (requiredConatiner) {
-    document.getElementById(requiredConatiner).innerHTML = "This fild is required";
+    document.getElementById(requiredConatiner).innerHTML =
+      "This fild is required";
   }
 }
 
@@ -495,14 +519,16 @@ function showAddTaskToBoard() {
 function loadEventListner() {
   let contactDropdown = document.getElementById("assignedToDropdownIcon");
   contactDropdown.addEventListener("click", function () {
-    dropdownContentAssignedTo.style.display = dropdownContentAssignedTo.style.display === "flex" ? "none" : "flex";
+    dropdownContentAssignedTo.style.display =
+      dropdownContentAssignedTo.style.display === "flex" ? "none" : "flex";
     let dispayStatus = dropdownContentAssignedTo.style.display;
     toggleDropdownIcon("assignedToDropdownIcon", dispayStatus);
   });
 
   let categoryDropdown = document.getElementById("categoryDropdownIcon");
   categoryDropdown.addEventListener("click", function () {
-    dropdownContenCategory.style.display = dropdownContenCategory.style.display === "flex" ? "none" : "flex";
+    dropdownContenCategory.style.display =
+      dropdownContenCategory.style.display === "flex" ? "none" : "flex";
     let dispayStatus = dropdownContenCategory.style.display;
     toggleDropdownIcon("categoryDropdownIcon", dispayStatus);
   });
@@ -518,13 +544,21 @@ function loadEventListner() {
 function handleWindowClick(event) {
   let contactDropdown = document.getElementById("assignedToDropdownIcon");
   let categoryDropdown = document.getElementById("categoryDropdownIcon");
-  let assignedToConatiner = document.getElementById("dropdownContentAssignedTo");
-  if (!contactDropdown.contains(event.target) && !assignedToConatiner.contains(event.target)) {
+  let assignedToConatiner = document.getElementById(
+    "dropdownContentAssignedTo"
+  );
+  if (
+    !contactDropdown.contains(event.target) &&
+    !assignedToConatiner.contains(event.target)
+  ) {
     dropdownContentAssignedTo.style.display = "none";
     toggleDropdownIcon("assignedToDropdownIcon", "none");
   }
   let categoryConatiner = document.getElementById("dropdownContenCategory");
-  if (!categoryDropdown.contains(event.target) && !categoryConatiner.contains(event.target)) {
+  if (
+    !categoryDropdown.contains(event.target) &&
+    !categoryConatiner.contains(event.target)
+  ) {
     dropdownContenCategory.style.display = "none";
     toggleDropdownIcon("categoryDropdownIcon", "none");
   }
@@ -582,21 +616,22 @@ async function addToTaskBackend() {
   let dueDate = document.getElementById("duedateInputField").value;
   let selectedContacts = loadSelectedContacts();
   let allSubtasks = loadAllSubtasks();
-  let allTasks = await loadAllTasks();
+  //let allTasks = await loadAllTasks();
   let currentTask = {
-    id: new Date().getTime(),
     title: title,
     description: description,
     todoCategory: category,
-    category: selectedCategory,
+    category: "open",
     dueDate: dueDate,
     priority: selectedPrio,
     assignedContacts: selectedContacts,
-    subtask: allSubtasks,
+    subtask: allSubtasks.length > 0 ? allSubtasks : [],
     counter: 0,
   };
-  allTasks.push(currentTask);
-  await saveAllTasks(allTasks);
+  console.log(currentTask);
+
+  await postData("/tasks", currentTask);
+  //await saveAllTasks(allTasks);
 }
 
 /**

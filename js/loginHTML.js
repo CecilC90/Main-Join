@@ -107,16 +107,19 @@ function renderRegistrationPageHTML() {
            <input type="text" placeholder="Name" id="name" required />
            <img src="./assets/img/person.svg" alt="" />
          </div>
+         <div class="errMessage"></div>
          <div class="inputField" id="inputEmailField">
            <input type="email" placeholder="Email" id="email" onkeyup="showEmailAlreadyUsed(false)" required />
            <img src="./assets/img/mail.svg" alt="" />
          </div>
+         <div class="errMessage" id="errMessageMail"></div>
          <div class="inputField">
            <input type="password" placeholder="Password" id="password" onkeyup="changePasswordIconRegistration('passwordIconContainer', 'password')" required />
            <div id="passwordIconContainer">
             <img src="./assets/img/lock.svg" alt="" />
            </div>
          </div>
+         <div class="errMessage"></div>
          <div class="inputField" id="inputPasswordField">
            <input type="password" placeholder="Confirm Password" id="confirmPasswort" onkeyup="changePasswordIconRegistrationConfirm('confirmPasswordIconContainer', 'confirmPasswort')" required />
            <div id="confirmPasswordIconContainer">

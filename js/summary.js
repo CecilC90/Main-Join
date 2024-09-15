@@ -62,6 +62,7 @@ function showGreetingMobile() {
 async function loadAllTasks() {
     let respons = await getItem("allTasks");
     todos = JSON.parse(respons);
+    console.log(todos);
 }
 
 /**
