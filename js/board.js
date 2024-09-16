@@ -22,7 +22,7 @@ async function renderHTML() {
     await loadContacts();
     pushColorForCategory();
     renderTodos();
-    addIdToTasks();
+    //addIdToTasks();
     showSelectedButton("boardButton");
 }
 
@@ -460,7 +460,7 @@ async function subtaskCounter(index, i) {
         todos[index].counter--;
     }
 
-    await setItem('allTasks', JSON.stringify(todos));
+    //await setItem('allTasks', JSON.stringify(todos));
     showCounter.innerHTML = todos[index].counter;
     changeProgressbar(index);
 }

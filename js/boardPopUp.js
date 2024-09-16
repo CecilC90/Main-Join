@@ -580,6 +580,7 @@ function renderAssingnedToDropdownListEditview() {
  * @param {number} index - The index of the todo to display in edit view. 
  */
 async function changeTask(index) {
+  let taskId = todos[index].id;
     let newTitle = document.getElementById('new-title');
     let newDescription = document.getElementById('new-description');
     let newDate = document.getElementById('new-date');
@@ -600,11 +601,23 @@ async function changeTask(index) {
         description: newDescription.value,
         dueDate: newDate.value,
     }
+    console.log(todos[index]);
 
-    await setItem('allTasks', JSON.stringify(todos));
+    await updateTaskData("/tasks", taskId, todos[index]);
+    //await setItem('allTasks', JSON.stringify(todos));
 
     showDetailView(index);
     renderTodos();
+}
+
+async function updateTaskData(path = "", contactId, updatedContact) {
+  const response = await fetch(`${BASE_URL}${path}/${contactId}.json`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedContact),
+  });
 }
 
 // Addtask function

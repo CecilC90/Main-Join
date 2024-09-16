@@ -215,6 +215,7 @@ async function loadTasks(path = "/tasks") {
   todos = Object.keys(data).map((key) => {
     let todo = data[key];
     todo.id = key;
+    console.log(todo.id);
     todo.subtask = todo.subtask || [];
     todo.assignedContacts = todo.assignedContacts || [];
     return todo;

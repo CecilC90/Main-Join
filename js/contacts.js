@@ -499,7 +499,6 @@ async function updateContactsInfo(i, event) {
   event.preventDefault();
   let contactId = sortedContacts[i].id;
   let updatedContact = {
-    //id: contacts[i]['id'],
     name: document.getElementById("editName").value,
     email: document.getElementById("editEmail").value,
     phone: document.getElementById("editPhone").value,
@@ -532,7 +531,6 @@ async function addContact() {
     phone: addPhone.value,
   };
   contacts.color = backgroundColors[randomIndex];
-  //await loadContacts();
   await postData("/contacts", contacts);
   await loadContacts();
   renderContacts();
