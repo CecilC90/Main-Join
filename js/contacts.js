@@ -322,13 +322,6 @@ async function deleteContact(i, sortedContacts) {
   document.getElementById("infoContainer").style.display = "none";
 }
 
-async function deleteData(path = "") {
-  let response = await fetch(BASE_URL + path + ".json", {
-    method: "DELETE",
-  });
-  return (responseToJson = await response.json());
-}
-
 /**
  * Cancels input operation.
  */

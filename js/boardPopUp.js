@@ -154,11 +154,14 @@ function renderCheckboxAfterClose(index) {
  * @param {number} index - The index of the todo to display in detail view.
  */
 async function deleteTask(index) {
-    todos.splice(index);
-
-    await setItem('allTasks', JSON.stringify(todos));
+    //todos.splice(index);
+    console.log(todos[index].id);
+    //await setItem('allTasks', JSON.stringify(todos));
+    await deleteData("/tasks/" + todos[index].id);
+    await loadTasks();
     closeDetailView();
     renderTodos;
+    
 }
 
 // Editview functions
@@ -385,17 +388,15 @@ function renderAssingnedToDropdownListEditview() {
    * 
    * @param {number} i - Number from the array contacts.
    */
-  function setContactSelectedEditview(i, index) {
-    let assignedContact = todos[index].assignedContacts[i];
-    const contact = findContactById(assignedContact);
-    if (contact.selected) {
-      contact.selected = false;
+  function setContactSelectedEditview(i) {
+    if (contacts[i]["selected"]) {
+      contacts[i]["selected"] = false;
       showSelectedDropdownContactEditview(i);
     } else {
-      contact.selected = true;
+      contacts[i]["selected"] = true;
       showSelectedDropdownContactEditview(i);
     }
-    renderSelectedContactsIconsEditview(index);
+    renderSelectedContactsIconsEditview();
   }
   
   /**
@@ -419,15 +420,14 @@ function renderAssingnedToDropdownListEditview() {
    * Creates the icons below the input field assigned To
    * 
    */
-  function renderSelectedContactsIconsEditview(index) {
+  function renderSelectedContactsIconsEditview() {
     let content = document.getElementById("showSelectedDropdownContactEditview");
     content.innerHTML = "";
-    for(let i = 0; i < todos[index].assignedContacts.length; i++) {
-      const contactId = todos[index].assignedContacts[i];
-      const contact = findContactById(contactId);
-      let contactSelected = contact.selected;
-      if (contactSelected) {
-        content.innerHTML += renderSelectedContactsIconsEditviewHTML(i, index, contact.color);
+    for (let i = 0; i < contacts.length; i++) {
+      if (contacts[i]["selected"]) {
+        content.innerHTML += /* html */ `
+          <div class="contactsIcon">${getFirstAndSecondLetter(i)}</div>
+        `;
       }
     }
   }
@@ -569,7 +569,6 @@ function renderAssingnedToDropdownListEditview() {
         }
     );
     
-    await setItem('allTasks', JSON.stringify(todos));
     clearSubtaskInputFieldEditview();
     renderSubtasksEditview(index);
 }

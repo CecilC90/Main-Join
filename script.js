@@ -101,6 +101,13 @@ function loadLoggedInUser() {
   showUserInitials();
 }
 
+async function deleteData(path = "") {
+  let response = await fetch(BASE_URL + path + ".json", {
+    method: "DELETE",
+  });
+  return (responseToJson = await response.json());
+}
+
 /**
  * shows the logged in user in header 
  * 
