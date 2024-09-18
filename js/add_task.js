@@ -631,7 +631,7 @@ async function addToTaskBackend() {
   console.log(currentTask);
 
   await postData("/tasks", currentTask);
-  //await saveAllTasks(allTasks);
+  
 }
 
 /**

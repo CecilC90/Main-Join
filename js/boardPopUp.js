@@ -602,22 +602,13 @@ async function changeTask(index) {
     }
     console.log(todos[index]);
 
-    await updateTaskData("/tasks", taskId, todos[index]);
-    //await setItem('allTasks', JSON.stringify(todos));
+    await updateData("/tasks", taskId, todos[index]);
 
     showDetailView(index);
     renderTodos();
 }
 
-async function updateTaskData(path = "", contactId, updatedContact) {
-  const response = await fetch(`${BASE_URL}${path}/${contactId}.json`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(updatedContact),
-  });
-}
+
 
 // Addtask function
 

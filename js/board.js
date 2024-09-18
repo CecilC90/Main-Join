@@ -284,9 +284,14 @@ function hideCurrentCategory(index, categorys) {
  */
 async function changeTo(newStatus, index, event) {
     event.stopPropagation();
-    todos[index].category = newStatus;
-
-    await setItem('allTasks', JSON.stringify(todos));
+    let updatedTask = {
+        ...todos[index],  
+        category: newStatus  
+    };
+    console.log(todos[index].id);
+    console.log(updatedTask)
+    await updateData("/tasks", todos[index].id, updatedTask);
+    await loadTasks();
     renderTodos();
 }
 

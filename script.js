@@ -239,3 +239,13 @@ async function postData(path = "", data = {}) {
     body: JSON.stringify(data),
   });
 }
+
+async function updateData(path = "", id, updatedData) {
+  const response = await fetch(`${BASE_URL}${path}/${id}.json`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedData),
+  });
+}
