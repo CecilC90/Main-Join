@@ -13,7 +13,7 @@ async function renderSummary() {
     await includesHTML();
     showSelectedButton("summaryButton");
     await loadLoggedInUser();
-    await loadAllTasks();
+    await loadTasks();
     await checkIsMsgAvailable();
     renderSummaryHTML();
     greeting();
@@ -53,16 +53,6 @@ function showGreetingMobile() {
         document.getElementById('greetingMobile').classList.add('hidden-overlay');
         document.getElementById('greetingMobile').classList.remove('d-none');
     }
-}
-
-/**
- * Loads all tasks from the storage.
- * @returns {Promise<void>}
- */
-async function loadAllTasks() {
-    let respons = await getItem("allTasks");
-    todos = JSON.parse(respons);
-    console.log(todos);
 }
 
 /**

@@ -1,6 +1,6 @@
 function templateHTMLTodoContainer(element, index) {
     return /*HTML*/ `
-    <div class="todo-content" onclick="showDetailView(${index})" draggable="true" ondragstart="startDragging(${element.id})" id="todo-container${index}">
+    <div class="todo-content" onclick="showDetailView(${index})" draggable="true" ondragstart="startDragging(${index})" id="todo-container${index}">
         <div class="space-between position-relative" id="position-relative${index}">
           <span class="category-span" id="category-span${index}">${element.todoCategory}</span>
           <img id="dropdown-status" onclick="openDropDownStatus(event, ${index})" src="./assets/img/more.svg">

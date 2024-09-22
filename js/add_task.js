@@ -628,10 +628,8 @@ async function addToTaskBackend() {
     subtask: allSubtasks.length > 0 ? allSubtasks : [],
     counter: 0,
   };
-  console.log(currentTask);
 
   await postData("/tasks", currentTask);
-  
 }
 
 /**

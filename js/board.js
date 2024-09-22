@@ -288,8 +288,6 @@ async function changeTo(newStatus, index, event) {
         ...todos[index],  
         category: newStatus  
     };
-    console.log(todos[index].id);
-    console.log(updatedTask)
     await updateData("/tasks", todos[index].id, updatedTask);
     await loadTasks();
     renderTodos();
@@ -303,7 +301,6 @@ async function changeTo(newStatus, index, event) {
 function renderSubtaskProgressbar(index) {
     let progressbarContent = document.getElementById(`progress-content${index}`);
     if(todos[index].subtask.length > 0) {
-        console.log(todos[index].subtask.length);
       progressbarContent.innerHTML = templateProgressbar(index); 
     }
   

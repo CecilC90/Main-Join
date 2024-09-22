@@ -9,7 +9,6 @@ let userNavbarOpen = false;
 async function getData(path="") {
   let response = await fetch(BASE_URL + path + ".json");
   let responsToJason = await response.json();
-  console.log(responsToJason);
 }
 
 /**
@@ -212,7 +211,6 @@ async function loadContacts(path = "/contacts") {
     contact.id = key;
     return contact;
   });
-  console.log(contacts);
 }
 
 async function loadTasks(path = "/tasks") {
@@ -222,12 +220,10 @@ async function loadTasks(path = "/tasks") {
   todos = Object.keys(data).map((key) => {
     let todo = data[key];
     todo.id = key;
-    console.log(todo.id);
     todo.subtask = todo.subtask || [];
     todo.assignedContacts = todo.assignedContacts || [];
     return todo;
   });
-  console.log(todos);
 }
 
 async function postData(path = "", data = {}) {

@@ -243,6 +243,7 @@ footer {
     animation-name: SlideFromRight;
     animation-duration: 225ms;
     animation-fill-mode: forwards;
+    overflow-x: auto;
 }
 
 .boardAddToDo {

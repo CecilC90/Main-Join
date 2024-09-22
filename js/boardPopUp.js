@@ -154,9 +154,6 @@ function renderCheckboxAfterClose(index) {
  * @param {number} index - The index of the todo to display in detail view.
  */
 async function deleteTask(index) {
-    //todos.splice(index);
-    console.log(todos[index].id);
-    //await setItem('allTasks', JSON.stringify(todos));
     await deleteData("/tasks/" + todos[index].id);
     await loadTasks();
     closeDetailView();
@@ -583,7 +580,6 @@ async function changeTask(index) {
     let newTitle = document.getElementById('new-title');
     let newDescription = document.getElementById('new-description');
     let newDate = document.getElementById('new-date');
-
     todos[index].assignedContacts = [];
 
     for(let j = 0; j < contacts.length; j++) {
@@ -600,7 +596,6 @@ async function changeTask(index) {
         description: newDescription.value,
         dueDate: newDate.value,
     }
-    console.log(todos[index]);
 
     await updateData("/tasks", taskId, todos[index]);
 

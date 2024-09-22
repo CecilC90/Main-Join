@@ -141,7 +141,6 @@
     .board-header {
         padding-top: 80px;
         padding-left: 30px;
-        width: 100vw;
     }
 
     body, .board-section {
@@ -150,7 +149,6 @@
 
     .board-section {
         padding: 30px;
-        width: 100vw;
         flex-wrap: nowrap;
         overflow-x: auto;
     }

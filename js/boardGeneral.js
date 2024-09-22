@@ -7,10 +7,15 @@
  */
 async function moveTo(category) {
     todos[startDragginId]['category'] = category;
+    updatedCategory= category,
+    todos[startDragginId] = {
+        ...todos[startDragginId],
+        category: updatedCategory
+    }
     highlightOut(category);
     allTaskAreDisplayed();
+    await updateData("/tasks", todos[startDragginId].id, todos[startDragginId]);
     renderTodos();
-    await setItem('allTasks', JSON.stringify(todos));
 }
 
 /**
@@ -40,10 +45,10 @@ function allowDrop(ev) {
 /**
  * The task is dragged and the function begins.
  * 
- * @param {number} id - Each task has an id to identify which task is being pulled.
+ * @param {number} index  - Each task has an id to identify which task is being pulled.
  */
-function startDragging(id) {
-    startDragginId = id;
+function startDragging(index) {
+    startDragginId = index;
 }
 
 /**An ID is added to the task.
@@ -107,12 +112,13 @@ async function filterTodos() {
  * @param {number} screenWidth - Returns the width of a screen.
  */
 function filterTitlesOfTodos(search, visibility, screenWidth) {
+
     for(let i = 0; i < todos.length; i++) {
         const todo = todos[i];
         let todoContent = document.getElementById(`todo-container${i}`);
         let title = todo['title'];
         let category = todo['category'];
-        if(title.toLowerCase().includes(search)) {
+        if(title.toLowerCase().startsWith(search)) {
             todoContent.style.display = 'block';
             visibility[category] = true;
         } else {

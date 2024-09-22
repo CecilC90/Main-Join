@@ -312,7 +312,6 @@ function openUserInformation(i, sortedContacts, initials) {
  * @param {Array<Object>} sortedContacts - Sorted array of contact objects.
  */
 async function deleteContact(i, sortedContacts) {
-  console.log(sortedContacts[i].id);
   await deleteData("/contacts/" + sortedContacts[i].id);
   await loadContacts();
   renderContacts();
@@ -497,7 +496,6 @@ async function updateContactsInfo(i, event) {
     phone: document.getElementById("editPhone").value,
     color: contacts[i]["color"],
   };
-  console.log(updatedContact);
   await updateContactData("/contacts", contactId, updatedContact);
   await loadContacts();
   renderContacts();
