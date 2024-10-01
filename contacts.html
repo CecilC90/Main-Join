@@ -43,17 +43,18 @@
             <div class="info-container" id="infoContainer">
                 <button class="contact-close" onclick="closeMainContact()"><img src="./assets/img/arrow-left-line.svg"
                         alt=""></button>
-                        <div>
-                            <button class="menu-contact-mobile" id="menuContactMobile" onclick="openContatOptions(i)"><img
-                                    src="./assets/img/more_vert.svg" alt=""></button>
-                        </div>
-                <div class="headline">
+                        
+                <div class="headline-contacts">
                     <span class="fs-61 fw-700">Contacts</span>
                     <span class="seperator"></span>
                     <span class="fs-27 fw-400">Better with a team</span>
                     <span class="seperator-mobile"></span>
                 </div>
                 <div id="userOverview"></div>
+                <div class="mobile-button-container">
+                    <button class="menu-contact-mobile" id="menuContactMobile" onclick="openContatOptions(i)"><img
+                            src="./assets/img/more_vert.svg" alt=""></button>
+                </div>
                 <div class="contact-options-mobile" id="contactOptionsMobile">
                     <div id="openEditMobile" onclick="openEditContactPopUp(`${i}`)">
                         <img src="./assets/img/contacts-edit.svg" alt="" id="openEditMobile">Edit

@@ -176,6 +176,9 @@ font-weight: 700; */
 /* #region header */
 
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: fixed;
   top: 0;
   left: 232px;
@@ -185,6 +188,7 @@ font-weight: 700; */
   font-weight: 400;
   background-color: white;
   z-index: 99;
+  height: 96px;
 }
 
 .header-container {
@@ -195,6 +199,7 @@ font-weight: 700; */
   padding-right: 40px;
   padding-top: 20px;
   padding-bottom: 20px;
+  width: 100%;
 }
 
 .help-container {

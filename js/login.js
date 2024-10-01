@@ -59,67 +59,6 @@ function renderRegistrationPage() {
 }
 
 /**
- * triggers the logo slide in the desktop and mobile version
- *
- */
-document.addEventListener("DOMContentLoaded", function () {
-  var slideImage = document.getElementById("slideImage");
-  var content = document.getElementById("content");
-  var loginMaskContainer = document.getElementById("loginMaskContainer");
-  var initialTop = window.innerHeight / 2 - slideImage.clientHeight / 2;
-  var initialLeft = window.innerWidth / 2 - slideImage.clientWidth / 2;
-  var slideImageColors = document.querySelectorAll(".slideImageColor");
-  if (window.innerWidth >= 750) {
-    slideImage.style.top = initialTop + "px";
-    slideImage.style.left = initialLeft + "px";
-    slideImageColors.forEach(function (path) {
-      path.setAttribute("fill", "#2A3647");
-    });
-    setTimeout(function () {
-      slideImage.style.top = "80px";
-      slideImage.style.left = "77px";
-      slideImage.style.transform = "translate(0, 0) scale(1)";
-      slideImage.style.width = "100.03px";
-      slideImage.style.height = "121.97px";
-      content.style.opacity = 1;
-      loginMaskContainer.style.opacity = 1;
-    }, 500);
-  } else if (window.innerHeight <= 700) {
-    slideImage.style.top = initialTop + "px";
-    slideImage.style.left = initialLeft + "px";
-    setTimeout(function () {
-      slideImage.style.top = "8px";
-      slideImage.style.left = "16px";
-      slideImage.style.transform = "translate(0, 0) scale(1)";
-      slideImage.style.width = "54px";
-      slideImage.style.height = "68.03px";
-      content.style.opacity = 1;
-      loginMaskContainer.style.opacity = 1;
-      document.body.style.backgroundColor = "#F6F7F8";
-      slideImageColors.forEach(function (path) {
-        path.setAttribute("fill", "#2A3647");
-      });
-    }, 500);
-  } else {
-    slideImage.style.top = initialTop + "px";
-    slideImage.style.left = initialLeft + "px";
-    setTimeout(function () {
-      slideImage.style.top = "37px";
-      slideImage.style.left = "38px";
-      slideImage.style.transform = "translate(0, 0) scale(1)";
-      slideImage.style.width = "64px";
-      slideImage.style.height = "78.03px";
-      content.style.opacity = 1;
-      loginMaskContainer.style.opacity = 1;
-      document.body.style.backgroundColor = "#F6F7F8";
-      slideImageColors.forEach(function (path) {
-        path.setAttribute("fill", "#2A3647");
-      });
-    }, 500);
-  }
-});
-
-/**
  * starts the function setLogoPosition when changing the page width
  *
  */

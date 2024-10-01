@@ -3,13 +3,51 @@
 }
 #slideImage {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 274px;
   height: 335px;
-  transform: scale(1);
-  transition: top 0.5s, left 0.5s, transform 0.5s, width 0.5s, height 0.5s;
+  transition: all 1s ease-in-out;
+  animation: moveToCorner 1s ease-in-out 0.5s forwards;
   z-index: 1;
 }
-.checkbox{
+
+/* Bild-Animation: Bewegung und Verkleinerung */
+@keyframes moveToCorner {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    top: 80px;
+    left: 77px;
+    transform: translate(0, 0); /* Entferne Zentrierung */
+    width: 100px; /* Neue Breite */
+    height: 122px; /* Neue Höhe */
+  }
+}
+
+/* Für Mobilgeräte: Positionierung auf 10px ändern */
+@media (max-width: 750px) {
+  @keyframes moveToCorner {
+    0% {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    100% {
+      top: 37px;
+      left: 38px;
+      transform: translate(0, 0); /* Entferne Zentrierung */
+      width: 100px; /* Neue Breite */
+      height: 122px; /* Neue Höhe */
+    }
+  }
+}
+
+.checkbox {
   cursor: pointer;
   height: 24px;
   width: 24px;
@@ -45,7 +83,8 @@
   justify-content: space-between;
   height: 100vh;
   opacity: 0;
-  transition: opacity 0.5s;
+  transition: opacity 1s ease-in-out;
+  animation: fadeIn 1s ease-in-out 1s forwards; /* Verzögerung von 1s */
 }
 .signUpButtonContainer {
   display: flex;
@@ -56,6 +95,7 @@
   margin-right: 122px;
   z-index: 2;
 }
+
 .signUpButtonContainer button {
   padding: 15px 16px;
   border-radius: 8px;
@@ -63,10 +103,10 @@
   font-style: normal;
   font-weight: 700;
 }
-.signUpButtonContainer p{
+.signUpButtonContainer p {
   margin-block-start: 0;
   margin-block-end: 0;
-  font-size: 20px
+  font-size: 20px;
 }
 .loginMaskContainer {
   position: absolute;
@@ -75,7 +115,54 @@
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.5s;
+  transition: opacity 1s ease-in-out;
+  animation: fadeIn 1s ease-in-out 1s forwards; /* Verzögerung von 1s */
 }
+
+/* Opazität von Container-Elementen erhöhen */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.logo-small {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 122px;
+  z-index: 1;
+  background-image: url(../assets/img/join-logo-white.svg);
+  background-repeat: no-repeat; /* Verhindert, dass das Bild wiederholt wird */
+  background-size: contain; /* Das Bild wird so skaliert, dass es im Container bleibt */
+  background-position: center; /* Zentriert das Bild im Container */
+  transition: all 1s ease-in-out; /* Übergang für Animationen */
+  animation: changeImage 1s ease-in-out 1s forwards;
+}
+
+/* Animation für den Bildwechsel */
+@keyframes changeImage {
+  0% {
+    background-image: url(../assets/img/join-logo-white.svg); /* Anfangsbild */
+  }
+  50% {
+    background-image: url(../assets/img/join-logo-blue.svg); /* Anfangsbild */
+  }
+  100% {
+    top: 37px;
+    left: 38px;
+    width: 64px;
+    height: 78px;
+    transform: translate(0, 0); /* Entferne Zentrierung */
+    background-image: url(../assets/img/join-logo-blue.svg); /* Endbild */
+  }
+}
+
 .loginMask {
   display: flex;
   gap: 32px;
@@ -131,7 +218,7 @@
   font-style: normal;
   font-weight: 400;
 }
-.passwordIcon{
+.passwordIcon {
   cursor: pointer;
 }
 .rememberMeContainer {
@@ -176,7 +263,7 @@
 .footnotes a:hover {
   color: #29abe2;
   font-weight: 700;
-  cursor: pointer;;
+  cursor: pointer;
 }
 /* #endregion */
 
@@ -244,14 +331,14 @@
   font-size: 16px;
   text-decoration: none;
 }
-.setColorPrivacyPolicRed p{
+.setColorPrivacyPolicRed p {
   color: #ff001f;
 }
-.setColorPrivacyPolicRed a{
+.setColorPrivacyPolicRed a {
   color: #ff001f;
 }
 
-.errMessage{
+.errMessage {
   height: 24px;
   color: #ff001f;
   font-size: 12px;
@@ -267,12 +354,60 @@
     margin-top: 150px;
   }
 }
-@media (max-width: 750px) {
-  body{
-    background-color: #2A3647;
-    transition: background-color 0.5s;
+
+@media(max-height: 900px) {
+  body {
+    height: 100vh;
   }
-  .slideImageColor{
+}
+
+@media (max-height: 800px) {
+
+  /* Animation für den Bildwechsel */
+  @keyframes changeImage {
+    0% {
+      background-image: url(../assets/img/join-logo-white.svg); /* Anfangsbild */
+    }
+    50% {
+      background-image: url(../assets/img/join-logo-blue.svg); /* Anfangsbild */
+    }
+    100% {
+      top: 16px;
+      left: 24px;
+      width: 64px;
+      height: 78px;
+      transform: translate(0, 0); /* Entferne Zentrierung */
+      background-image: url(../assets/img/join-logo-blue.svg); /* Endbild */
+    }
+  }
+}
+
+@media (min-width: 751px) {
+  .logo-small {
+    display: none;
+  }
+}
+
+@media (max-width: 750px) {
+  body {
+    background-color: #2a3647;
+    transition: all 1s ease-in-out; /* Übergang für Animationen */
+    animation: changeColor 1s ease-in-out 1s forwards;
+  }
+
+  @keyframes changeColor {
+    0% {
+      background-color: #2a3647;
+    }
+    50% {
+      /* Bildwechsel hier über JS oder setTimeout */
+    }
+    100% {
+      background-color: #F6F7F8;
+    }
+  }
+
+  .slideImageColor {
     transition: fill 0.5s ease;
   }
   #slideImage {
@@ -315,19 +450,25 @@
   .registrationBackIcon {
     right: -24px;
   }
-  .signUpButtonContainer button{
+  .signUpButtonContainer button {
     font-size: 16px;
   }
-  .loginButtonContainer button{
+  .loginButtonContainer button {
     font-size: 16px;
+  }
+  .logo-large {
+    display: none;
+  }
+  .logo-small {
+    display: block;
   }
 }
 
-@media(max-height: 700px) {
-.loginMaskContainer {
-  width: 100%;
-}
-  
+@media (max-height: 700px) {
+  .loginMaskContainer {
+    width: 100%;
+  }
+
   .loginMask {
     gap: 24px;
     padding: 8px 16px;
@@ -360,5 +501,37 @@
 
   .errMessage {
     height: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .loginMask {
+    padding: 24px 8px;
+    gap: 16px;
+  }
+  .inputFieldsContainer {
+    max-width: 364px;
+    width: 100%;
+  }
+  .loginMaskContainer {
+    width: 100%;
+  }
+
+  /* Animation für den Bildwechsel */
+  @keyframes changeImage {
+    0% {
+      background-image: url(../assets/img/join-logo-white.svg); /* Anfangsbild */
+    }
+    50% {
+      background-image: url(../assets/img/join-logo-blue.svg); /* Anfangsbild */
+    }
+    100% {
+      top: 8px;
+      left: 8px;
+      width: 54px;
+      height: 68px;
+      transform: translate(0, 0); /* Entferne Zentrierung */
+      background-image: url(../assets/img/join-logo-blue.svg); /* Endbild */
+    }
   }
 }
